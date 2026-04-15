@@ -1,0 +1,39 @@
+{
+ "actions": [],
+ "creation": "2026-04-16 16:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": ["finding_narrative", "linked_observation"],
+ "fields": [
+  {
+   "fieldname": "finding_narrative",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Finding (narrative)",
+   "description": "Text finding when not represented as a separate Observation"
+  },
+  {
+   "fieldname": "linked_observation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Linked Observation",
+   "options": "Healthcare Observation",
+   "description": "FHIR DiagnosticReport.result → Observation"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-04-16 16:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Diagnostic Report Finding",
+ "owner": "Administrator",
+ "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

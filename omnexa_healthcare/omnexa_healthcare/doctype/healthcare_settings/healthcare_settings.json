@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "creation": "2026-04-15 10:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hospital_clinic_section",
+  "default_appointment_duration_mins",
+  "require_active_patient_for_encounter",
+  "lab_section",
+  "include_lab_observations_in_ips_bundle",
+  "pharmacy_section",
+  "allow_medication_statement_without_encounter",
+  "store_section",
+  "consumable_policy_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "hospital_clinic_section",
+   "fieldtype": "Section Break",
+   "label": "Hospital / clinic"
+  },
+  {
+   "default": "15",
+   "fieldname": "default_appointment_duration_mins",
+   "fieldtype": "Int",
+   "label": "Default appointment duration (minutes)",
+   "description": "Used as a planning hint for front desk and scheduling."
+  },
+  {
+   "default": "1",
+   "fieldname": "require_active_patient_for_encounter",
+   "fieldtype": "Check",
+   "label": "Require active patient for new encounters",
+   "description": "When cleared, inactive patients may still receive encounters (e.g. legacy data migration)."
+  },
+  {
+   "fieldname": "lab_section",
+   "fieldtype": "Section Break",
+   "label": "Laboratory"
+  },
+  {
+   "default": "1",
+   "fieldname": "include_lab_observations_in_ips_bundle",
+   "fieldtype": "Check",
+   "label": "Include laboratory observations in IPS FHIR export",
+   "description": "When off, laboratory/exam observations are not listed under Composition section LOINC 30954-2 (Bundle entries and DiagnosticReport references are unchanged)."
+  },
+  {
+   "fieldname": "pharmacy_section",
+   "fieldtype": "Section Break",
+   "label": "Pharmacy"
+  },
+  {
+   "default": "1",
+   "fieldname": "allow_medication_statement_without_encounter",
+   "fieldtype": "Check",
+   "label": "Allow medication statements without encounter",
+   "description": "If disabled, new medication statements must be linked to an encounter."
+  },
+  {
+   "fieldname": "store_section",
+   "fieldtype": "Section Break",
+   "label": "Stores / warehouse"
+  },
+  {
+   "fieldname": "consumable_policy_note",
+   "fieldtype": "Small Text",
+   "label": "Consumables / stock policy note",
+   "description": "Internal note (e.g. which warehouse issues OT consumables). Stock masters and movements use Omnexa Accounting (Item, Warehouse, Stock Entry); shortcuts are on the Healthcare workspace."
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-04-15 10:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {"role": "System Manager", "read": 1, "write": 1, "create": 0, "delete": 0, "report": 0, "export": 1, "share": 0, "print": 0, "email": 0},
+  {"role": "Company Admin", "read": 1, "write": 1, "create": 0, "delete": 0, "report": 0, "export": 0, "share": 0, "print": 0, "email": 0}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

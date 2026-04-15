@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-04-16 14:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "patient",
+  "patient_display",
+  "company",
+  "branch",
+  "encounter",
+  "status",
+  "occurrence_datetime",
+  "vaccine_name",
+  "cvx_code",
+  "lot_number",
+  "site",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "IMM-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "IMM-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Patient",
+   "options": "Healthcare Patient",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "patient.full_name",
+   "fieldname": "patient_display",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+  {
+   "fieldname": "encounter",
+   "fieldtype": "Link",
+   "label": "Encounter",
+   "options": "Healthcare Encounter"
+  },
+  {
+   "default": "completed",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "completed\nentered-in-error\nnot-done",
+   "description": "FHIR Immunization.status",
+   "reqd": 1
+  },
+  {
+   "fieldname": "occurrence_datetime",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Occurrence Date/Time",
+   "description": "FHIR Immunization.occurrenceDateTime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vaccine_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vaccine Name",
+   "reqd": 1,
+   "description": "Display name (FHIR vaccineCode text)"
+  },
+  {
+   "fieldname": "cvx_code",
+   "fieldtype": "Data",
+   "label": "CVX Code",
+   "description": "HL7 CVX vaccine code when known (http://hl7.org/fhir/sid/cvx)"
+  },
+  {
+   "fieldname": "lot_number",
+   "fieldtype": "Data",
+   "label": "Lot Number",
+   "description": "FHIR Immunization.lotNumber"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Data",
+   "label": "Body Site",
+   "description": "Plain text site (FHIR site.text)"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-16 14:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Immunization",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
+  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
+  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

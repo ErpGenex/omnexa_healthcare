@@ -1,0 +1,377 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-04-15 12:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sb_admin",
+  "active",
+  "company",
+  "branch",
+  "managing_facility",
+  "billing_customer",
+  "sb_name",
+  "name_prefix",
+  "given_name",
+  "middle_name",
+  "family_name",
+  "name_suffix",
+  "full_name",
+  "sb_demographics",
+  "gender",
+  "birth_date",
+  "birth_date_precision",
+  "birth_time",
+  "multiple_birth",
+  "multiple_birth_order",
+  "deceased",
+  "deceased_datetime",
+  "blood_group",
+  "nationality",
+  "preferred_language",
+  "marital_status",
+  "sb_address",
+  "address_use",
+  "address_type",
+  "address_line1",
+  "address_line2",
+  "district",
+  "city",
+  "state",
+  "postal_code",
+  "country",
+  "sb_care_preferences",
+  "interpreter_required",
+  "communication_language",
+  "allergies_free_text",
+  "sb_privacy",
+  "consent_to_care_recorded_at",
+  "consent_notes",
+  "data_sharing_restricted",
+  "sb_identifiers",
+  "identifiers",
+  "sb_telecom",
+  "telecom"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "HP-.#####",
+   "reqd": 1,
+   "default": "HP-.#####"
+  },
+  {
+   "collapsible": 0,
+   "fieldname": "sb_admin",
+   "fieldtype": "Section Break",
+   "label": "Administrative"
+  },
+  {
+   "default": "1",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active Record",
+   "description": "FHIR Patient.active — whether this patient record is in use"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Registration Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "managing_facility",
+   "fieldtype": "Link",
+   "label": "Managing Facility",
+   "options": "Healthcare Facility Profile",
+   "description": "FHIR Patient.managingOrganization — facility responsible for this record"
+  },
+  {
+   "fieldname": "billing_customer",
+   "fieldtype": "Link",
+   "label": "Billing customer",
+   "options": "Customer",
+   "description": "Customer master in Omnexa Accounting used for Sales Invoice / receivables for this patient."
+  },
+  {
+   "fieldname": "sb_name",
+   "fieldtype": "Section Break",
+   "label": "Legal / Official Name (FHIR HumanName)"
+  },
+  {
+   "fieldname": "name_prefix",
+   "fieldtype": "Data",
+   "label": "Prefix"
+  },
+  {
+   "fieldname": "given_name",
+   "fieldtype": "Data",
+   "label": "Given / First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "family_name",
+   "fieldtype": "Data",
+   "label": "Family / Last Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "name_suffix",
+   "fieldtype": "Data",
+   "label": "Suffix"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "label": "Full Display Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_demographics",
+   "fieldtype": "Section Break",
+   "label": "Demographics"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Administrative Gender",
+   "options": "male\nfemale\nother\nunknown",
+   "description": "FHIR Patient.gender (administrative, not clinical sex for diagnosis)"
+  },
+  {
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "label": "Birth Date"
+  },
+  {
+   "default": "DMY",
+   "fieldname": "birth_date_precision",
+   "fieldtype": "Select",
+   "label": "Birth Date Precision",
+   "options": "DMY\nMY\nY\nUNK",
+   "description": "How birth date was captured when incomplete (international registries)"
+  },
+  {
+   "fieldname": "birth_time",
+   "fieldtype": "Time",
+   "label": "Birth Time",
+   "description": "Optional; use when neonatal documentation requires time"
+  },
+  {
+   "default": "0",
+   "fieldname": "multiple_birth",
+   "fieldtype": "Check",
+   "label": "Multiple Birth (part of set)"
+  },
+  {
+   "fieldname": "multiple_birth_order",
+   "fieldtype": "Int",
+   "label": "Birth Order",
+   "description": "FHIR Patient.multipleBirthInteger — e.g. 2 of twins"
+  },
+  {
+   "default": "0",
+   "fieldname": "deceased",
+   "fieldtype": "Check",
+   "label": "Deceased"
+  },
+  {
+   "fieldname": "deceased_datetime",
+   "fieldtype": "Datetime",
+   "label": "Deceased Date/Time",
+   "depends_on": "eval:doc.deceased"
+  },
+  {
+   "fieldname": "blood_group",
+   "fieldtype": "Select",
+   "label": "Blood Group (ABO/Rh)",
+   "options": "\nA+\nA-\nB+\nB-\nAB+\nAB-\nO+\nO-\nUnknown"
+  },
+  {
+   "fieldname": "nationality",
+   "fieldtype": "Link",
+   "label": "Nationality",
+   "options": "Country"
+  },
+  {
+   "fieldname": "preferred_language",
+   "fieldtype": "Data",
+   "label": "Preferred Language (ISO 639-1)",
+   "description": "e.g. ar, en — FHIR Patient.communication language"
+  },
+  {
+   "fieldname": "marital_status",
+   "fieldtype": "Select",
+   "label": "Marital Status",
+   "options": "\nA\nD\nI\nL\nM\nP\nS\nT\nU\nW\nUNK",
+   "description": "HL7 v3 MaritalStatus codes (subset); UNK = unknown"
+  },
+  {
+   "fieldname": "sb_address",
+   "fieldtype": "Section Break",
+   "label": "Address (FHIR Address)"
+  },
+  {
+   "default": "home",
+   "fieldname": "address_use",
+   "fieldtype": "Select",
+   "label": "Address Use",
+   "options": "home\nwork\ntemp\nold\nbilling"
+  },
+  {
+   "default": "both",
+   "fieldname": "address_type",
+   "fieldtype": "Select",
+   "label": "Address Type",
+   "options": "postal\nphysical\nboth"
+  },
+  {
+   "fieldname": "address_line1",
+   "fieldtype": "Data",
+   "label": "Address Line 1"
+  },
+  {
+   "fieldname": "address_line2",
+   "fieldtype": "Data",
+   "label": "Address Line 2"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District / County"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State / Province"
+  },
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Data",
+   "label": "Postal Code"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "sb_care_preferences",
+   "fieldtype": "Section Break",
+   "label": "Care & Safety (summary)"
+  },
+  {
+   "default": "0",
+   "fieldname": "interpreter_required",
+   "fieldtype": "Check",
+   "label": "Interpreter Required"
+  },
+  {
+   "fieldname": "communication_language",
+   "fieldtype": "Data",
+   "label": "Clinical Communication Language",
+   "description": "Language for consultations if different from preferred_language"
+  },
+  {
+   "fieldname": "allergies_free_text",
+   "fieldtype": "Small Text",
+   "label": "Allergies / adverse reactions (summary)",
+   "description": "Interim narrative until structured AllergyIntolerance / reaction resources are added"
+  },
+  {
+   "fieldname": "sb_privacy",
+   "fieldtype": "Section Break",
+   "label": "Privacy & consent (governance)"
+  },
+  {
+   "fieldname": "consent_to_care_recorded_at",
+   "fieldtype": "Datetime",
+   "label": "Consent to Care Recorded At"
+  },
+  {
+   "fieldname": "consent_notes",
+   "fieldtype": "Small Text",
+   "label": "Consent Notes",
+   "description": "Reference to policy version or witness; not a legal substitute for signed forms"
+  },
+  {
+   "default": "0",
+   "fieldname": "data_sharing_restricted",
+   "fieldtype": "Check",
+   "label": "Restrict secondary use / analytics sharing",
+   "description": "Flag for anonymization / export controls in BI pipelines"
+  },
+  {
+   "fieldname": "sb_identifiers",
+   "fieldtype": "Section Break",
+   "label": "Identifiers (FHIR Identifier)"
+  },
+  {
+   "fieldname": "identifiers",
+   "fieldtype": "Table",
+   "label": "Identifiers",
+   "options": "Healthcare Patient Identifier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_telecom",
+   "fieldtype": "Section Break",
+   "label": "Telecom (FHIR ContactPoint)"
+  },
+  {
+   "fieldname": "telecom",
+   "fieldtype": "Table",
+   "label": "Contact Points",
+   "options": "Healthcare Patient Telecom"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-15 12:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Patient",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
+  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
+  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "full_name,given_name,family_name",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

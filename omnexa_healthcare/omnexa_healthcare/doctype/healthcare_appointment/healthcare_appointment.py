@@ -9,6 +9,8 @@ from frappe.model.document import Document
 class HealthcareAppointment(Document):
 	def validate(self):
 		self._validate_branch_company_match()
+		self._validate_patient_context()
+		self._validate_encounter_link()
 		self._validate_service_unit_assignment()
 
 	def _validate_branch_company_match(self):
@@ -17,6 +19,43 @@ class HealthcareAppointment(Document):
 			frappe.throw(_("Branch {0} does not exist.").format(self.branch), title=_("Branch"))
 		if branch_company != self.company:
 			frappe.throw(_("Branch belongs to a different company."), title=_("Branch"))
+
+	def _validate_patient_context(self):
+		if not self.patient:
+			return
+		pdata = frappe.db.get_value(
+			"Healthcare Patient",
+			self.patient,
+			["company", "branch", "active"],
+			as_dict=True,
+		)
+		if not pdata:
+			frappe.throw(_("Patient does not exist."), title=_("Patient"))
+		if not pdata.active:
+			frappe.throw(_("Inactive patient records cannot receive new appointments."), title=_("Patient"))
+		if pdata.company != self.company or pdata.branch != self.branch:
+			frappe.throw(
+				_("Patient must belong to the same company and branch as the appointment."),
+				title=_("Patient"),
+			)
+
+	def _validate_encounter_link(self):
+		if not self.encounter:
+			return
+		row = frappe.db.get_value(
+			"Healthcare Encounter",
+			self.encounter,
+			["patient", "appointment", "company", "branch"],
+			as_dict=True,
+		)
+		if not row:
+			frappe.throw(_("Encounter does not exist."), title=_("Encounter"))
+		if row.patient != self.patient:
+			frappe.throw(_("Encounter patient must match appointment patient."), title=_("Encounter"))
+		if row.company != self.company or row.branch != self.branch:
+			frappe.throw(_("Encounter must belong to the same company and branch."), title=_("Encounter"))
+		if row.appointment and row.appointment != self.name:
+			frappe.throw(_("Encounter is linked to a different appointment."), title=_("Encounter"))
 
 	def _validate_service_unit_assignment(self):
 		unit_data = frappe.db.get_value(

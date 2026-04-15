@@ -1,0 +1,137 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-04-16 14:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "patient",
+  "patient_display",
+  "company",
+  "branch",
+  "encounter",
+  "category",
+  "observation_profile",
+  "status",
+  "value_primary",
+  "value_secondary",
+  "unit_ucum",
+  "effective_datetime",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "OBS-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "OBS-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Patient",
+   "options": "Healthcare Patient",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "patient.full_name",
+   "fieldname": "patient_display",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+  {
+   "fieldname": "encounter",
+   "fieldtype": "Link",
+   "label": "Encounter",
+   "options": "Healthcare Encounter"
+  },
+  {
+   "default": "vital-signs",
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "label": "Category",
+   "options": "vital-signs\nsurvey\nexam\nlaboratory",
+   "description": "FHIR Observation.category (primary)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "observation_profile",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Measure / type",
+   "options": "heart_rate\nspo2\nbody_temperature\nbody_weight\nbody_height\nblood_pressure\nlab_glucose\nlab_hemoglobin",
+   "description": "Maps to LOINC in FHIR export (vitals or common lab results)",
+   "reqd": 1
+  },
+  {
+   "default": "final",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "registered\npreliminary\nfinal\namended\ncorrected\ncancelled\nentered-in-error",
+   "description": "FHIR Observation.status",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value_primary",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Value (primary)",
+   "description": "Numeric value; for BP = systolic mmHg",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value_secondary",
+   "fieldtype": "Float",
+   "label": "Value (secondary)",
+   "description": "For blood pressure: diastolic mmHg"
+  },
+  {
+   "fieldname": "unit_ucum",
+   "fieldtype": "Data",
+   "label": "UCUM Unit",
+   "description": "Override UCUM unit (e.g. mm[Hg], /min, %); default from profile if empty"
+  },
+  {
+   "fieldname": "effective_datetime",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Effective Date/Time",
+   "description": "FHIR Observation.effectiveDateTime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-16 14:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Observation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
+  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
+  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

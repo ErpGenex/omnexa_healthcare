@@ -10,7 +10,14 @@
   "company",
   "branch",
   "facility_type",
-  "status"
+  "status",
+  "section_contact",
+  "contact_phone",
+  "contact_email",
+  "section_site",
+  "pharmacy_license_number",
+  "laboratory_registration_id",
+  "warehouse_site_notes"
  ],
  "fields": [
   {
@@ -41,7 +48,8 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Facility Type",
-   "options": "Clinic\nMedical Center\nHospital",
+   "options": "Hospital\nMedical Center\nClinic\nLaboratory\nPharmacy\nWarehouse Store\nOther",
+   "description": "Classifies this site for master data, reporting, and workspace grouping (hospital, clinic, lab, pharmacy, store).",
    "reqd": 1
   },
   {
@@ -52,12 +60,51 @@
    "label": "Status",
    "options": "Active\nInactive",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_contact",
+   "fieldtype": "Section Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "contact_phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "section_site",
+   "fieldtype": "Section Break",
+   "label": "Lab / pharmacy / store"
+  },
+  {
+   "fieldname": "pharmacy_license_number",
+   "fieldtype": "Data",
+   "label": "Pharmacy license number",
+   "depends_on": "eval:doc.facility_type=='Pharmacy'"
+  },
+  {
+   "fieldname": "laboratory_registration_id",
+   "fieldtype": "Data",
+   "label": "Laboratory registration / accreditation ref.",
+   "depends_on": "eval:doc.facility_type=='Laboratory'"
+  },
+  {
+   "fieldname": "warehouse_site_notes",
+   "fieldtype": "Small Text",
+   "label": "Warehouse / store notes",
+   "depends_on": "eval:doc.facility_type=='Warehouse Store'"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-14 23:00:00",
+ "modified": "2026-04-15 10:30:00",
  "modified_by": "Administrator",
  "module": "Omnexa Healthcare",
  "name": "Healthcare Facility Profile",

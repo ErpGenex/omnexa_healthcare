@@ -8,7 +8,7 @@ app_license = "mit"
 # Apps
 # ------------------
 
-required_apps = ["omnexa_core"]
+required_apps = ["omnexa_core", "omnexa_accounting"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -43,7 +43,10 @@ required_apps = ["omnexa_core"]
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Healthcare Service Charge": "public/js/healthcare_service_charge.js",
+	"Healthcare Medication Dispense": "public/js/healthcare_medication_dispense.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -117,13 +120,27 @@ required_apps = ["omnexa_core"]
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+permission_query_conditions = {
+	"Healthcare Patient": "omnexa_healthcare.permissions.healthcare_patient_query_conditions",
+	"Healthcare Appointment": "omnexa_healthcare.permissions.healthcare_appointment_query_conditions",
+	"Healthcare Encounter": "omnexa_healthcare.permissions.healthcare_encounter_query_conditions",
+	"Healthcare Episode Of Care": "omnexa_healthcare.permissions.healthcare_episode_of_care_query_conditions",
+	"Healthcare Facility Profile": "omnexa_healthcare.permissions.healthcare_facility_profile_query_conditions",
+	"Healthcare Department": "omnexa_healthcare.permissions.healthcare_department_query_conditions",
+	"Healthcare Service Unit": "omnexa_healthcare.permissions.healthcare_service_unit_query_conditions",
+	"Healthcare Clinical Condition": "omnexa_healthcare.permissions.healthcare_clinical_condition_query_conditions",
+	"Healthcare Allergy Intolerance": "omnexa_healthcare.permissions.healthcare_allergy_intolerance_query_conditions",
+	"Healthcare Medication Statement": "omnexa_healthcare.permissions.healthcare_medication_statement_query_conditions",
+	"Healthcare Immunization": "omnexa_healthcare.permissions.healthcare_immunization_query_conditions",
+	"Healthcare Observation": "omnexa_healthcare.permissions.healthcare_observation_query_conditions",
+	"Healthcare Service Request": "omnexa_healthcare.permissions.healthcare_service_request_query_conditions",
+	"Healthcare Diagnostic Report": "omnexa_healthcare.permissions.healthcare_diagnostic_report_query_conditions",
+	"Healthcare Bed": "omnexa_healthcare.permissions.healthcare_bed_query_conditions",
+	"Healthcare Admission": "omnexa_healthcare.permissions.healthcare_admission_query_conditions",
+	"Healthcare Service Charge": "omnexa_healthcare.permissions.healthcare_service_charge_query_conditions",
+	"Healthcare Medication Dispense": "omnexa_healthcare.permissions.healthcare_medication_dispense_query_conditions",
+	"Healthcare Lab Sample": "omnexa_healthcare.permissions.healthcare_lab_sample_query_conditions",
+}
 
 # DocType Class
 # ---------------
@@ -137,13 +154,84 @@ required_apps = ["omnexa_core"]
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Healthcare Patient": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Appointment": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Facility Profile": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Department": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Service Unit": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Encounter": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Episode Of Care": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Clinical Condition": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Allergy Intolerance": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Medication Statement": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Immunization": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Observation": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Service Request": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Diagnostic Report": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Bed": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Admission": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Service Charge": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Medication Dispense": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+	"Healthcare Lab Sample": {
+		"before_validate": "omnexa_healthcare.permissions.populate_company_branch_from_user_context",
+		"validate": "omnexa_healthcare.permissions.enforce_branch_access_for_doc",
+	},
+}
 
 # Scheduled Tasks
 # ---------------

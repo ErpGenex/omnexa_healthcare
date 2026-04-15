@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-04-16 12:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "patient",
+  "patient_display",
+  "company",
+  "branch",
+  "allergy_type",
+  "category",
+  "criticality",
+  "substance_text",
+  "reaction_manifestation",
+  "clinical_status",
+  "verification_status",
+  "onset_datetime",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "ALG-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ALG-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Patient",
+   "options": "Healthcare Patient",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "patient.full_name",
+   "fieldname": "patient_display",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
+  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+  {
+   "default": "allergy",
+   "fieldname": "allergy_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "allergy\nintolerance",
+   "description": "FHIR AllergyIntolerance.type",
+   "reqd": 1
+  },
+  {
+   "default": "medication",
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "food\nmedication\nenvironment\nbiologic",
+   "description": "FHIR AllergyIntolerance.category (primary)",
+   "reqd": 1
+  },
+  {
+   "default": "unable-to-assess",
+   "fieldname": "criticality",
+   "fieldtype": "Select",
+   "label": "Criticality",
+   "options": "low\nhigh\nunable-to-assess",
+   "description": "FHIR AllergyIntolerance.criticality",
+   "reqd": 1
+  },
+  {
+   "fieldname": "substance_text",
+   "fieldtype": "Small Text",
+   "label": "Substance / Agent",
+   "reqd": 1,
+   "description": "Substance or agent description (FHIR AllergyIntolerance.code text)"
+  },
+  {
+   "fieldname": "reaction_manifestation",
+   "fieldtype": "Small Text",
+   "label": "Reaction / Manifestation",
+   "description": "Signs and symptoms (FHIR AllergyIntolerance.reaction.manifestation text)"
+  },
+  {
+   "default": "active",
+   "fieldname": "clinical_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Clinical Status",
+   "options": "active\ninactive\nresolved",
+   "description": "FHIR AllergyIntolerance.clinicalStatus",
+   "reqd": 1
+  },
+  {
+   "default": "unconfirmed",
+   "fieldname": "verification_status",
+   "fieldtype": "Select",
+   "label": "Verification Status",
+   "options": "unconfirmed\nconfirmed\nrefuted\nentered-in-error",
+   "description": "FHIR AllergyIntolerance.verificationStatus",
+   "reqd": 1
+  },
+  {
+   "fieldname": "onset_datetime",
+   "fieldtype": "Datetime",
+   "label": "Onset Date/Time",
+   "description": "FHIR AllergyIntolerance.onsetDateTime"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Clinical Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-16 12:00:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Allergy Intolerance",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
+  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
+  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
