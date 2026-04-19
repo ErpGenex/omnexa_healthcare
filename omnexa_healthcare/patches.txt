@@ -7,3 +7,4 @@ omnexa_healthcare.patches.v1_0.backup_healthcare_appointment_legacy_data
 # Patches added in this section will be executed after doctypes are migrated
 omnexa_healthcare.patches.v1_0.restore_healthcare_appointment_patients
 omnexa_healthcare.patches.v1_0.healthcare_settings_defaults
+omnexa_healthcare.patches.v1_0.sync_healthcare_report_roles
