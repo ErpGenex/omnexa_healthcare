@@ -1,0 +1,41 @@
+{
+ "allow_roles": [
+  {
+   "role": "Desk User"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "creation": "2026-04-20 00:31:41.499802",
+ "docstatus": 0,
+ "doctype": "Module Onboarding",
+ "documentation_url": "https://frappe.io/framework",
+ "idx": 0,
+ "is_complete": 0,
+ "modified": "2026-04-20 02:24:46.659779",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "ERPGENEX \u2014 Healthcare",
+ "owner": "Administrator",
+ "steps": [
+  {
+   "step": "ERPGENEX-WS-healthcare-01-healthcare_settings"
+  },
+  {
+   "step": "ERPGENEX-WS-healthcare-02-healthcare_facility_profile"
+  },
+  {
+   "step": "ERPGENEX-WS-healthcare-03-healthcare_department"
+  },
+  {
+   "step": "ERPGENEX-WS-healthcare-04-healthcare_service_unit"
+  },
+  {
+   "step": "ERPGENEX-WS-healthcare-home"
+  }
+ ],
+ "subtitle": "Guided setup for this workspace.",
+ "success_message": "You are ready to work in Healthcare.",
+ "title": "ERPGENEX \u00b7 Healthcare"
+}

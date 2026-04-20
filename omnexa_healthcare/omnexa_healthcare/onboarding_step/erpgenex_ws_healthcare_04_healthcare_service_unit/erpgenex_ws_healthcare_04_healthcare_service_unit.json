@@ -1,0 +1,21 @@
+{
+ "action": "Create Entry",
+ "action_label": "Create",
+ "creation": "2026-04-20 00:31:41.486321",
+ "description": "Create or review your first **Healthcare Service Unit** record from this workspace.",
+ "docstatus": 0,
+ "doctype": "Onboarding Step",
+ "idx": 0,
+ "is_complete": 0,
+ "is_single": 0,
+ "is_skipped": 0,
+ "modified": "2026-04-20 02:24:46.639950",
+ "modified_by": "Administrator",
+ "name": "ERPGENEX-WS-healthcare-04-healthcare_service_unit",
+ "owner": "Administrator",
+ "reference_document": "Healthcare Service Unit",
+ "show_form_tour": 0,
+ "show_full_form": 0,
+ "title": "Get started with Healthcare Service Unit",
+ "validate_action": 1
+}
