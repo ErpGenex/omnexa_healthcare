@@ -4,6 +4,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "hospital_clinic_section",
   "default_appointment_duration_mins",
   "require_active_patient_for_encounter",
@@ -12,9 +13,18 @@
   "pharmacy_section",
   "allow_medication_statement_without_encounter",
   "store_section",
-  "consumable_policy_note"
+  "consumable_policy_note",
+  "governance_section",
+  "change_ticket",
+  "control_section",
+  "policy_reference"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Settings Identity"
+  },
   {
    "fieldname": "hospital_clinic_section",
    "fieldtype": "Section Break",
@@ -68,6 +78,26 @@
    "fieldtype": "Small Text",
    "label": "Consumables / stock policy note",
    "description": "Internal note (e.g. which warehouse issues OT consumables). Stock masters and movements use Omnexa Accounting (Item, Warehouse, Stock Entry); shortcuts are on the Healthcare workspace."
+  },
+  {
+   "fieldname": "governance_section",
+   "fieldtype": "Section Break",
+   "label": "Governance"
+  },
+  {
+   "fieldname": "change_ticket",
+   "fieldtype": "Data",
+   "label": "Change Ticket"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Governance"
+  },
+  {
+   "fieldname": "policy_reference",
+   "fieldtype": "Data",
+   "label": "Policy Reference"
   }
  ],
  "grid_page_length": 50,
@@ -80,8 +110,30 @@
  "name": "Healthcare Settings",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 0, "delete": 0, "report": 0, "export": 1, "share": 0, "print": 0, "email": 0},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 0, "delete": 0, "report": 0, "export": 0, "share": 0, "print": 0, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "report": 0,
+   "export": 1,
+   "share": 0,
+   "print": 0,
+   "email": 0
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 0,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "share": 0,
+   "print": 0,
+   "email": 0
+  }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",

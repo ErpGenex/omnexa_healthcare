@@ -4,13 +4,34 @@
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
- "field_order": ["description", "item", "item_code", "qty", "rate", "amount"],
+ "field_order": [
+  "identity_section",
+  "description",
+  "line_note",
+  "item",
+  "item_code",
+  "qty",
+  "rate",
+  "amount",
+  "control_section",
+  "owner_user"
+ ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "fieldname": "description",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Description"
+  },
+  {
+   "fieldname": "line_note",
+   "fieldtype": "Data",
+   "label": "Line Note"
   },
   {
    "fieldname": "item",
@@ -49,6 +70,17 @@
    "in_list_view": 1,
    "label": "Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -59,7 +91,15 @@
  "module": "Omnexa Healthcare",
  "name": "Healthcare Service Charge Line",
  "owner": "Administrator",
- "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "identifier_use",
   "identifier_type",
   "type_display",
@@ -12,9 +13,17 @@
   "value",
   "period_start",
   "period_end",
-  "is_primary_mrn"
+  "is_primary_mrn",
+  "issuer_name",
+  "control_section",
+  "care_manager"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "official",
    "fieldname": "identifier_use",
@@ -22,7 +31,7 @@
    "in_list_view": 1,
    "label": "Identifier Use",
    "options": "usual\nofficial\ntemp\nsecondary\nold",
-   "description": "FHIR Identifier.use — purpose of this identifier in this context"
+   "description": "FHIR Identifier.use \u2014 purpose of this identifier in this context"
   },
   {
    "default": "MRN",
@@ -43,7 +52,7 @@
    "fieldname": "system_uri",
    "fieldtype": "Data",
    "label": "Assigning System URI",
-   "description": "FHIR Identifier.system — namespace for the value (e.g. urn:oid:... or https://...)"
+   "description": "FHIR Identifier.system \u2014 namespace for the value (e.g. urn:oid:... or https://...)"
   },
   {
    "fieldname": "value",
@@ -68,6 +77,22 @@
    "fieldtype": "Check",
    "label": "Primary MRN",
    "description": "Mark the main medical record number for this facility context"
+  },
+  {
+   "fieldname": "issuer_name",
+   "fieldtype": "Data",
+   "label": "Issuer Name"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "care_manager",
+   "fieldtype": "Link",
+   "label": "Care Manager",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -79,7 +104,15 @@
  "module": "Omnexa Healthcare",
  "name": "Healthcare Patient Identifier",
  "owner": "Administrator",
- "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "naming_series",
   "sb_admin",
   "active",
@@ -54,9 +55,17 @@
   "sb_identifiers",
   "identifiers",
   "sb_telecom",
-  "telecom"
+  "telecom",
+  "reporting_tag",
+  "control_section",
+  "care_manager"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
@@ -76,7 +85,7 @@
    "fieldname": "active",
    "fieldtype": "Check",
    "label": "Active Record",
-   "description": "FHIR Patient.active — whether this patient record is in use"
+   "description": "FHIR Patient.active \u2014 whether this patient record is in use"
   },
   {
    "fieldname": "company",
@@ -99,7 +108,7 @@
    "fieldtype": "Link",
    "label": "Managing Facility",
    "options": "Healthcare Facility Profile",
-   "description": "FHIR Patient.managingOrganization — facility responsible for this record"
+   "description": "FHIR Patient.managingOrganization \u2014 facility responsible for this record"
   },
   {
    "fieldname": "billing_customer",
@@ -189,7 +198,7 @@
    "fieldname": "multiple_birth_order",
    "fieldtype": "Int",
    "label": "Birth Order",
-   "description": "FHIR Patient.multipleBirthInteger — e.g. 2 of twins"
+   "description": "FHIR Patient.multipleBirthInteger \u2014 e.g. 2 of twins"
   },
   {
    "default": "0",
@@ -219,7 +228,7 @@
    "fieldname": "preferred_language",
    "fieldtype": "Data",
    "label": "Preferred Language (ISO 639-1)",
-   "description": "e.g. ar, en — FHIR Patient.communication language"
+   "description": "e.g. ar, en \u2014 FHIR Patient.communication language"
   },
   {
    "fieldname": "marital_status",
@@ -351,6 +360,22 @@
    "fieldtype": "Table",
    "label": "Contact Points",
    "options": "Healthcare Patient Telecom"
+  },
+  {
+   "fieldname": "reporting_tag",
+   "fieldtype": "Data",
+   "label": "Reporting Tag"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "care_manager",
+   "fieldtype": "Link",
+   "label": "Care Manager",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -363,9 +388,42 @@
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
-  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Desk User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "share": 0,
+   "print": 1,
+   "email": 0
+  }
  ],
  "row_format": "Dynamic",
  "search_fields": "full_name,given_name,family_name",

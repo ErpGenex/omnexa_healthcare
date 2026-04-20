@@ -4,8 +4,20 @@
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
- "field_order": ["finding_narrative", "linked_observation"],
+ "field_order": [
+  "identity_section",
+  "finding_narrative",
+  "linked_observation",
+  "finding_code",
+  "control_section",
+  "performer"
+ ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "fieldname": "finding_narrative",
    "fieldtype": "Small Text",
@@ -19,7 +31,23 @@
    "in_list_view": 1,
    "label": "Linked Observation",
    "options": "Healthcare Observation",
-   "description": "FHIR DiagnosticReport.result → Observation"
+   "description": "FHIR DiagnosticReport.result \u2192 Observation"
+  },
+  {
+   "fieldname": "finding_code",
+   "fieldtype": "Data",
+   "label": "Finding Code"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "performer",
+   "fieldtype": "Link",
+   "label": "Performer",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -31,7 +59,15 @@
  "module": "Omnexa Healthcare",
  "name": "Healthcare Diagnostic Report Finding",
  "owner": "Administrator",
- "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",

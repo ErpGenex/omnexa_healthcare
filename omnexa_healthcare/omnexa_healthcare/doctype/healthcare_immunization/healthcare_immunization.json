@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "naming_series",
   "patient",
   "patient_display",
@@ -18,9 +19,17 @@
   "cvx_code",
   "lot_number",
   "site",
-  "notes"
+  "notes",
+  "administered_by",
+  "control_section",
+  "performer"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "IMM-.#####",
    "fieldname": "naming_series",
@@ -45,8 +54,22 @@
    "label": "Patient Name",
    "read_only": 1
   },
-  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
   {
    "fieldname": "encounter",
    "fieldtype": "Link",
@@ -101,6 +124,23 @@
    "fieldname": "notes",
    "fieldtype": "Small Text",
    "label": "Notes"
+  },
+  {
+   "fieldname": "administered_by",
+   "fieldtype": "Link",
+   "label": "Administered By",
+   "options": "User"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "performer",
+   "fieldtype": "Link",
+   "label": "Performer",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -113,9 +153,42 @@
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
-  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Desk User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "share": 0,
+   "print": 1,
+   "email": 0
+  }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",

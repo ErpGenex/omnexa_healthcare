@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "facility_name",
   "company",
   "branch",
@@ -17,9 +18,17 @@
   "section_site",
   "pharmacy_license_number",
   "laboratory_registration_id",
-  "warehouse_site_notes"
+  "warehouse_site_notes",
+  "classification_code",
+  "control_section",
+  "owner_user"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "fieldname": "facility_name",
    "fieldtype": "Data",
@@ -99,6 +108,22 @@
    "fieldtype": "Small Text",
    "label": "Warehouse / store notes",
    "depends_on": "eval:doc.facility_type=='Warehouse Store'"
+  },
+  {
+   "fieldname": "classification_code",
+   "fieldtype": "Data",
+   "label": "Classification Code"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,

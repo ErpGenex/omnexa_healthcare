@@ -6,20 +6,85 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "department_name",
   "department_code",
   "company",
   "branch",
   "facility_profile",
-  "status"
+  "status",
+  "department_head",
+  "control_section",
+  "owner_user"
  ],
  "fields": [
-  {"fieldname": "department_name", "fieldtype": "Data", "label": "Department Name", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "department_code", "fieldtype": "Data", "label": "Department Code", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "facility_profile", "fieldtype": "Link", "label": "Facility Profile", "options": "Healthcare Facility Profile"},
-  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Active\nInactive", "default": "Active", "reqd": 1, "in_list_view": 1}
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
+  {
+   "fieldname": "department_name",
+   "fieldtype": "Data",
+   "label": "Department Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "department_code",
+   "fieldtype": "Data",
+   "label": "Department Code",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "facility_profile",
+   "fieldtype": "Link",
+   "label": "Facility Profile",
+   "options": "Healthcare Facility Profile"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive",
+   "default": "Active",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "department_head",
+   "fieldtype": "Link",
+   "label": "Department Head",
+   "options": "User"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner",
+   "options": "User"
+  }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
@@ -30,9 +95,42 @@
  "name": "Healthcare Department",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
-  {"role": "Desk User", "read": 1, "write": 0, "create": 0, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 0, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Desk User",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "share": 0,
+   "print": 0,
+   "email": 0
+  }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",

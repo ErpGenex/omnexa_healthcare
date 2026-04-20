@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "naming_series",
   "patient",
   "patient_display",
@@ -21,9 +22,17 @@
   "severity",
   "onset_datetime",
   "abatement_datetime",
-  "recorded_date"
+  "recorded_date",
+  "problem_owner",
+  "control_section",
+  "owner_user"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "CC-.#####",
    "fieldname": "naming_series",
@@ -53,7 +62,7 @@
    "fieldtype": "Link",
    "label": "Encounter",
    "options": "Healthcare Encounter",
-   "description": "FHIR Condition.encounter — optional encounter context"
+   "description": "FHIR Condition.encounter \u2014 optional encounter context"
   },
   {
    "fieldname": "episode_of_care",
@@ -62,8 +71,22 @@
    "options": "Healthcare Episode Of Care",
    "description": "Longitudinal program context (exported as FHIR extension)"
   },
-  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
   {
    "default": "problem-list-item",
    "fieldname": "category",
@@ -131,6 +154,23 @@
    "in_list_view": 1,
    "label": "Recorded Date",
    "description": "FHIR Condition.recordedDate (date only in export)"
+  },
+  {
+   "fieldname": "problem_owner",
+   "fieldtype": "Link",
+   "label": "Problem Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -143,9 +183,42 @@
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
-  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Desk User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "share": 0,
+   "print": 1,
+   "email": 0
+  }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",

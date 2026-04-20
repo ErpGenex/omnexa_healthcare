@@ -5,12 +5,21 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "contact_system",
   "contact_use",
   "value",
-  "rank"
+  "rank",
+  "contact_note",
+  "control_section",
+  "care_manager"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "phone",
    "fieldname": "contact_system",
@@ -44,6 +53,22 @@
    "fieldtype": "Int",
    "label": "Rank",
    "description": "Lower = preferred (FHIR ContactPoint.rank)"
+  },
+  {
+   "fieldname": "contact_note",
+   "fieldtype": "Data",
+   "label": "Contact Note"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "care_manager",
+   "fieldtype": "Link",
+   "label": "Care Manager",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -55,7 +80,15 @@
  "module": "Omnexa Healthcare",
  "name": "Healthcare Patient Telecom",
  "owner": "Administrator",
- "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -5,13 +5,22 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "rank",
   "icd10_code",
   "description",
   "clinical_status",
-  "verification_status"
+  "verification_status",
+  "diagnosis_type",
+  "control_section",
+  "care_manager"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "1",
    "fieldname": "rank",
@@ -50,6 +59,24 @@
    "label": "Verification Status",
    "options": "unconfirmed\nprovisional\ndifferential\nconfirmed\nrefuted\nentered-in-error",
    "description": "FHIR Condition.verificationStatus"
+  },
+  {
+   "fieldname": "diagnosis_type",
+   "fieldtype": "Select",
+   "label": "Diagnosis Type",
+   "options": "Primary\nSecondary",
+   "default": "Primary"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "care_manager",
+   "fieldtype": "Link",
+   "label": "Care Manager",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -61,7 +88,15 @@
  "module": "Omnexa Healthcare",
  "name": "Healthcare Encounter Diagnosis",
  "owner": "Administrator",
- "permissions": [{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "identity_section",
   "naming_series",
   "sb_subject",
   "patient",
@@ -29,9 +30,17 @@
   "sb_clinical",
   "chief_complaint",
   "reason_for_visit",
-  "diagnoses"
+  "diagnoses",
+  "reporting_tag",
+  "control_section",
+  "care_manager"
  ],
  "fields": [
+  {
+   "fieldname": "identity_section",
+   "fieldtype": "Section Break",
+   "label": "Identity"
+  },
   {
    "default": "ENC-.#####",
    "fieldname": "naming_series",
@@ -40,7 +49,11 @@
    "options": "ENC-.#####",
    "reqd": 1
   },
-  {"fieldname": "sb_subject", "fieldtype": "Section Break", "label": "Subject"},
+  {
+   "fieldname": "sb_subject",
+   "fieldtype": "Section Break",
+   "label": "Subject"
+  },
   {
    "fieldname": "patient",
    "fieldtype": "Link",
@@ -62,18 +75,36 @@
    "fieldtype": "Link",
    "label": "Appointment",
    "options": "Healthcare Appointment",
-   "description": "FHIR Encounter.appointment — optional link to scheduled visit"
+   "description": "FHIR Encounter.appointment \u2014 optional link to scheduled visit"
   },
   {
    "fieldname": "episode_of_care",
    "fieldtype": "Link",
    "label": "Episode Of Care",
    "options": "Healthcare Episode Of Care",
-   "description": "FHIR Encounter.episodeOfCare — longitudinal care program"
+   "description": "FHIR Encounter.episodeOfCare \u2014 longitudinal care program"
   },
-  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
-  {"fieldname": "sb_location", "fieldtype": "Section Break", "label": "Location"},
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_location",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
   {
    "fieldname": "facility",
    "fieldtype": "Link",
@@ -93,7 +124,11 @@
    "label": "Service Unit",
    "options": "Healthcare Service Unit"
   },
-  {"fieldname": "sb_class", "fieldtype": "Section Break", "label": "Class & workflow"},
+  {
+   "fieldname": "sb_class",
+   "fieldtype": "Section Break",
+   "label": "Class & workflow"
+  },
   {
    "default": "ambulatory",
    "fieldname": "encounter_class",
@@ -130,7 +165,11 @@
    "description": "FHIR Encounter.status",
    "reqd": 1
   },
-  {"fieldname": "sb_period", "fieldtype": "Section Break", "label": "Period"},
+  {
+   "fieldname": "sb_period",
+   "fieldtype": "Section Break",
+   "label": "Period"
+  },
   {
    "fieldname": "period_start",
    "fieldtype": "Datetime",
@@ -145,7 +184,11 @@
    "label": "Period End",
    "description": "FHIR Encounter.period.end"
   },
-  {"fieldname": "sb_clinical", "fieldtype": "Section Break", "label": "Clinical (summary)"},
+  {
+   "fieldname": "sb_clinical",
+   "fieldtype": "Section Break",
+   "label": "Clinical (summary)"
+  },
   {
    "fieldname": "chief_complaint",
    "fieldtype": "Small Text",
@@ -162,6 +205,22 @@
    "label": "Encounter Diagnoses",
    "options": "Healthcare Encounter Diagnosis",
    "description": "Working / final diagnoses for this encounter (FHIR Condition subset)"
+  },
+  {
+   "fieldname": "reporting_tag",
+   "fieldtype": "Data",
+   "label": "Reporting Tag"
+  },
+  {
+   "fieldname": "control_section",
+   "fieldtype": "Section Break",
+   "label": "Control"
+  },
+  {
+   "fieldname": "care_manager",
+   "fieldtype": "Link",
+   "label": "Care Manager",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
@@ -174,9 +233,42 @@
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
-  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1, "share": 1, "print": 1, "email": 1},
-  {"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1, "share": 0, "print": 1, "email": 1},
-  {"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0, "share": 0, "print": 1, "email": 0}
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Company Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 1,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "Desk User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "export": 0,
+   "share": 0,
+   "print": 1,
+   "email": 0
+  }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
