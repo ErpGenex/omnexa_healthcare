@@ -1,194 +1,192 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-15 14:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "patient",
-  "patient_display",
-  "billing_customer",
-  "company",
-  "branch",
-  "encounter",
-  "admission",
-  "posting_date",
-  "status",
-  "sales_invoice",
-  "items",
-  "reporting_tag",
-  "control_section",
-  "owner_user"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "HSC-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "HSC-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "patient",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Patient",
-   "options": "Healthcare Patient",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "patient.full_name",
-   "fieldname": "patient_display",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Patient Name",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "patient.billing_customer",
-   "fieldname": "billing_customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Billing customer",
-   "options": "Customer",
-   "reqd": 1,
-   "description": "Invoiced party (Omnexa Accounting). Pulled from patient when set."
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "encounter",
-   "fieldtype": "Link",
-   "label": "Encounter",
-   "options": "Healthcare Encounter"
-  },
-  {
-   "fieldname": "admission",
-   "fieldtype": "Link",
-   "label": "Admission",
-   "options": "Healthcare Admission",
-   "description": "Inpatient stay when billing room/services for IPD."
-  },
-  {
-   "default": "Today",
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Posting date",
-   "reqd": 1
-  },
-  {
-   "default": "Draft",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Draft\nInvoiced\nCancelled",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "sales_invoice",
-   "fieldtype": "Link",
-   "label": "Sales Invoice",
-   "options": "Sales Invoice",
-   "read_only": 1,
-   "description": "Created in Omnexa Accounting via Create Sales Invoice."
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "Lines",
-   "options": "Healthcare Service Charge Line",
-   "reqd": 1
-  },
-  {
-   "fieldname": "reporting_tag",
-   "fieldtype": "Data",
-   "label": "Reporting Tag"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "owner_user",
-   "fieldtype": "Link",
-   "label": "Owner",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-15 14:00:00",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Service Charge",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 1,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-15 14:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"patient_display",
+		"column_break_omnexa_1",
+		"billing_customer",
+		"company",
+		"branch",
+		"encounter",
+		"column_break_omnexa_2",
+		"admission",
+		"posting_date",
+		"status",
+		"sales_invoice",
+		"items",
+		"reporting_tag",
+		"owner_user"
+	],
+	"fields": [
+		{
+			"default": "HSC-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HSC-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fetch_from": "patient.billing_customer",
+			"fieldname": "billing_customer",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Billing customer",
+			"options": "Customer",
+			"reqd": 1,
+			"description": "Invoiced party (Omnexa Accounting). Pulled from patient when set."
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission",
+			"description": "Inpatient stay when billing room/services for IPD."
+		},
+		{
+			"default": "Today",
+			"fieldname": "posting_date",
+			"fieldtype": "Date",
+			"in_list_view": 1,
+			"label": "Posting date",
+			"reqd": 1
+		},
+		{
+			"default": "Draft",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nInvoiced\nCancelled",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "sales_invoice",
+			"fieldtype": "Link",
+			"label": "Sales Invoice",
+			"options": "Sales Invoice",
+			"read_only": 1,
+			"description": "Created in Omnexa Accounting via Create Sales Invoice."
+		},
+		{
+			"fieldname": "items",
+			"fieldtype": "Table",
+			"label": "Lines",
+			"options": "Healthcare Service Charge Line",
+			"reqd": 1
+		},
+		{
+			"fieldname": "reporting_tag",
+			"fieldtype": "Data",
+			"label": "Reporting Tag"
+		},
+		{
+			"fieldname": "owner_user",
+			"fieldtype": "Link",
+			"label": "Owner",
+			"options": "User"
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-15 14:00:00",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Service Charge",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }

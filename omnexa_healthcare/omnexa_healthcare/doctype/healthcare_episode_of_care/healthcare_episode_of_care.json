@@ -1,194 +1,192 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-16 10:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "episode_title",
-  "patient",
-  "patient_display",
-  "company",
-  "branch",
-  "managing_facility",
-  "episode_type",
-  "status",
-  "period_start",
-  "period_end",
-  "description",
-  "care_manager",
-  "control_section",
-  "owner_user"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "EOC-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "EOC-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "episode_title",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Episode Title",
-   "reqd": 1
-  },
-  {
-   "fieldname": "patient",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Patient",
-   "options": "Healthcare Patient",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "patient.full_name",
-   "fieldname": "patient_display",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Patient Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "managing_facility",
-   "fieldtype": "Link",
-   "label": "Managing Facility",
-   "options": "Healthcare Facility Profile",
-   "description": "FHIR EpisodeOfCare.managingOrganization"
-  },
-  {
-   "default": "chronic_disease",
-   "fieldname": "episode_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Episode Type",
-   "options": "chronic_disease\nmaternity\nmental_health\nrehabilitation\ncancer_care\nhacc\npost_acute\nother",
-   "description": "Clinical program / pathway (maps to FHIR EpisodeOfCare.type text coding)",
-   "reqd": 1
-  },
-  {
-   "default": "planned",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "planned\nwaitlist\nactive\nonhold\nfinished\ncancelled",
-   "description": "FHIR EpisodeOfCare.status",
-   "reqd": 1
-  },
-  {
-   "fieldname": "period_start",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Period Start",
-   "description": "FHIR EpisodeOfCare.period.start (date)",
-   "reqd": 1
-  },
-  {
-   "fieldname": "period_end",
-   "fieldtype": "Date",
-   "label": "Period End",
-   "description": "FHIR EpisodeOfCare.period.end"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Small Text",
-   "label": "Description"
-  },
-  {
-   "fieldname": "care_manager",
-   "fieldtype": "Link",
-   "label": "Care Manager",
-   "options": "User"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "owner_user",
-   "fieldtype": "Link",
-   "label": "Owner",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-16 10:00:00",
- "modified_by": "Administrator",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Episode Of Care",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 1,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-16 10:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"episode_title",
+		"patient",
+		"patient_display",
+		"column_break_omnexa_1",
+		"company",
+		"branch",
+		"managing_facility",
+		"episode_type",
+		"status",
+		"column_break_omnexa_2",
+		"period_start",
+		"period_end",
+		"description",
+		"care_manager",
+		"owner_user"
+	],
+	"fields": [
+		{
+			"default": "EOC-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "EOC-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "episode_title",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Episode Title",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "managing_facility",
+			"fieldtype": "Link",
+			"label": "Managing Facility",
+			"options": "Healthcare Facility Profile",
+			"description": "FHIR EpisodeOfCare.managingOrganization"
+		},
+		{
+			"default": "chronic_disease",
+			"fieldname": "episode_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Episode Type",
+			"options": "chronic_disease\nmaternity\nmental_health\nrehabilitation\ncancer_care\nhacc\npost_acute\nother",
+			"description": "Clinical program / pathway (maps to FHIR EpisodeOfCare.type text coding)",
+			"reqd": 1
+		},
+		{
+			"default": "planned",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "planned\nwaitlist\nactive\nonhold\nfinished\ncancelled",
+			"description": "FHIR EpisodeOfCare.status",
+			"reqd": 1
+		},
+		{
+			"fieldname": "period_start",
+			"fieldtype": "Date",
+			"in_list_view": 1,
+			"label": "Period Start",
+			"description": "FHIR EpisodeOfCare.period.start (date)",
+			"reqd": 1
+		},
+		{
+			"fieldname": "period_end",
+			"fieldtype": "Date",
+			"label": "Period End",
+			"description": "FHIR EpisodeOfCare.period.end"
+		},
+		{
+			"fieldname": "description",
+			"fieldtype": "Small Text",
+			"label": "Description"
+		},
+		{
+			"fieldname": "care_manager",
+			"fieldtype": "Link",
+			"label": "Care Manager",
+			"options": "User"
+		},
+		{
+			"fieldname": "owner_user",
+			"fieldtype": "Link",
+			"label": "Owner",
+			"options": "User"
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-16 10:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Episode Of Care",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }

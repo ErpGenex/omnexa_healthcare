@@ -1,204 +1,202 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-15 14:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "patient",
-  "patient_display",
-  "company",
-  "branch",
-  "encounter",
-  "medication_statement",
-  "item",
-  "qty",
-  "warehouse",
-  "stock_entry",
-  "status",
-  "dispensed_datetime",
-  "notes",
-  "dispensed_by",
-  "control_section",
-  "performer"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "MDP-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "MDP-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "patient",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Patient",
-   "options": "Healthcare Patient",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "patient.full_name",
-   "fieldname": "patient_display",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Patient Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "encounter",
-   "fieldtype": "Link",
-   "label": "Encounter",
-   "options": "Healthcare Encounter"
-  },
-  {
-   "fieldname": "medication_statement",
-   "fieldtype": "Link",
-   "label": "Medication statement",
-   "options": "Healthcare Medication Statement",
-   "description": "Clinical prescription / order this dispense fulfills."
-  },
-  {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "label": "Item (drug / SKU)",
-   "options": "Item",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "default": "1",
-   "fieldname": "qty",
-   "fieldtype": "Float",
-   "label": "Quantity",
-   "reqd": 1
-  },
-  {
-   "fieldname": "warehouse",
-   "fieldtype": "Link",
-   "label": "Warehouse",
-   "options": "Warehouse",
-   "description": "Issuing warehouse (Omnexa Accounting)."
-  },
-  {
-   "fieldname": "stock_entry",
-   "fieldtype": "Link",
-   "label": "Stock Entry",
-   "options": "Stock Entry",
-   "read_only": 1,
-   "description": "Material issue linked after posting stock movement."
-  },
-  {
-   "default": "draft",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "draft\ndispensed\ncancelled",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "dispensed_datetime",
-   "fieldtype": "Datetime",
-   "label": "Dispensed at"
-  },
-  {
-   "fieldname": "notes",
-   "fieldtype": "Small Text",
-   "label": "Notes"
-  },
-  {
-   "fieldname": "dispensed_by",
-   "fieldtype": "Link",
-   "label": "Dispensed By",
-   "options": "User"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "performer",
-   "fieldtype": "Link",
-   "label": "Performer",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-15 14:00:00",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Medication Dispense",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 1,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-15 14:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"patient_display",
+		"company",
+		"branch",
+		"column_break_omnexa_1",
+		"encounter",
+		"medication_statement",
+		"item",
+		"qty",
+		"warehouse",
+		"column_break_omnexa_2",
+		"stock_entry",
+		"status",
+		"dispensed_datetime",
+		"notes",
+		"dispensed_by",
+		"performer"
+	],
+	"fields": [
+		{
+			"default": "MDP-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "MDP-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"fieldname": "medication_statement",
+			"fieldtype": "Link",
+			"label": "Medication statement",
+			"options": "Healthcare Medication Statement",
+			"description": "Clinical prescription / order this dispense fulfills."
+		},
+		{
+			"fieldname": "item",
+			"fieldtype": "Link",
+			"label": "Item (drug / SKU)",
+			"options": "Item",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"default": "1",
+			"fieldname": "qty",
+			"fieldtype": "Float",
+			"label": "Quantity",
+			"reqd": 1
+		},
+		{
+			"fieldname": "warehouse",
+			"fieldtype": "Link",
+			"label": "Warehouse",
+			"options": "Warehouse",
+			"description": "Issuing warehouse (Omnexa Accounting)."
+		},
+		{
+			"fieldname": "stock_entry",
+			"fieldtype": "Link",
+			"label": "Stock Entry",
+			"options": "Stock Entry",
+			"read_only": 1,
+			"description": "Material issue linked after posting stock movement."
+		},
+		{
+			"default": "draft",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "draft\ndispensed\ncancelled",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "dispensed_datetime",
+			"fieldtype": "Datetime",
+			"label": "Dispensed at"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		},
+		{
+			"fieldname": "dispensed_by",
+			"fieldtype": "Link",
+			"label": "Dispensed By",
+			"options": "User"
+		},
+		{
+			"fieldname": "performer",
+			"fieldtype": "Link",
+			"label": "Performer",
+			"options": "User"
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-15 14:00:00",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Medication Dispense",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }

@@ -1,178 +1,176 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-15 00:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "patient",
-  "patient_display",
-  "encounter",
-  "company",
-  "branch",
-  "department",
-  "service_unit",
-  "appointment_date",
-  "status",
-  "triage_level",
-  "control_section",
-  "owner_user"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "HAP-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "HAP-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "patient",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Patient",
-   "options": "Healthcare Patient",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "patient.full_name",
-   "fieldname": "patient_display",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Patient Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "encounter",
-   "fieldtype": "Link",
-   "label": "Active Encounter",
-   "options": "Healthcare Encounter",
-   "read_only": 1,
-   "description": "Set automatically when an encounter is linked to this appointment"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "label": "Department",
-   "options": "Healthcare Department",
-   "reqd": 1
-  },
-  {
-   "fieldname": "service_unit",
-   "fieldtype": "Link",
-   "label": "Service Unit",
-   "options": "Healthcare Service Unit",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "appointment_date",
-   "fieldtype": "Datetime",
-   "label": "Appointment Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Scheduled\nArrived\nIn Consultation\nCompleted\nCancelled",
-   "default": "Scheduled",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "triage_level",
-   "fieldtype": "Select",
-   "label": "Triage Level",
-   "options": "P1\nP2\nP3\nP4\nP5",
-   "default": "P3"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "owner_user",
-   "fieldtype": "Link",
-   "label": "Owner",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-15 12:00:00",
- "modified_by": "Administrator",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Appointment",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 0,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-15 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"patient_display",
+		"encounter",
+		"column_break_omnexa_1",
+		"company",
+		"branch",
+		"department",
+		"service_unit",
+		"column_break_omnexa_2",
+		"appointment_date",
+		"status",
+		"triage_level",
+		"owner_user"
+	],
+	"fields": [
+		{
+			"default": "HAP-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HAP-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Active Encounter",
+			"options": "Healthcare Encounter",
+			"read_only": 1,
+			"description": "Set automatically when an encounter is linked to this appointment"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "department",
+			"fieldtype": "Link",
+			"label": "Department",
+			"options": "Healthcare Department",
+			"reqd": 1
+		},
+		{
+			"fieldname": "service_unit",
+			"fieldtype": "Link",
+			"label": "Service Unit",
+			"options": "Healthcare Service Unit",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "appointment_date",
+			"fieldtype": "Datetime",
+			"label": "Appointment Date",
+			"reqd": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Scheduled\nArrived\nIn Consultation\nCompleted\nCancelled",
+			"default": "Scheduled",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "triage_level",
+			"fieldtype": "Select",
+			"label": "Triage Level",
+			"options": "P1\nP2\nP3\nP4\nP5",
+			"default": "P3"
+		},
+		{
+			"fieldname": "owner_user",
+			"fieldtype": "Link",
+			"label": "Owner",
+			"options": "User"
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-15 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Appointment",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 0,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }

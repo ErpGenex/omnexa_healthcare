@@ -1,214 +1,212 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-16 16:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "patient",
-  "patient_display",
-  "company",
-  "branch",
-  "encounter",
-  "status",
-  "intent",
-  "request_category",
-  "priority",
-  "request_title",
-  "request_loinc",
-  "authored_on",
-  "note",
-  "request_owner",
-  "control_section",
-  "owner_user"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "SRQ-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "SRQ-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "patient",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Patient",
-   "options": "Healthcare Patient",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "patient.full_name",
-   "fieldname": "patient_display",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Patient Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "encounter",
-   "fieldtype": "Link",
-   "label": "Encounter",
-   "options": "Healthcare Encounter"
-  },
-  {
-   "default": "active",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "draft\nactive\non-hold\nrevoked\ncompleted\nentered-in-error\nunknown",
-   "description": "FHIR ServiceRequest.status",
-   "reqd": 1
-  },
-  {
-   "default": "order",
-   "fieldname": "intent",
-   "fieldtype": "Select",
-   "label": "Intent",
-   "options": "proposal\nplan\norder\noption",
-   "description": "FHIR ServiceRequest.intent",
-   "reqd": 1
-  },
-  {
-   "default": "laboratory",
-   "fieldname": "request_category",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Request Category",
-   "options": "laboratory\nimaging\ncounseling\nsocial\nother",
-   "description": "Maps to FHIR ServiceRequest.category (HL7 service-request-category)",
-   "reqd": 1
-  },
-  {
-   "default": "routine",
-   "fieldname": "priority",
-   "fieldtype": "Select",
-   "label": "Priority",
-   "options": "routine\nurgent\nasap\nstat",
-   "description": "FHIR ServiceRequest.priority",
-   "reqd": 1
-  },
-  {
-   "fieldname": "request_title",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Request Title",
-   "reqd": 1,
-   "description": "Human-readable order (FHIR code.text)"
-  },
-  {
-   "fieldname": "request_loinc",
-   "fieldtype": "Data",
-   "label": "LOINC Code",
-   "description": "Ordered test / panel LOINC when coded"
-  },
-  {
-   "fieldname": "authored_on",
-   "fieldtype": "Datetime",
-   "in_list_view": 1,
-   "label": "Authored On",
-   "description": "FHIR ServiceRequest.authoredOn",
-   "reqd": 1
-  },
-  {
-   "fieldname": "note",
-   "fieldtype": "Small Text",
-   "label": "Note"
-  },
-  {
-   "fieldname": "request_owner",
-   "fieldtype": "Link",
-   "label": "Request Owner",
-   "options": "User"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "owner_user",
-   "fieldtype": "Link",
-   "label": "Owner",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-16 16:00:00",
- "modified_by": "Administrator",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Service Request",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 1,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-16 16:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"patient_display",
+		"company",
+		"branch",
+		"column_break_omnexa_1",
+		"encounter",
+		"status",
+		"intent",
+		"request_category",
+		"priority",
+		"column_break_omnexa_2",
+		"request_title",
+		"request_loinc",
+		"authored_on",
+		"note",
+		"request_owner",
+		"owner_user"
+	],
+	"fields": [
+		{
+			"default": "SRQ-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "SRQ-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"default": "active",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "draft\nactive\non-hold\nrevoked\ncompleted\nentered-in-error\nunknown",
+			"description": "FHIR ServiceRequest.status",
+			"reqd": 1
+		},
+		{
+			"default": "order",
+			"fieldname": "intent",
+			"fieldtype": "Select",
+			"label": "Intent",
+			"options": "proposal\nplan\norder\noption",
+			"description": "FHIR ServiceRequest.intent",
+			"reqd": 1
+		},
+		{
+			"default": "laboratory",
+			"fieldname": "request_category",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Request Category",
+			"options": "laboratory\nimaging\ncounseling\nsocial\nother",
+			"description": "Maps to FHIR ServiceRequest.category (HL7 service-request-category)",
+			"reqd": 1
+		},
+		{
+			"default": "routine",
+			"fieldname": "priority",
+			"fieldtype": "Select",
+			"label": "Priority",
+			"options": "routine\nurgent\nasap\nstat",
+			"description": "FHIR ServiceRequest.priority",
+			"reqd": 1
+		},
+		{
+			"fieldname": "request_title",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Request Title",
+			"reqd": 1,
+			"description": "Human-readable order (FHIR code.text)"
+		},
+		{
+			"fieldname": "request_loinc",
+			"fieldtype": "Data",
+			"label": "LOINC Code",
+			"description": "Ordered test / panel LOINC when coded"
+		},
+		{
+			"fieldname": "authored_on",
+			"fieldtype": "Datetime",
+			"in_list_view": 1,
+			"label": "Authored On",
+			"description": "FHIR ServiceRequest.authoredOn",
+			"reqd": 1
+		},
+		{
+			"fieldname": "note",
+			"fieldtype": "Small Text",
+			"label": "Note"
+		},
+		{
+			"fieldname": "request_owner",
+			"fieldtype": "Link",
+			"label": "Request Owner",
+			"options": "User"
+		},
+		{
+			"fieldname": "owner_user",
+			"fieldtype": "Link",
+			"label": "Owner",
+			"options": "User"
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-16 16:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Service Request",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }

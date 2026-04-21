@@ -1,145 +1,133 @@
 {
- "actions": [],
- "allow_rename": 0,
- "autoname": "naming_series:",
- "creation": "2026-04-15 14:00:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "identity_section",
-  "naming_series",
-  "bed_label",
-  "company",
-  "branch",
-  "service_unit",
-  "status",
-  "bed_type",
-  "control_section",
-  "owner_user"
- ],
- "fields": [
-  {
-   "fieldname": "identity_section",
-   "fieldtype": "Section Break",
-   "label": "Identity"
-  },
-  {
-   "default": "BED-.#####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "BED-.#####",
-   "reqd": 1
-  },
-  {
-   "fieldname": "bed_label",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Bed label",
-   "description": "Room/bed identifier shown on ward boards (e.g. A-12).",
-   "reqd": 1
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "service_unit",
-   "fieldtype": "Link",
-   "label": "Ward / unit",
-   "options": "Healthcare Service Unit",
-   "reqd": 1,
-   "in_list_view": 1,
-   "description": "Usually a ward-type service unit (IPD)."
-  },
-  {
-   "default": "Available",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Available\nOccupied\nReserved\nCleaning\nMaintenance",
-   "reqd": 1,
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "bed_type",
-   "fieldtype": "Select",
-   "label": "Bed Type",
-   "options": "General\nICU\nIsolation\nPediatric",
-   "default": "General"
-  },
-  {
-   "fieldname": "control_section",
-   "fieldtype": "Section Break",
-   "label": "Control"
-  },
-  {
-   "fieldname": "owner_user",
-   "fieldtype": "Link",
-   "label": "Owner",
-   "options": "User"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-04-15 14:00:00",
- "module": "Omnexa Healthcare",
- "name": "Healthcare Bed",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "role": "System Manager",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 1,
-   "report": 1,
-   "export": 1,
-   "share": 1,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Company Admin",
-   "read": 1,
-   "write": 1,
-   "create": 1,
-   "delete": 0,
-   "report": 1,
-   "export": 1,
-   "share": 0,
-   "print": 1,
-   "email": 1
-  },
-  {
-   "role": "Desk User",
-   "read": 1,
-   "write": 1,
-   "create": 0,
-   "delete": 0,
-   "report": 1,
-   "export": 0,
-   "share": 0,
-   "print": 1,
-   "email": 0
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-04-15 14:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"bed_label",
+		"company",
+		"branch",
+		"service_unit",
+		"status",
+		"bed_type",
+		"owner_user"
+	],
+	"fields": [
+		{
+			"default": "BED-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "BED-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "bed_label",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Bed label",
+			"description": "Room/bed identifier shown on ward boards (e.g. A-12).",
+			"reqd": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "service_unit",
+			"fieldtype": "Link",
+			"label": "Ward / unit",
+			"options": "Healthcare Service Unit",
+			"reqd": 1,
+			"in_list_view": 1,
+			"description": "Usually a ward-type service unit (IPD)."
+		},
+		{
+			"default": "Available",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Available\nOccupied\nReserved\nCleaning\nMaintenance",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "bed_type",
+			"fieldtype": "Select",
+			"label": "Bed Type",
+			"options": "General\nICU\nIsolation\nPediatric",
+			"default": "General"
+		},
+		{
+			"fieldname": "owner_user",
+			"fieldtype": "Link",
+			"label": "Owner",
+			"options": "User"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-04-15 14:00:00",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Bed",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 0,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
 }
