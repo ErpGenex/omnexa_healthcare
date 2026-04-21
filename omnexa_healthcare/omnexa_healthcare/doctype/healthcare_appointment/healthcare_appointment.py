@@ -8,10 +8,17 @@ from frappe.model.document import Document
 
 class HealthcareAppointment(Document):
 	def validate(self):
+		self._validate_required_context()
 		self._validate_branch_company_match()
 		self._validate_patient_context()
 		self._validate_encounter_link()
 		self._validate_service_unit_assignment()
+
+	def _validate_required_context(self):
+		if not self.patient:
+			frappe.throw(_("Patient is mandatory for appointment."), title=_("Patient"))
+		if not self.service_unit:
+			frappe.throw(_("Service Unit is mandatory for appointment."), title=_("Service Unit"))
 
 	def _validate_branch_company_match(self):
 		branch_company = frappe.db.get_value("Branch", self.branch, "company")

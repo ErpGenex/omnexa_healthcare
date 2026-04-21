@@ -85,8 +85,8 @@ doctype_js = {
 # Installation
 # ------------
 
-# before_install = "omnexa_healthcare.install.before_install"
-# after_install = "omnexa_healthcare.install.after_install"
+before_install = "omnexa_healthcare.install.enforce_supported_frappe_version"
+before_migrate = "omnexa_healthcare.install.enforce_supported_frappe_version"
 
 # Uninstallation
 # ------------

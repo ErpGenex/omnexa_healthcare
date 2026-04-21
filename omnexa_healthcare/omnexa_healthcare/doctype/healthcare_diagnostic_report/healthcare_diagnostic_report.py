@@ -8,11 +8,20 @@ from frappe.model.document import Document
 
 class HealthcareDiagnosticReport(Document):
 	def validate(self):
+		self._validate_traceability_context()
 		self._validate_branch_company_match()
 		self._validate_patient()
 		self._validate_encounter()
 		self._validate_service_request()
 		self._validate_findings()
+
+	def _validate_traceability_context(self):
+		# Enforce clinical traceability: report must originate from encounter or service request.
+		if not self.encounter and not self.based_on_service_request:
+			frappe.throw(
+				_("Diagnostic report must reference Encounter or Service Request."),
+				title=_("Traceability"),
+			)
 
 	def _validate_branch_company_match(self):
 		branch_company = frappe.db.get_value("Branch", self.branch, "company")
@@ -68,6 +77,8 @@ class HealthcareDiagnosticReport(Document):
 			frappe.throw(_("Service Request must belong to the same company and branch."), title=_("Service Request"))
 
 	def _validate_findings(self):
+		if not (self.get("findings") or []):
+			frappe.throw(_("At least one finding is required."), title=_("Findings"))
 		for row in self.get("findings") or []:
 			if not row.get("linked_observation") and not row.get("finding_narrative"):
 				frappe.throw(
