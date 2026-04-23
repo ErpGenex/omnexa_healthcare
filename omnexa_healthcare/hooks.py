@@ -1,8 +1,8 @@
 app_name = "omnexa_healthcare"
 app_title = "ErpGenEx — Healthcare"
-app_publisher = "Omnexa"
+app_publisher = "ErpGenEx"
 app_description = "Healthcare vertical"
-app_email = "dev@omnexa.com"
+app_email = "dev@erpgenex.com"
 app_license = "mit"
 
 # Apps
