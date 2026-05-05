@@ -6,6 +6,7 @@
 	"doctype": "DocType",
 	"engine": "InnoDB",
 	"field_order": [
+		"tab_break_overview",
 		"naming_series",
 		"patient",
 		"patient_display",
@@ -15,6 +16,7 @@
 		"encounter",
 		"medication_statement",
 		"item",
+		"tab_break_details",
 		"qty",
 		"warehouse",
 		"column_break_omnexa_2",
@@ -26,6 +28,16 @@
 		"performer"
 	],
 	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_details",
+			"fieldtype": "Tab Break",
+			"label": "Details"
+		},
 		{
 			"default": "MDP-.#####",
 			"fieldname": "naming_series",
@@ -152,7 +164,7 @@
 	"grid_page_length": 50,
 	"index_web_pages_for_search": 1,
 	"links": [],
-	"modified": "2026-04-15 14:00:00",
+	"modified": "2026-05-07 12:00:00",
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Medication Dispense",
 	"naming_rule": "By \"Naming Series\" field",
