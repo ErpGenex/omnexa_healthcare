@@ -6,6 +6,7 @@
 	"doctype": "DocType",
 	"engine": "InnoDB",
 	"field_order": [
+		"tab_break_overview",
 		"naming_series",
 		"patient",
 		"patient_display",
@@ -15,6 +16,7 @@
 		"allergy_type",
 		"category",
 		"criticality",
+		"tab_break_details",
 		"substance_text",
 		"reaction_manifestation",
 		"column_break_omnexa_2",
@@ -26,6 +28,16 @@
 		"owner_user"
 	],
 	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_details",
+			"fieldtype": "Tab Break",
+			"label": "Details"
+		},
 		{
 			"default": "ALG-.#####",
 			"fieldname": "naming_series",
@@ -161,7 +173,7 @@
 	"grid_page_length": 50,
 	"index_web_pages_for_search": 1,
 	"links": [],
-	"modified": "2026-04-16 12:00:00",
+	"modified": "2026-05-07 12:00:00",
 	"modified_by": "Administrator",
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Allergy Intolerance",

@@ -6,6 +6,7 @@
 	"doctype": "DocType",
 	"engine": "InnoDB",
 	"field_order": [
+		"tab_break_overview",
 		"naming_series",
 		"patient",
 		"patient_display",
@@ -14,6 +15,7 @@
 		"column_break_omnexa_1",
 		"episode_of_care",
 		"encounter",
+		"tab_break_details",
 		"admission_class",
 		"status",
 		"bed",
@@ -25,6 +27,16 @@
 		"care_manager"
 	],
 	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_details",
+			"fieldtype": "Tab Break",
+			"label": "Details"
+		},
 		{
 			"default": "ADM-.#####",
 			"fieldname": "naming_series",
@@ -142,7 +154,7 @@
 	"grid_page_length": 50,
 	"index_web_pages_for_search": 1,
 	"links": [],
-	"modified": "2026-04-15 14:00:00",
+	"modified": "2026-05-07 12:00:00",
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Admission",
 	"naming_rule": "By \"Naming Series\" field",

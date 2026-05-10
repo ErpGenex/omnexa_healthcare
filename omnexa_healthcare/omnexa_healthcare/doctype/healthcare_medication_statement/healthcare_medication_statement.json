@@ -6,6 +6,7 @@
 	"doctype": "DocType",
 	"engine": "InnoDB",
 	"field_order": [
+		"tab_break_overview",
 		"naming_series",
 		"patient",
 		"patient_display",
@@ -14,6 +15,7 @@
 		"column_break_omnexa_1",
 		"encounter",
 		"status",
+		"tab_break_details",
 		"medication_text",
 		"dosage_text",
 		"effective_period_start",
@@ -25,6 +27,16 @@
 		"performer"
 	],
 	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_details",
+			"fieldtype": "Tab Break",
+			"label": "Details"
+		},
 		{
 			"default": "MED-.#####",
 			"fieldname": "naming_series",
@@ -145,7 +157,7 @@
 	"grid_page_length": 50,
 	"index_web_pages_for_search": 1,
 	"links": [],
-	"modified": "2026-04-16 14:00:00",
+	"modified": "2026-05-07 12:00:00",
 	"modified_by": "Administrator",
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Medication Statement",
