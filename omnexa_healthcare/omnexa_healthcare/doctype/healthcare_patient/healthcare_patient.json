@@ -6,7 +6,9 @@
 	"doctype": "DocType",
 	"engine": "InnoDB",
 	"field_order": [
+		"tab_break_overview",
 		"naming_series",
+		"tab_break_1",
 		"sb_admin",
 		"active",
 		"company",
@@ -14,6 +16,7 @@
 		"branch",
 		"managing_facility",
 		"billing_customer",
+		"tab_break_2",
 		"sb_name",
 		"name_prefix",
 		"given_name",
@@ -22,6 +25,7 @@
 		"family_name",
 		"name_suffix",
 		"full_name",
+		"tab_break_3",
 		"sb_demographics",
 		"gender",
 		"birth_date",
@@ -37,6 +41,7 @@
 		"nationality",
 		"preferred_language",
 		"marital_status",
+		"tab_break_4",
 		"sb_address",
 		"address_use",
 		"address_type",
@@ -49,22 +54,71 @@
 		"state",
 		"postal_code",
 		"country",
+		"tab_break_5",
 		"sb_care_preferences",
 		"interpreter_required",
 		"communication_language",
 		"allergies_free_text",
+		"tab_break_6",
 		"sb_privacy",
 		"consent_to_care_recorded_at",
 		"consent_notes",
 		"data_sharing_restricted",
+		"tab_break_7",
 		"sb_identifiers",
 		"identifiers",
+		"tab_break_8",
 		"sb_telecom",
 		"telecom",
 		"reporting_tag",
 		"care_manager"
 	],
 	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_1",
+			"fieldtype": "Tab Break",
+			"label": "Details"
+		},
+		{
+			"fieldname": "tab_break_2",
+			"fieldtype": "Tab Break",
+			"label": "Further"
+		},
+		{
+			"fieldname": "tab_break_3",
+			"fieldtype": "Tab Break",
+			"label": "Posting"
+		},
+		{
+			"fieldname": "tab_break_4",
+			"fieldtype": "Tab Break",
+			"label": "More"
+		},
+		{
+			"fieldname": "tab_break_5",
+			"fieldtype": "Tab Break",
+			"label": "References"
+		},
+		{
+			"fieldname": "tab_break_6",
+			"fieldtype": "Tab Break",
+			"label": "Additional"
+		},
+		{
+			"fieldname": "tab_break_7",
+			"fieldtype": "Tab Break",
+			"label": "Tab 8"
+		},
+		{
+			"fieldname": "tab_break_8",
+			"fieldtype": "Tab Break",
+			"label": "Tab 9"
+		},
 		{
 			"fieldname": "naming_series",
 			"fieldtype": "Select",
@@ -399,7 +453,7 @@
 	"grid_page_length": 50,
 	"index_web_pages_for_search": 1,
 	"links": [],
-	"modified": "2026-04-15 12:00:00",
+	"modified": "2026-05-07 12:00:00",
 	"modified_by": "Administrator",
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Patient",
