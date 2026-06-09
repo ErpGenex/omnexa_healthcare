@@ -1,0 +1,17 @@
+{
+  "name": "Omnexa Healthcare",
+  "short_name": "Omnexa HC",
+  "description": "Hospital and clinic mobile — patients and physicians",
+  "start_url": "/app/healthcare-patient-mobile",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2490ef",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/frappe/images/frappe-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -3,17 +3,12 @@
 
 """Broaden Healthcare report visibility for clinical, nursing, finance, and desk roles."""
 
-import frappe
+from __future__ import annotations
 
-REPORT_NAMES = (
-	"Healthcare Encounter Summary",
-	"Healthcare Appointment Utilization",
-	"Healthcare Inpatient Occupancy",
-	"Healthcare Appointment Status Summary",
-	"Healthcare Admission LOS Analysis",
-	"Healthcare Service Charge Summary",
-	"Healthcare Diagnostic Category Summary",
-)
+import json
+import os
+
+import frappe
 
 ROLES = (
 	"System Manager",
@@ -27,13 +22,29 @@ ROLES = (
 )
 
 
+def _discover_report_names() -> list[str]:
+	report_dir = frappe.get_app_path("omnexa_healthcare", "omnexa_healthcare", "report")
+	names: list[str] = []
+	if not os.path.isdir(report_dir):
+		return names
+	for folder in sorted(os.listdir(report_dir)):
+		json_path = os.path.join(report_dir, folder, f"{folder}.json")
+		if not os.path.isfile(json_path):
+			continue
+		with open(json_path, encoding="utf-8") as handle:
+			data = json.load(handle)
+		if data.get("name"):
+			names.append(data["name"])
+	return names
+
+
 def execute():
 	valid_roles = set(frappe.get_all("Role", pluck="name"))
 	roles = tuple(r for r in ROLES if r in valid_roles)
 	if not roles:
 		return
 
-	for name in REPORT_NAMES:
+	for name in _discover_report_names():
 		if not frappe.db.exists("Report", name):
 			continue
 		doc = frappe.get_doc("Report", name)

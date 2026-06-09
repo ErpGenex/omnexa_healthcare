@@ -1,0 +1,61 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Imaging Modality",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "field:modality_code",
+	"fields": [
+		{
+			"fieldname": "modality_code",
+			"fieldtype": "Data",
+			"label": "Modality Code",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "modality_name",
+			"fieldtype": "Data",
+			"label": "Modality Name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "dicom_modality",
+			"fieldtype": "Select",
+			"label": "DICOM Modality",
+			"options": "CT\nMR\nXR\nUS\nMG\nNM\nPT\nRF\nOT"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active"
+		}
+	]
+}

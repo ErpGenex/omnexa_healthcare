@@ -76,7 +76,7 @@
 			"fieldname": "bed_type",
 			"fieldtype": "Select",
 			"label": "Bed Type",
-			"options": "General\nICU\nIsolation\nPediatric",
+			"options": "General\nICU\nHDU\nIsolation\nPediatric",
 			"default": "General"
 		},
 		{

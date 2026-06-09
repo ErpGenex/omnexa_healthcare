@@ -1,0 +1,23 @@
+{
+	"actions": [],
+	"autoname": "format:HCF-{YYYY}-{#####}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["specialty", "appointment_type", "first_visit_rate", "follow_up_rate", "default_item", "company", "branch"],
+	"fields": [
+		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty", "reqd": 1, "in_list_view": 1},
+		{"default": "Consultation", "fieldname": "appointment_type", "fieldtype": "Select", "label": "Appointment Type", "options": "Consultation\nFollow-up\nTelehealth", "reqd": 1},
+		{"fieldname": "first_visit_rate", "fieldtype": "Currency", "label": "First Visit Rate", "reqd": 1},
+		{"fieldname": "follow_up_rate", "fieldtype": "Currency", "label": "Follow-up Rate"},
+		{"fieldname": "default_item", "fieldtype": "Link", "label": "Default Item", "options": "Item"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch (optional)", "options": "Branch"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Consultation Fee Rule",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

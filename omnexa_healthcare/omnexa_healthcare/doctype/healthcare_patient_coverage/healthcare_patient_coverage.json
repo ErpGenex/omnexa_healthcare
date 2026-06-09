@@ -1,0 +1,27 @@
+{
+	"actions": [],
+	"autoname": "format:HCV-{YYYY}-{#####}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "payer", "insurance_plan", "member_id", "copay_percent", "valid_from", "valid_to", "is_primary", "is_active", "company", "branch"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "label": "Patient", "options": "Healthcare Patient", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "payer", "fieldtype": "Link", "label": "Payer", "options": "Healthcare Payer", "reqd": 1},
+		{"fieldname": "insurance_plan", "fieldtype": "Link", "label": "Insurance Plan", "options": "Healthcare Insurance Plan", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "member_id", "fieldtype": "Data", "label": "Member ID", "in_list_view": 1},
+		{"fieldname": "copay_percent", "fieldtype": "Percent", "label": "Copay %", "default": "20"},
+		{"fieldname": "valid_from", "fieldtype": "Date", "label": "Valid From"},
+		{"fieldname": "valid_to", "fieldtype": "Date", "label": "Valid To"},
+		{"default": "0", "fieldname": "is_primary", "fieldtype": "Check", "label": "Primary Coverage"},
+		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Patient Coverage",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

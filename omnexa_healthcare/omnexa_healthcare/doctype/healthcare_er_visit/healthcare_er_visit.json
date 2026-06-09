@@ -1,0 +1,129 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Er Visit",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:ERV-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "arrival_datetime",
+			"fieldtype": "Datetime",
+			"label": "Arrival",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "esi_level",
+			"fieldtype": "Select",
+			"label": "ESI Triage",
+			"options": "1\n2\n3\n4\n5",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "chief_complaint",
+			"fieldtype": "Small Text",
+			"label": "Chief Complaint"
+		},
+		{
+			"default": "Registered",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Registered\nTriaged\nIn Treatment\nDisposition\nCompleted\nLWBS",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "track",
+			"fieldtype": "Select",
+			"label": "Track",
+			"options": "Main\nFast Track\nTrauma\nResuscitation"
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission"
+		},
+		{
+			"fieldname": "disposition",
+			"fieldtype": "Select",
+			"label": "Disposition",
+			"options": "\nDischarge\nAdmit\nTransfer\nAMA\nExpired"
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Attending",
+			"options": "Healthcare Practitioner"
+		}
+	]
+}

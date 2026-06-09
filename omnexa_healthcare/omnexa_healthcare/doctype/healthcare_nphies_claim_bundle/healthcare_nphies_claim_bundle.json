@@ -1,0 +1,89 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Nphies Claim Bundle",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:NPH-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "insurance_claim",
+			"fieldtype": "Link",
+			"label": "Insurance Claim",
+			"options": "Healthcare Insurance Claim",
+			"reqd": 1
+		},
+		{
+			"fieldname": "bundle_type",
+			"fieldtype": "Select",
+			"label": "Bundle Type",
+			"options": "Claim\nEligibility\nPrior Auth",
+			"reqd": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSubmitted\nAccepted\nRejected",
+			"reqd": 1
+		},
+		{
+			"fieldname": "fhir_bundle",
+			"fieldtype": "Code",
+			"label": "FHIR Bundle JSON",
+			"options": "JSON"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

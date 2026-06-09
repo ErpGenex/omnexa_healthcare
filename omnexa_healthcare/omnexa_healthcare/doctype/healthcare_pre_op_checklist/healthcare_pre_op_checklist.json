@@ -1,0 +1,89 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Pre Op Checklist",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:POC-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "surgical_case",
+			"fieldtype": "Link",
+			"label": "Surgical Case",
+			"options": "Healthcare Surgical Case",
+			"reqd": 1
+		},
+		{
+			"fieldname": "site_marked",
+			"fieldtype": "Check",
+			"label": "Site Marked"
+		},
+		{
+			"fieldname": "consent_signed",
+			"fieldtype": "Check",
+			"label": "Consent Signed"
+		},
+		{
+			"fieldname": "antibiotics_given",
+			"fieldtype": "Check",
+			"label": "Antibiotics Prophylaxis"
+		},
+		{
+			"fieldname": "who_checklist_complete",
+			"fieldtype": "Check",
+			"label": "WHO Checklist Complete"
+		},
+		{
+			"default": "Pending",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Pending\nComplete"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		}
+	]
+}

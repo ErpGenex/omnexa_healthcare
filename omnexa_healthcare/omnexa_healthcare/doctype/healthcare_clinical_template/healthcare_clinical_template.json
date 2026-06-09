@@ -1,0 +1,23 @@
+{
+	"actions": [],
+	"autoname": "format:HCT-{YYYY}-{#####}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["specialty", "template_name", "chief_complaint_hint", "assessment_template", "plan_template", "company", "is_active"],
+	"fields": [
+		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "template_name", "fieldtype": "Data", "label": "Template Name", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "chief_complaint_hint", "fieldtype": "Small Text", "label": "Chief Complaint Hint"},
+		{"fieldname": "assessment_template", "fieldtype": "Small Text", "label": "Assessment Template"},
+		{"fieldname": "plan_template", "fieldtype": "Small Text", "label": "Plan Template"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Clinical Template",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

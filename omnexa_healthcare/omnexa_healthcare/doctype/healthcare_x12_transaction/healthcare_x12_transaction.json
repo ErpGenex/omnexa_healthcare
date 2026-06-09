@@ -1,0 +1,109 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare X12 Transaction",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Patient Portal User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:X12-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "transaction_type",
+			"fieldtype": "Select",
+			"label": "Type",
+			"options": "270\n271\n837\n835",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "direction",
+			"fieldtype": "Select",
+			"label": "Direction",
+			"options": "Outbound\nInbound",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient"
+		},
+		{
+			"fieldname": "insurance_claim",
+			"fieldtype": "Link",
+			"label": "Insurance Claim",
+			"options": "Healthcare Insurance Claim"
+		},
+		{
+			"fieldname": "payload",
+			"fieldtype": "Code",
+			"label": "X12 Payload",
+			"options": "X12"
+		},
+		{
+			"default": "Draft",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSent\nAcknowledged\nRejected",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch"
+		}
+	]
+}

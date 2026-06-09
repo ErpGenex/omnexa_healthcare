@@ -1,0 +1,27 @@
+# Copyright (c) 2026, Omnexa and contributors
+# License: MIT
+
+import frappe
+from frappe.tests.utils import FrappeTestCase
+
+from omnexa_healthcare.workspace.healthcare_workspace import get_workspace_coverage, sync_healthcare_workspace_menu
+
+
+class TestHealthcareWorkspace(FrappeTestCase):
+	def test_workspace_sync_rebuilds(self):
+		stats = sync_healthcare_workspace_menu(save=True, rebuild=True)
+		self.assertGreater(stats["sections"], 20)
+		self.assertGreater(stats["total_links"], 145)
+		self.assertGreater(stats["shortcuts"], 145)
+		self.assertGreater(stats.get("content_blocks", 0), 160)
+
+	def test_workspace_coverage_counts(self):
+		cov = get_workspace_coverage()
+		self.assertEqual(cov["healthcare_doctypes_missing"], [])
+		self.assertEqual(cov["healthcare_reports_missing"], [])
+		self.assertGreaterEqual(cov["pages"], 13)
+		self.assertGreaterEqual(cov["reports"], 48)
+		self.assertGreaterEqual(cov["doctypes"], 70)
+
+	def test_healthcare_workspace_exists(self):
+		self.assertTrue(frappe.db.exists("Workspace", "Healthcare"))

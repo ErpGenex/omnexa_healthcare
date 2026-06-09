@@ -8,3 +8,6 @@ omnexa_healthcare.patches.v1_0.backup_healthcare_appointment_legacy_data
 omnexa_healthcare.patches.v1_0.restore_healthcare_appointment_patients
 omnexa_healthcare.patches.v1_0.healthcare_settings_defaults
 omnexa_healthcare.patches.v1_0.sync_healthcare_report_roles
+omnexa_healthcare.patches.v1_0.seed_worldclass_masters
+omnexa_healthcare.patches.v1_0.seed_epic_parity
+omnexa_healthcare.patches.v1_0.seed_global_leader

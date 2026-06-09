@@ -1,0 +1,91 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Clinical Ai Insight",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:CAI-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "insight_type",
+			"fieldtype": "Select",
+			"label": "Type",
+			"options": "Risk\nRecommendation\nSummary\nAlert",
+			"reqd": 1
+		},
+		{
+			"fieldname": "summary",
+			"fieldtype": "Text",
+			"label": "Summary",
+			"reqd": 1
+		},
+		{
+			"fieldname": "confidence",
+			"fieldtype": "Percent",
+			"label": "Confidence"
+		},
+		{
+			"fieldname": "source",
+			"fieldtype": "Data",
+			"label": "Source Model"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch"
+		}
+	]
+}

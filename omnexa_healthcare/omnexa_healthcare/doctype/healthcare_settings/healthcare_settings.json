@@ -7,6 +7,12 @@
 		"hospital_clinic_section",
 		"default_appointment_duration_mins",
 		"require_active_patient_for_encounter",
+		"allow_cross_branch_appointments",
+		"allow_cross_branch_patient_access",
+		"send_appointment_reminders",
+		"reminder_hours_before",
+		"enable_phi_audit_log",
+		"pacs_wado_base_url",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -29,6 +35,43 @@
 			"fieldtype": "Int",
 			"label": "Default appointment duration (minutes)",
 			"description": "Used as a planning hint for front desk and scheduling."
+		},
+		{
+			"default": "1",
+			"fieldname": "allow_cross_branch_appointments",
+			"fieldtype": "Check",
+			"label": "Allow cross-branch appointments",
+			"description": "When enabled, patients may book at any branch (e.g. doctor with clinics in multiple locations)."
+		},
+		{
+			"default": "1",
+			"fieldname": "allow_cross_branch_patient_access",
+			"fieldtype": "Check",
+			"label": "Allow cross-branch patient record access (MPI)",
+			"description": "Enterprise MPI: when enabled, patient records are visible across branches."
+		},
+		{
+			"default": "1",
+			"fieldname": "send_appointment_reminders",
+			"fieldtype": "Check",
+			"label": "Send appointment email reminders"
+		},
+		{
+			"default": "24",
+			"fieldname": "reminder_hours_before",
+			"fieldtype": "Int",
+			"label": "Reminder hours before appointment"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_phi_audit_log",
+			"fieldtype": "Check",
+			"label": "Enable PHI access audit log"
+		},
+		{
+			"fieldname": "pacs_wado_base_url",
+			"fieldtype": "Data",
+			"label": "PACS WADO-RS base URL"
 		},
 		{
 			"default": "1",

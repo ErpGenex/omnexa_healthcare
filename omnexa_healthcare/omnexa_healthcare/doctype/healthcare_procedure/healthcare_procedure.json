@@ -1,0 +1,24 @@
+{
+	"actions": [],
+	"autoname": "field:procedure_code",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["procedure_code", "procedure_title", "specialty", "default_item", "default_rate", "duration_mins", "company", "is_active"],
+	"fields": [
+		{"fieldname": "procedure_code", "fieldtype": "Data", "label": "Procedure Code", "reqd": 1, "unique": 1, "in_list_view": 1},
+		{"fieldname": "procedure_title", "fieldtype": "Data", "label": "Procedure Title", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty", "in_list_view": 1},
+		{"fieldname": "default_item", "fieldtype": "Link", "label": "Default Item", "options": "Item"},
+		{"fieldname": "default_rate", "fieldtype": "Currency", "label": "Default Rate"},
+		{"fieldname": "duration_mins", "fieldtype": "Int", "label": "Duration (mins)", "default": "60"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Procedure",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

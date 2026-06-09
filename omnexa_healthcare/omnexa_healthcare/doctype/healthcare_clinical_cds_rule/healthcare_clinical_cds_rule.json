@@ -1,0 +1,86 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Clinical Cds Rule",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:CDS-{#####}",
+	"fields": [
+		{
+			"fieldname": "rule_name",
+			"fieldtype": "Data",
+			"label": "Rule Name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "trigger_event",
+			"fieldtype": "Select",
+			"label": "Trigger",
+			"options": "Medication Order\nLab Order\nDiagnosis\nAllergy",
+			"reqd": 1
+		},
+		{
+			"fieldname": "match_field",
+			"fieldtype": "Data",
+			"label": "Match Value"
+		},
+		{
+			"fieldname": "severity",
+			"fieldtype": "Select",
+			"label": "Severity",
+			"options": "Info\nWarning\nCritical\nContraindicated",
+			"reqd": 1
+		},
+		{
+			"fieldname": "message",
+			"fieldtype": "Small Text",
+			"label": "Message",
+			"reqd": 1
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active"
+		}
+	]
+}

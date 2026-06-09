@@ -1,0 +1,46 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"company",
+		"branch",
+		"operating_room",
+		"procedure",
+		"procedure_order",
+		"primary_surgeon",
+		"surgical_team",
+		"anesthesia_record",
+		"scheduled_start",
+		"scheduled_end",
+		"status",
+		"service_charge"
+	],
+	"fields": [
+		{"default": "SC-.#####", "fieldname": "naming_series", "fieldtype": "Select", "label": "Series", "options": "SC-.#####", "reqd": 1},
+		{"fieldname": "patient", "fieldtype": "Link", "label": "Patient", "options": "Healthcare Patient", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "operating_room", "fieldtype": "Link", "label": "Operating Room", "options": "Healthcare Operating Room", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "procedure", "fieldtype": "Link", "label": "Procedure", "options": "Healthcare Procedure", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "procedure_order", "fieldtype": "Link", "label": "Procedure Order", "options": "Healthcare Procedure Order"},
+		{"fieldname": "primary_surgeon", "fieldtype": "Link", "label": "Primary Surgeon", "options": "Healthcare Practitioner"},
+		{"fieldname": "surgical_team", "fieldtype": "Table", "label": "Surgical Team", "options": "Healthcare Surgical Team Member"},
+		{"fieldname": "anesthesia_record", "fieldtype": "Link", "label": "Anesthesia Record", "options": "Healthcare Anesthesia Record", "read_only": 1},
+		{"fieldname": "scheduled_start", "fieldtype": "Datetime", "label": "Scheduled Start", "reqd": 1},
+		{"fieldname": "scheduled_end", "fieldtype": "Datetime", "label": "Scheduled End"},
+		{"default": "Scheduled", "fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Scheduled\nIn Progress\nCompleted\nCancelled", "in_list_view": 1},
+		{"fieldname": "service_charge", "fieldtype": "Link", "label": "Service Charge", "options": "Healthcare Service Charge", "read_only": 1}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Surgical Case",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Physician", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

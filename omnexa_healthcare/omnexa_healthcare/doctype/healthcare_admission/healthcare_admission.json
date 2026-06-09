@@ -24,6 +24,7 @@
 		"expected_discharge_date",
 		"discharge_datetime",
 		"admission_reference",
+		"drg_code",
 		"care_manager"
 	],
 	"fields": [
@@ -135,6 +136,12 @@
 			"fieldname": "admission_reference",
 			"fieldtype": "Data",
 			"label": "Admission Reference"
+		},
+		{
+			"fieldname": "drg_code",
+			"fieldtype": "Link",
+			"label": "DRG Code",
+			"options": "Healthcare Drg Code"
 		},
 		{
 			"fieldname": "care_manager",

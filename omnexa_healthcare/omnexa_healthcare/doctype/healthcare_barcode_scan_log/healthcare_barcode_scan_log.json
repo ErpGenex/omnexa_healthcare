@@ -1,0 +1,93 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Barcode Scan Log",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:BCS-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "scan_context",
+			"fieldtype": "Select",
+			"label": "Context",
+			"options": "eMAR\nPharmacy Dispense\nLab Sample",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient"
+		},
+		{
+			"fieldname": "barcode",
+			"fieldtype": "Data",
+			"label": "Barcode",
+			"reqd": 1
+		},
+		{
+			"fieldname": "item",
+			"fieldtype": "Link",
+			"label": "Item",
+			"options": "Item"
+		},
+		{
+			"fieldname": "verified",
+			"fieldtype": "Check",
+			"label": "Verified",
+			"default": "1"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

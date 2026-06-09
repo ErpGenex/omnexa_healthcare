@@ -1,0 +1,66 @@
+{
+	"actions": [],
+	"allow_rename": 1,
+	"autoname": "field:specialty_code",
+	"creation": "2026-06-09 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"specialty_name",
+		"specialty_code",
+		"icd_chapter",
+		"column_break_1",
+		"company",
+		"is_active"
+	],
+	"fields": [
+		{
+			"fieldname": "specialty_name",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Specialty Name",
+			"reqd": 1,
+			"unique": 1
+		},
+		{
+			"fieldname": "specialty_code",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Specialty Code",
+			"reqd": 1,
+			"unique": 1
+		},
+		{
+			"fieldname": "icd_chapter",
+			"fieldtype": "Data",
+			"label": "ICD Chapter (optional)"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Active"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company (optional scope)",
+			"options": "Company"
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Specialty",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1},
+		{"role": "Desk User", "read": 1, "write": 0, "create": 0, "delete": 0, "report": 1, "export": 0}
+	],
+	"sort_field": "specialty_name",
+	"sort_order": "ASC",
+	"track_changes": 1
+}

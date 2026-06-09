@@ -1,0 +1,100 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Adt Transfer",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:ADT-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "from_bed",
+			"fieldtype": "Link",
+			"label": "From Bed",
+			"options": "Healthcare Bed"
+		},
+		{
+			"fieldname": "to_bed",
+			"fieldtype": "Link",
+			"label": "To Bed",
+			"options": "Healthcare Bed",
+			"reqd": 1
+		},
+		{
+			"fieldname": "transfer_datetime",
+			"fieldtype": "Datetime",
+			"label": "Transfer Time",
+			"reqd": 1
+		},
+		{
+			"fieldname": "reason",
+			"fieldtype": "Small Text",
+			"label": "Reason"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

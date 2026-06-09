@@ -1,0 +1,27 @@
+{
+	"actions": [],
+	"autoname": "format:HCL-{YYYY}-{#####}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "payer", "insurance_plan", "patient_coverage", "service_charge", "sales_invoice", "claim_amount", "approved_amount", "status", "company", "branch"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "label": "Patient", "options": "Healthcare Patient", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "payer", "fieldtype": "Link", "label": "Payer", "options": "Healthcare Payer", "reqd": 1},
+		{"fieldname": "insurance_plan", "fieldtype": "Link", "label": "Insurance Plan", "options": "Healthcare Insurance Plan", "reqd": 1},
+		{"fieldname": "patient_coverage", "fieldtype": "Link", "label": "Patient Coverage", "options": "Healthcare Patient Coverage"},
+		{"fieldname": "service_charge", "fieldtype": "Link", "label": "Service Charge", "options": "Healthcare Service Charge"},
+		{"fieldname": "sales_invoice", "fieldtype": "Link", "label": "Sales Invoice", "options": "Sales Invoice", "read_only": 1},
+		{"fieldname": "claim_amount", "fieldtype": "Currency", "label": "Claim Amount", "reqd": 1},
+		{"fieldname": "approved_amount", "fieldtype": "Currency", "label": "Approved Amount"},
+		{"default": "Draft", "fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Draft\nSubmitted\nApproved\nRejected\nPaid", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Insurance Claim",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

@@ -22,6 +22,8 @@
 		"facility",
 		"department",
 		"service_unit",
+		"practitioner",
+		"specialty",
 		"tab_break_3",
 		"sb_class",
 		"encounter_class",
@@ -36,6 +38,8 @@
 		"tab_break_5",
 		"sb_clinical",
 		"chief_complaint",
+		"clinical_template",
+		"structured_clinical_data",
 		"reason_for_visit",
 		"diagnoses",
 		"reporting_tag",
@@ -156,6 +160,20 @@
 			"options": "Healthcare Service Unit"
 		},
 		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "specialty",
+			"fieldtype": "Link",
+			"label": "Specialty",
+			"options": "Healthcare Specialty",
+			"in_list_view": 1
+		},
+		{
 			"fieldname": "sb_class",
 			"fieldtype": "Section Break",
 			"label": "Class & workflow"
@@ -224,6 +242,17 @@
 			"fieldname": "chief_complaint",
 			"fieldtype": "Small Text",
 			"label": "Chief Complaint"
+		},
+		{
+			"fieldname": "clinical_template",
+			"fieldtype": "Link",
+			"label": "Clinical Template",
+			"options": "Healthcare Clinical Template"
+		},
+		{
+			"fieldname": "structured_clinical_data",
+			"fieldtype": "JSON",
+			"label": "Structured Clinical Data"
 		},
 		{
 			"fieldname": "reason_for_visit",

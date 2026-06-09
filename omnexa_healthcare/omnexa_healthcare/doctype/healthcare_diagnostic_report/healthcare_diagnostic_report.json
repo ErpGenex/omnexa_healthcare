@@ -24,6 +24,9 @@
 		"effective_datetime",
 		"conclusion",
 		"findings",
+		"abnormal_flag",
+		"pacs_wado_url",
+		"structured_template",
 		"report_reference",
 		"performer"
 	],
@@ -144,6 +147,23 @@
 			"fieldtype": "Table",
 			"label": "Findings",
 			"options": "Healthcare Diagnostic Report Finding"
+		},
+		{
+			"default": "0",
+			"fieldname": "abnormal_flag",
+			"fieldtype": "Check",
+			"label": "Abnormal Result"
+		},
+		{
+			"fieldname": "pacs_wado_url",
+			"fieldtype": "Data",
+			"label": "PACS WADO URL"
+		},
+		{
+			"fieldname": "structured_template",
+			"fieldtype": "Link",
+			"label": "Structured Template",
+			"options": "Healthcare Radiology Report Template"
 		},
 		{
 			"fieldname": "report_reference",

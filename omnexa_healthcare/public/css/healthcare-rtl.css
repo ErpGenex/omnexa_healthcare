@@ -1,0 +1,22 @@
+/* Omnexa Healthcare — RTL clinical UX */
+[dir="rtl"] .healthcare-clinical,
+html[lang="ar"] .layout-main-section,
+html[lang="ar"] .page-form {
+	direction: rtl;
+	text-align: right;
+}
+
+html[lang="ar"] .frappe-control .control-label,
+html[lang="ar"] .form-section .section-head {
+	text-align: right;
+}
+
+.healthcare-mobile-shell {
+	max-width: 480px;
+	margin: 0 auto;
+	padding: 12px;
+}
+
+.healthcare-mobile-shell .btn {
+	min-height: 44px;
+}

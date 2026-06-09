@@ -1,0 +1,84 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Patient Consent",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:HPC-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "consent_type",
+			"fieldtype": "Select",
+			"label": "Consent Type",
+			"options": "Treatment\nData Sharing\nResearch\nMarketing",
+			"reqd": 1
+		},
+		{
+			"fieldname": "consent_given",
+			"fieldtype": "Check",
+			"label": "Consent Given",
+			"default": "0"
+		},
+		{
+			"fieldname": "signed_on",
+			"fieldtype": "Datetime",
+			"label": "Signed On"
+		},
+		{
+			"fieldname": "witness",
+			"fieldtype": "Link",
+			"label": "Witness",
+			"options": "User"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	]
+}

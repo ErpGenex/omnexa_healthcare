@@ -1,0 +1,86 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Drg Code",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Patient Portal User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "field:drg_code",
+	"fields": [
+		{
+			"fieldname": "drg_code",
+			"fieldtype": "Data",
+			"label": "DRG Code",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "description",
+			"fieldtype": "Data",
+			"label": "Description",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "weight",
+			"fieldtype": "Float",
+			"label": "Relative Weight"
+		},
+		{
+			"fieldname": "base_rate",
+			"fieldtype": "Currency",
+			"label": "Base Rate"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active"
+		}
+	]
+}

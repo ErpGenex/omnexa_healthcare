@@ -1,0 +1,107 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Medication Administration Record",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:HMA-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission"
+		},
+		{
+			"fieldname": "medication_statement",
+			"fieldtype": "Link",
+			"label": "Medication Order",
+			"options": "Healthcare Medication Statement"
+		},
+		{
+			"fieldname": "item",
+			"fieldtype": "Link",
+			"label": "Drug",
+			"options": "Item",
+			"reqd": 1
+		},
+		{
+			"fieldname": "scheduled_time",
+			"fieldtype": "Datetime",
+			"label": "Scheduled Time",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "administered_time",
+			"fieldtype": "Datetime",
+			"label": "Administered At"
+		},
+		{
+			"default": "Scheduled",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Scheduled\nGiven\nHeld\nRefused\nMissed",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "dose",
+			"fieldtype": "Data",
+			"label": "Dose"
+		},
+		{
+			"fieldname": "nurse",
+			"fieldtype": "Link",
+			"label": "Nurse",
+			"options": "User"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

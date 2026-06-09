@@ -1,0 +1,25 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "disabled": 0,
+ "doctype": "Report",
+ "filters": [
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1, "width": "180px"},
+  {"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "width": "180px"},
+  {"fieldname": "from_date", "fieldtype": "Date", "label": "From Date", "reqd": 1, "width": "120px"},
+  {"fieldname": "to_date", "fieldtype": "Date", "label": "To Date", "reqd": 1, "width": "120px"}
+ ],
+ "is_standard": "Yes",
+ "module": "Omnexa Healthcare",
+ "name": "Healthcare Revenue By Specialty",
+ "ref_doctype": "Healthcare Service Charge",
+ "report_name": "Healthcare Revenue By Specialty",
+ "report_type": "Script Report",
+ "roles": [
+  {"role": "System Manager"},
+  {"role": "Company Admin"},
+  {"role": "Accounts Manager"},
+  {"role": "Accounts User"},
+  {"role": "Report Manager"}
+ ]
+}

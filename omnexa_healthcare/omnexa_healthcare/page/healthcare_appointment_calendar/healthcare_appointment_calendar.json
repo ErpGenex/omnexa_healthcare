@@ -1,0 +1,15 @@
+{
+	"content": null,
+	"docstatus": 0,
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-appointment-calendar",
+	"page_name": "healthcare-appointment-calendar",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Desk User"}
+	],
+	"standard": "Yes",
+	"title": "Healthcare Appointment Calendar"
+}

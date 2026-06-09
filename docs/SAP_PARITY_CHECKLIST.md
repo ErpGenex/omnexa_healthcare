@@ -4,9 +4,9 @@
 
 | # | Capability | Status | Evidence |
 |---|------------|--------|----------|
-| 1 | Sector master data (DocTypes) | Implemented | app DocTypes |
-| 2 | Workflow / docstatus lifecycle | Implemented | standard Frappe |
-| 3 | Operational reports | Implemented | app reports |
+| 1 | Sector master data (DocTypes) | Implemented | 60+ Healthcare DocTypes |
+| 2 | Workflow / docstatus lifecycle | Implemented | standard Frappe + claim/surgical workflows |
+| 3 | Operational reports | Implemented | 48 app reports |
 | 4 | Sector KPI preview API | Implemented | preview_sector_kpi |
 | 5 | omnexa_core vertical bridge | Implemented | vertical_parity |
 | 6 | omnexa_accounting GL bridge | Implemented | required_apps |
@@ -16,6 +16,6 @@
 | 10 | SAP HANA scale-out | N/A | MariaDB / bench stack |
 | 11 | SAP STMS transport | N/A | Git + bench deploy |
 
-**Metrics:** 25 DocTypes · 6 tests · 14 reports
+**Metrics:** 60+ DocTypes · 85+ tests · 48 reports · 8 Pages
 
 **Checklist product score:** **100%** (signed omnexa_healthcare)

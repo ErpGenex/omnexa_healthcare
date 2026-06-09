@@ -1,0 +1,64 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"editable_grid": 1,
+	"engine": "InnoDB",
+	"field_order": [
+		"branch",
+		"facility_profile",
+		"service_unit",
+		"specialty",
+		"consultation_fee",
+		"is_active"
+	],
+	"fields": [
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "facility_profile",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Facility",
+			"options": "Healthcare Facility Profile"
+		},
+		{
+			"fieldname": "service_unit",
+			"fieldtype": "Link",
+			"label": "Default Service Unit",
+			"options": "Healthcare Service Unit"
+		},
+		{
+			"fieldname": "specialty",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Specialty",
+			"options": "Healthcare Specialty",
+			"reqd": 1
+		},
+		{
+			"default": "0",
+			"fieldname": "consultation_fee",
+			"fieldtype": "Currency",
+			"in_list_view": 1,
+			"label": "Default Consultation Fee"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Active"
+		}
+	],
+	"istable": 1,
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Practitioner Branch",
+	"permissions": [],
+	"track_changes": 0
+}

@@ -1,0 +1,60 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "disabled": 0,
+ "doctype": "Report",
+ "is_standard": "Yes",
+ "module": "Omnexa Healthcare",
+ "prepared_report": 0,
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Company Admin"
+  },
+  {
+   "role": "Desk User"
+  },
+  {
+   "role": "Report Manager"
+  },
+  {
+   "role": "Physician"
+  },
+  {
+   "role": "Nursing User"
+  }
+ ],
+ "name": "Healthcare Lab Panel Volume",
+ "report_name": "Healthcare Lab Panel Volume",
+ "ref_doctype": "Healthcare Lab Test Panel",
+ "filters": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "reqd": 1
+  }
+ ]
+}

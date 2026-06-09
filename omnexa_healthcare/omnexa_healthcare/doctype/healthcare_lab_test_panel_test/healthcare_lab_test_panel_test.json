@@ -1,0 +1,29 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Lab Test Panel Test",
+	"track_changes": 1,
+	"fields": [
+		{
+			"fieldname": "test_name",
+			"fieldtype": "Data",
+			"label": "Test Name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "loinc_code",
+			"fieldtype": "Data",
+			"label": "LOINC",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "unit",
+			"fieldtype": "Data",
+			"label": "Unit"
+		}
+	],
+	"istable": 1
+}

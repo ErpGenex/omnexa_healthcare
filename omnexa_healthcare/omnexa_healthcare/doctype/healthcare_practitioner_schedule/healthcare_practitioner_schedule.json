@@ -1,0 +1,63 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"editable_grid": 1,
+	"engine": "InnoDB",
+	"field_order": [
+		"branch",
+		"day_of_week",
+		"from_time",
+		"to_time",
+		"slot_duration_mins",
+		"specialty"
+	],
+	"fields": [
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "day_of_week",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Day",
+			"options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday",
+			"reqd": 1
+		},
+		{
+			"fieldname": "from_time",
+			"fieldtype": "Time",
+			"in_list_view": 1,
+			"label": "From",
+			"reqd": 1
+		},
+		{
+			"fieldname": "to_time",
+			"fieldtype": "Time",
+			"in_list_view": 1,
+			"label": "To",
+			"reqd": 1
+		},
+		{
+			"default": "15",
+			"fieldname": "slot_duration_mins",
+			"fieldtype": "Int",
+			"label": "Slot Duration (mins)"
+		},
+		{
+			"fieldname": "specialty",
+			"fieldtype": "Link",
+			"label": "Specialty (optional filter)",
+			"options": "Healthcare Specialty"
+		}
+	],
+	"istable": 1,
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Practitioner Schedule",
+	"permissions": [],
+	"track_changes": 0
+}

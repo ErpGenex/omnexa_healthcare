@@ -22,6 +22,7 @@
 		"column_break_omnexa_2",
 		"request_title",
 		"request_loinc",
+		"modality",
 		"authored_on",
 		"note",
 		"request_owner",
@@ -135,6 +136,13 @@
 			"fieldtype": "Data",
 			"label": "LOINC Code",
 			"description": "Ordered test / panel LOINC when coded"
+		},
+		{
+			"fieldname": "modality",
+			"fieldtype": "Link",
+			"label": "Imaging Modality",
+			"options": "Healthcare Imaging Modality",
+			"depends_on": "eval:doc.request_category=='imaging'"
 		},
 		{
 			"fieldname": "authored_on",

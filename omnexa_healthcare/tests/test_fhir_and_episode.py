@@ -12,20 +12,15 @@ from omnexa_healthcare.api.fhir_export import (
 	get_fhir_patient_summary_ips_bundle,
 	get_fhir_service_request,
 )
+from omnexa_healthcare.tests.test_utils import ensure_currency_and_country, ensure_company_stock_gl, make_test_branch, setup_admin_all_branch_access
 
 
 class TestFhirExportAndEpisode(FrappeTestCase):
 	def setUp(self):
 		super().setUp()
 		frappe.set_user("Administrator")
-		if not frappe.db.exists("Currency", "EGP"):
-			frappe.get_doc(
-				{"doctype": "Currency", "currency_name": "EGP", "symbol": "E£", "enabled": 1}
-			).insert(ignore_permissions=True)
-		if not frappe.db.exists("Country", "Egypt"):
-			frappe.get_doc(
-				{"doctype": "Country", "country_name": "Egypt", "code": "EG"}
-			).insert(ignore_permissions=True)
+		setup_admin_all_branch_access()
+		ensure_currency_and_country()
 
 	def _make_company(self, label):
 		abbr = f"FE{label}{frappe.generate_hash(length=2).upper()}"
@@ -43,17 +38,7 @@ class TestFhirExportAndEpisode(FrappeTestCase):
 		return doc.name
 
 	def _make_branch(self, company, code):
-		doc = frappe.get_doc(
-			{
-				"doctype": "Branch",
-				"company": company,
-				"branch_name": f"Branch {code}",
-				"branch_code": code,
-				"status": "Active",
-			}
-		)
-		doc.insert(ignore_permissions=True)
-		return doc.name
+		return make_test_branch(company, code)
 
 	def _make_patient(self, company, branch):
 		return frappe.get_doc(
@@ -352,6 +337,7 @@ class TestFhirExportAndEpisode(FrappeTestCase):
 				"company": company,
 			}
 		).insert(ignore_permissions=True)
+		ensure_company_stock_gl(company, wh.name)
 		md = frappe.get_doc(
 			{
 				"doctype": "Healthcare Medication Dispense",

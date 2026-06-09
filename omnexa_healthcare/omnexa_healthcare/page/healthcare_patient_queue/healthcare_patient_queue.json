@@ -1,0 +1,17 @@
+{
+	"content": null,
+	"docstatus": 0,
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-patient-queue",
+	"page_name": "healthcare-patient-queue",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Desk User"},
+		{"role": "Nursing User"},
+		{"role": "Physician"}
+	],
+	"standard": "Yes",
+	"title": "Healthcare Patient Queue"
+}

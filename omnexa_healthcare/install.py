@@ -22,3 +22,19 @@ def enforce_supported_frappe_version():
 			"Supported range is >=15.0,<16.0.",
 			frappe.ValidationError,
 		)
+
+
+def after_migrate():
+	try:
+		from omnexa_healthcare.workspace.healthcare_workspace import sync_healthcare_workspace_menu
+
+		sync_healthcare_workspace_menu(save=True)
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: workspace sync failed")
+
+	try:
+		from omnexa_healthcare.patches.v1_0.sync_healthcare_report_roles import execute as sync_report_roles
+
+		sync_report_roles()
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: report role sync failed")

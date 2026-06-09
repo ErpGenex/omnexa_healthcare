@@ -1,0 +1,94 @@
+{
+	"actions": [],
+	"allow_rename": 1,
+	"autoname": "format:HPR-{YYYY}-{#####}",
+	"creation": "2026-06-09 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"practitioner_name",
+		"user",
+		"license_number",
+		"column_break_1",
+		"company",
+		"status",
+		"section_branch",
+		"branch_assignments",
+		"section_schedule",
+		"schedule"
+	],
+	"fields": [
+		{
+			"fieldname": "practitioner_name",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Practitioner Name",
+			"reqd": 1
+		},
+		{
+			"fieldname": "user",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "User Account",
+			"options": "User"
+		},
+		{
+			"fieldname": "license_number",
+			"fieldtype": "Data",
+			"label": "Medical License No."
+		},
+		{
+			"default": "Active",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Active\nInactive"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "section_branch",
+			"fieldtype": "Section Break",
+			"label": "Clinic / Branch Assignments"
+		},
+		{
+			"fieldname": "branch_assignments",
+			"fieldtype": "Table",
+			"label": "Branch Assignments",
+			"options": "Healthcare Practitioner Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "section_schedule",
+			"fieldtype": "Section Break",
+			"label": "Weekly Schedule"
+		},
+		{
+			"fieldname": "schedule",
+			"fieldtype": "Table",
+			"label": "Schedule Lines",
+			"options": "Healthcare Practitioner Schedule"
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		}
+	],
+	"links": [
+		{"group": "Scheduling", "link_doctype": "Healthcare Appointment", "link_fieldname": "practitioner"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Practitioner",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 0, "delete": 0, "report": 1, "export": 0}
+	],
+	"track_changes": 1
+}

@@ -19,6 +19,8 @@
 		"tab_break_details",
 		"qty",
 		"warehouse",
+		"batch_no",
+		"expiry_date",
 		"column_break_omnexa_2",
 		"stock_entry",
 		"status",
@@ -112,6 +114,16 @@
 			"label": "Warehouse",
 			"options": "Warehouse",
 			"description": "Issuing warehouse (Omnexa Accounting)."
+		},
+		{
+			"fieldname": "batch_no",
+			"fieldtype": "Data",
+			"label": "Batch No (FEFO)"
+		},
+		{
+			"fieldname": "expiry_date",
+			"fieldtype": "Date",
+			"label": "Expiry Date"
 		},
 		{
 			"fieldname": "stock_entry",

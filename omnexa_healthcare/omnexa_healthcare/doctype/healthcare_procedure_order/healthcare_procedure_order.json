@@ -1,0 +1,28 @@
+{
+	"actions": [],
+	"autoname": "format:HPO-{YYYY}-{#####}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "encounter", "practitioner", "specialty", "procedure", "appointment", "planned_date", "status", "service_charge", "company", "branch"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "label": "Patient", "options": "Healthcare Patient", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "encounter", "fieldtype": "Link", "label": "Encounter", "options": "Healthcare Encounter"},
+		{"fieldname": "practitioner", "fieldtype": "Link", "label": "Practitioner", "options": "Healthcare Practitioner", "in_list_view": 1},
+		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty"},
+		{"fieldname": "procedure", "fieldtype": "Link", "label": "Procedure", "options": "Healthcare Procedure", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "appointment", "fieldtype": "Link", "label": "Appointment", "options": "Healthcare Appointment"},
+		{"fieldname": "planned_date", "fieldtype": "Datetime", "label": "Planned Date", "in_list_view": 1},
+		{"default": "Draft", "fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Draft\nScheduled\nIn Progress\nCompleted\nCancelled", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "service_charge", "fieldtype": "Link", "label": "Service Charge", "options": "Healthcare Service Charge", "read_only": 1},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch", "reqd": 1}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Procedure Order",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1}
+	],
+	"track_changes": 1
+}

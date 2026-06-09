@@ -1,0 +1,114 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Secure Message",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Patient Portal User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:MSG-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "sender",
+			"fieldtype": "Link",
+			"label": "Sender",
+			"options": "User",
+			"reqd": 1
+		},
+		{
+			"fieldname": "recipient",
+			"fieldtype": "Link",
+			"label": "Recipient",
+			"options": "User",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "subject",
+			"fieldtype": "Data",
+			"label": "Subject"
+		},
+		{
+			"fieldname": "body",
+			"fieldtype": "Text",
+			"label": "Message",
+			"reqd": 1
+		},
+		{
+			"default": "0",
+			"fieldname": "is_read",
+			"fieldtype": "Check",
+			"label": "Read"
+		},
+		{
+			"fieldname": "thread_id",
+			"fieldtype": "Data",
+			"label": "Thread ID",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch"
+		}
+	]
+}

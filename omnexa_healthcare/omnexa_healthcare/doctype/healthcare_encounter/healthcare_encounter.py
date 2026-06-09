@@ -9,6 +9,8 @@ from frappe.utils import cint
 
 class HealthcareEncounter(Document):
 	def validate(self):
+		self._sync_from_appointment()
+		self._validate_diagnoses()
 		self._validate_branch_company_match()
 		self._validate_patient()
 		self._validate_appointment_link()
@@ -192,3 +194,34 @@ class HealthcareEncounter(Document):
 				None,
 				update_modified=False,
 			)
+
+	def _sync_from_appointment(self):
+		if not self.appointment:
+			return
+		appt = frappe.db.get_value(
+			"Healthcare Appointment",
+			self.appointment,
+			["practitioner", "specialty", "branch", "company"],
+			as_dict=True,
+		)
+		if not appt:
+			return
+		if appt.practitioner and not self.practitioner:
+			self.practitioner = appt.practitioner
+		if appt.specialty and not getattr(self, "specialty", None):
+			if frappe.get_meta("Healthcare Encounter").has_field("specialty"):
+				self.specialty = appt.specialty
+		if appt.branch and not self.branch:
+			self.branch = appt.branch
+		if appt.company and not self.company:
+			self.company = appt.company
+
+	def _validate_diagnoses(self):
+		for row in self.diagnoses or []:
+			if not row.icd10_code:
+				continue
+			if not frappe.db.exists("Healthcare Icd10 Code", {"code": row.icd10_code, "is_active": 1}):
+				continue
+			desc = frappe.db.get_value("Healthcare Icd10 Code", {"code": row.icd10_code}, "description")
+			if desc and (not row.description or (row.description or "").strip().lower() == "pending"):
+				row.description = desc

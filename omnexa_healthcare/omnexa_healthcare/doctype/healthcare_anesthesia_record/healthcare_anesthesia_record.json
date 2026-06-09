@@ -1,0 +1,89 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Anesthesia Record",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:HAR-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "surgical_case",
+			"fieldtype": "Link",
+			"label": "Surgical Case",
+			"options": "Healthcare Surgical Case",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "anesthesiologist",
+			"fieldtype": "Link",
+			"label": "Anesthesiologist",
+			"options": "Healthcare Practitioner"
+		},
+		{
+			"fieldname": "asa_class",
+			"fieldtype": "Select",
+			"label": "ASA Class",
+			"options": "I\nII\nIII\nIV\nV\nVI"
+		},
+		{
+			"fieldname": "anesthesia_type",
+			"fieldtype": "Select",
+			"label": "Anesthesia Type",
+			"options": "General\nRegional\nLocal\nSedation"
+		},
+		{
+			"fieldname": "start_time",
+			"fieldtype": "Datetime",
+			"label": "Start"
+		},
+		{
+			"fieldname": "end_time",
+			"fieldtype": "Datetime",
+			"label": "End"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

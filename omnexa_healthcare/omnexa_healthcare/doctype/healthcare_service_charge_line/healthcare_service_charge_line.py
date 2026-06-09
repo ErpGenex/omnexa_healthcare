@@ -1,6 +1,5 @@
 # Copyright (c) 2026, Omnexa and contributors
-# License: See license.txt
-
+# License: MIT
 from frappe.model.document import Document
 
 

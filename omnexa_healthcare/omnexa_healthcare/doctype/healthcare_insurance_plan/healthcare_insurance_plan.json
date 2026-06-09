@@ -1,0 +1,23 @@
+{
+	"actions": [],
+	"autoname": "field:plan_code",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["plan_name", "plan_code", "payer", "coverage_percent", "copay_amount", "company", "is_active"],
+	"fields": [
+		{"fieldname": "plan_name", "fieldtype": "Data", "label": "Plan Name", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "plan_code", "fieldtype": "Data", "label": "Plan Code", "reqd": 1, "unique": 1},
+		{"fieldname": "payer", "fieldtype": "Link", "label": "Payer", "options": "Healthcare Payer", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "coverage_percent", "fieldtype": "Percent", "label": "Coverage %", "default": "80"},
+		{"fieldname": "copay_amount", "fieldtype": "Currency", "label": "Copay Amount"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Insurance Plan",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

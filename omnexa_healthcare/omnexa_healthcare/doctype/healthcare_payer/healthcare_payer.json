@@ -1,0 +1,21 @@
+{
+	"actions": [],
+	"autoname": "field:payer_code",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["payer_name", "payer_code", "payer_type", "company", "is_active"],
+	"fields": [
+		{"fieldname": "payer_name", "fieldtype": "Data", "label": "Payer Name", "reqd": 1, "in_list_view": 1},
+		{"fieldname": "payer_code", "fieldtype": "Data", "label": "Payer Code", "reqd": 1, "unique": 1, "in_list_view": 1},
+		{"fieldname": "payer_type", "fieldtype": "Select", "label": "Payer Type", "options": "Insurance\nGovernment\nCorporate\nSelf", "default": "Insurance", "reqd": 1},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Payer",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

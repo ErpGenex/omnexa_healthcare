@@ -1,0 +1,99 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Prior Authorization",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:HPA-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "payer",
+			"fieldtype": "Link",
+			"label": "Payer",
+			"options": "Healthcare Payer",
+			"reqd": 1
+		},
+		{
+			"fieldname": "insurance_plan",
+			"fieldtype": "Link",
+			"label": "Insurance Plan",
+			"options": "Healthcare Insurance Plan"
+		},
+		{
+			"fieldname": "service_description",
+			"fieldtype": "Data",
+			"label": "Service",
+			"reqd": 1
+		},
+		{
+			"fieldname": "auth_number",
+			"fieldtype": "Data",
+			"label": "Authorization Number"
+		},
+		{
+			"default": "Draft",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSubmitted\nPending\nApproved\nDenied\nExpired",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "valid_from",
+			"fieldtype": "Date",
+			"label": "Valid From"
+		},
+		{
+			"fieldname": "valid_to",
+			"fieldtype": "Date",
+			"label": "Valid To"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	]
+}

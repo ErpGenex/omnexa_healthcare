@@ -17,10 +17,18 @@
 		"tab_break_details",
 		"department",
 		"service_unit",
+		"practitioner",
+		"specialty",
 		"column_break_omnexa_2",
 		"appointment_date",
+		"slot_end",
+		"appointment_type",
 		"status",
 		"triage_level",
+		"tab_break_billing",
+		"booking_fee",
+		"payment_status",
+		"service_charge",
 		"owner_user"
 	],
 	"fields": [
@@ -33,6 +41,11 @@
 			"fieldname": "tab_break_details",
 			"fieldtype": "Tab Break",
 			"label": "Details"
+		},
+		{
+			"fieldname": "tab_break_billing",
+			"fieldtype": "Tab Break",
+			"label": "Billing"
 		},
 		{
 			"default": "HAP-.#####",
@@ -98,16 +111,43 @@
 			"in_list_view": 1
 		},
 		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "specialty",
+			"fieldtype": "Link",
+			"label": "Specialty",
+			"options": "Healthcare Specialty",
+			"in_list_view": 1
+		},
+		{
 			"fieldname": "appointment_date",
 			"fieldtype": "Datetime",
-			"label": "Appointment Date",
+			"label": "Appointment Start",
 			"reqd": 1
+		},
+		{
+			"fieldname": "slot_end",
+			"fieldtype": "Datetime",
+			"label": "Appointment End"
+		},
+		{
+			"default": "Consultation",
+			"fieldname": "appointment_type",
+			"fieldtype": "Select",
+			"label": "Appointment Type",
+			"options": "Consultation\nFollow-up\nProcedure\nTelehealth\nEmergency",
+			"in_list_view": 1
 		},
 		{
 			"fieldname": "status",
 			"fieldtype": "Select",
 			"label": "Status",
-			"options": "Scheduled\nArrived\nIn Consultation\nCompleted\nCancelled",
+			"options": "Scheduled\nArrived\nIn Consultation\nCompleted\nNo Show\nCancelled",
 			"default": "Scheduled",
 			"reqd": 1,
 			"in_list_view": 1
@@ -118,6 +158,26 @@
 			"label": "Triage Level",
 			"options": "P1\nP2\nP3\nP4\nP5",
 			"default": "P3"
+		},
+		{
+			"fieldname": "booking_fee",
+			"fieldtype": "Currency",
+			"label": "Booking / Consultation Fee",
+			"default": "0"
+		},
+		{
+			"default": "Unpaid",
+			"fieldname": "payment_status",
+			"fieldtype": "Select",
+			"label": "Payment Status",
+			"options": "Unpaid\nPartially Paid\nPaid\nWaived"
+		},
+		{
+			"fieldname": "service_charge",
+			"fieldtype": "Link",
+			"label": "Service Charge",
+			"options": "Healthcare Service Charge",
+			"read_only": 1
 		},
 		{
 			"fieldname": "owner_user",

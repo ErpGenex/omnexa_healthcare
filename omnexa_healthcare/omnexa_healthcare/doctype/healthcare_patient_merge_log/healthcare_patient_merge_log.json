@@ -1,0 +1,64 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Patient Merge Log",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:HPM-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "source_patient",
+			"fieldtype": "Link",
+			"label": "Source Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "target_patient",
+			"fieldtype": "Link",
+			"label": "Target Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "merged_by",
+			"fieldtype": "Link",
+			"label": "Merged By",
+			"options": "User"
+		},
+		{
+			"fieldname": "merged_on",
+			"fieldtype": "Datetime",
+			"label": "Merged On"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	]
+}

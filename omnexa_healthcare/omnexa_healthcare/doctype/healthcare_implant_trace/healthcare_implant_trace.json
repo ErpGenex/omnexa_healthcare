@@ -1,0 +1,80 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Implant Trace",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:IMP-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "surgical_case",
+			"fieldtype": "Link",
+			"label": "Surgical Case",
+			"options": "Healthcare Surgical Case",
+			"reqd": 1
+		},
+		{
+			"fieldname": "udi",
+			"fieldtype": "Data",
+			"label": "UDI / GS1",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "item",
+			"fieldtype": "Link",
+			"label": "Item",
+			"options": "Item"
+		},
+		{
+			"fieldname": "lot_number",
+			"fieldtype": "Data",
+			"label": "Lot"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		}
+	]
+}

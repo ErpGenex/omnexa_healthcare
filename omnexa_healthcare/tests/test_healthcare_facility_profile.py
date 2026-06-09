@@ -1,18 +1,15 @@
 import frappe
 from frappe.tests.utils import FrappeTestCase
 
+from omnexa_healthcare.tests.test_utils import ensure_currency_and_country, make_test_branch, setup_admin_all_branch_access
+
 
 class TestHealthcareFacilityProfile(FrappeTestCase):
 	def setUp(self):
 		super().setUp()
-		if not frappe.db.exists("Currency", "EGP"):
-			frappe.get_doc(
-				{"doctype": "Currency", "currency_name": "EGP", "symbol": "E£", "enabled": 1}
-			).insert(ignore_permissions=True)
-		if not frappe.db.exists("Country", "Egypt"):
-			frappe.get_doc(
-				{"doctype": "Country", "country_name": "Egypt", "code": "EG"}
-			).insert(ignore_permissions=True)
+		frappe.set_user("Administrator")
+		setup_admin_all_branch_access()
+		ensure_currency_and_country()
 
 	def _make_company(self, label):
 		abbr = f"HC{label}{frappe.generate_hash(length=2).upper()}"
@@ -30,17 +27,7 @@ class TestHealthcareFacilityProfile(FrappeTestCase):
 		return doc.name
 
 	def _make_branch(self, company, code):
-		doc = frappe.get_doc(
-			{
-				"doctype": "Branch",
-				"company": company,
-				"branch_name": f"Branch {code}",
-				"branch_code": code,
-				"status": "Active",
-			}
-		)
-		doc.insert(ignore_permissions=True)
-		return doc.name
+		return make_test_branch(company, code)
 
 	def _make_patient(self, company, branch, given="John", family="Doe", mrn="MRN-001"):
 		return frappe.get_doc(

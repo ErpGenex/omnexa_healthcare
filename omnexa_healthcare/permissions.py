@@ -100,3 +100,28 @@ def healthcare_medication_dispense_query_conditions(user=None):
 
 def healthcare_lab_sample_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Lab Sample", user)
+
+
+def healthcare_practitioner_query_conditions(user=None):
+	# Practitioners are company-scoped; branch assignments are in child table.
+	return ""
+
+
+def healthcare_procedure_order_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Procedure Order", user)
+
+
+def healthcare_patient_coverage_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Patient Coverage", user)
+
+
+def healthcare_insurance_claim_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Insurance Claim", user)
+
+
+def healthcare_operating_room_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Operating Room", user)
+
+
+def healthcare_surgical_case_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Surgical Case", user)

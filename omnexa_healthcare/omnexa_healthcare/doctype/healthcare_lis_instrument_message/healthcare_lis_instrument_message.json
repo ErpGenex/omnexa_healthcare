@@ -1,0 +1,93 @@
+{
+	"actions": [],
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Lis Instrument Message",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Nursing User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0
+		}
+	],
+	"track_changes": 1,
+	"autoname": "format:LIM-{YYYY}-{#####}",
+	"fields": [
+		{
+			"fieldname": "instrument_id",
+			"fieldtype": "Data",
+			"label": "Instrument ID",
+			"reqd": 1
+		},
+		{
+			"fieldname": "protocol",
+			"fieldtype": "Select",
+			"label": "Protocol",
+			"options": "ASTM\nHL7",
+			"reqd": 1
+		},
+		{
+			"fieldname": "direction",
+			"fieldtype": "Select",
+			"label": "Direction",
+			"options": "Inbound\nOutbound"
+		},
+		{
+			"fieldname": "payload",
+			"fieldtype": "Code",
+			"label": "Message",
+			"options": "JSON"
+		},
+		{
+			"fieldname": "lab_sample",
+			"fieldtype": "Link",
+			"label": "Lab Sample",
+			"options": "Healthcare Lab Sample"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Received\nProcessed\nError",
+			"reqd": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		}
+	]
+}
