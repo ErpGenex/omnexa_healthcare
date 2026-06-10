@@ -424,6 +424,7 @@ class _HospitalDemoSeeder:
 			"stats": self.stats,
 			"facility": self.ctx.get("facility"),
 			"web_booking_url": self.ctx.get("web_booking_url"),
+			"hospital_site_url": self.ctx.get("hospital_site_url"),
 			"published_services": len(self.ctx.get("published_services") or []),
 			"web_bookings": self.stats.get("Healthcare Appointment (Website)", 0),
 			"specialty_modules": self.ctx.get("specialty_modules_count", 0),
@@ -1231,6 +1232,7 @@ class _HospitalDemoSeeder:
 			published.append(service_code)
 
 		self.ctx["published_services"] = published
+		self._seed_branch_public_website()
 		booking_url = f"/healthcare-booking?company={quote(self.company)}&branch={quote(self.branch)}"
 		self.ctx["web_booking_url"] = booking_url
 
@@ -1307,6 +1309,94 @@ class _HospitalDemoSeeder:
 					},
 				)
 				frappe.db.set_value("Healthcare Appointment", appt.name, "encounter", enc.name)
+
+	def _seed_branch_public_website(self) -> None:
+		slug = frappe.scrub(self.branch).replace("_", "-")[:50]
+		dept_icons = {
+			"CARD": "cardiology",
+			"PED": "pediatrics",
+			"ORT": "orthopedics",
+			"DER": "dermatology",
+			"DEN": "dentistry",
+			"RAD": "radiology",
+			"LAB": "lab",
+			"PHM": "pharmacy",
+			"ER": "emergency",
+		}
+		depts = self.ctx.get("departments") or {}
+		for code, dept_name in depts.items():
+			icon = dept_icons.get(code, "general")
+			frappe.db.set_value(
+				"Healthcare Department",
+				dept_name,
+				{
+					"publish_on_website": 1 if code in dept_icons else 0,
+					"website_icon": icon,
+					"website_display_order": list(depts.keys()).index(code) * 10 if code in depts else 0,
+					"website_description_ar": f"قسم {code} — رعاية متخصصة",
+					"website_description_en": f"{code} department — specialized care",
+				},
+				update_modified=False,
+			)
+
+		for spec, pr_name in (self.ctx.get("practitioners") or {}).items():
+			frappe.db.set_value(
+				"Healthcare Practitioner",
+				pr_name,
+				{
+					"publish_on_website": 1,
+					"years_of_experience": 8 + (len(spec) % 7),
+					"website_rating": 4.7 + (len(spec) % 3) * 0.1,
+					"website_bio_ar": "طبيب متخصص ذو خبرة واسعة في الرعاية السريرية.",
+					"website_bio_en": "Experienced specialist focused on high-quality patient care.",
+				},
+				update_modified=False,
+			)
+
+		site_url = f"/hospital?site={quote(slug)}"
+		if frappe.db.exists("Healthcare Branch Website", self.branch):
+			frappe.db.set_value(
+				"Healthcare Branch Website",
+				self.branch,
+				{
+					"is_enabled": 1,
+					"site_slug": slug,
+					"hospital_name_ar": "مستشفى الحياة",
+					"hospital_name_en": f"{DEMO_MARKER} Al-Hayat Hospital",
+					"tagline_ar": "رعايتكم... أولويتنا",
+					"tagline_en": "Your care... our priority",
+					"hero_text_ar": "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية.",
+					"hero_text_en": "A full-service hospital delivering comprehensive care with modern medical technology.",
+					"contact_phone": "+20 100 000 0000",
+					"contact_email": "info@example.com",
+					"stat_years": 15,
+					"enable_online_shop": 1,
+				},
+				update_modified=False,
+			)
+		else:
+			self._insert(
+				"Healthcare Branch Website",
+				{
+					"branch": self.branch,
+					"company": self.company,
+					"is_enabled": 1,
+					"site_slug": slug,
+					"hospital_name_ar": "مستشفى الحياة",
+					"hospital_name_en": f"{DEMO_MARKER} Al-Hayat Hospital",
+					"tagline_ar": "رعايتكم... أولويتنا",
+					"tagline_en": "Your care... our priority",
+					"hero_text_ar": "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية.",
+					"hero_text_en": "A full-service hospital delivering comprehensive care with modern medical technology.",
+					"contact_phone": "+20 100 000 0000",
+					"contact_email": "info@example.com",
+					"stat_years": 15,
+					"enable_online_shop": 1,
+				},
+			)
+		self.ctx["hospital_site_url"] = site_url
+		self.ctx["web_booking_url"] = site_url
+		self._bump("Healthcare Branch Website")
 
 	def _seed_inventory_and_finance(self) -> None:
 		wh_name = f"{DEMO_MARKER} Pharmacy WH"

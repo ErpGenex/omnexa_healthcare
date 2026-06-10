@@ -32,8 +32,8 @@ app_include_css = [
 app_include_js = "/assets/omnexa_healthcare/js/healthcare_terminology.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/omnexa_healthcare/css/omnexa_healthcare.css"
-# web_include_js = "/assets/omnexa_healthcare/js/omnexa_healthcare.js"
+web_include_css = "/assets/omnexa_healthcare/css/hospital_website.css"
+web_include_js = "/assets/omnexa_healthcare/js/hospital_website.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "omnexa_healthcare/public/scss/website"
@@ -51,6 +51,8 @@ doctype_js = {
 	"Healthcare Service Charge": "public/js/healthcare_service_charge.js",
 	"Healthcare Medication Dispense": "public/js/healthcare_medication_dispense.js",
 	"Healthcare Appointment": "public/js/healthcare_appointment.js",
+	"Healthcare Branch Website": "omnexa_healthcare/doctype/healthcare_branch_website/healthcare_branch_website.js",
+	"Healthcare Settings": "public/js/healthcare_settings.js",
 }
 
 boot_session = "omnexa_healthcare.healthcare_boot.boot_session"

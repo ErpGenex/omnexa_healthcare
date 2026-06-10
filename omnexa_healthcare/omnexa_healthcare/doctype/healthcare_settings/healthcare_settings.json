@@ -27,6 +27,8 @@
 		"allow_medication_statement_without_encounter",
 		"store_section",
 		"consumable_policy_note",
+		"website_section",
+		"public_website_default_branch",
 		"governance_section",
 		"change_ticket",
 		"policy_reference"
@@ -168,6 +170,18 @@
 			"fieldtype": "Small Text",
 			"label": "Consumables / stock policy note",
 			"description": "Internal note (e.g. which warehouse issues OT consumables). Stock masters and movements use Omnexa Accounting (Item, Warehouse, Stock Entry); shortcuts are on the Healthcare workspace."
+		},
+		{
+			"fieldname": "website_section",
+			"fieldtype": "Section Break",
+			"label": "Public hospital website"
+		},
+		{
+			"description": "Used for quick copy/share of the public site link from Healthcare Settings.",
+			"fieldname": "public_website_default_branch",
+			"fieldtype": "Link",
+			"label": "Default branch for public website",
+			"options": "Branch"
 		},
 		{
 			"fieldname": "governance_section",

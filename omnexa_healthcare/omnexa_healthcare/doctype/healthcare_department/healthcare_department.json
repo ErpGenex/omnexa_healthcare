@@ -14,7 +14,15 @@
 		"facility_profile",
 		"status",
 		"department_head",
-		"owner_user"
+		"owner_user",
+		"tab_break_website",
+		"publish_on_website",
+		"website_icon",
+		"website_description_ar",
+		"website_description_en",
+		"website_display_order",
+		"website_services_ar",
+		"website_services_en"
 	],
 	"fields": [
 		{
@@ -78,6 +86,50 @@
 			"fieldtype": "Link",
 			"label": "Owner",
 			"options": "User"
+		},
+		{
+			"fieldname": "tab_break_website",
+			"fieldtype": "Tab Break",
+			"label": "Website"
+		},
+		{
+			"default": "1",
+			"fieldname": "publish_on_website",
+			"fieldtype": "Check",
+			"label": "Publish on website"
+		},
+		{
+			"default": "general",
+			"fieldname": "website_icon",
+			"fieldtype": "Select",
+			"label": "Website icon",
+			"options": "general\ncardiology\northopedics\npediatrics\nobgyn\ninternal\nent\ndermatology\nophthalmology\ndentistry\nemergency\nlab\nradiology\npharmacy"
+		},
+		{
+			"fieldname": "website_description_ar",
+			"fieldtype": "Small Text",
+			"label": "Website description (Arabic)"
+		},
+		{
+			"fieldname": "website_description_en",
+			"fieldtype": "Small Text",
+			"label": "Website description (English)"
+		},
+		{
+			"default": "0",
+			"fieldname": "website_display_order",
+			"fieldtype": "Int",
+			"label": "Website display order"
+		},
+		{
+			"fieldname": "website_services_ar",
+			"fieldtype": "Small Text",
+			"label": "Services list (Arabic, one per line)"
+		},
+		{
+			"fieldname": "website_services_en",
+			"fieldtype": "Small Text",
+			"label": "Services list (English, one per line)"
 		}
 	],
 	"grid_page_length": 50,

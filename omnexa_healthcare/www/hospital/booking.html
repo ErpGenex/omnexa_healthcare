@@ -1,0 +1,24 @@
+{% extends "templates/web.html" %}
+
+{% block title %}حجز موعد | Booking{% endblock %}
+
+{% block page_content %}
+<div class="hc-site" data-page="booking">
+  <header class="hc-header" id="hc-header"></header>
+  <section class="hc-booking-shell">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2>حجز موعد</h2>
+        <p>Online appointment booking</p>
+      </div>
+      <div id="hc-booking-app"></div>
+    </div>
+  </section>
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    HospitalSite.init("booking");
+  });
+</script>
+{% endblock %}

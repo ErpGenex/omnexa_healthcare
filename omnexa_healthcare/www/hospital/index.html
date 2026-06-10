@@ -1,0 +1,43 @@
+{% extends "templates/web.html" %}
+
+{% block title %}مستشفى | Hospital{% endblock %}
+
+{% block page_content %}
+<div class="hc-site" data-page="home">
+  <header class="hc-header" id="hc-header"></header>
+  <section class="hc-hero" id="hc-home-hero"></section>
+  <div class="hc-wrap"><div class="hc-features-bar" id="hc-features-bar"></div></div>
+  <section class="hc-section">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2 id="hc-dept-title">الأقسام الطبية</h2>
+        <p>Medical Departments</p>
+      </div>
+      <div id="hc-departments"></div>
+    </div>
+  </section>
+  <section class="hc-stats" id="hc-stats"></section>
+  <section class="hc-section">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2>خدمات مميزة</h2>
+        <p>Featured Services</p>
+      </div>
+      <div id="hc-services"></div>
+    </div>
+  </section>
+  <section class="hc-section" id="hc-contact">
+    <div class="hc-wrap hc-card" style="text-align:center;">
+      <h2>احجز موعدك الآن</h2>
+      <p>Book your appointment online in minutes.</p>
+      <a class="hc-btn hc-btn-primary" id="hc-home-book-cta" href="/hospital/booking">Book Appointment</a>
+    </div>
+  </section>
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    HospitalSite.init("home");
+  });
+</script>
+{% endblock %}

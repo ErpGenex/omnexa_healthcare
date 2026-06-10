@@ -15,7 +15,14 @@
 		"section_branch",
 		"branch_assignments",
 		"section_schedule",
-		"schedule"
+		"schedule",
+		"section_website",
+		"publish_on_website",
+		"website_photo",
+		"years_of_experience",
+		"website_rating",
+		"website_bio_ar",
+		"website_bio_en"
 	],
 	"fields": [
 		{
@@ -74,6 +81,44 @@
 			"fieldtype": "Table",
 			"label": "Schedule Lines",
 			"options": "Healthcare Practitioner Schedule"
+		},
+		{
+			"fieldname": "section_website",
+			"fieldtype": "Section Break",
+			"label": "Website"
+		},
+		{
+			"default": "1",
+			"fieldname": "publish_on_website",
+			"fieldtype": "Check",
+			"label": "Publish on website"
+		},
+		{
+			"fieldname": "website_photo",
+			"fieldtype": "Attach Image",
+			"label": "Website photo"
+		},
+		{
+			"default": "5",
+			"fieldname": "years_of_experience",
+			"fieldtype": "Int",
+			"label": "Years of experience"
+		},
+		{
+			"default": "4.8",
+			"fieldname": "website_rating",
+			"fieldtype": "Float",
+			"label": "Website rating (display)"
+		},
+		{
+			"fieldname": "website_bio_ar",
+			"fieldtype": "Small Text",
+			"label": "Bio (Arabic)"
+		},
+		{
+			"fieldname": "website_bio_en",
+			"fieldtype": "Small Text",
+			"label": "Bio (English)"
 		},
 		{
 			"fieldname": "column_break_1",

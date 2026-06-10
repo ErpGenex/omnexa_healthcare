@@ -1,0 +1,282 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "field:branch",
+	"creation": "2026-06-10 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"branch",
+		"company",
+		"is_enabled",
+		"site_slug",
+		"section_branding",
+		"hospital_name_ar",
+		"hospital_name_en",
+		"tagline_ar",
+		"tagline_en",
+		"hero_text_ar",
+		"hero_text_en",
+		"website_logo",
+		"primary_color",
+		"column_break_branding",
+		"contact_phone",
+		"contact_email",
+		"contact_address_ar",
+		"contact_address_en",
+		"section_stats",
+		"stat_departments",
+		"stat_doctors",
+		"stat_patients",
+		"stat_years",
+		"column_break_stats",
+		"working_hours_ar",
+		"working_hours_en",
+		"section_features",
+		"enable_online_shop",
+		"enable_doctors_page",
+		"enable_departments_page",
+		"section_social",
+		"facebook_url",
+		"instagram_url",
+		"whatsapp_number"
+	],
+	"fields": [
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"unique": 1
+		},
+		{
+			"fetch_from": "branch.company",
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Company",
+			"options": "Company",
+			"read_only": 1,
+			"reqd": 1
+		},
+		{
+			"default": "1",
+			"fieldname": "is_enabled",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Enable public website"
+		},
+		{
+			"description": "Used in the public URL, e.g. /hospital?site=al-hayat",
+			"fieldname": "site_slug",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Site slug",
+			"unique": 1
+		},
+		{
+			"fieldname": "section_branding",
+			"fieldtype": "Section Break",
+			"label": "Branding"
+		},
+		{
+			"default": "مستشفى الحياة",
+			"fieldname": "hospital_name_ar",
+			"fieldtype": "Data",
+			"label": "Hospital name (Arabic)"
+		},
+		{
+			"default": "Al-Hayat Hospital",
+			"fieldname": "hospital_name_en",
+			"fieldtype": "Data",
+			"label": "Hospital name (English)"
+		},
+		{
+			"default": "رعايتكم... أولويتنا",
+			"fieldname": "tagline_ar",
+			"fieldtype": "Data",
+			"label": "Tagline (Arabic)"
+		},
+		{
+			"default": "Your care... our priority",
+			"fieldname": "tagline_en",
+			"fieldtype": "Data",
+			"label": "Tagline (English)"
+		},
+		{
+			"fieldname": "hero_text_ar",
+			"fieldtype": "Small Text",
+			"label": "Hero description (Arabic)"
+		},
+		{
+			"fieldname": "hero_text_en",
+			"fieldtype": "Small Text",
+			"label": "Hero description (English)"
+		},
+		{
+			"fieldname": "website_logo",
+			"fieldtype": "Attach Image",
+			"label": "Logo"
+		},
+		{
+			"default": "#003366",
+			"fieldname": "primary_color",
+			"fieldtype": "Data",
+			"label": "Primary color"
+		},
+		{
+			"fieldname": "column_break_branding",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "contact_phone",
+			"fieldtype": "Data",
+			"label": "Contact phone"
+		},
+		{
+			"fieldname": "contact_email",
+			"fieldtype": "Data",
+			"label": "Contact email"
+		},
+		{
+			"fieldname": "contact_address_ar",
+			"fieldtype": "Small Text",
+			"label": "Address (Arabic)"
+		},
+		{
+			"fieldname": "contact_address_en",
+			"fieldtype": "Small Text",
+			"label": "Address (English)"
+		},
+		{
+			"fieldname": "section_stats",
+			"fieldtype": "Section Break",
+			"label": "Statistics (0 = auto count)"
+		},
+		{
+			"default": "0",
+			"fieldname": "stat_departments",
+			"fieldtype": "Int",
+			"label": "Departments count"
+		},
+		{
+			"default": "0",
+			"fieldname": "stat_doctors",
+			"fieldtype": "Int",
+			"label": "Doctors count"
+		},
+		{
+			"default": "0",
+			"fieldname": "stat_patients",
+			"fieldtype": "Int",
+			"label": "Annual patients"
+		},
+		{
+			"default": "0",
+			"fieldname": "stat_years",
+			"fieldtype": "Int",
+			"label": "Years of experience"
+		},
+		{
+			"fieldname": "column_break_stats",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "working_hours_ar",
+			"fieldtype": "Small Text",
+			"label": "Working hours (Arabic)"
+		},
+		{
+			"fieldname": "working_hours_en",
+			"fieldtype": "Small Text",
+			"label": "Working hours (English)"
+		},
+		{
+			"fieldname": "section_features",
+			"fieldtype": "Section Break",
+			"label": "Features"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_online_shop",
+			"fieldtype": "Check",
+			"label": "Show online shop / products"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_doctors_page",
+			"fieldtype": "Check",
+			"label": "Show doctors page"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_departments_page",
+			"fieldtype": "Check",
+			"label": "Show departments page"
+		},
+		{
+			"fieldname": "section_social",
+			"fieldtype": "Section Break",
+			"label": "Social"
+		},
+		{
+			"fieldname": "facebook_url",
+			"fieldtype": "Data",
+			"label": "Facebook URL"
+		},
+		{
+			"fieldname": "instagram_url",
+			"fieldtype": "Data",
+			"label": "Instagram URL"
+		},
+		{
+			"fieldname": "whatsapp_number",
+			"fieldtype": "Data",
+			"label": "WhatsApp number"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-10 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Branch Website",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 1,
+			"email": 1,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "System Manager",
+			"share": 1,
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"email": 1,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Company Admin",
+			"share": 1,
+			"write": 1
+		},
+		{
+			"read": 1,
+			"role": "Desk User"
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}
