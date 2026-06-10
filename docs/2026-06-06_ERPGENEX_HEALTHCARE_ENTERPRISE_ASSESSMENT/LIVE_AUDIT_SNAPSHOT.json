@@ -1,6 +1,6 @@
 {
   "version": "2026.06.06",
-  "generated_at": "2026-06-10T13:06:47.937460",
+  "generated_at": "2026-06-10T23:03:00.503916",
   "app": "omnexa_healthcare",
   "objective": "Global #1 Healthcare Information System",
   "world_class_readiness_score": 5.0,
@@ -379,12 +379,12 @@
   },
   "functional_audit": {
     "counts": {
-      "doctypes": 80,
-      "child_tables": 13,
-      "pages": 17,
+      "doctypes": 84,
+      "child_tables": 14,
+      "pages": 19,
       "reports": 48,
       "whitelisted_apis": 0,
-      "test_files": 20
+      "test_files": 23
     },
     "doctypes": [
       "Healthcare Admission",
@@ -395,13 +395,16 @@
       "Healthcare Appointment",
       "Healthcare Barcode Scan Log",
       "Healthcare Bed",
+      "Healthcare Branch Website",
       "Healthcare Care Gap",
       "Healthcare Claim Remittance",
       "Healthcare Clinical Ai Insight",
       "Healthcare Clinical Cds Rule",
       "Healthcare Clinical Condition",
       "Healthcare Clinical Template",
+      "Healthcare Companion Stay",
       "Healthcare Consultation Fee Rule",
+      "Healthcare Critical Care Monitoring",
       "Healthcare Dental Chart Entry",
       "Healthcare Dental Treatment Plan",
       "Healthcare Department",
@@ -414,6 +417,7 @@
       "Healthcare Episode Of Care",
       "Healthcare Er Visit",
       "Healthcare Facility Profile",
+      "Healthcare Follow Up Plan",
       "Healthcare Icd10 Code",
       "Healthcare Imaging Modality",
       "Healthcare Immunization",
@@ -474,6 +478,8 @@
       "healthcare-dicom-viewer",
       "healthcare-er-board",
       "healthcare-executive-dashboard",
+      "healthcare-follow-up-plans",
+      "healthcare-icu-board",
       "healthcare-in-basket",
       "healthcare-lab-workbench",
       "healthcare-patient-chart",
@@ -782,9 +788,9 @@
     ]
   },
   "performance": {
-    "patient_records": 162,
+    "patient_records": 232,
     "appointments": 0,
-    "encounters": 17,
+    "encounters": 25,
     "recommendations": [
       "Index appointment_date + branch on Healthcare Appointment",
       "Cache workspace menu after migrate",
@@ -799,7 +805,7 @@
     "accessibility_score": 90,
     "wcag_audit": "WCAG 2.1 AA CSS helpers deployed",
     "rtl_support": true,
-    "i18n_strings": 1279,
+    "i18n_strings": 1343,
     "mobile_pages": 2,
     "journey_wizards": 3,
     "target": "Top 1% global healthcare UX (90+)",

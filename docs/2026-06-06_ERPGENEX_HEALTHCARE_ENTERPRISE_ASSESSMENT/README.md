@@ -1,48 +1,67 @@
-# ERPGenex Healthcare — تقييم مؤسسي وخطة الوصول للمرتبة الأولى عالمياً
+# ERPGenex Healthcare — تقييم مؤسسي وخارطة الوصول للمستوى العالمي
 
-**التاريخ:** 2026-06-06  
-**التطبيق:** `omnexa_healthcare` (ErpGenEx — Healthcare)  
-**الهدف الاستراتيجي:** **#1 عالمياً** بين أنظمة المعلومات الصحية (HIS/EMR/EHR)  
-**المبدأ:** **عدم كسر أي وظيفة قائمة** — إضافات تدريجية + تراجع آمن
+**آخر تحديث:** 2026-06-10  
+**التطبيق:** `omnexa_healthcare`  
+**الهدف الاستراتيجي:** منصة صحية عالمية المستوى (HIS/EMR/EHR + تجربة مريض + telehealth)
+
+---
+
+## ⚠️ قراءة مزدوجة للنتائج
+
+| نوع التقييم | المصدر | النتيجة | ما يعنيه |
+|-------------|--------|---------|----------|
+| **هيكلي (آلي)** | `enterprise_assessment.py` | 100% · 5.00/5 | وجود DocTypes/Pages/APIs |
+| **تشغيلي (استشاري)** | [GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md) | **71/100** | جاهزية إنتاج عالمية |
+
+التقييم الآلي **لا يستبدل** تقييم العمق الوظيفي والUX والتكاملات الإنتاجية.
 
 ---
 
 ## محتويات المجلد
 
-| الملف | المرحلة | الغرض |
-|-------|---------|--------|
-| [EXECUTIVE_REPORT_AR.md](./EXECUTIVE_REPORT_AR.md) | 16 | التقرير التنفيذي النهائي |
-| [ENTERPRISE_AUDIT_AR.md](./ENTERPRISE_AUDIT_AR.md) | 1–3, 6–13 | التدقيق الوظيفي + النضج + الفجوات + الأمن + الأداء + AI |
-| [SPECIALTY_AND_DENTAL_AR.md](./SPECIALTY_AND_DENTAL_AR.md) | 4–5 | محرك التخصصات الديناميكي + مركز تميز الأسنان |
-| [ROADMAP_GLOBAL_NUMBER_ONE_AR.md](./ROADMAP_GLOBAL_NUMBER_ONE_AR.md) | 14 | خارطة الطريق المؤسسية (6 موجات) |
-| [MASTER_CHECKLIST.json](./MASTER_CHECKLIST.json) | 15 | تشيكليست التنفيذ الشامل |
-| [LIVE_AUDIT_SNAPSHOT.json](./LIVE_AUDIT_SNAPSHOT.json) | — | لقطة تدقيق حية من النظام (مُولَّدة آلياً) |
+| الملف | الغرض |
+|-------|--------|
+| **[GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md)** | **الوصف الكامل · المقارنة العالمية · التقييم النهائي** |
+| [GAP_ANALYSIS_17_PHASES_AR.md](./GAP_ANALYSIS_17_PHASES_AR.md) | تدقيق 17 مرحلة (Architecture → BI) |
+| [DEVELOPMENT_ROADMAP_2026_AR.md](./DEVELOPMENT_ROADMAP_2026_AR.md) | خارطة 30 يوم / 90 / 6 / 12 / 24 شهر |
+| [MASTER_CHECKLIST_v2026.json](./MASTER_CHECKLIST_v2026.json) | تشيكليست صريح (موجود/جزئي/ناقص/حرج) |
+| [MASTER_CHECKLIST.json](./MASTER_CHECKLIST.json) | تشيكليست هيكلي (86 بند — مكتمل) |
+| [LIVE_AUDIT_SNAPSHOT.json](./LIVE_AUDIT_SNAPSHOT.json) | لقطة تدقيق حية (مُولَّدة آلياً) |
+| [EXECUTIVE_REPORT_AR.md](./EXECUTIVE_REPORT_AR.md) | تقرير تنفيذي |
+| [ENTERPRISE_AUDIT_AR.md](./ENTERPRISE_AUDIT_AR.md) | تدقيق مؤسسي تفصيلي |
+| [ROADMAP_GLOBAL_NUMBER_ONE_AR.md](./ROADMAP_GLOBAL_NUMBER_ONE_AR.md) | موجات الإغلاق السابقة |
+| [SPECIALTY_AND_DENTAL_AR.md](./SPECIALTY_AND_DENTAL_AR.md) | التخصصات والأسنان |
 
 ---
 
-## الملخص التنفيذي (لقطة حية — محدّثة)
+## ملخص تنفيذي سريع
 
-| المؤشر | القيمة |
-|--------|--------|
-| **World-Class Readiness** | **5.00 / 5.00** |
-| **مؤشر النضج التشغيلي** | **100.0%** |
-| **الترتيب التنافسي** | **#1 / 11** (أمام Epic 4.82) |
-| DocTypes | 80+ |
-| Pages | 17 |
-| Reports | 48 |
-| اختبارات | 20+ ملف |
-| فجوات مفتوحة | **0** (86/86 مكتمل) |
+| المؤشر | هيكلي | استشاري |
+|--------|-------|---------|
+| الجاهزية العالمية | 5.00/5 | **71/100** |
+| Epic parity وظيفي | 100%* | **~78%** |
+| تجربة المريض | — | **68/100** |
+| Telehealth | موجود نوع موعد | **45/100** |
+| الرعاية المنزلية | — | **30/100** |
+| الترتيب العالمي (HIS) | #1 داخلي | **~18–25** |
 
----
+\*وجود مكوّنات
 
-## الموجة الثانية — إغلاق الفجوات ✅
+### أقوى 5 نقاط تنافسية
 
-1. **DocTypes:** Dental Treatment Plan · Orthodontic Case · Installment Plan · Treatment Package
-2. **صفحات:** `healthcare-dental-chart` · `healthcare-specialty-wizard` · `healthcare-patient-journey`
-3. **APIs:** `patient_journey` · `patient_notifications` · `ai_scheduling` · `llm_clinical` · WADO-RS streaming
-4. **أمان:** MFA · HIPAA/GDPR evidence pack · WCAG CSS
-5. **بذر:** `seed_enterprise_gap_closure` — 15 تخصص + إعدادات Healthcare Settings
-6. **اختبارات:** `test_enterprise_gap_closure` — E2E patient journey UAT
+1. عمق HIS (84 DocType) في منصة ERP واحدة  
+2. NPHIES + RCM إقليمي  
+3. محرك تخصصات + مركز أسنان  
+4. ADT/IPD/ER/ICU/LIS/RIS/Pharmacy  
+5. FHIR/HL7/X12 + موقع مستشفى عام  
+
+### أهم 5 فجوات حرجة
+
+1. فيديو telehealth  
+2. دفع مريض أونلاين end-to-end  
+3. رعاية منزلية + RPM  
+4. AI سريري إنتاجي (ليس template)  
+5. تطبيقات مريض native + UX consumer-grade  
 
 ---
 
@@ -52,10 +71,9 @@
 bench --site SITE migrate
 bench build --app omnexa_healthcare
 bench --site SITE execute omnexa_healthcare.enterprise_assessment.execute
-bench --site SITE execute omnexa_healthcare.enterprise_assessment.get_enterprise_assessment
 bench --site SITE run-tests --app omnexa_healthcare
 ```
 
 ---
 
-*ErpGenEx Healthcare · Enterprise Assessment v2026.06.06 · Gap Closure Complete*
+*ErpGenEx Healthcare · Enterprise Assessment · v2026.06.10*

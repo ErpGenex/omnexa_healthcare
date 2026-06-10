@@ -18,6 +18,7 @@
 		"hero_text_ar",
 		"hero_text_en",
 		"website_logo",
+		"hero_image",
 		"primary_color",
 		"column_break_branding",
 		"contact_phone",
@@ -119,6 +120,12 @@
 			"fieldname": "website_logo",
 			"fieldtype": "Attach Image",
 			"label": "Logo"
+		},
+		{
+			"description": "Large hero background image on the hospital homepage (e.g. hospital building photo).",
+			"fieldname": "hero_image",
+			"fieldtype": "Attach Image",
+			"label": "Hero image"
 		},
 		{
 			"default": "#003366",

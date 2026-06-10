@@ -12,6 +12,10 @@ from frappe.utils import cint, flt, get_url
 from omnexa_healthcare.api.web_booking import get_published_services
 from omnexa_healthcare.scheduling_engine import get_available_slots
 
+DEFAULT_HERO_IMAGE = (
+	"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80"
+)
+
 DEPARTMENT_ICONS = {
 	"general": "🏥",
 	"cardiology": "❤️",
@@ -194,6 +198,7 @@ def get_site_config(site: str | None = None, company: str | None = None, branch:
 		"tagline_en": (website.tagline_en if website else "") or "Your care... our priority",
 		"hero_text_ar": website.hero_text_ar if website else "",
 		"hero_text_en": website.hero_text_en if website else "",
+		"hero_image": (website.hero_image if website else "") or DEFAULT_HERO_IMAGE,
 		"logo": website.website_logo if website else "",
 		"primary_color": (website.primary_color if website else "") or "#003366",
 		"contact": {

@@ -127,36 +127,62 @@
 }
 
 .hc-site .hc-hero {
-	background: linear-gradient(135deg, var(--hc-primary) 0%, var(--hc-primary-light) 100%);
 	color: #fff;
-	padding: 72px 0 56px;
 }
 
-.hc-site .hc-hero-grid {
-	display: grid;
-	grid-template-columns: 1.2fr 0.8fr;
-	gap: 32px;
+.hc-site .hc-hero-pro {
+	position: relative;
+	min-height: 520px;
+	display: flex;
 	align-items: center;
+	overflow: hidden;
+}
+
+.hc-site .hc-hero-pro::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, rgba(0, 51, 102, 0.88) 0%, rgba(0, 51, 102, 0.55) 55%, rgba(0, 51, 102, 0.35) 100%);
+	z-index: 1;
+}
+
+.hc-site .hc-hero-bg {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.hc-site .hc-hero-content {
+	position: relative;
+	z-index: 2;
+	padding: 72px 0 56px;
+	max-width: 640px;
 }
 
 .hc-site .hc-hero h1 {
 	font-size: clamp(2rem, 4vw, 3rem);
-	margin: 0 0 12px;
+	margin: 0 0 14px;
 	line-height: 1.2;
 }
 
 .hc-site .hc-hero p {
 	font-size: 1.05rem;
-	opacity: 0.92;
-	line-height: 1.7;
+	opacity: 0.95;
+	line-height: 1.8;
 }
 
-.hc-site .hc-hero-card {
-	background: rgba(255, 255, 255, 0.12);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	border-radius: var(--hc-radius);
-	padding: 24px;
-	backdrop-filter: blur(8px);
+.hc-site .hc-hero-actions {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+	margin-top: 24px;
+}
+
+.hc-site .hc-btn-hero-outline {
+	color: #fff;
+	border-color: #fff;
+	background: transparent;
 }
 
 .hc-site .hc-features-bar {

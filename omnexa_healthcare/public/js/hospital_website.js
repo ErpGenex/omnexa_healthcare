@@ -10,12 +10,12 @@
 		{ icon: "💙", ar: "رعاية عالية الجودة", en: "High-Quality Care" },
 	];
 
-	const SERVICE_VISUALS = {
-		Emergency: "🚑",
-		Laboratory: "🔬",
-		Radiology: "📷",
-		Pharmacy: "💊",
-		default: "🏥",
+	const SERVICE_IMAGES = {
+		Emergency: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+		Laboratory: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80",
+		Radiology: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80",
+		Pharmacy: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+		default: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
 	};
 
 	window.HospitalSite = {
@@ -201,24 +201,21 @@
 			const suffix = this.querySuffix();
 			const hero = document.getElementById("hc-home-hero");
 			if (hero) {
+				const heroImg = this.esc(cfg.hero_image || "");
+				const heroText = cfg[this.textField("hero_text")] || (
+					this.lang === "ar"
+						? "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية."
+						: "A full-service hospital delivering comprehensive care with modern medical technology."
+				);
+				hero.className = "hc-hero hc-hero-pro";
 				hero.innerHTML = `
-					<div class="hc-wrap hc-hero-grid">
-						<div>
-							<h1>${this.esc(cfg[this.textField("tagline")] || "")}</h1>
-							<h2 style="font-weight:500;margin:0 0 16px;">${this.esc(cfg[this.nameField()] || "")}</h2>
-							<p>${this.esc(cfg[this.textField("hero_text")] || (this.lang === "ar" ? "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية." : "A full-service hospital delivering comprehensive care with modern medical technology."))}</p>
-							<div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-								<a class="hc-btn hc-btn-light" href="/hospital/booking${suffix}">${this.t("book_now")}</a>
-								<a class="hc-btn hc-btn-outline" style="color:#fff;border-color:#fff;" href="#hc-contact">${this.t("contact_us")}</a>
-							</div>
-						</div>
-						<div class="hc-hero-card">
-							<h3>${this.lang === "ar" ? "لماذا نحن؟" : "Why choose us?"}</h3>
-							<ul style="line-height:1.9;padding-${this.lang === "ar" ? "right" : "left"}:18px;">
-								<li>${this.lang === "ar" ? "فريق طبي متخصص" : "Specialist medical team"}</li>
-								<li>${this.lang === "ar" ? "حجز إلكتروني سريع" : "Fast online booking"}</li>
-								<li>${this.lang === "ar" ? "خدمات تشخيصية متكاملة" : "Integrated diagnostics"}</li>
-							</ul>
+					<div class="hc-hero-bg" style="background-image:url('${heroImg}')"></div>
+					<div class="hc-wrap hc-hero-content">
+						<h1>${this.esc(cfg[this.textField("tagline")] || "")}</h1>
+						<p>${this.esc(heroText)}</p>
+						<div class="hc-hero-actions">
+							<a class="hc-btn hc-btn-light" href="/hospital/booking${suffix}">${this.t("book_now")}</a>
+							<a class="hc-btn hc-btn-outline hc-btn-hero-outline" href="#hc-contact">${this.t("contact_us")}</a>
 						</div>
 					</div>`;
 			}
@@ -276,12 +273,14 @@
 				servicesWrap.innerHTML = rows.length
 					? `<div class="hc-grid-4">${rows
 							.map((s) => {
-								const icon = SERVICE_VISUALS[s.service_type] || SERVICE_VISUALS.default;
+								const img = SERVICE_IMAGES[s.service_type] || SERVICE_IMAGES.default;
 								return `<div class="hc-card hc-service-card">
-									<div class="hc-service-img">${icon}</div>
-									<h3>${this.esc(s.service_title)}</h3>
-									<p class="text-muted">${this.esc(s.website_description || "")}</p>
-									<a class="hc-btn hc-btn-light" href="/hospital/booking${this.querySuffix({ service: s.service_code })}">${this.t("book_now")}</a>
+									<img class="hc-service-img" src="${this.esc(img)}" alt="">
+									<div class="hc-card-body">
+										<h3>${this.esc(s.service_title)}</h3>
+										<p class="text-muted">${this.esc(s.website_description || "")}</p>
+										<a class="hc-btn hc-btn-light" href="/hospital/booking${this.querySuffix({ service: s.service_code })}">${this.t("book_now")}</a>
+									</div>
 								</div>`;
 							})
 							.join("")}</div>`
