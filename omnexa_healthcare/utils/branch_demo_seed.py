@@ -158,6 +158,28 @@ def _item_has_field(fieldname: str) -> bool:
 def _demo_pharmacy_item_rate(item_code: str, fallback: float = 10.0) -> float:
 	return _DEMO_PHARMACY_RATES.get(item_code, fallback)
 
+
+def _resolve_item_name(item_code: str, company: str) -> str | None:
+	return frappe.db.get_value("Item", {"item_code": item_code, "company": company}, "name")
+
+
+def _stock_entry_item_row(item_name: str, warehouse: str, qty: float, rate: float) -> dict:
+	item_code = frappe.db.get_value("Item", item_name, "item_code")
+	uom = frappe.db.get_value("Item", item_name, "stock_uom") or "Nos"
+	row: dict = {
+		"item": item_name,
+		"item_code": item_code,
+		"qty": qty,
+		"t_warehouse": warehouse,
+		"uom": uom,
+	}
+	item_meta = frappe.get_meta("Stock Entry Item")
+	if item_meta.has_field("rate"):
+		row["rate"] = rate
+	elif item_meta.has_field("basic_rate"):
+		row["basic_rate"] = rate
+	return row
+
 ICD10_SAMPLES = [
 	("I10", "Essential hypertension"),
 	("E11.9", "Type 2 diabetes mellitus"),
@@ -1254,8 +1276,9 @@ class _HospitalDemoSeeder:
 		items: list[str] = []
 		for code, label, rate in PHARMACY_ITEMS:
 			item_code = f"{DEMO_MARKER}{code}"
-			if frappe.db.exists("Item", {"item_code": item_code, "company": self.company}):
-				items.append(item_code)
+			existing = _resolve_item_name(item_code, self.company)
+			if existing:
+				items.append(existing)
 				continue
 			item_payload: dict = {
 				"item_code": item_code,
@@ -1272,25 +1295,33 @@ class _HospitalDemoSeeder:
 			items.append(item.name)
 
 		if items and not frappe.db.exists("Stock Entry", {"remarks": f"{DEMO_MARKER} opening stock"}):
-			se = frappe.get_doc(
-				{
-					"doctype": "Stock Entry",
-					"stock_entry_type": "Material Receipt",
-					"company": self.company,
-					"branch": self.branch if frappe.get_meta("Stock Entry").has_field("branch") else None,
-					"posting_date": today(),
-					"remarks": f"{DEMO_MARKER} opening stock",
-					"items": [
-						{
-							"item_code": ic,
-							"qty": 200,
-							"t_warehouse": wh,
-							"basic_rate": _demo_pharmacy_item_rate(ic),
-						}
-						for ic in items[:5]
-					],
-				}
-			)
+			se_meta = frappe.get_meta("Stock Entry")
+			se_payload: dict = {
+				"doctype": "Stock Entry",
+				"company": self.company,
+				"posting_date": today(),
+				"remarks": f"{DEMO_MARKER} opening stock",
+				"items": [
+					_stock_entry_item_row(
+						item_name,
+						wh,
+						200,
+						_demo_pharmacy_item_rate(
+							frappe.db.get_value("Item", item_name, "item_code") or ""
+						),
+					)
+					for item_name in items[:5]
+				],
+			}
+			if se_meta.has_field("branch"):
+				se_payload["branch"] = self.branch
+			if se_meta.has_field("purpose"):
+				se_payload["purpose"] = "Material Receipt"
+			elif se_meta.has_field("stock_entry_type"):
+				se_payload["stock_entry_type"] = "Material Receipt"
+			if se_meta.has_field("to_warehouse"):
+				se_payload["to_warehouse"] = wh
+			se = frappe.get_doc(se_payload)
 			se.insert(ignore_permissions=True)
 			try:
 				se.submit()
