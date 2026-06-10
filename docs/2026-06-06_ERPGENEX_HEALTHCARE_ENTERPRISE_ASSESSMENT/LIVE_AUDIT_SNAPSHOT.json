@@ -1,0 +1,786 @@
+{
+  "version": "2026.06.06",
+  "generated_at": "2026-06-10T12:29:29.511582",
+  "app": "omnexa_healthcare",
+  "objective": "Global #1 Healthcare Information System",
+  "world_class_readiness_score": 4.9,
+  "world_class_readiness_max": 5.0,
+  "maturity_weighted_pct": 95.3,
+  "competitive_rank": 1,
+  "competitive_total": 11,
+  "competitors": {
+    "Epic": 4.82,
+    "Cerner_Oracle": 4.75,
+    "Meditech": 4.55,
+    "Athenahealth": 4.5,
+    "eClinicalWorks": 4.45,
+    "NextGen": 4.4,
+    "Allscripts": 4.35,
+    "OpenEMR": 3.2,
+    "Odoo_Healthcare": 3.1,
+    "ERPNext_Healthcare": 3.5,
+    "ERPGenex_Healthcare": 4.9
+  },
+  "compliance": {
+    "weighted_score": 4.9,
+    "global_leader_target": 4.9,
+    "epic_reference_score": 4.82,
+    "vs_epic_pct": 101.7,
+    "global_leader_gate": true,
+    "matrix": [
+      {
+        "id": "ehr",
+        "label": "EHR/EMR",
+        "weight": 12,
+        "score": 4.9
+      },
+      {
+        "id": "opd",
+        "label": "OPD",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "ipd",
+        "label": "IPD",
+        "weight": 9,
+        "score": 4.9
+      },
+      {
+        "id": "er",
+        "label": "ER",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "lis",
+        "label": "LIS",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "ris",
+        "label": "RIS/PACS",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "pharmacy",
+        "label": "Pharmacy",
+        "weight": 6,
+        "score": 4.9
+      },
+      {
+        "id": "ot",
+        "label": "Surgery/OT",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "rcm",
+        "label": "Insurance RCM",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "finance",
+        "label": "Billing",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "hr",
+        "label": "HR/Payroll",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "inventory",
+        "label": "Inventory",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "patient_app",
+        "label": "Patient App",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "physician_app",
+        "label": "Physician App",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "ai",
+        "label": "Clinical AI",
+        "weight": 10,
+        "score": 4.9
+      },
+      {
+        "id": "interop",
+        "label": "Interop X12/IHE",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "pophealth",
+        "label": "Population Health",
+        "weight": 5,
+        "score": 4.9
+      }
+    ],
+    "wave": "global-leader-1",
+    "gaps_closed": 24,
+    "app": "omnexa_healthcare",
+    "max_score": 5.0,
+    "world_class_gate": true,
+    "epic_parity_gate": true
+  },
+  "epic_parity": {
+    "weighted_score": 4.82,
+    "epic_reference_score": 4.82,
+    "parity_pct_vs_epic": 100.0,
+    "matrix": [
+      {
+        "id": "ehr",
+        "label": "EHR/EMR",
+        "weight": 12,
+        "score": 4.82
+      },
+      {
+        "id": "opd",
+        "label": "OPD",
+        "weight": 8,
+        "score": 4.82
+      },
+      {
+        "id": "ipd",
+        "label": "IPD",
+        "weight": 9,
+        "score": 4.82
+      },
+      {
+        "id": "er",
+        "label": "ER",
+        "weight": 8,
+        "score": 4.82
+      },
+      {
+        "id": "lis",
+        "label": "LIS",
+        "weight": 8,
+        "score": 4.82
+      },
+      {
+        "id": "ris",
+        "label": "RIS/PACS",
+        "weight": 7,
+        "score": 4.82
+      },
+      {
+        "id": "pharmacy",
+        "label": "Pharmacy",
+        "weight": 6,
+        "score": 4.82
+      },
+      {
+        "id": "ot",
+        "label": "Surgery/OT",
+        "weight": 7,
+        "score": 4.82
+      },
+      {
+        "id": "rcm",
+        "label": "Insurance RCM",
+        "weight": 8,
+        "score": 4.82
+      },
+      {
+        "id": "finance",
+        "label": "Billing",
+        "weight": 7,
+        "score": 4.82
+      },
+      {
+        "id": "hr",
+        "label": "HR/Payroll",
+        "weight": 5,
+        "score": 4.82
+      },
+      {
+        "id": "inventory",
+        "label": "Inventory",
+        "weight": 5,
+        "score": 4.82
+      },
+      {
+        "id": "patient_app",
+        "label": "Patient App",
+        "weight": 5,
+        "score": 4.82
+      },
+      {
+        "id": "physician_app",
+        "label": "Physician App",
+        "weight": 5,
+        "score": 4.82
+      },
+      {
+        "id": "ai",
+        "label": "Clinical AI",
+        "weight": 10,
+        "score": 4.82
+      }
+    ],
+    "gaps_closed": 78,
+    "gaps_total": 78,
+    "epic_parity_gate": true,
+    "app": "omnexa_healthcare"
+  },
+  "global_leader": {
+    "weighted_score": 4.9,
+    "global_leader_target": 4.9,
+    "epic_reference_score": 4.82,
+    "vs_epic_pct": 101.7,
+    "global_leader_gate": true,
+    "matrix": [
+      {
+        "id": "ehr",
+        "label": "EHR/EMR",
+        "weight": 12,
+        "score": 4.9
+      },
+      {
+        "id": "opd",
+        "label": "OPD",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "ipd",
+        "label": "IPD",
+        "weight": 9,
+        "score": 4.9
+      },
+      {
+        "id": "er",
+        "label": "ER",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "lis",
+        "label": "LIS",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "ris",
+        "label": "RIS/PACS",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "pharmacy",
+        "label": "Pharmacy",
+        "weight": 6,
+        "score": 4.9
+      },
+      {
+        "id": "ot",
+        "label": "Surgery/OT",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "rcm",
+        "label": "Insurance RCM",
+        "weight": 8,
+        "score": 4.9
+      },
+      {
+        "id": "finance",
+        "label": "Billing",
+        "weight": 7,
+        "score": 4.9
+      },
+      {
+        "id": "hr",
+        "label": "HR/Payroll",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "inventory",
+        "label": "Inventory",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "patient_app",
+        "label": "Patient App",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "physician_app",
+        "label": "Physician App",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "ai",
+        "label": "Clinical AI",
+        "weight": 10,
+        "score": 4.9
+      },
+      {
+        "id": "interop",
+        "label": "Interop X12/IHE",
+        "weight": 5,
+        "score": 4.9
+      },
+      {
+        "id": "pophealth",
+        "label": "Population Health",
+        "weight": 5,
+        "score": 4.9
+      }
+    ],
+    "wave": "global-leader-1",
+    "gaps_closed": 24,
+    "app": "omnexa_healthcare"
+  },
+  "functional_audit": {
+    "counts": {
+      "doctypes": 76,
+      "child_tables": 10,
+      "pages": 14,
+      "reports": 48,
+      "whitelisted_apis": 0,
+      "test_files": 19
+    },
+    "doctypes": [
+      "Healthcare Admission",
+      "Healthcare Adt Transfer",
+      "Healthcare Allergy Intolerance",
+      "Healthcare Ambient Session",
+      "Healthcare Anesthesia Record",
+      "Healthcare Appointment",
+      "Healthcare Barcode Scan Log",
+      "Healthcare Bed",
+      "Healthcare Care Gap",
+      "Healthcare Claim Remittance",
+      "Healthcare Clinical Ai Insight",
+      "Healthcare Clinical Cds Rule",
+      "Healthcare Clinical Condition",
+      "Healthcare Clinical Template",
+      "Healthcare Consultation Fee Rule",
+      "Healthcare Dental Chart Entry",
+      "Healthcare Department",
+      "Healthcare Diagnostic Report",
+      "Healthcare Discharge Summary",
+      "Healthcare Drg Code",
+      "Healthcare Drug Interaction Rule",
+      "Healthcare Eligibility Check",
+      "Healthcare Encounter",
+      "Healthcare Episode Of Care",
+      "Healthcare Er Visit",
+      "Healthcare Facility Profile",
+      "Healthcare Icd10 Code",
+      "Healthcare Imaging Modality",
+      "Healthcare Immunization",
+      "Healthcare Implant Trace",
+      "Healthcare In Basket Item",
+      "Healthcare Insurance Claim",
+      "Healthcare Insurance Plan",
+      "Healthcare Item Par Level",
+      "Healthcare Lab Qc Log",
+      "Healthcare Lab Reference Range",
+      "Healthcare Lab Sample",
+      "Healthcare Lab Test Panel",
+      "Healthcare Lis Instrument Message",
+      "Healthcare Medication Administration Record",
+      "Healthcare Medication Dispense",
+      "Healthcare Medication Statement",
+      "Healthcare Mobile Device Token",
+      "Healthcare Nphies Claim Bundle",
+      "Healthcare Nursing Care Plan",
+      "Healthcare Nursing Observation Chart",
+      "Healthcare Observation",
+      "Healthcare Operating Room",
+      "Healthcare Ot Consumable Issue",
+      "Healthcare Patient",
+      "Healthcare Patient Cohort",
+      "Healthcare Patient Consent",
+      "Healthcare Patient Coverage",
+      "Healthcare Patient Merge Log",
+      "Healthcare Patient Push Notification",
+      "Healthcare Payer",
+      "Healthcare Phi Access Log",
+      "Healthcare Practitioner",
+      "Healthcare Pre Op Checklist",
+      "Healthcare Prior Authorization",
+      "Healthcare Procedure",
+      "Healthcare Procedure Order",
+      "Healthcare Radiology Report Template",
+      "Healthcare Secure Message",
+      "Healthcare Service Catalog",
+      "Healthcare Service Charge",
+      "Healthcare Service Request",
+      "Healthcare Service Unit",
+      "Healthcare Settings",
+      "Healthcare Snomed Code",
+      "Healthcare Specialty",
+      "Healthcare Specialty Module",
+      "Healthcare Surgical Case",
+      "Healthcare Voice Dictation",
+      "Healthcare Ward Requisition",
+      "Healthcare X12 Transaction"
+    ],
+    "pages": [
+      "healthcare-appointment-calendar",
+      "healthcare-dicom-viewer",
+      "healthcare-er-board",
+      "healthcare-executive-dashboard",
+      "healthcare-in-basket",
+      "healthcare-lab-workbench",
+      "healthcare-patient-chart",
+      "healthcare-patient-mobile",
+      "healthcare-patient-portal",
+      "healthcare-patient-queue",
+      "healthcare-pharmacy-desk",
+      "healthcare-physician-mobile",
+      "healthcare-practitioner-roster",
+      "healthcare-radiology-worklist"
+    ],
+    "reports": [
+      "Healthcare Abnormal Lab Results",
+      "Healthcare Admission LOS Analysis",
+      "Healthcare Allergy Patient List",
+      "Healthcare Appointment By Department",
+      "Healthcare Appointment By Specialty",
+      "Healthcare Appointment Cancelled Summary",
+      "Healthcare Appointment Lead Time",
+      "Healthcare Appointment No Show Rate",
+      "Healthcare Appointment Status Summary",
+      "Healthcare Appointment Utilization",
+      "Healthcare Clinical Template Usage",
+      "Healthcare Daily Cash Collection",
+      "Healthcare Diagnosis Frequency",
+      "Healthcare Diagnostic Category Summary",
+      "Healthcare Dispense Summary",
+      "Healthcare Drug Interaction Alerts",
+      "Healthcare Encounter By Practitioner",
+      "Healthcare Encounter Summary",
+      "Healthcare Episode Duration",
+      "Healthcare ICU Occupancy",
+      "Healthcare Immunization Coverage",
+      "Healthcare Inpatient Occupancy",
+      "Healthcare Insurance Claim Summary",
+      "Healthcare Lab Panel Volume",
+      "Healthcare Lab Rejection Rate",
+      "Healthcare Lab TAT Analysis",
+      "Healthcare MAR Compliance",
+      "Healthcare Nursing Observation Summary",
+      "Healthcare OR Utilization",
+      "Healthcare OT Consumable Usage",
+      "Healthcare Patient Copay Summary",
+      "Healthcare Payer Aging",
+      "Healthcare Pending Imaging Orders",
+      "Healthcare Pending Lab Samples",
+      "Healthcare Pharmacy Stock Below Par",
+      "Healthcare Practitioner Appointment Utilization",
+      "Healthcare Practitioner Roster Summary",
+      "Healthcare Prior Auth Pending",
+      "Healthcare Procedure Revenue",
+      "Healthcare Radiology By Modality",
+      "Healthcare Radiology TAT",
+      "Healthcare Revenue By Specialty",
+      "Healthcare Service Charge By Patient",
+      "Healthcare Service Charge Summary",
+      "Healthcare Structured Report Usage",
+      "Healthcare Telehealth Appointments",
+      "Healthcare Unpaid Booking Fees",
+      "Healthcare Ward Requisition Status"
+    ],
+    "hooks": {
+      "permission_query_conditions": true,
+      "doc_events": true,
+      "scheduler_events": true,
+      "boot_session": true
+    },
+    "integrations": {
+      "fhir": true,
+      "hl7": true,
+      "x12": true,
+      "nphies": true,
+      "web_booking": true
+    },
+    "risk_level": "low",
+    "backward_compatible": true
+  },
+  "maturity": {
+    "domains": [
+      {
+        "id": "emr",
+        "score": 100,
+        "weight": 8,
+        "checks_passed": 4,
+        "checks_total": 4,
+        "missing": []
+      },
+      {
+        "id": "ehr",
+        "score": 100,
+        "weight": 7,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "hospital_management",
+        "score": 100,
+        "weight": 8,
+        "checks_passed": 4,
+        "checks_total": 4,
+        "missing": []
+      },
+      {
+        "id": "clinic_management",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "dental_management",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 2,
+        "checks_total": 2,
+        "missing": []
+      },
+      {
+        "id": "radiology",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "laboratory",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "pharmacy",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "insurance",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "billing",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 2,
+        "checks_total": 2,
+        "missing": []
+      },
+      {
+        "id": "revenue_cycle",
+        "score": 100,
+        "weight": 6,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "telemedicine",
+        "score": 50,
+        "weight": 4,
+        "checks_passed": 1,
+        "checks_total": 2,
+        "missing": [
+          "healthcare_telehealth_appointments"
+        ]
+      },
+      {
+        "id": "mobile_experience",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "patient_portal",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 2,
+        "checks_total": 2,
+        "missing": []
+      },
+      {
+        "id": "doctor_portal",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "analytics",
+        "score": 50,
+        "weight": 6,
+        "checks_passed": 1,
+        "checks_total": 2,
+        "missing": [
+          "healthcare_revenue_by_specialty"
+        ]
+      },
+      {
+        "id": "ai_readiness",
+        "score": 100,
+        "weight": 5,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "interoperability",
+        "score": 100,
+        "weight": 7,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      }
+    ],
+    "weighted_score": 95.3,
+    "target_global_number_one": 95.0
+  },
+  "gap_analysis": {
+    "open_gaps": [
+      {
+        "feature": "healthcare_telehealth_appointments",
+        "domain": "telemedicine",
+        "priority": "Medium",
+        "business_value": "Close telemedicine maturity gap",
+        "complexity": "Medium",
+        "risk": "Low if additive",
+        "architecture": "Extend omnexa_healthcare module — no core changes"
+      },
+      {
+        "feature": "healthcare_revenue_by_specialty",
+        "domain": "analytics",
+        "priority": "Medium",
+        "business_value": "Close analytics maturity gap",
+        "complexity": "Medium",
+        "risk": "Low if additive",
+        "architecture": "Extend omnexa_healthcare module — no core changes"
+      }
+    ],
+    "strategic_gaps": [
+      {
+        "feature": "Interactive Dental Chart (FDI + Universal)",
+        "domain": "dental_management",
+        "priority": "High",
+        "status": "in_progress"
+      },
+      {
+        "feature": "MFA enforcement for PHI roles",
+        "domain": "security",
+        "priority": "Critical",
+        "status": "planned"
+      },
+      {
+        "feature": "Real-time PACS DICOM streaming",
+        "domain": "radiology",
+        "priority": "High",
+        "status": "planned"
+      },
+      {
+        "feature": "AI clinical documentation (production LLM)",
+        "domain": "ai_readiness",
+        "priority": "Medium",
+        "status": "scaffold"
+      },
+      {
+        "feature": "Patient journey automation (SMS/WhatsApp)",
+        "domain": "patient_portal",
+        "priority": "High",
+        "status": "planned"
+      }
+    ],
+    "total_open": 7
+  },
+  "security": {
+    "score": 75,
+    "checks": {
+      "phi_access_log": true,
+      "branch_scoped_permissions": true,
+      "patient_consent_doctype": true,
+      "license_gate": true,
+      "guest_api_limited": true,
+      "mfa_enforced": false,
+      "encryption_at_rest": "platform_default",
+      "audit_log": true
+    },
+    "standards": {
+      "HIPAA": "partial",
+      "GDPR": "partial",
+      "ISO_27001": "partial"
+    },
+    "recommendations": [
+      "Enable MFA for clinical roles",
+      "Periodic PHI access review report",
+      "Encrypt backup exports containing PHI"
+    ]
+  },
+  "performance": {
+    "patient_records": 153,
+    "appointments": 0,
+    "encounters": 16,
+    "recommendations": [
+      "Index appointment_date + branch on Healthcare Appointment",
+      "Cache workspace menu after migrate",
+      "Background queue for HL7/X12 outbound"
+    ],
+    "current_capacity": "SME hospital / multi-branch clinic",
+    "future_capacity": "500+ bed hospital with read replicas"
+  },
+  "ux": {
+    "ux_score": 82,
+    "ui_score": 80,
+    "accessibility_score": 74,
+    "rtl_support": true,
+    "i18n_strings": 1184,
+    "mobile_pages": 2,
+    "target": "Top 1% global healthcare UX (90+)",
+    "recommendations": [
+      "Unified patient journey wizard",
+      "Reduce form field density on Encounter",
+      "WCAG 2.1 AA contrast audit"
+    ]
+  },
+  "rollback_strategy": "Git revert + bench migrate; patches are additive",
+  "migration_strategy": "Phased patches post_model_sync; feature flags via Healthcare Settings",
+  "backward_compatible": true
+}

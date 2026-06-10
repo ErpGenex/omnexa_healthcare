@@ -65,6 +65,14 @@ def validate_icd10_code(code: str | None) -> None:
 def _specialty_form(specialty: str | None) -> dict:
 	if not specialty:
 		return {}
+	try:
+		from omnexa_healthcare.specialty_engine import get_specialty_module_for_specialty
+
+		mod = get_specialty_module_for_specialty(specialty)
+		if mod and mod.get("encounter_sections"):
+			return {"sections": mod["encounter_sections"], "module_code": mod.get("module_code"), "chart_type": mod.get("chart_type")}
+	except Exception:
+		pass
 	spec_name = frappe.db.get_value("Healthcare Specialty", specialty, "specialty_name") or specialty
 	for key, form in SPECIALTY_FORMS.items():
 		if key.lower() in (spec_name or "").lower():

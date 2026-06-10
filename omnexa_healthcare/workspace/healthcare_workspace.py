@@ -49,6 +49,8 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Snomed Code", "SNOMED Codes"),
 			("DocType", "Healthcare Drg Code", "DRG Codes"),
 			("DocType", "Healthcare Clinical Template", "Clinical Templates"),
+			("DocType", "Healthcare Specialty Module", "Specialty Modules"),
+			("DocType", "Healthcare Dental Chart Entry", "Dental Chart"),
 			("DocType", "Healthcare Procedure", "Procedures"),
 			("DocType", "Healthcare Lab Test Panel", "Lab Test Panels"),
 			("DocType", "Healthcare Lab Reference Range", "Lab Reference Ranges"),
