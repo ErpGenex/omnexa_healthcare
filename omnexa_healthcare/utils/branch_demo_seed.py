@@ -180,6 +180,22 @@ def _stock_entry_item_row(item_name: str, warehouse: str, qty: float, rate: floa
 		row["basic_rate"] = rate
 	return row
 
+
+def _invoice_item_row(item_name: str, qty: float, rate: float) -> dict:
+	item_code = frappe.db.get_value("Item", item_name, "item_code")
+	return {"item": item_name, "item_code": item_code, "qty": qty, "rate": rate}
+
+
+def _service_charge_line(item_name: str, description: str, qty: float, rate: float) -> dict:
+	item_code = frappe.db.get_value("Item", item_name, "item_code")
+	return {
+		"item": item_name,
+		"item_code": item_code,
+		"description": description,
+		"qty": qty,
+		"rate": rate,
+	}
+
 ICD10_SAMPLES = [
 	("I10", "Essential hypertension"),
 	("E11.9", "Type 2 diabetes mellitus"),
@@ -436,6 +452,30 @@ class _HospitalDemoSeeder:
 		doc.insert(ignore_permissions=True)
 		self._bump(doctype)
 		return doc
+
+	def _demo_billing_item(self) -> str:
+		"""Service item for OPD billing demo (Sales Invoice + Service Charge lines)."""
+		cached = self.ctx.get("billing_item")
+		if cached and frappe.db.exists("Item", cached):
+			return cached
+		item_code = f"{DEMO_MARKER}OPD-SVC"
+		existing = _resolve_item_name(item_code, self.company)
+		if existing:
+			self.ctx["billing_item"] = existing
+			return existing
+		payload: dict = {
+			"item_code": item_code,
+			"item_name": f"{DEMO_MARKER} OPD Consultation Service",
+			"company": self.company,
+			"stock_uom": "Nos",
+			"is_stock_item": 0,
+			"is_sales_item": 1,
+		}
+		if _item_has_field("product_type"):
+			payload["product_type"] = "Service"
+		item = self._insert("Item", payload)
+		self.ctx["billing_item"] = item.name
+		return item.name
 
 	def _seed_masters(self) -> None:
 		for code, desc in ICD10_SAMPLES:
@@ -1005,6 +1045,7 @@ class _HospitalDemoSeeder:
 			if frappe.db.exists("Healthcare Treatment Package", package_code):
 				continue
 			spec_link = self._resolve_specialty(spec_label, SPECIALTY_LABEL_BY_CODE.get(spec_label, spec_label[:3].upper()))
+			billing_item = self._demo_billing_item()
 			self._insert(
 				"Healthcare Treatment Package",
 				{
@@ -1014,7 +1055,16 @@ class _HospitalDemoSeeder:
 					"total_price": total_price,
 					"company": self.company,
 					"is_active": 1,
-					"items": [{"procedure": proc, "qty": 1, "rate": rate, "amount": rate} for proc, rate in items],
+					"items": [
+						{
+							"item_code": billing_item,
+							"procedure": proc,
+							"qty": 1,
+							"rate": rate,
+							"amount": rate,
+						}
+						for proc, rate in items
+					],
 				},
 			)
 
@@ -1366,6 +1416,7 @@ class _HospitalDemoSeeder:
 			customer = frappe.db.get_value("Healthcare Patient", patient, "billing_customer")
 			if not customer:
 				continue
+			billing_item = self._demo_billing_item()
 			charge = self._insert(
 				"Healthcare Service Charge",
 				{
@@ -1378,16 +1429,8 @@ class _HospitalDemoSeeder:
 					"status": "Draft",
 					"reporting_tag": REPORTING_TAG,
 					"items": [
-						{
-							"description": "Consultation fee",
-							"qty": 1,
-							"rate": 350,
-						},
-						{
-							"description": "Laboratory panel",
-							"qty": 1,
-							"rate": 450,
-						},
+						_service_charge_line(billing_item, "Consultation fee", 1, 350),
+						_service_charge_line(billing_item, "Laboratory panel", 1, 450),
 					],
 				},
 			)
@@ -1398,6 +1441,7 @@ class _HospitalDemoSeeder:
 		if not frappe.db.exists("DocType", "Sales Invoice"):
 			return
 		try:
+			billing_item = self._demo_billing_item()
 			si = frappe.get_doc(
 				{
 					"doctype": "Sales Invoice",
@@ -1407,14 +1451,7 @@ class _HospitalDemoSeeder:
 					"posting_date": add_days(today(), -(idx % 10)),
 					"due_date": add_days(today(), 15),
 					"remarks": f"{DEMO_MARKER} OPD billing {patient}",
-					"items": [
-						{
-							"item_code": None,
-							"item_name": "OPD Consultation (demo)",
-							"qty": 1,
-							"rate": 350,
-						}
-					],
+					"items": [_invoice_item_row(billing_item, 1, 350)],
 				}
 			)
 			si.insert(ignore_permissions=True)
