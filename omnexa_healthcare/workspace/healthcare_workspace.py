@@ -27,6 +27,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("Page", "healthcare-radiology-worklist", "Radiology Worklist"),
 			("Page", "healthcare-dicom-viewer", "DICOM Viewer"),
 			("Page", "healthcare-pharmacy-desk", "Pharmacy Desk"),
+			("Page", "healthcare-patient-chart", "Patient Medical File"),
 			("Page", "healthcare-patient-portal", "Patient Portal"),
 			("Page", "healthcare-patient-mobile", "Patient Mobile"),
 			("Page", "healthcare-physician-mobile", "Physician Mobile"),
@@ -60,7 +61,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		"👤 MPI & Patient Access",
 		[
 			("DocType", "Healthcare Patient", "Patient"),
-			("DocType", "Customer", "Customer (ERP)"),
+			("Page", "healthcare-patient-chart", "Patient Medical File"),
 			("DocType", "Healthcare Patient Merge Log", "Patient Merge Log"),
 			("DocType", "Healthcare Patient Consent", "Patient Consent"),
 			("DocType", "Healthcare Phi Access Log", "PHI Audit Log"),

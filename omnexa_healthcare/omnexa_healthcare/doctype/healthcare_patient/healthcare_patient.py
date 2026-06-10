@@ -8,9 +8,13 @@ from frappe.model.document import Document
 
 class HealthcarePatient(Document):
 	def validate(self):
+		from omnexa_healthcare.patient_billing import ensure_patient_billing_account, ensure_patient_identifiers
+
+		ensure_patient_identifiers(self)
 		self._set_full_name()
 		self._validate_branch_company_match()
 		self._validate_managing_facility()
+		ensure_patient_billing_account(self)
 		self._validate_billing_customer()
 		self._validate_identifiers()
 		self._validate_telecom()
@@ -59,9 +63,9 @@ class HealthcarePatient(Document):
 			return
 		c_company = frappe.db.get_value("Customer", self.billing_customer, "company")
 		if not c_company:
-			frappe.throw(_("Customer does not exist."), title=_("Customer"))
+			frappe.throw(_("Billing account does not exist."), title=_("Patient"))
 		if c_company != self.company:
-			frappe.throw(_("Billing customer must belong to the same company."), title=_("Customer"))
+			frappe.throw(_("Billing account must belong to the same company."), title=_("Patient"))
 
 	def _validate_identifiers(self):
 		if not self.identifiers:

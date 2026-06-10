@@ -24,10 +24,12 @@ class HealthcareServiceCharge(Document):
 			frappe.throw(_("Branch belongs to a different company."), title=_("Company"))
 
 	def _validate_patient_and_customer(self):
+		from omnexa_healthcare.patient_billing import ensure_patient_billing_account
+
 		pdata = frappe.db.get_value(
 			"Healthcare Patient",
 			self.patient,
-			["company", "branch"],
+			["company", "branch", "billing_customer"],
 			as_dict=True,
 		)
 		if not pdata:
@@ -35,10 +37,12 @@ class HealthcareServiceCharge(Document):
 		if pdata.company != self.company or pdata.branch != self.branch:
 			frappe.throw(_("Patient must belong to the same company and branch."), title=_("Patient"))
 		if not self.billing_customer:
-			frappe.throw(_("Billing customer is required."), title=_("Customer"))
+			self.billing_customer = ensure_patient_billing_account(self.patient) or pdata.billing_customer
+		if not self.billing_customer:
+			frappe.throw(_("Patient billing account could not be resolved."), title=_("Patient"))
 		c_company = frappe.db.get_value("Customer", self.billing_customer, "company")
 		if c_company != self.company:
-			frappe.throw(_("Customer belongs to a different company."), title=_("Customer"))
+			frappe.throw(_("Billing account belongs to a different company."), title=_("Patient"))
 
 	def _validate_encounter_admission(self):
 		if self.encounter:

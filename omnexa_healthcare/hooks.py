@@ -26,7 +26,7 @@ required_apps = ["omnexa_core", "omnexa_accounting"]
 
 # include js, css files in header of desk.html
 app_include_css = "/assets/omnexa_healthcare/css/healthcare-rtl.css"
-# app_include_js = "/assets/omnexa_healthcare/js/omnexa_healthcare.js"
+app_include_js = "/assets/omnexa_healthcare/js/healthcare_terminology.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/omnexa_healthcare/css/omnexa_healthcare.css"
@@ -44,10 +44,13 @@ app_include_css = "/assets/omnexa_healthcare/css/healthcare-rtl.css"
 
 # include js in doctype views
 doctype_js = {
+	"Healthcare Patient": "public/js/healthcare_patient.js",
 	"Healthcare Service Charge": "public/js/healthcare_service_charge.js",
 	"Healthcare Medication Dispense": "public/js/healthcare_medication_dispense.js",
 	"Healthcare Appointment": "public/js/healthcare_appointment.js",
 }
+
+boot_session = "omnexa_healthcare.healthcare_boot.boot_session"
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}

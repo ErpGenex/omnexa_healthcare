@@ -64,11 +64,12 @@
 			"fetch_from": "patient.billing_customer",
 			"fieldname": "billing_customer",
 			"fieldtype": "Link",
-			"in_list_view": 1,
-			"label": "Billing customer",
+			"hidden": 1,
+			"label": "Billing account (ERP)",
 			"options": "Customer",
+			"read_only": 1,
 			"reqd": 1,
-			"description": "Invoiced party (Omnexa Accounting). Pulled from patient when set."
+			"description": "Auto from patient — hidden in healthcare UI."
 		},
 		{
 			"fieldname": "company",

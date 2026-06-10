@@ -1,0 +1,15 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-patient-chart",
+	"page_name": "healthcare-patient-chart",
+	"standard": "Yes",
+	"title": "Patient Medical File",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Physician"},
+		{"role": "Nursing User"},
+		{"role": "Desk User"}
+	]
+}

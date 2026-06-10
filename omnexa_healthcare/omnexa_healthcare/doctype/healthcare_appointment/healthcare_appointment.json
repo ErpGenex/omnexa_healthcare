@@ -28,6 +28,7 @@
 		"tab_break_billing",
 		"booking_fee",
 		"payment_status",
+		"booking_channel",
 		"service_charge",
 		"owner_user"
 	],
@@ -171,6 +172,14 @@
 			"fieldtype": "Select",
 			"label": "Payment Status",
 			"options": "Unpaid\nPartially Paid\nPaid\nWaived"
+		},
+		{
+			"default": "Desk",
+			"fieldname": "booking_channel",
+			"fieldtype": "Select",
+			"label": "Booking Channel",
+			"options": "Desk\nWebsite\nPortal\nMobile",
+			"in_list_view": 1
 		},
 		{
 			"fieldname": "service_charge",

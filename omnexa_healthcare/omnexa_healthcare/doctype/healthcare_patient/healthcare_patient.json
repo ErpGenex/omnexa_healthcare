@@ -166,9 +166,11 @@
 		{
 			"fieldname": "billing_customer",
 			"fieldtype": "Link",
-			"label": "Billing customer",
+			"hidden": 1,
+			"label": "Billing account (ERP)",
 			"options": "Customer",
-			"description": "Customer master in Omnexa Accounting used for Sales Invoice / receivables for this patient."
+			"read_only": 1,
+			"description": "Auto-linked receivables account — not shown in healthcare workflows."
 		},
 		{
 			"fieldname": "sb_name",
