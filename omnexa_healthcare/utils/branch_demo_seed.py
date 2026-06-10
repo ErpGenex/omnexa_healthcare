@@ -61,6 +61,30 @@ DENTAL_DEMO_TEETH: list[tuple[str, str, str]] = [
 	("46", "B", "healthy"),
 ]
 
+# patient_index, module_code, plan_type, practitioner_key
+DEMO_FOLLOW_UP_ASSIGNMENTS: list[tuple[int, str, str, str]] = [
+	(0, "orthopedics", "rehabilitation", "ORT"),
+	(1, "gynecology", "antenatal", "GYN"),
+	(2, "physiotherapy", "physiotherapy", "ORT"),
+	(3, "oncology", "chemotherapy", "GEN"),
+	(4, "cardiology", "chronic_care", "CAR"),
+	(5, "surgery", "post_op", "GEN"),
+	(6, "pediatrics", "chronic_care", "PED"),
+	(7, "dermatology", "dermatology_course", "DER"),
+	(8, "neurology", "chronic_care", "GEN"),
+	(9, "gastroenterology", "chronic_care", "GEN"),
+	(10, "ophthalmology", "post_op", "GEN"),
+	(11, "urology", "post_op", "GEN"),
+	(12, "psychiatry", "psychotherapy", "GEN"),
+	(13, "dental", "dental", "DEN"),
+	(14, "orthopedics", "post_op", "ORT"),
+	(15, "gynecology", "postnatal", "GYN"),
+	(16, "cardiology", "chronic_care", "CAR"),
+	(17, "physiotherapy", "physiotherapy", "ORT"),
+	(18, "oncology", "chemotherapy", "GEN"),
+	(19, "surgery", "post_op", "GEN"),
+]
+
 TREATMENT_PACKAGES: list[tuple[str, str, str, float, list[tuple[str, float]]]] = [
 	(
 		f"{DEMO_MARKER}DENTAL-CHECKUP",
@@ -228,6 +252,7 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 	filters_base = {"company": company, "branch": branch}
 
 	delete_order = [
+		"Healthcare Follow Up Plan",
 		"Healthcare Orthodontic Case",
 		"Healthcare Dental Treatment Plan",
 		"Healthcare Dental Chart Entry",
@@ -348,6 +373,7 @@ class _HospitalDemoSeeder:
 			"specialty_modules": self.ctx.get("specialty_modules_count", 0),
 			"dental_charts": self.stats.get("Healthcare Dental Chart Entry", 0),
 			"treatment_plans": self.stats.get("Healthcare Dental Treatment Plan", 0),
+			"follow_up_plans": self.stats.get("Healthcare Follow Up Plan", 0),
 		}
 
 	def _bump(self, key: str, n: int = 1) -> None:
@@ -917,6 +943,45 @@ class _HospitalDemoSeeder:
 						],
 					},
 				)
+
+		self._seed_multi_visit_follow_up_plans(patients, practitioners)
+
+	def _seed_multi_visit_follow_up_plans(self, patients: list[str], practitioners: dict[str, str]) -> None:
+		from omnexa_healthcare.api.follow_up_plan import create_follow_up_plan
+
+		for patient_idx, module_code, plan_type, pr_key in DEMO_FOLLOW_UP_ASSIGNMENTS:
+			if patient_idx >= len(patients):
+				continue
+			patient = patients[patient_idx]
+			specialty = frappe.db.get_value("Healthcare Specialty Module", module_code, "specialty")
+			if not specialty:
+				continue
+			existing = frappe.db.exists(
+				"Healthcare Follow Up Plan",
+				{"patient": patient, "specialty": specialty, "plan_type": plan_type, "plan_title": ["like", f"%{DEMO_MARKER}%"]},
+			)
+			if existing:
+				continue
+			try:
+				out = create_follow_up_plan(
+					patient=patient,
+					specialty=specialty,
+					plan_type=plan_type,
+					plan_title=f"{DEMO_MARKER} {module_code.replace('_', ' ').title()} follow-up",
+					practitioner=practitioners.get(pr_key),
+					company=self.company,
+					branch=self.branch,
+					start_date=add_days(today(), -(patient_idx % 5) * 7),
+				)
+				plan_name = out.get("name")
+				if plan_name and patient_idx % 3 == 0:
+					plan_doc = frappe.get_doc("Healthcare Follow Up Plan", plan_name)
+					if plan_doc.visits:
+						plan_doc.visits[0].status = "completed"
+						plan_doc.save(ignore_permissions=True)
+				self._bump("Healthcare Follow Up Plan")
+			except Exception:
+				frappe.log_error(frappe.get_traceback(), f"DEMO-HC follow-up plan {module_code} patient {patient_idx}")
 
 	def _seed_website_services_and_bookings(self) -> None:
 		depts = self.ctx.get("departments") or {}

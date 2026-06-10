@@ -18,7 +18,8 @@
 		"procedure_workflow",
 		"billing_workflow",
 		"insurance_workflow",
-		"inventory_workflow"
+		"inventory_workflow",
+		"follow_up_workflow"
 	],
 	"fields": [
 		{"fieldname": "module_name", "fieldtype": "Data", "in_list_view": 1, "label": "Module Name", "reqd": 1},
@@ -40,7 +41,8 @@
 		{"fieldname": "procedure_workflow", "fieldtype": "JSON", "label": "Procedure Workflow"},
 		{"fieldname": "billing_workflow", "fieldtype": "JSON", "label": "Billing Workflow"},
 		{"fieldname": "insurance_workflow", "fieldtype": "JSON", "label": "Insurance Workflow"},
-		{"fieldname": "inventory_workflow", "fieldtype": "JSON", "label": "Inventory Workflow"}
+		{"fieldname": "inventory_workflow", "fieldtype": "JSON", "label": "Inventory Workflow"},
+		{"fieldname": "follow_up_workflow", "fieldtype": "JSON", "label": "Follow-up Workflow"}
 	],
 	"module": "Omnexa Healthcare",
 	"name": "Healthcare Specialty Module",

@@ -17,11 +17,20 @@ frappe.pages["healthcare-patient-journey"].on_page_load = function (wrapper) {
 			args: { patient: p },
 			callback(r) {
 				const j = r.message || {};
-				$steps.html(`<h5>${__("Progress")}: ${j.progress_pct || 0}%</h5><ul class="list-group">` +
+				let html = `<h5>${__("Progress")}: ${j.progress_pct || 0}%</h5><ul class="list-group">` +
 					(j.steps || []).map((s) => {
 						const badge = s.state === "completed" ? "success" : s.state === "pending" ? "warning" : "secondary";
 						return `<li class="list-group-item d-flex justify-content-between"><span>${frappe.utils.escape_html(s.label)}</span><span class="badge bg-${badge}">${frappe.utils.escape_html(s.state)}</span></li>`;
-					}).join("") + "</ul>");
+					}).join("") + "</ul>";
+				if ((j.follow_up_plans || []).length) {
+					html += `<h5 class="mt-3">${__("Multi-Visit Follow-up Plans")}</h5><ul class="list-group">` +
+						j.follow_up_plans.map((p) =>
+							`<li class="list-group-item d-flex justify-content-between">
+								<span>${frappe.utils.escape_html(p.plan_title)} — ${frappe.utils.escape_html(p.specialty_name || "")}</span>
+								<span class="badge bg-info">${p.progress_pct || 0}%</span></li>`
+						).join("") + "</ul>";
+				}
+				$steps.html(html);
 			},
 		});
 	});

@@ -37,7 +37,7 @@ class TestEnterpriseGapClosure(unittest.TestCase):
 		if not patient:
 			self.skipTest("No patient")
 		journey = get_patient_journey(patient)
-		self.assertEqual(len(journey["steps"]), 9)
+		self.assertEqual(len(journey["steps"]), 10)
 		self.assertIn("progress_pct", journey)
 
 	def test_new_doctypes_exist(self):

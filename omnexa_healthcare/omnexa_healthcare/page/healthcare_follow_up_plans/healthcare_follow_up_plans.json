@@ -1,0 +1,22 @@
+{
+	"content": null,
+	"creation": "2026-06-06 00:00:00",
+	"docstatus": 0,
+	"doctype": "Page",
+	"idx": 0,
+	"modified": "2026-06-06 00:00:00",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-follow-up-plans",
+	"page_name": "healthcare-follow-up-plans",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Physician"},
+		{"role": "Desk User"},
+		{"role": "Nursing User"}
+	],
+	"script": null,
+	"standard": "Yes",
+	"system_page": 0,
+	"title": "Specialty Follow-up Plans"
+}

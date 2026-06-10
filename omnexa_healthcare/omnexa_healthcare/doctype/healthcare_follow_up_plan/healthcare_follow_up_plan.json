@@ -1,0 +1,61 @@
+{
+	"actions": [],
+	"autoname": "format:HFUP-{YYYY}-{#####}",
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"patient",
+		"plan_title",
+		"plan_type",
+		"specialty",
+		"practitioner",
+		"encounter",
+		"column_break_1",
+		"company",
+		"branch",
+		"status",
+		"start_date",
+		"expected_end_date",
+		"section_visits",
+		"visits",
+		"notes"
+	],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "in_list_view": 1, "in_standard_filter": 1, "label": "Patient", "options": "Healthcare Patient", "reqd": 1},
+		{"fieldname": "plan_title", "fieldtype": "Data", "in_list_view": 1, "label": "Plan Title", "reqd": 1},
+		{
+			"default": "general",
+			"fieldname": "plan_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"in_standard_filter": 1,
+			"label": "Plan Type",
+			"options": "general\nrehabilitation\nantenatal\npostnatal\nchronic_care\npost_op\nchemotherapy\nphysiotherapy\ndental\npsychotherapy\ndermatology_course"
+		},
+		{"fieldname": "specialty", "fieldtype": "Link", "in_list_view": 1, "in_standard_filter": 1, "label": "Specialty", "options": "Healthcare Specialty", "reqd": 1},
+		{"fieldname": "practitioner", "fieldtype": "Link", "label": "Practitioner", "options": "Healthcare Practitioner"},
+		{"fieldname": "encounter", "fieldtype": "Link", "label": "Index Encounter", "options": "Healthcare Encounter"},
+		{"fieldname": "column_break_1", "fieldtype": "Column Break"},
+		{"default": "active", "fieldname": "status", "fieldtype": "Select", "in_list_view": 1, "label": "Status", "options": "draft\nactive\ncompleted\ncancelled"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch"},
+		{"fieldname": "start_date", "fieldtype": "Date", "in_list_view": 1, "label": "Start Date"},
+		{"fieldname": "expected_end_date", "fieldtype": "Date", "label": "Expected End Date"},
+		{"fieldname": "section_visits", "fieldtype": "Section Break", "label": "Scheduled Visits"},
+		{"fieldname": "visits", "fieldtype": "Table", "label": "Visits", "options": "Healthcare Follow Up Plan Visit"},
+		{"fieldname": "notes", "fieldtype": "Small Text", "label": "Notes"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Follow Up Plan",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "report": 1, "export": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1},
+		{"role": "Physician", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 1},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0},
+		{"role": "Nursing User", "read": 1, "write": 1, "create": 1, "delete": 0, "report": 1, "export": 0}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"track_changes": 1
+}

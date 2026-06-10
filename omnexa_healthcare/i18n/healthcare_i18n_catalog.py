@@ -243,6 +243,8 @@ DOCTYPE_AR: dict[str, str] = {
 	"Healthcare Installment Plan Line": "بند خطة تقسيط",
 	"Healthcare Treatment Package": "باقة علاج",
 	"Healthcare Treatment Package Item": "بند باقة علاج",
+	"Healthcare Follow Up Plan": "خطة متابعة تخصصية",
+	"Healthcare Follow Up Plan Visit": "زيارة خطة المتابعة",
 }
 
 # Report names (Healthcare …)

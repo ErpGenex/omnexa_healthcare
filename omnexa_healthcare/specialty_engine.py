@@ -10,6 +10,8 @@ import json
 import frappe
 from frappe import _
 
+from omnexa_healthcare.follow_up_templates import FOLLOW_UP_PLAN_TEMPLATES, MULTI_VISIT_MODULE_CODES
+
 
 DEFAULT_SPECIALTY_MODULES: list[dict] = [
 	{
@@ -74,7 +76,19 @@ def get_specialty_module_for_specialty(specialty: str | None) -> dict | None:
 	row = frappe.db.get_value(
 		"Healthcare Specialty Module",
 		{"specialty": specialty, "is_active": 1},
-		["name", "module_code", "module_name", "chart_type", "encounter_sections", "consultation_workflow", "procedure_workflow", "billing_workflow", "insurance_workflow", "inventory_workflow"],
+		[
+			"name",
+			"module_code",
+			"module_name",
+			"chart_type",
+			"encounter_sections",
+			"consultation_workflow",
+			"procedure_workflow",
+			"billing_workflow",
+			"insurance_workflow",
+			"inventory_workflow",
+			"follow_up_workflow",
+		],
 		as_dict=True,
 	)
 	if not row:
@@ -90,7 +104,16 @@ def get_specialty_module_for_specialty(specialty: str | None) -> dict | None:
 		"billing_workflow": _json_load(row.billing_workflow),
 		"insurance_workflow": _json_load(row.insurance_workflow),
 		"inventory_workflow": _json_load(row.inventory_workflow),
+		"follow_up_workflow": _json_load(row.follow_up_workflow),
+		"supports_multi_visit_follow_up": row.module_code in MULTI_VISIT_MODULE_CODES,
 	}
+
+
+@frappe.whitelist()
+def list_multi_visit_specialty_modules() -> list[dict]:
+	from omnexa_healthcare.api.follow_up_plan import list_multi_visit_specialties
+
+	return list_multi_visit_specialties()
 
 
 @frappe.whitelist()
@@ -130,22 +153,30 @@ def seed_default_specialty_modules(company: str | None = None) -> int:
 			)
 			doc.insert(ignore_permissions=True)
 			specialty = doc.name
+		follow_up = FOLLOW_UP_PLAN_TEMPLATES.get(spec["module_code"], {})
+		payload = {
+			"doctype": "Healthcare Specialty Module",
+			"module_code": spec["module_code"],
+			"module_name": spec["module_name"],
+			"specialty": specialty,
+			"chart_type": spec.get("chart_type", "none"),
+			"encounter_sections": json.dumps(spec.get("encounter_sections", [])),
+			"consultation_workflow": json.dumps(spec.get("consultation_workflow", {})),
+			"billing_workflow": json.dumps(spec.get("billing_workflow", {})),
+			"follow_up_workflow": json.dumps(follow_up) if follow_up else None,
+			"is_active": 1,
+			**({"company": company} if company else {}),
+		}
 		if frappe.db.exists("Healthcare Specialty Module", spec["module_code"]):
+			if follow_up:
+				frappe.db.set_value(
+					"Healthcare Specialty Module",
+					spec["module_code"],
+					"follow_up_workflow",
+					json.dumps(follow_up),
+				)
 			continue
-		doc = frappe.get_doc(
-			{
-				"doctype": "Healthcare Specialty Module",
-				"module_code": spec["module_code"],
-				"module_name": spec["module_name"],
-				"specialty": specialty,
-				"chart_type": spec.get("chart_type", "none"),
-				"encounter_sections": json.dumps(spec.get("encounter_sections", [])),
-				"consultation_workflow": json.dumps(spec.get("consultation_workflow", {})),
-				"billing_workflow": json.dumps(spec.get("billing_workflow", {})),
-				"is_active": 1,
-				**({"company": company} if company else {}),
-			}
-		)
+		doc = frappe.get_doc(payload)
 		doc.insert(ignore_permissions=True)
 		created += 1
 	return created

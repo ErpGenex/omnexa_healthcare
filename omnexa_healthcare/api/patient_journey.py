@@ -18,7 +18,8 @@ JOURNEY_STEPS = [
 	{"id": "investigation", "label": "Investigation", "doctype": "Healthcare Service Request"},
 	{"id": "treatment", "label": "Treatment", "doctype": "Healthcare Procedure Order"},
 	{"id": "billing", "label": "Billing", "doctype": "Healthcare Service Charge"},
-	{"id": "follow_up", "label": "Follow-up", "doctype": "Healthcare Appointment"},
+	{"id": "follow_up_plan", "label": "Multi-Visit Follow-up Plan", "doctype": "Healthcare Follow Up Plan"},
+	{"id": "follow_up", "label": "Follow-up Appointment", "doctype": "Healthcare Appointment"},
 ]
 
 
@@ -31,11 +32,16 @@ def get_patient_journey(patient: str) -> dict:
 		status = _step_status(patient, step)
 		steps.append({**step, **status})
 	completed = sum(1 for s in steps if s.get("state") == "completed")
+	from omnexa_healthcare.api.follow_up_plan import get_patient_follow_up_plans
+
+	follow_up_plans = get_patient_follow_up_plans(patient)
 	return {
 		"patient": patient,
 		"steps": steps,
 		"progress_pct": round(completed / len(steps) * 100) if steps else 0,
 		"friction_points": [s["id"] for s in steps if s.get("state") == "pending" and s["id"] in ("confirmation", "check_in")],
+		"follow_up_plans": follow_up_plans,
+		"active_follow_up_plans": sum(1 for p in follow_up_plans if p.get("status") == "active"),
 	}
 
 
