@@ -146,6 +146,18 @@ PHARMACY_ITEMS: list[tuple[str, str, float]] = [
 	("GAUZE", "Sterile Gauze Pack", 22.0),
 ]
 
+_DEMO_PHARMACY_RATES: dict[str, float] = {
+	f"{DEMO_MARKER}{code}": rate for code, _, rate in PHARMACY_ITEMS
+}
+
+
+def _item_has_field(fieldname: str) -> bool:
+	return bool(frappe.get_meta("Item").has_field(fieldname))
+
+
+def _demo_pharmacy_item_rate(item_code: str, fallback: float = 10.0) -> float:
+	return _DEMO_PHARMACY_RATES.get(item_code, fallback)
+
 ICD10_SAMPLES = [
 	("I10", "Essential hypertension"),
 	("E11.9", "Type 2 diabetes mellitus"),
@@ -1245,17 +1257,18 @@ class _HospitalDemoSeeder:
 			if frappe.db.exists("Item", {"item_code": item_code, "company": self.company}):
 				items.append(item_code)
 				continue
-			item = self._insert(
-				"Item",
-				{
-					"item_code": item_code,
-					"item_name": f"{DEMO_MARKER} {label}",
-					"company": self.company,
-					"stock_uom": "Nos",
-					"is_stock_item": 1,
-					"standard_rate": rate,
-				},
-			)
+			item_payload: dict = {
+				"item_code": item_code,
+				"item_name": f"{DEMO_MARKER} {label}",
+				"company": self.company,
+				"stock_uom": "Nos",
+				"is_stock_item": 1,
+			}
+			if _item_has_field("standard_rate"):
+				item_payload["standard_rate"] = rate
+			if _item_has_field("product_type"):
+				item_payload["product_type"] = "Consumable"
+			item = self._insert("Item", item_payload)
 			items.append(item.name)
 
 		if items and not frappe.db.exists("Stock Entry", {"remarks": f"{DEMO_MARKER} opening stock"}):
@@ -1272,7 +1285,7 @@ class _HospitalDemoSeeder:
 							"item_code": ic,
 							"qty": 200,
 							"t_warehouse": wh,
-							"basic_rate": frappe.db.get_value("Item", ic, "standard_rate") or 10,
+							"basic_rate": _demo_pharmacy_item_rate(ic),
 						}
 						for ic in items[:5]
 					],
