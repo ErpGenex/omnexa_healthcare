@@ -23,6 +23,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("Page", "healthcare-practitioner-roster", "Practitioner Roster"),
 			("Page", "healthcare-in-basket", "In Basket"),
 			("Page", "healthcare-er-board", "ER Board"),
+			("Page", "healthcare-icu-board", "ICU / NICU Board"),
 			("Page", "healthcare-lab-workbench", "Lab Workbench"),
 			("Page", "healthcare-radiology-worklist", "Radiology Worklist"),
 			("Page", "healthcare-dicom-viewer", "DICOM Viewer"),
@@ -117,6 +118,8 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		[
 			("DocType", "Healthcare Bed", "Bed"),
 			("DocType", "Healthcare Admission", "Admission"),
+			("DocType", "Healthcare Companion Stay", "Companion Stay"),
+			("DocType", "Healthcare Critical Care Monitoring", "ICU / NICU Monitoring"),
 			("DocType", "Healthcare Adt Transfer", "ADT Transfer"),
 			("DocType", "Healthcare Nursing Care Plan", "Nursing Care Plan"),
 			("DocType", "Healthcare Discharge Summary", "Discharge Summary"),

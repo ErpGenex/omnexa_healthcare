@@ -26,6 +26,9 @@ DEPARTMENTS: list[tuple[str, str, str]] = [
 	("PHM", "Pharmacy", "Pharmacy"),
 	("ER", "Emergency", "Emergency"),
 	("IPD", "Inpatient Ward", "Ward"),
+	("ICU", "Intensive Care Unit", "ICU"),
+	("NICU", "Neonatal ICU (Yellow Nursery)", "NICU"),
+	("CMP", "Companion Lodging", "Companion Ward"),
 	("SUR", "Surgery", "Service Unit"),
 ]
 
@@ -270,6 +273,8 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 		"Healthcare Clinical Condition",
 		"Healthcare Allergy Intolerance",
 		"Healthcare Er Visit",
+		"Healthcare Critical Care Monitoring",
+		"Healthcare Companion Stay",
 		"Healthcare Admission",
 		"Healthcare Encounter",
 		"Healthcare Appointment",
@@ -354,6 +359,7 @@ class _HospitalDemoSeeder:
 		self._seed_masters()
 		if self.patient_count:
 			self._seed_patients_and_journeys()
+			self._seed_critical_care_demo()
 			self._seed_specialty_excellence()
 		self._seed_website_services_and_bookings()
 		if self.include_financial:
@@ -466,6 +472,29 @@ class _HospitalDemoSeeder:
 			)
 			beds.append(bed.name)
 		self.ctx["beds"] = beds
+
+		critical_beds: dict[str, str] = {}
+		for label, unit_key, bed_type in (
+			("ICU-01", "ICU", "ICU"),
+			("ICU-02", "ICU", "HDU"),
+			("NICU-01", "NICU", "NICU"),
+			("Nursery-01", "NICU", "Nursery"),
+			("CMP-01", "CMP", "Companion"),
+			("CMP-02", "CMP", "Companion"),
+		):
+			b = self._insert(
+				"Healthcare Bed",
+				{
+					"bed_label": f"{DEMO_MARKER} {label}",
+					"company": self.company,
+					"branch": self.branch,
+					"service_unit": units[unit_key],
+					"bed_type": bed_type,
+					"status": "Available",
+				},
+			)
+			critical_beds[label] = b.name
+		self.ctx["critical_beds"] = critical_beds
 
 		practitioners: dict[str, str] = {}
 		unit_map = {
@@ -820,6 +849,104 @@ class _HospitalDemoSeeder:
 				)
 
 		self.ctx["patients"] = patients
+
+	def _seed_critical_care_demo(self) -> None:
+		patients = self.ctx.get("patients") or []
+		beds = self.ctx.get("critical_beds") or {}
+		if len(patients) < 6 or not beds:
+			return
+		icu_admit = self._insert(
+			"Healthcare Admission",
+			{
+				"naming_series": "ADM-.#####",
+				"patient": patients[3],
+				"company": self.company,
+				"branch": self.branch,
+				"admission_class": "emergency",
+				"status": "admitted",
+				"bed": beds["ICU-01"],
+				"admission_datetime": f"{add_days(today(), -1)} 09:00:00",
+			},
+		)
+		nicu_admit = self._insert(
+			"Healthcare Admission",
+			{
+				"naming_series": "ADM-.#####",
+				"patient": patients[4],
+				"company": self.company,
+				"branch": self.branch,
+				"admission_class": "emergency",
+				"status": "admitted",
+				"bed": beds["NICU-01"],
+				"admission_datetime": f"{add_days(today(), -2)} 11:30:00",
+			},
+		)
+		self._insert(
+			"Healthcare Critical Care Monitoring",
+			{
+				"patient": patients[3],
+				"admission": icu_admit.name,
+				"bed": beds["ICU-01"],
+				"care_unit": "ICU",
+				"recorded_at": now_datetime(),
+				"heart_rate": 98,
+				"respiratory_rate": 18,
+				"spo2": 96.0,
+				"bp_systolic": 128,
+				"bp_diastolic": 78,
+				"temperature_c": 37.1,
+				"fio2_percent": 40.0,
+				"company": self.company,
+				"branch": self.branch,
+			},
+		)
+		self._insert(
+			"Healthcare Critical Care Monitoring",
+			{
+				"patient": patients[4],
+				"admission": nicu_admit.name,
+				"bed": beds["NICU-01"],
+				"care_unit": "NICU",
+				"recorded_at": now_datetime(),
+				"heart_rate": 142,
+				"respiratory_rate": 42,
+				"spo2": 91.0,
+				"temperature_c": 36.8,
+				"weight_g": 2100.0,
+				"gestational_age_weeks": 34.0,
+				"company": self.company,
+				"branch": self.branch,
+			},
+		)
+		ipd_beds = self.ctx.get("beds") or []
+		if ipd_beds:
+			ipd_admit = self._insert(
+				"Healthcare Admission",
+				{
+					"naming_series": "ADM-.#####",
+					"patient": patients[5],
+					"company": self.company,
+					"branch": self.branch,
+					"admission_class": "elective",
+					"status": "admitted",
+					"bed": ipd_beds[8],
+					"admission_datetime": f"{add_days(today(), -3)} 10:00:00",
+				},
+			)
+			self._insert(
+				"Healthcare Companion Stay",
+				{
+					"patient": patients[5],
+					"admission": ipd_admit.name,
+					"companion_name": "Ahmed Hassan (demo escort)",
+					"relationship": "Father",
+					"bed": beds["CMP-01"],
+					"check_in_datetime": f"{add_days(today(), -1)} 18:00:00",
+					"status": "active",
+					"company": self.company,
+					"branch": self.branch,
+				},
+			)
 
 	def _resolve_specialty(self, label: str, fallback_code: str | None = None) -> str:
 		code = frappe.db.get_value("Healthcare Specialty", {"specialty_name": label})

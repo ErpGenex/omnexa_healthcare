@@ -6,6 +6,8 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import now_datetime
 
+from omnexa_healthcare.bed_units import is_companion_bed
+
 
 class HealthcareAdmission(Document):
 	def validate(self):
@@ -99,11 +101,16 @@ class HealthcareAdmission(Document):
 			bdoc = frappe.db.get_value(
 				"Healthcare Bed",
 				self.bed,
-				["company", "branch"],
+				["company", "branch", "bed_type"],
 				as_dict=True,
 			)
 			if not bdoc or bdoc.company != self.company or bdoc.branch != self.branch:
 				frappe.throw(_("Bed must belong to the same company and branch."), title=_("Bed"))
+			if is_companion_bed(bdoc.bed_type):
+				frappe.throw(
+					_("Companion beds are for escort lodging only. Use Companion Stay, not patient Admission."),
+					title=_("Bed"),
+				)
 
 	def after_insert(self):
 		self._sync_bed_status()

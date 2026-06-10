@@ -154,6 +154,8 @@ permission_query_conditions = {
 	"Healthcare Insurance Claim": "omnexa_healthcare.permissions.healthcare_insurance_claim_query_conditions",
 	"Healthcare Operating Room": "omnexa_healthcare.permissions.healthcare_operating_room_query_conditions",
 	"Healthcare Surgical Case": "omnexa_healthcare.permissions.healthcare_surgical_case_query_conditions",
+	"Healthcare Companion Stay": "omnexa_healthcare.permissions.healthcare_companion_stay_query_conditions",
+	"Healthcare Critical Care Monitoring": "omnexa_healthcare.permissions.healthcare_critical_care_monitoring_query_conditions",
 }
 
 # DocType Class
@@ -207,6 +209,8 @@ _BRANCH_VALIDATE = [
 	"Healthcare Er Visit",
 	"Healthcare In Basket Item",
 	"Healthcare Adt Transfer",
+	"Healthcare Companion Stay",
+	"Healthcare Critical Care Monitoring",
 	"Healthcare Nursing Care Plan",
 	"Healthcare Discharge Summary",
 	"Healthcare Eligibility Check",

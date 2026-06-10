@@ -51,6 +51,7 @@ Age Max,الحد الأقصى للعمر
 Age Min,الحد الأدنى للعمر
 AI Insights,رؤى الذكاء الاصطناعي
 Alert,تنبيه
+Alert Level,مستوى التنبيه
 Allergies,الحساسيات
 Allergies / adverse reactions (summary),الحساسيات / التفاعلات الضارة (ملخص)
 Allergy,حساسية
@@ -70,6 +71,7 @@ Android,Android
 Anesthesia Record,سجل التخدير
 Anesthesia Type,نوع التخدير
 Anesthesiologist,طبيب التخدير
+antenatal,متابعة حمل
 Antibiotics Prophylaxis,الوقاية بالمضادات الحيوية
 Appliance Type,نوع الجهاز
 Appointment,موعد
@@ -143,6 +145,8 @@ Book a service,احجز خدمة
 Booking / Consultation Fee,حجز / استشارة رسوم
 Booking Channel,قناة الحجز
 both,كلاهما
+BP Diastolic (mmHg),ضغط انبساطي (مم زئبق)
+BP Systolic (mmHg),ضغط انقباضي (مم زئبق)
 Branch,الفرع
 Branch (optional),الفرع (اختياري)
 Branch Assignments,تعيينات الفروع
@@ -158,6 +162,7 @@ Care & Safety (summary),الرعاية والسلامة (ملخص)
 Care Gap,رعاية فجوة
 Care Gaps,فجوات الرعاية
 Care Manager,مدير الرعاية
+Care Unit,وحدة الرعاية
 caries,تسوس
 Category,الفئة
 CDS Rules,قواعد الدعم القراري السريري
@@ -166,9 +171,13 @@ Change Ticket,تذكرة تغيير
 Channel,القناة
 Chapter,الفصل
 Chart Type,نوع المخطط
+Check-in,تسجيل الدخول
+Check-out,تسجيل الخروج
+chemotherapy,علاج كيميائي
 Chief Complaint,الشكوى الرئيسية
 Chief Complaint Hint,تلميح الشكوى الرئيسية
 Chronic Care,رعاية مزمنة
+chronic_care,رعاية مزمنة
 chronic_disease,مرض مزمن
 Circulating Nurse,ممرضة الدوران
 City,المدينة
@@ -198,6 +207,13 @@ Cohort Name,اسم المجموعة
 collected,مجمّع
 Collected at,تاريخ الجمع
 community,مجتمعي
+Companion,مرافق
+Companion Bed,سرير المرافق
+Companion ID Number,رقم هوية المرافق
+Companion Name,اسم المرافق
+Companion Phone,هاتف المرافق
+Companion Stay,إقامة مرافق
+Companion Ward,جناح المرافقين
 Company,الشركة
 Company (optional scope),الشركة (نطاق اختياري)
 Complete,مكتمل
@@ -235,6 +251,7 @@ Coverage %,تغطية %
 Create Customer,إنشاء مريض
 Criteria JSON,معايير JSON
 Critical,حرج
+Critical Care Monitoring,Critical Care Monitoring
 Criticality,الخطورة
 CRM Customer Revenue,إيرادات المرضى
 crown,تاج
@@ -272,6 +289,7 @@ Default Rate,السعر الافتراضي
 Default Service Unit,وحدة الخدمة الافتراضية
 Demographics,البيانات الديموغرافية
 Denied,مرفوض
+dental,dental
 Dental Chart,مخطط الأسنان
 Dental Chart Entry,إدخال مخطط أسنان
 Dental Treatment Plan,خطة علاج أسنان
@@ -282,6 +300,7 @@ Department,القسم
 Department Code,قسم رمز
 Department Head,رئيس القسم
 Department Name,اسم القسم
+dermatology_course,دورة علاج جلدية
 Description,الوصف
 Desk,مكتب
 Details,التفاصيل
@@ -303,7 +322,7 @@ Discharge,خروج
 Discharge Date/Time,تاريخ/وقت الخروج
 Discharge date/time,تاريخ/وقت الخروج
 Discharge Summary,ملخص الخروج
-discharged,مُخرج
+discharged,مُخرَج
 Dispense Summary,صرف ملخص
 dispensed,مُصرف
 Dispensed at,تاريخ الصرف
@@ -385,6 +404,7 @@ Estimated Duration (months),المدة التقديرية (أشهر)
 exam,فحص
 Executive Dashboard,لوحة القيادة التنفيذية
 Expected discharge,الخروج المتوقع
+Expected End Date,Expected End Date
 Expected Range,المدى المتوقع
 Expired,منتهي
 Expiry Date,تاريخ الانتهاء
@@ -398,6 +418,7 @@ Failed,فشل
 Family / Last Name,اسم العائلة
 Family name,اسم العائلة
 Fast Track,مسار سريع
+Father,أب
 fax,فاكس
 FDI,FDI
 Female,أنثى
@@ -411,10 +432,15 @@ Finding (narrative),النتيجة (سردية)
 Finding Code,رمز النتيجة
 Findings,النتائج
 finished,منتهٍ
+FiO2 (%),FiO2 (%)
 First name,الاسم الأول
 First Visit Rate,معدل الزيارة الأولى
+Follow Up Plan,Follow Up Plan
+Follow Up Plan Visit,Follow Up Plan Visit
+Follow Up Plans,Follow Up Plans
 Follow-up,متابعة
 Follow-up Rate,معدل المتابعة
+Follow-up Workflow,سير عمل المتابعة
 food,طعام
 Frequency,التكرار
 Friday,الجمعة
@@ -427,6 +453,8 @@ Further,إضافي
 Gap Type,نوع الفجوة
 Gender,الجنس
 General,عام
+general,general
+Gestational Age (weeks),عمر الحمل (أسابيع)
 Given,معطى
 Given / First Name,الاسم الأول
 Goals,الأهداف
@@ -463,7 +491,9 @@ Healthcare Clinical Cds Rule,قاعدة دعم قراري سريري
 Healthcare Clinical Condition,حالة مرضية
 Healthcare Clinical Template,قالب سريري
 Healthcare Clinical Template Usage,استخدام القوالب السريرية
+Healthcare Companion Stay,إقامة مرافق
 Healthcare Consultation Fee Rule,قاعدة رسوم استشارة
+Healthcare Critical Care Monitoring,مراقبة عناية مركزة / حضانة
 Healthcare Daily Cash Collection,التحصيل النقدي اليومي
 Healthcare Dental Chart Entry,إدخال مخطط أسنان
 Healthcare Dental Treatment Plan,خطة علاج أسنان
@@ -489,7 +519,10 @@ Healthcare ER Board,لوحة الطوارئ
 Healthcare Er Visit,زيارة طوارئ
 Healthcare Executive Dashboard,لوحة القيادة التنفيذية
 Healthcare Facility Profile,ملف منشأة
+Healthcare Follow Up Plan,خطة متابعة تخصصية
+Healthcare Follow Up Plan Visit,زيارة خطة المتابعة
 Healthcare Icd10 Code,رمز ICD-10
+Healthcare ICU Board,لوحة العناية المركزة / الحضانة
 Healthcare ICU Occupancy,إشغال العناية المركزة
 Healthcare Imaging Modality,طريقة تصوير
 Healthcare Immunization,تطعيم
@@ -589,6 +622,7 @@ Healthcare Ward Requisition Item,بند طلب قسم
 Healthcare Ward Requisition Status,قسم طلب حالة
 Healthcare X12 Transaction,معاملة X12
 healthy,سليم
+Heart Rate (bpm),معدل النبض (نبضة/د)
 heart_rate,معدل النبض
 Held,معلّق
 High,مرتفع
@@ -604,6 +638,9 @@ ICD-10 Code,ICD-10 رمز
 ICD-10 Codes,رموز ICD-10
 Icd10 Code,رمز ICD-10
 ICU,ICU
+ICU / NICU Board,لوحة العناية المركزة / الحضانة
+ICU / NICU Monitoring,مراقبة العناية المركزة / حضانة
+Icu Board,Icu Board
 ICU Occupancy,إشغال العناية المركزة
 Identifier Type,نوع المعرّف
 Identifier Use,استخدام المعرّف
@@ -636,6 +673,7 @@ Inactive,غير نشط
 inactive,غير نشط
 Inbound,وارد
 Include laboratory observations in IPS FHIR export,تضمين قياسات المختبر في تصدير IPS FHIR
+Index Encounter,الزيارة السريرية المرجعية
 Info,معلومات
 inpatient,تنويم
 Inpatient Occupancy,إشغال المنوّمين
@@ -754,6 +792,7 @@ Middle Name,الاسم الأوسط
 mild,خفيف
 Minor,ثانوي
 Missed,فائت
+missed,فائت
 missing,مفقود
 Mobile,جوال
 mobile,محمول
@@ -769,6 +808,7 @@ Module Name,اسم الوحدة
 Monday,الاثنين
 Monthly,شهري
 More,المزيد
+Mother,أم
 MPI & Patient Access,سجل المرضى والوصول
 MR,MR
 MRN,MRN
@@ -779,9 +819,11 @@ National ID,الهوية الوطنية
 Nationality,الجنسية
 Neuro,أعصاب
 New Customer,مريض جديد
+NICU,حضانة أطفال
 NM,NM
 No Show,رقم غياب
 none,لا شيء
+Normal,طبيعي
 Not Eligible,غير مؤهل
 not-done,لم يُنفّذ
 not-taken,لم يُؤخذ
@@ -790,6 +832,7 @@ Notes,ملاحظات
 NPHIES Bundle,حزمة نفيس
 Nphies Claim Bundle,حزمة مطالبة نفيس
 Nurse,ممرض/ة
+Nursery,الحضانة الصفراء
 Nursing Care Plan,خطة الرعاية التمريضية
 Nursing Chart,مخطط التمريض
 Nursing Diagnosis,تمريض تشخيص
@@ -856,6 +899,7 @@ Partially Paid,مدفوع جزئياً
 Passport,جواز سفر
 pathology,مرضيات
 Patient,مريض
+Patient Admission,قبول المريض
 Patient billing account could not be resolved.,تعذّر تحديد حساب فوترة المريض.
 Patient Chart,مريض مخطط
 Patient Cohort,مريض مجموعة
@@ -903,21 +947,25 @@ Phone,هاتف
 phone,هاتف
 physical,جسدي
 Physician Mobile,تطبيق الطبيب
+physiotherapy,علاج طبيعي
 plan,خطة
 Plan Code,خطة رمز
 Plan Name,اسم الخطة
 Plan Template,خطة قالب
 Plan Title,عنوان الخطة
+Plan Type,نوع الخطة
 planned,مخطط
 Planned Date,التاريخ المخطط
 Platform,المنصة
 Policy Reference,مرجع الوثيقة
 Portal,بوابة
 post_acute,رعاية ما بعد حادة
+post_op,متابعة ما بعد العملية
 postal,بريدي
 Postal Code,الرمز البريدي
 Posting,ترحيل
 Posting date,تاريخ الترحيل
+postnatal,متابعة ما بعد الولادة
 Practitioner,طبيب
 Practitioner Appointment Utilization,طبيب موعد استخدام
 Practitioner Branch,طبيب فرع
@@ -958,6 +1006,7 @@ Processing,قيد المعالجة
 proposal,مقترح
 Protocol,البروتوكول
 provisional,مؤقت
+psychotherapy,علاج نفسي
 PT,PT
 Publish on Website,النشر على الموقع
 Published services,الخدمات المنشورة
@@ -987,7 +1036,8 @@ Reason for Visit (narrative),سبب الزيارة (سردي)
 Received,مستلم
 Recipient,المستلم
 Recommendation,التوصية
-Recorded By,سُجّل بواسطة
+Recorded At,وقت التسجيل
+Recorded By,سجّله
 Recorded Date,تاريخ التسجيل
 Recording,تسجيل
 recurrence,تكرار
@@ -1005,6 +1055,7 @@ rehabilitation,تأهيل
 Rejected,مرفوض
 rejected,مرفوض
 relapse,انتكاسة
+Relationship,صلة القرابة
 Relative Weight,الوزن النسبي
 Reminder hours before appointment,ساعات التذكير قبل الموعد
 remission,هدأة
@@ -1017,11 +1068,13 @@ Reporting Tag,وسم التقرير
 Request Category,فئة الطلب
 Request Owner,مسؤول الطلب
 Request Title,عنوان الطلب
+requested,مطلوب
 Require active patient for new encounters,اشتراط مريض نشط للزيارات الجديدة
 Requisition Date,تاريخ الطلب
 Research,بحث
 Reserved,محجوز
 resolved,محلول
+Respiratory Rate (/min),معدل الت respiration (/د)
 Response JSON,استجابة JSON
 Restrict secondary use / analytics sharing,تقييد الاستخدام الثانوي / مشاركة التحليلات
 Result,النتيجة
@@ -1047,9 +1100,11 @@ Sample Type,نوع العينة
 Saturday,السبت
 Schedule Lines,بنود الجدول
 Scheduled,مجدول
+scheduled,مجدول
 Scheduled End,نهاية مجدولة
 Scheduled Start,بداية مجدولة
 Scheduled Time,الوقت المجدول
+Scheduled Visits,الزيارات المجدولة
 Screening,فحص
 Scrub Nurse,ممرضة التعقيم
 Secondary,ثانوي
@@ -1082,6 +1137,7 @@ Settings,الإعدادات
 Setup,تهيئة
 severe,شديد
 Severity,الشدة
+Sibling,أخ/أخت
 Signature,التوقيع
 Signed,موقّع
 Signed On,تاريخ التوقيع
@@ -1099,6 +1155,8 @@ Source Patient,المريض المصدر
 Specialty,التخصص
 Specialty (optional filter),التخصص (فلتر اختياري)
 Specialty Code,تخصص رمز
+Specialty Follow-up Plan,خطة متابعة تخصصية
+Specialty Follow-up Plans,خطط المتابعة التخصصية
 Specialty Module,وحدة تخصص
 Specialty Modules,وحدات التخصص
 Specialty Name,اسم التخصص
@@ -1106,6 +1164,8 @@ Specialty Onboarding Wizard,معالج إعداد التخصص
 Specialty Wizard,معالج التخصص
 Specimen / barcode ID,عينة / باركود ID
 spo2,تشبع الأكسجين
+SpO2 (%),تشبع الأكسجين (%)
+Spouse,زوج/زوجة
 SSN,SSN
 Start,البداية
 Start Date,تاريخ البدء
@@ -1147,6 +1207,7 @@ Telecom value is required on each row.,قيمة وسيلة الاتصال مطل
 Telehealth,رعاية عن بُعد
 Telehealth Appointments,رعاية عن بُعد مواعيد
 temp,مؤقت
+Temperature (°C),درجة الحرارة (°م)
 Template Name,اسم القالب
 Test / Control,فحص / ضابط
 Test Name,اسم الفحص
@@ -1212,11 +1273,13 @@ Value,القيمة
 Value (primary),القيمة (أساسية)
 Value (secondary),القيمة (ثانوية)
 Values,القيم
+Ventilator Mode,وضع التنفس الاصطناعي
 Verification Status,حالة التحقق
 Verified,مُحقق
 VI,VI
 virtual,افتراضي
 Visit #,زيارة #
+Visit Objective,هدف الزيارة
 Visits,زيارات
 vital-signs,علامات حيوية
 Vitals,علامات حيوية
@@ -1242,6 +1305,7 @@ Website Display Order,ترتيب العرض في الموقع
 Wednesday,الأربعاء
 Weekly,أسبوعي
 Weekly Schedule,الجدول الأسبوعي
+Weight (g),الوزن (جم)
 WhatsApp webhook URL,رابط webhook لواتساب
 "When an MRN is recorded, exactly one row must be marked as Primary MRN.",عند تسجيل رقم ملف طبي، يجب تحديد صف واحد فقط كرقم ملف طبي أساسي.
 WHO Checklist Complete,اكتمال قائمة منظمة الصحة العالمية

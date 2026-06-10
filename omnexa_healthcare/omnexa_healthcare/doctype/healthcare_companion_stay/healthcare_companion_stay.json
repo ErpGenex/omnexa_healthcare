@@ -1,0 +1,131 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"admission",
+		"companion_name",
+		"relationship",
+		"companion_phone",
+		"companion_id_number",
+		"bed",
+		"check_in_datetime",
+		"check_out_datetime",
+		"status",
+		"company",
+		"branch",
+		"notes"
+	],
+	"fields": [
+		{
+			"default": "CMP-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "CMP-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient Admission",
+			"options": "Healthcare Admission",
+			"reqd": 1
+		},
+		{
+			"fieldname": "companion_name",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Companion Name",
+			"reqd": 1
+		},
+		{
+			"default": "Other",
+			"fieldname": "relationship",
+			"fieldtype": "Select",
+			"label": "Relationship",
+			"options": "Father\nMother\nSpouse\nSibling\nOther"
+		},
+		{
+			"fieldname": "companion_phone",
+			"fieldtype": "Data",
+			"label": "Companion Phone"
+		},
+		{
+			"fieldname": "companion_id_number",
+			"fieldtype": "Data",
+			"label": "Companion ID Number"
+		},
+		{
+			"fieldname": "bed",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Companion Bed",
+			"options": "Healthcare Bed",
+			"reqd": 1
+		},
+		{
+			"fieldname": "check_in_datetime",
+			"fieldtype": "Datetime",
+			"in_list_view": 1,
+			"label": "Check-in",
+			"reqd": 1
+		},
+		{
+			"fieldname": "check_out_datetime",
+			"fieldtype": "Datetime",
+			"label": "Check-out"
+		},
+		{
+			"default": "active",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "requested\nactive\ndischarged\ncancelled",
+			"reqd": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Companion Stay",
+	"naming_rule": "By \"Naming Series\" field",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Nursing User", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

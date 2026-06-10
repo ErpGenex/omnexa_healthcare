@@ -64,7 +64,7 @@
 			"fieldname": "unit_type",
 			"fieldtype": "Select",
 			"label": "Unit Type",
-			"options": "Clinic\nService Unit\nOPD\nEmergency\nWard\nLaboratory\nPharmacy\nImaging\nStore\nAdministrative",
+			"options": "Clinic\nService Unit\nOPD\nEmergency\nWard\nICU\nNICU\nCompanion Ward\nLaboratory\nPharmacy\nImaging\nStore\nAdministrative",
 			"reqd": 1,
 			"default": "Clinic",
 			"description": "Physical or logical unit (clinic room, lab bench, pharmacy counter, store, etc.)."

@@ -1,0 +1,175 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"admission",
+		"bed",
+		"care_unit",
+		"recorded_at",
+		"heart_rate",
+		"respiratory_rate",
+		"spo2",
+		"bp_systolic",
+		"bp_diastolic",
+		"temperature_c",
+		"fio2_percent",
+		"ventilator_mode",
+		"weight_g",
+		"gestational_age_weeks",
+		"alert_level",
+		"recorded_by",
+		"company",
+		"branch",
+		"notes"
+	],
+	"fields": [
+		{
+			"default": "CCM-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "CCM-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Admission",
+			"options": "Healthcare Admission",
+			"reqd": 1
+		},
+		{
+			"fieldname": "bed",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Bed",
+			"options": "Healthcare Bed",
+			"reqd": 1
+		},
+		{
+			"fieldname": "care_unit",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Care Unit",
+			"options": "ICU\nNICU\nNursery",
+			"reqd": 1
+		},
+		{
+			"fieldname": "recorded_at",
+			"fieldtype": "Datetime",
+			"in_list_view": 1,
+			"label": "Recorded At",
+			"reqd": 1
+		},
+		{
+			"fieldname": "heart_rate",
+			"fieldtype": "Int",
+			"label": "Heart Rate (bpm)"
+		},
+		{
+			"fieldname": "respiratory_rate",
+			"fieldtype": "Int",
+			"label": "Respiratory Rate (/min)"
+		},
+		{
+			"fieldname": "spo2",
+			"fieldtype": "Float",
+			"label": "SpO2 (%)"
+		},
+		{
+			"fieldname": "bp_systolic",
+			"fieldtype": "Int",
+			"label": "BP Systolic (mmHg)"
+		},
+		{
+			"fieldname": "bp_diastolic",
+			"fieldtype": "Int",
+			"label": "BP Diastolic (mmHg)"
+		},
+		{
+			"fieldname": "temperature_c",
+			"fieldtype": "Float",
+			"label": "Temperature (°C)"
+		},
+		{
+			"fieldname": "fio2_percent",
+			"fieldtype": "Float",
+			"label": "FiO2 (%)"
+		},
+		{
+			"fieldname": "ventilator_mode",
+			"fieldtype": "Data",
+			"label": "Ventilator Mode"
+		},
+		{
+			"fieldname": "weight_g",
+			"fieldtype": "Float",
+			"label": "Weight (g)",
+			"description": "Neonatal weight for NICU / yellow nursery."
+		},
+		{
+			"fieldname": "gestational_age_weeks",
+			"fieldtype": "Float",
+			"label": "Gestational Age (weeks)"
+		},
+		{
+			"default": "Normal",
+			"fieldname": "alert_level",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Alert Level",
+			"options": "Normal\nWarning\nCritical",
+			"read_only": 1
+		},
+		{
+			"fieldname": "recorded_by",
+			"fieldtype": "Link",
+			"label": "Recorded By",
+			"options": "User"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Critical Care Monitoring",
+	"naming_rule": "By \"Naming Series\" field",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Physician", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Nursing User", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

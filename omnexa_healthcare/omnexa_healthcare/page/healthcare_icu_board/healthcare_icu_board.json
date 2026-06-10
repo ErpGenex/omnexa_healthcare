@@ -1,0 +1,13 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-icu-board",
+	"page_name": "healthcare-icu-board",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Physician"},
+		{"role": "Nursing User"}
+	],
+	"standard": "Yes",
+	"title": "Healthcare ICU Board"
+}

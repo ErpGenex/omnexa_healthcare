@@ -125,3 +125,11 @@ def healthcare_operating_room_query_conditions(user=None):
 
 def healthcare_surgical_case_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Surgical Case", user)
+
+
+def healthcare_companion_stay_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Companion Stay", user)
+
+
+def healthcare_critical_care_monitoring_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Critical Care Monitoring", user)

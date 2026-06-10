@@ -46,7 +46,12 @@ REPORT_SPECS: dict[str, dict] = {
 	"healthcare_drug_interaction_alerts": {"table": "Healthcare Drug Interaction Rule", "group": "severity", "no_date": True},
 	"healthcare_pharmacy_stock_below_par": {"metric": "below_par"},
 	"healthcare_or_utilization": {"table": "Healthcare Surgical Case", "group": "operating_room", "date": "scheduled_start"},
-	"healthcare_icu_occupancy": {"table": "Healthcare Bed", "group": "status", "no_date": True, "extra": "bed_type IN ('ICU', 'HDU')"},
+	"healthcare_icu_occupancy": {
+		"table": "Healthcare Bed",
+		"group": "status",
+		"no_date": True,
+		"extra": "bed_type IN ('ICU', 'HDU', 'NICU', 'Nursery')",
+	},
 	"healthcare_mar_compliance": {"table": "Healthcare Medication Administration Record", "group": "status", "date": "scheduled_time"},
 	"healthcare_nursing_observation_summary": {"table": "Healthcare Nursing Observation Chart", "group": "observation_type", "date": "observation_datetime"},
 	"healthcare_ward_requisition_status": {"table": "Healthcare Ward Requisition", "group": "status", "date": "requisition_date"},
