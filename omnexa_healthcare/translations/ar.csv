@@ -1,22 +1,1184 @@
+1,1
+2,2
+270,270
+271,271
+3,3
+4,4
+5,5
+835,835
+837,837
+A,A
+A+,A+
+A-,A-
+AB+,AB+
+AB-,AB-
+Abatement Date/Time,تاريخ/وقت زوال الأعراض
+Abnormal Lab Results,نتائج مختبر غير طبيعية
+Abnormal Result,نتيجة غير طبيعية
+Accepted,مقبول
+Accessed On,تاريخ الوصول
+Acknowledged,مُقرّ به
+Action,إجراء
+Active,نشط
+active,نشط
+Active Encounter,زيارة سريرية نشطة
+Active Record,سجل نشط
+Add Customer,إضافة مريض
+Additional,إضافي
+Address (FHIR Address),العنوان (FHIR Address)
+Address Line 1,سطر العنوان 1
+Address Line 2,سطر العنوان 2
+Address Type,نوع العنوان
+Address Use,استخدام العنوان
+Adjustment,تسوية
+Administered At,تاريخ الإعطاء
+Administered By,أُعطي بواسطة
+Administrative,إداري
+Administrative Gender,الجنس الإداري
+Admission,قبول
+Admission class,فئة القبول
+Admission date/time,تاريخ/وقت القبول
+Admission LOS Analysis,تحليل مدة الإقامة
+Admission must belong to the same company and branch.,يجب أن ينتمي القبول لنفس الشركة والفرع.
+Admission patient must match.,يجب أن يتطابق مريض القبول.
+Admission Reference,مرجع القبول
+Admissions,القبول
+Admit,قبول
+admitted,مُقبول
+ADT Transfer,تحويل قبول/خروج/تحويل
+Adt Transfer,تحويل قبول/خروج/تحويل
+Age Max,الحد الأقصى للعمر
+Age Min,الحد الأدنى للعمر
+AI Insights,رؤى الذكاء الاصطناعي
+Alert,تنبيه
+Allergies,الحساسيات
+Allergies / adverse reactions (summary),الحساسيات / التفاعلات الضارة (ملخص)
+Allergy,حساسية
+allergy,حساسية
+Allergy Intolerance,حساسية / عدم تحمّل
+Allergy Patient List,قائمة مرضى الحساسية
+Allow cross-branch appointments,السماح بمواعيد عبر الفروع
+Allow cross-branch patient record access (MPI),السماح بالوصول لملف المريض عبر الفروع (MPI)
+Allow medication statements without encounter,السماح بوصفات الدواء دون زيارة سريرية
+AMA,AMA
+Ambient AI,الذكاء الاصطناعي المحيطي
+Ambient Session,جلسة ذكاء اصطناعي محيطي
+ambulatory,عيادة خارجية
+amended,معدّل
+Amount,المبلغ
+Android,Android
+Anesthesia Record,سجل التخدير
+Anesthesia Type,نوع التخدير
+Anesthesiologist,طبيب التخدير
+Antibiotics Prophylaxis,الوقاية بالمضادات الحيوية
+Appointment,موعد
+Appointment By Department,موعد حسب قسم
+Appointment By Specialty,موعد حسب تخصص
+Appointment Calendar,تقويم المواعيد
+Appointment Cancelled Summary,ملخص المواعيد الملغاة
+Appointment End,نهاية الموعد
+Appointment Lead Time,موعد زمن وقت
+Appointment No Show Rate,معدل غياب المواعيد
+Appointment Start,بداية الموعد
+Appointment Status Summary,موعد حالة ملخص
+Appointment Type,نوع الموعد
+Appointment Utilization,موعد استخدام
+Appointments,المواعيد
+Approved,موافق عليه
+Approved Amount,المبلغ المعتمد
+Archived,مؤرشف
+Arrival,الوصول
+Arrived,وصل
+arrived,وصل
+ASA Class,فئة ASA
+asap,في أقرب وقت
+Assessment Template,قالب التقييم
+Assigning System URI,معرّف نظام التعيين
+Assistant,مساعد
+ASTM,ASTM
+At least one identifier is required (e.g. MRN or national ID).,مطلوب معرّف واحد على الأقل (مثل رقم الملف الطبي أو الهوية الوطنية).
+Attachments,مرفقات
+Attending,الطبيب المعالج
+Authored On,تاريخ الإنشاء
+Authorization Number,رقم الموافقة
+Available,متاح
+Available slot,الموعد المتاح
+B+,B+
+B-,B-
+Barcode,باركود
+Barcode Scan Log,سجل مسح الباركود
+Base Rate,السعر الأساسي
+Based On (Service Request),مبني على (طلب خدمة)
+Batch,دفعة
+Batch No (FEFO),رقم الدفعة (FEFO)
+Bed,سرير
+Bed label,تسمية السرير
+Bed Type,نوع السرير
+Billing,فوترة
+billing,فوترة
+Billing account (ERP),فوترة المريض (داخلي)
+Billing account belongs to a different company.,حساب الفوترة ينتمي لشركة أخرى.
+Billing account does not exist.,حساب الفوترة غير موجود.
+Billing account must belong to the same company.,يجب أن ينتمي حساب الفوترة لنفس الشركة.
+Billing Customer,مريض
+Billing customer,مريض
+biologic,بيولوجي
+Birth Date,تاريخ الميلاد
+Birth date,تاريخ الميلاد
+Birth Date Precision,دقة تاريخ الميلاد
+Birth Order,ترتيب الولادة
+Birth Time,وقت الولادة
+Blood,دم
+Blood Group (ABO/Rh),فصيلة الدم (ABO/Rh)
+blood_pressure,ضغط الدم
+Body Site,موضع الجسم
+body_height,الطول
+body_temperature,درجة الحرارة
+body_weight,الوزن
+Book a service,احجز خدمة
+Booking / Consultation Fee,حجز / استشارة رسوم
+Booking Channel,قناة الحجز
+both,كلاهما
+Branch,الفرع
+Branch (optional),الفرع (اختياري)
+Branch Assignments,تعيينات الفروع
+Branch belongs to a different company.,الفرع ينتمي لشركة أخرى.
+Branch {0} does not exist.,الفرع {0} غير موجود.
+Bundle Type,نوع الحزمة
+Cancelled,ملغى
+cancelled,ملغى
+cancer_care,رعاية السرطان
+Capacity,السعة
+Care & Safety (summary),الرعاية والسلامة (ملخص)
+Care Gap,رعاية فجوة
+Care Gaps,فجوات الرعاية
+Care Manager,مدير الرعاية
+Category,الفئة
+CDS Rules,قواعد الدعم القراري السريري
+Change Ticket,تذكرة تغيير
+Channel,القناة
+Chapter,الفصل
+Chief Complaint,الشكوى الرئيسية
+Chief Complaint Hint,تلميح الشكوى الرئيسية
+Chronic Care,رعاية مزمنة
+chronic_disease,مرض مزمن
+Circulating Nurse,ممرضة الدوران
+City,المدينة
+Claim,مطالبة
+Claim Amount,مبلغ المطالبة
+Claim Remittance,تسوية المطالبة
+Class & workflow,الفئة وسير العمل
+Classification Code,رمز التصنيف
+Cleaning,تنظيف
+Clinic,عيادة
+Clinic / Branch Assignments,تعيينات العيادة / الفرع
+Clinical (summary),سريري (ملخص)
+Clinical Ai Insight,سريري Ai رؤية
+Clinical Cds Rule,قاعدة دعم قراري سريري
+Clinical Communication Language,لغة التواصل السريري
+Clinical Condition,سريري حالة مرضية
+Clinical Description,الوصف السريري
+Clinical Notes,ملاحظات سريرية
+Clinical Status,الحالة السريرية
+Clinical Template,سريري قالب
+Clinical Template Usage,سريري قالب استخدام
+Clinical Templates,القوالب السريرية
+Closed,مغلق
+Cohort,مجموعة
+Cohort Name,اسم المجموعة
+collected,مجمّع
+Collected at,تاريخ الجمع
+community,مجتمعي
+Company,الشركة
+Company (optional scope),الشركة (نطاق اختياري)
+Complete,مكتمل
+Completed,مكتمل
+completed,مكتمل
+Conclusion,الاستنتاج
+Conditions,الحالات المرضية
+Conditions (ICD-10),الحالات المرضية (ICD-10)
+Confidence,الثقة
+Confirm booking,تأكيد الحجز
+confirmed,مؤكد
+Consent Given,تمت الموافقة
+Consent Notes,ملاحظات الموافقة
+Consent Signed,تم توقيع الموافقة
+Consent to Care Recorded At,تاريخ تسجيل موافقة الرعاية
+Consent Type,نوع الموافقة
+Consultation,استشارة
+Consultation Fee Rule,قاعدة رسوم الاستشارة
+Consultation Fees,رسوم الاستشارة
+Consumables / stock policy note,ملاحظة سياسة المستهلكات / المخزون
+Contact,جهة اتصال
+Contact Note,ملاحظة الاتصال
+Contact Points,نقاط الاتصال
+Context,السياق
+Contraindicated,موانع الاستعمال
+Copay %,مشاركة تكلفة %
+Copay Amount,مبلغ المشاركة في التكلفة
+Corporate,مؤسسي
+corrected,مصحح
+counseling,إرشاد
+Country,الدولة
+Coverage %,تغطية %
+Create Customer,إنشاء مريض
+Criteria JSON,معايير JSON
+Critical,حرج
+Criticality,الخطورة
+CRM Customer Revenue,إيرادات المرضى
+CT,CT
+Customer,مريض
+customer,مريض
+Customer 360,مريض 360
+Customer and Payment,المريض والدفع
+Customer Email,بريد المريض
+Customer Group,مجموعة مرضى
+Customer Name,اسم المريض
+Customer name,اسم المريض
+Customer Profile,ملف المريض
+Customer Receipt,قبض من مريض
+Customer Type,نوع المريض
+Customers,مرضى
+customers,مرضى
+Customers / patients,مرضى
+CVX Code,CVX رمز
+D,D
+Daily Cash Collection,التحصيل النقدي اليومي
+Data Sharing,مشاركة البيانات
+Day,يوم
+Day Case,حالة يوم واحد
+Deceased,متوفى
+Deceased Date/Time,تاريخ/وقت الوفاة
+Deceased date/time is required when deceased is checked.,تاريخ/وقت الوفاة مطلوب عند تحديد المتوفى.
+Default appointment duration (minutes),مدة الموعد الافتراضية (دقائق)
+Default Consultation Fee,رسوم الاستشارة الافتراضية
+Default Customer,المريض الافتراضي
+Default Item,الصنف الافتراضي
+Default Practitioner,الطبيب الافتراضي
+Default Rate,السعر الافتراضي
+Default Service Unit,وحدة الخدمة الافتراضية
+Demographics,البيانات الديموغرافية
+Denied,مرفوض
+Department,القسم
+Department Code,قسم رمز
+Department Head,رئيس القسم
+Department Name,اسم القسم
+Description,الوصف
+Desk,مكتب
+Details,التفاصيل
+Device ID,جهاز ID
+Diagnosis,تشخيص
+Diagnosis Frequency,تكرار التشخيص
+Diagnosis Type,نوع التشخيص
+Diagnostic Category Summary,ملخص فئات التشخيص
+Diagnostic Report,تشخيصي تقرير
+Diagnostic Report Finding,نتيجة التقرير التشخيصي
+Diagnostic Reports,التقارير التشخيصية
+DICOM Modality,DICOM طريقة
+DICOM Viewer,عارض DICOM
+Dicom Viewer,عارض DICOM
+Dictated By,أملاه
+differential,تشخيص تفريقي
+Direction,الاتجاه
+Discharge,خروج
+Discharge Date/Time,تاريخ/وقت الخروج
+Discharge date/time,تاريخ/وقت الخروج
+Discharge Summary,ملخص الخروج
+discharged,مُخرج
+Dispense Summary,صرف ملخص
+dispensed,مُصرف
+Dispensed at,تاريخ الصرف
+Dispensed By,صُرف بواسطة
+Disposition,التصرف
+District / County,الحي / المحافظة
+DMY,DMY
+DocType,نوع المستند
+Document,مستند
+Done,منجز
+Dosage / Instructions,الجرعة / التعليمات
+Dose,الجرعة
+Draft,مسودة
+draft,مسودة
+Draft Clinical Note,ملاحظة سريرية مسودة
+DRG Code,DRG رمز
+Drg Code,رمز DRG
+DRG Codes,رموز DRG
+Driver License,رخصة القيادة
+Drug,دواء
+Drug A,دواء A
+Drug B,دواء B
+Drug Interaction Alerts,دواء تفاعل تنبيهات
+Drug Interaction Rule,قاعدة تفاعل دوائي
+Drug Interactions,تفاعلات الأدوية
+Due Date,تاريخ الاستحقاق
+Duplicate identifier type and value combination.,تكرار في نوع المعرّف وقيمته.
+Duration (mins),المدة (دقائق)
+Effective Date/Time,تاريخ/وقت السريان
+Effective From,ساري من
+Effective To,ساري حتى
+elective,اختياري
+Eligibility,أهلية
+Eligibility Check,التحقق من الأهلية
+Eligible,مؤهل
+Email,بريد إلكتروني
+email,بريد إلكتروني
+eMAR,سجل إعطاء إلكتروني
+Emergency,طوارئ
+emergency,طوارئ
+Employee,موظف
+Enable PHI access audit log,تفعيل سجل تدقيق الوصول للمعلومات الصحية
+Encounter,زيارة سريرية
+Encounter By Practitioner,زيارة سريرية حسب طبيب
+Encounter Class,فئة الزيارة السريرية
+Encounter Diagnoses,زيارة سريرية تشخيصات
+Encounter Diagnosis,زيارة سريرية تشخيص
+Encounter patient must match.,يجب أن يتطابق مريض الزيارة السريرية.
+Encounter Summary,زيارة سريرية ملخص
+Encounter Type,نوع الزيارة السريرية
+encounter-diagnosis,زيارة سريرية تشخيص
+Encounters,الزيارات السريرية
+End,النهاية
+End Customer,مريض
+entered-in-error,أُدخل بالخطأ
+environment,بيئة
+EOB / Reference,كشف المزايا / المرجع
+Episode Duration,مدة حلقة الرعاية
+Episode Of Care,حلقة من رعاية
+Episode of Care,حلقة الرعاية
+Episode Title,عنوان حلقة الرعاية
+Episode Type,نوع حلقة الرعاية
+Episodes of care,حلقات الرعاية
+ER Board,لوحة الطوارئ
+Er Board,Er لوحة
+ER Visit,زيارة الطوارئ
+Er Visit,Er زيارة
+ER visits,زيارات الطوارئ
+ErpGenEx — Healthcare,إيربجينكس — الرعاية الصحية
+Error,خطأ
+ESI Triage,فرز ESI
+exam,فحص
+Executive Dashboard,لوحة القيادة التنفيذية
+Expected discharge,الخروج المتوقع
+Expected Range,المدى المتوقع
+Expired,منتهي
+Expiry Date,تاريخ الانتهاء
+Export,تصدير
+Facility,المنشأة
+Facility Name,اسم المنشأة
+Facility Profile,ملف المنشأة
+Facility Type,نوع المنشأة
+Failed,فشل
+Family / Last Name,اسم العائلة
+Family name,اسم العائلة
+Fast Track,مسار سريع
+fax,فاكس
+Female,أنثى
+female,أنثى
+FHIR Bundle JSON,FHIR حزمة JSON
+FHIR IPS document bundle loaded — international patient summary standard.,تم تحميل حزمة FHIR IPS — معيار الملخص الدولي للمريض.
+final,نهائي
+Finalized,نهائي
+Finding (narrative),النتيجة (سردية)
+Finding Code,رمز النتيجة
+Findings,النتائج
+finished,منتهٍ
+First name,الاسم الأول
+First Visit Rate,معدل الزيارة الأولى
+Follow-up,متابعة
+Follow-up Rate,معدل المتابعة
+food,طعام
+Friday,الجمعة
+From,من
+From Bed,من سرير
+Full Display Name,الاسم الكامل للعرض
+Full display name could not be built from name parts.,تعذّر بناء الاسم الكامل من أجزاء الاسم.
+Further,إضافي
+Gap Type,نوع الفجوة
+Gender,الجنس
+General,عام
+Given,معطى
+Given / First Name,الاسم الأول
+Goals,الأهداف
+Governance,الحوكمة
+Government,حكومي
+Grading System,نظام التصنيف
+hacc,HACC
+HDU,HDU
+health-concern,مخاوف صحية
+Healthcare,الرعاية الصحية
+Healthcare Abnormal Lab Results,نتائج مختبر غير طبيعية
+Healthcare Admission,قبول
+Healthcare Admission LOS Analysis,تحليل مدة إقامة المرضى
+Healthcare Adt Transfer,تحويل ADT
+Healthcare Allergy Intolerance,حساسية
+Healthcare Allergy Patient List,قائمة مرضى الحساسية
+Healthcare Ambient Session,جلسة ذكاء اصطناعي محيطي
+Healthcare Anesthesia Record,سجل تخدير
+Healthcare Appointment,موعد
+Healthcare Appointment By Department,موعد حسب قسم
+Healthcare Appointment By Specialty,موعد حسب تخصص
+Healthcare Appointment Calendar,تقويم المواعيد
+Healthcare Appointment Cancelled Summary,ملخص المواعيد الملغاة
+Healthcare Appointment Lead Time,موعد زمن وقت
+Healthcare Appointment No Show Rate,معدل غياب المواعيد
+Healthcare Appointment Status Summary,موعد حالة ملخص
+Healthcare Appointment Utilization,موعد استخدام
+Healthcare Barcode Scan Log,سجل مسح باركود
+Healthcare Bed,سرير
+Healthcare Care Gap,فجوة رعاية
+Healthcare Claim Remittance,تسوية مطالبة
+Healthcare Clinical Ai Insight,رؤية ذكاء اصطناعي سريرية
+Healthcare Clinical Cds Rule,قاعدة دعم قراري سريري
+Healthcare Clinical Condition,حالة مرضية
+Healthcare Clinical Template,قالب سريري
+Healthcare Clinical Template Usage,استخدام القوالب السريرية
+Healthcare Consultation Fee Rule,قاعدة رسوم استشارة
+Healthcare Daily Cash Collection,التحصيل النقدي اليومي
+Healthcare Department,قسم
+Healthcare Diagnosis Frequency,تكرار التشخيصات
+Healthcare Diagnostic Category Summary,ملخص فئات التشخيص
+Healthcare Diagnostic Report,تقرير تشخيصي
+Healthcare Diagnostic Report Finding,نتائج التقارير التشخيصية
+Healthcare Discharge Summary,ملخص خروج
+Healthcare Dispense Summary,صرف ملخص
+Healthcare Drg Code,رمز DRG
+Healthcare Drug Interaction Alerts,تنبيهات تفاعل الأدوية
+Healthcare Drug Interaction Rule,قاعدة تفاعل دوائي
+Healthcare Eligibility Check,تحقق أهلية
+Healthcare Encounter,زيارة سريرية
+Healthcare Encounter By Practitioner,زيارة سريرية حسب طبيب
+Healthcare Encounter Diagnosis,زيارة سريرية تشخيص
+Healthcare Encounter Summary,ملخص الزيارات السريرية
+Healthcare Episode Duration,مدة حلقات الرعاية
+Healthcare Episode Of Care,حلقة الرعاية
+Healthcare ER Board,لوحة الطوارئ
+Healthcare Er Visit,زيارة طوارئ
+Healthcare Executive Dashboard,لوحة القيادة التنفيذية
+Healthcare Facility Profile,ملف منشأة
+Healthcare Icd10 Code,رمز ICD-10
+Healthcare ICU Occupancy,إشغال العناية المركزة
+Healthcare Imaging Modality,طريقة تصوير
+Healthcare Immunization,تطعيم
+Healthcare Immunization Coverage,تطعيم تغطية
+Healthcare Implant Trace,تتبع زرعة
+Healthcare In Basket,صندوق الوارد
+Healthcare In Basket Item,عنصر صندوق الوارد
+Healthcare Inpatient Occupancy,إشغال المنوّمين
+Healthcare Insurance Claim,مطالبة تأمين
+Healthcare Insurance Claim Summary,ملخص مطالبات التأمين
+Healthcare Insurance Plan,خطة تأمين
+Healthcare Item Par Level,حد أدنى للصنف
+Healthcare Lab Panel Volume,حجم لوحات المختبر
+Healthcare Lab Qc Log,سجل ضبط جودة مختبر
+Healthcare Lab Reference Range,مدى مرجعي مختبر
+Healthcare Lab Rejection Rate,معدل رفض عينات المختبر
+Healthcare Lab Sample,عينة مختبر
+Healthcare Lab TAT Analysis,تحليل زمن دورة المختبر
+Healthcare Lab Test Panel,لوحة فحص مختبر
+Healthcare Lab Test Panel Test,فحص لوحة المختبر
+Healthcare Lab Workbench,منصة المختبر
+Healthcare Lis Instrument Message,رسالة جهاز مختبر
+Healthcare MAR Compliance,MAR امتثال
+Healthcare Medication Administration Record,سجل إعطاء دواء
+Healthcare Medication Dispense,صرف دواء
+Healthcare Medication Statement,وصفة دواء
+Healthcare Mobile Device Token,رمز جهاز محمول
+Healthcare Nphies Claim Bundle,حزمة مطالبة نفيس
+Healthcare Nursing Care Plan,خطة رعاية تمريضية
+Healthcare Nursing Observation Chart,مخطط تمريضي
+Healthcare Nursing Observation Summary,ملخص الملاحظات التمريضية
+Healthcare Observation,قياس سريري
+Healthcare Operating Room,غرفة عمليات
+Healthcare OR Utilization,OR استخدام
+Healthcare Ot Consumable Issue,صرف مستهلكات غرفة عمليات
+Healthcare OT Consumable Usage,OT مستهلكات استخدام
+Healthcare Patient,مريض
+Healthcare Patient Cohort,مجموعة مرضى
+Healthcare Patient Consent,موافقة مريض
+Healthcare Patient Copay Summary,مريض مشاركة تكلفة ملخص
+Healthcare Patient Coverage,تغطية مريض
+Healthcare Patient Identifier,معرّف المريض
+Healthcare Patient Merge Log,سجل دمج مرضى
+Healthcare Patient Portal,بوابة المريض
+Healthcare Patient Push Notification,إشعار دفع للمريض
+Healthcare Patient Queue,طابور المرضى
+Healthcare Patient Telecom,اتصالات المريض
+Healthcare Payer,جهة تأمين
+Healthcare Payer Aging,أعمار مطالبات جهات التأمين
+Healthcare Pending Imaging Orders,معلق تصوير طلبات
+Healthcare Pending Lab Samples,عينات مختبر معلقة
+Healthcare Pharmacy Desk,مكتب الصيدلية
+Healthcare Pharmacy Stock Below Par,مخزون صيدلية دون الحد الأدنى
+Healthcare Phi Access Log,سجل وصول معلومات صحية
+Healthcare Practitioner,طبيب
+Healthcare Practitioner Appointment Utilization,طبيب موعد استخدام
+Healthcare Practitioner Branch,طبيب فرع
+Healthcare Practitioner Roster,جدول الأطباء
+Healthcare Practitioner Roster Summary,طبيب جدول ملخص
+Healthcare Practitioner Schedule,جدول الطبيب
+Healthcare Pre Op Checklist,قائمة ما قبل العملية
+Healthcare Prior Auth Pending,موافقات مسبقة معلقة
+Healthcare Prior Authorization,موافقة مسبقة
+Healthcare Procedure,إجراء
+Healthcare Procedure Order,طلب إجراء
+Healthcare Procedure Revenue,إيرادات الإجراءات
+Healthcare Radiology By Modality,الأشعة حسب الطريقة
+Healthcare Radiology Report Template,قالب تقرير أشعة
+Healthcare Radiology TAT,زمن دورة الأشعة
+Healthcare Radiology Worklist,قائمة عمل الأشعة
+Healthcare Revenue By Specialty,الإيرادات حسب التخصص
+Healthcare Secure Message,رسالة آمنة
+Healthcare Service Catalog,كتالوج خدمات
+Healthcare Service Charge,رسوم خدمة
+Healthcare Service Charge By Patient,رسوم الخدمة حسب المريض
+Healthcare Service Charge Line,بند رسوم خدمة
+Healthcare Service Charge Summary,ملخص رسوم الخدمة
+Healthcare Service Request,طلب خدمة
+Healthcare Service Unit,وحدة خدمة
+Healthcare Settings,إعدادات الرعاية الصحية
+Healthcare Snomed Code,رمز SNOMED
+Healthcare Specialty,تخصص
+Healthcare Structured Report Usage,استخدام التقارير المنظمة
+Healthcare Surgical Case,حالة جراحية
+Healthcare Surgical Team Member,عضو الفريق الجراحي
+Healthcare Telehealth Appointments,مواعيد الرعاية عن بُعد
+Healthcare Unpaid Booking Fees,رسوم حجز غير مدفوعة
+Healthcare Voice Dictation,إملاء صوتي
+Healthcare Ward Requisition,طلب قسم
+Healthcare Ward Requisition Item,بند طلب قسم
+Healthcare Ward Requisition Status,قسم طلب حالة
+Healthcare X12 Transaction,معاملة X12
+heart_rate,معدل النبض
+Held,معلّق
+High,مرتفع
+high,مرتفع
+HL7,HL7
+home,منزلي
+home_health,رعاية منزلية
+Hospital,مستشفى
+Hospital / clinic,مستشفى / عيادة
+I,I
+ICD Chapter (optional),فصل ICD (اختياري)
+ICD-10 Code,ICD-10 رمز
+ICD-10 Codes,رموز ICD-10
+Icd10 Code,رمز ICD-10
+ICU,ICU
+ICU Occupancy,إشغال العناية المركزة
+Identifier Type,نوع المعرّف
+Identifier Use,استخدام المعرّف
+Identifier value is required on each row.,قيمة المعرّف مطلوبة في كل صف.
+Identifiers,المعرّفات
+Identifiers (FHIR Identifier),المعرّفات (FHIR Identifier)
+II,II
+III,III
+Imaging,تصوير
+imaging,تصوير
+Imaging Modalities,طرق التصوير
+Imaging Modality,تصوير طريقة
+Immunization,تطعيم
+Immunization Coverage,تطعيم تغطية
+Immunizations,التطعيمات
+Implant Trace,تتبع الزرعات
+In Basket,صندوق الوارد
+In Basket Item,In صندوق وارد صنف
+In Basket Items,عناصر صندوق الوارد
+In Consultation,In استشارة
+In Control,تحت السيطرة
+In Progress,قيد التنفيذ
+In Treatment,قيد العلاج
+In Use,قيد الاستخدام
+in-progress,قيد التنفيذ
+in_lab,In مختبر
+Inactive,غير نشط
+inactive,غير نشط
+Inbound,وارد
+Include laboratory observations in IPS FHIR export,تضمين قياسات المختبر في تصدير IPS FHIR
+Info,معلومات
+inpatient,تنويم
+Inpatient Occupancy,إشغال المنوّمين
+Instrument ID,جهاز ID
+Insurance,تأمين
+Insurance Claim,مطالبة التأمين
+Insurance Claim Summary,تأمين مطالبة ملخص
+Insurance Member,عضو التأمين
+Insurance Plan,خطة التأمين
+Intake/Output,المدخلات/المخرجات
+intended,مقصود
+Intent,النية
+Interpreter Required,مترجم مطلوب
+Interventions,التدخلات
+intolerance,تحمّل
+Invoiced,مُفوتر
+Invoiced charges must reference a Sales Invoice.,يجب أن تشير الرسوم المفوترة إلى فاتورة بيع.
+iOS,iOS
+IPD,IPD
+Isolation,عزل
+Issue Date,تاريخ الإصدار
+Issued,صادر
+Issuer Name,اسم الجهة المصدرة
+Item,صنف
+Item (drug / SKU),الصنف (دواء / SKU)
+Item Code,رمز الصنف
+Item Group,مجموعة أصناف
+Item Par Level,صنف حد أدنى مستوى
+Items,أصناف
+IV,IV
+Journal Entry,قيد يومية
+L,L
+Lab & imaging reports,تقارير المختبر والتصوير
+Lab / pharmacy / store,مختبر / صيدلية / مخزن
+Lab Order,مختبر طلب
+Lab Panel Volume,حجم لوحات المختبر
+Lab Qc Log,مختبر Qc سجل
+Lab Reference Range,مختبر مرجعي مدى
+Lab Reference Ranges,المديات المرجعية للمختبر
+Lab Rejection Rate,معدل رفض العينات
+Lab Sample,عينة مختبر
+Lab TAT Analysis,تحليل زمن دورة المختبر
+Lab Test Panel,لوحة فحص المختبر
+Lab Test Panel Test,فحص لوحة المختبر
+Lab Test Panels,لوحات فحوص المختبر
+Lab Workbench,منصة المختبر
+lab_glucose,جلوكوز المختبر
+lab_hemoglobin,هيموغلوبين المختبر
+Laboratory,مختبر
+laboratory,مختبر
+Laboratory registration / accreditation ref.,مرجع تسجيل / اعتماد المختبر
+Legal / Official Name (FHIR HumanName),الاسم القانوني / الرسمي (FHIR HumanName)
+Line Note,ملاحظة البند
+Lines,البنود
+Linked Accounting Customer,حساب فوترة المريض
+Linked Observation,قياس مرتبط
+Lis Instrument Message,رسالة جهاز المختبر
+LIS Instruments,أجهزة نظام المختبر
+Load file,تحميل الملف
+Local,محلي
+Location,الموقع
+LOINC,LOINC
+LOINC Code,LOINC رمز
+Lot,دفعة
+Lot Number,رقم الدفعة
+Low,منخفض
+low,منخفض
+LWBS,LWBS
+M,M
+Main,رئيسي
+Maintenance,صيانة
+Major,رئيسي
+Male,ذكر
+male,ذكر
+Managing Facility,المنشأة المديرة
+Managing facility does not exist.,المنشأة المديرة غير موجودة.
+Managing facility must belong to the same company and branch.,يجب أن تنتمي المنشأة المديرة لنفس الشركة والفرع.
+MAR,MAR
+MAR Compliance,MAR امتثال
+Marital Status,الحالة الاجتماعية
+Marketing,تسويق
+Match Value,قيمة المطابقة
+Material Request,طلب مواد
+maternity,ولادة
+Measure / type,القياس / النوع
+Medical Center,مركز طبي
+Medical file / الملف الطبي,الملف الطبي
+Medical License No.,رقم الترخيص الطبي
+Medication,الدواء
+medication,دواء
+Medication Adherence,الالتزام بالدواء
+Medication Administration Record,دواء إعطاء سجل
+Medication Dispense,صرف الدواء
+Medication Order,دواء طلب
+Medication Statement,وصفة دواء
+Medication statement,وصفة دواء
+Medications,الأدوية
+Member ID,رقم العضوية
+mental_health,صحة نفسية
+Merged By,دُمج بواسطة
+Merged On,تاريخ الدمج
+Message,رسالة
+MG,MG
+Middle Name,الاسم الأوسط
+mild,خفيف
+Minor,ثانوي
+Missed,فائت
+Mobile,جوال
+mobile,محمول
+Mobile Device Token,رمز الجهاز المحمول
+Mobile Devices,الأجهزة المحمولة
+Modality,طريقة
+Modality Code,طريقة رمز
+Modality Name,اسم طريقة التصوير
+Moderate,متوسط
+moderate,متوسط
+Monday,الاثنين
+More,المزيد
+MPI & Patient Access,سجل المرضى والوصول
+MR,MR
+MRN,MRN
+Multiple Birth (part of set),ولادة متعددة (جزء من مجموعة)
+MY,MY
+National ID,الهوية الوطنية
+Nationality,الجنسية
+Neuro,أعصاب
+New Customer,مريض جديد
+NM,NM
+No Show,رقم غياب
+Not Eligible,غير مؤهل
+not-done,لم يُنفّذ
+not-taken,لم يُؤخذ
+Note,ملاحظة
+Notes,ملاحظات
+NPHIES Bundle,حزمة نفيس
+Nphies Claim Bundle,حزمة مطالبة نفيس
+Nurse,ممرض/ة
+Nursing Care Plan,خطة الرعاية التمريضية
+Nursing Chart,مخطط التمريض
+Nursing Diagnosis,تمريض تشخيص
+Nursing Observation Chart,تمريض قياس مخطط
+Nursing Observation Summary,تمريض قياس ملخص
+O+,O+
+O-,O-
+Observation,قياس
+observation,قياس
+Observations / Vitals,القياسات / العلامات الحيوية
+Observed At,تاريخ الملاحظة
+Occupied,مشغول
+Occurrence Date/Time,تاريخ/وقت الحدوث
+official,رسمي
+old,قديم
+on-hold,معلّق
+onhold,معلّق
+onleave,في إجازة
+Online Healthcare Booking,حجز الخدمات الصحية عبر الإنترنت
+Onset Date/Time,تاريخ/وقت البداية
+OPD,OPD
+Open,مفتوح
+Operating Room,غرفة العمليات
+option,خيار
+OR Utilization,OR استخدام
+order,طلب
+Orders & Requests,الطلبات والتحويلات
+OT,OT
+Ot Consumable Issue,صرف مستهلكات غرفة العمليات
+OT Consumable Usage,OT مستهلكات استخدام
+OT Consumables,مستهلكات غرفة العمليات
+Other,أخرى
+other,أخرى
+Outbound,صادر
+outpatient,عيادة خارجية
+Overdue,متأخر
+Overview,نظرة عامة
+Owner,المالك
+P,P
+P1,P1
+P2,P2
+P3,P3
+P4,P4
+P5,P5
+Package,حزمة
+PACS WADO URL,رابط PACS WADO
+PACS WADO-RS base URL,رابط قاعدة PACS WADO-RS
+pager,جهاز نداء
+Paid,مدفوع
+Paid Amount,المبلغ المدفوع
+Pain,ألم
+Panel Code,لوحة رمز
+Panel Name,اسم اللوحة
+Par Level,حد أدنى مستوى
+Par Levels,مستويات الحد الأدنى
+partial,جزئي
+Partially Paid,مدفوع جزئياً
+Passport,جواز سفر
+pathology,مرضيات
+Patient,مريض
+Patient billing account could not be resolved.,تعذّر تحديد حساب فوترة المريض.
+Patient Chart,مريض مخطط
+Patient Cohort,مريض مجموعة
+Patient Cohorts,مجموعات المرضى
+Patient Consent,موافقة المريض
+Patient Copay Summary,مريض مشاركة تكلفة ملخص
+Patient Coverage,تغطية المريض
+Patient does not exist.,المريض غير موجود.
+Patient Identifier,معرّف المريض
+Patient Medical File,الملف الطبي للمريض
+Patient Merge Log,سجل دمج المرضى
+Patient Mobile,تطبيق المريض
+Patient must belong to the same company and branch.,يجب أن ينتمي المريض لنفس الشركة والفرع.
+Patient Name,اسم المريض
+Patient Portal,بوابة المريض
+Patient Push Notification,مريض دفع إشعار
+Patient Queue,طابور المرضى
+Patient Telecom,اتصالات المريض
+Patients,مرضى
+Payer,جهة التأمين
+Payer Aging,أعمار جهات التأمين
+Payer Code,جهة التأمين رمز
+Payer Name,اسم جهة التأمين
+Payer Type,نوع جهة التأمين
+Payment Entry,قيد دفع
+Payment Status,دفع حالة
+Pediatric,أطفال
+Pending,قيد الانتظار
+Pending Imaging Orders,معلق تصوير طلبات
+Pending Lab Samples,عينات مختبر معلقة
+Performer,المنفّذ
+Period,الفترة
+Period End,نهاية الفترة
+Period Start,بداية الفترة
+Pharmacy,صيدلية
+Pharmacy Desk,مكتب الصيدلية
+Pharmacy Dispense,صيدلية صرف
+Pharmacy license number,رقم ترخيص الصيدلية
+Pharmacy Stock Below Par,مخزون صيدلية دون الحد الأدنى
+Phi Access Log,سجل وصول المعلومات الصحية
+PHI Audit Log,سجل تدقيق المعلومات الصحية
+Phone,هاتف
+phone,هاتف
+physical,جسدي
+Physician Mobile,تطبيق الطبيب
+plan,خطة
+Plan Code,خطة رمز
+Plan Name,اسم الخطة
+Plan Template,خطة قالب
+planned,مخطط
+Planned Date,التاريخ المخطط
+Platform,المنصة
+Policy Reference,مرجع الوثيقة
+Portal,بوابة
+post_acute,رعاية ما بعد حادة
+postal,بريدي
+Postal Code,الرمز البريدي
+Posting,ترحيل
+Posting date,تاريخ الترحيل
+Practitioner,طبيب
+Practitioner Appointment Utilization,طبيب موعد استخدام
+Practitioner Branch,طبيب فرع
+Practitioner Name,اسم الطبيب
+Practitioner Roster,جدول الأطباء
+Practitioner Roster Summary,طبيب جدول ملخص
+Practitioner Schedule,جدول الطبيب
+Pre Op Checklist,ما قبل عملية قائمة تحقق
+Pre-Op Checklist,قائمة ما قبل العملية
+Preferred Language (ISO 639-1),اللغة المفضلة (ISO 639-1)
+Preferred Term,المصطلح المفضل
+Prefix,بادئة
+preliminary,أولي
+Prescriber,الواصف
+Primary,أساسي
+Primary Coverage,التغطية الأساسية
+Primary Customer,المريض الرئيسي
+Primary MRN,رقم الملف الطبي الأساسي
+Primary MRN applies only to rows with identifier type MRN.,رقم الملف الطبي الأساسي ينطبق فقط على صفوف نوع المعرّف MRN.
+Primary Surgeon,الجراح الرئيسي
+Print,طباعة
+Prior Auth,موافقة مسبقة
+Prior Auth Pending,موافقات مسبقة معلقة
+Prior Authorization,الموافقة المسبقة
+Priority,الأولوية
+Privacy & consent (governance),الخصوصية والموافقة (حوكمة)
+Problem Owner,مسؤول المشكلة
+problem-list-item,بند قائمة المشاكل
+Procedure,إجراء
+Procedure Code,إجراء رمز
+Procedure Order,طلب إجراء
+Procedure Revenue,إجراء إيرادات
+Procedure Title,عنوان الإجراء
+Procedures,الإجراءات
+Processed,مُعالج
+Processing,قيد المعالجة
+proposal,مقترح
+Protocol,البروتوكول
+provisional,مؤقت
+PT,PT
+Publish on Website,النشر على الموقع
+Published services,الخدمات المنشورة
+Purchase Invoice,فاتورة شراء
+Purchase Order,أمر شراء
+Push,دفع
+Push Notifications,إشعارات الدفع
+Push Token,رمز الإشعار
+QC Date,تاريخ ضبط الجودة
+QC Log,سجل ضبط الجودة
+Qty,الكمية
+Quantity,الكمية
+Queued,في الطابور
+radiology,أشعة
+Radiology By Modality,أشعة حسب طريقة
+Radiology Report Template,أشعة تقرير قالب
+Radiology TAT,زمن دورة الأشعة
+Radiology Templates,قوالب الأشعة
+Radiology Worklist,قائمة عمل الأشعة
+Rank,الترتيب
+Rate,السعر
+Reaction / Manifestation,رد الفعل / المظهر
+Read,قراءة
+Reason,السبب
+Reason for Visit (narrative),سبب الزيارة (سردي)
+Received,مستلم
+Recipient,المستلم
+Recommendation,التوصية
+Recorded By,سُجّل بواسطة
+Recorded Date,تاريخ التسجيل
+Recording,تسجيل
+recurrence,تكرار
+Reference,مرجعي
+Reference DocType,نوع المستند المرجعي
+References,المراجع
+Refill,إعادة صرف
+Refused,مرفوض
+refuted,مُنفى
+Regional,إقليمي
+Registered,مسجّل
+registered,مسجّل
+Registration Branch,فرع التسجيل
+rehabilitation,تأهيل
+Rejected,مرفوض
+rejected,مرفوض
+relapse,انتكاسة
+Relative Weight,الوزن النسبي
+Reminder hours before appointment,ساعات التذكير قبل الموعد
+remission,هدأة
+Remittance Date,تاريخ التسوية
+Reorder Qty,كمية إعادة الطلب
+Report Category,فئة التقرير
+Report Reference,تقرير مرجعي
+Report Title,عنوان التقرير
+Reporting Tag,وسم التقرير
+Request Category,فئة الطلب
+Request Owner,مسؤول الطلب
+Request Title,عنوان الطلب
+Require active patient for new encounters,اشتراط مريض نشط للزيارات الجديدة
+Requisition Date,تاريخ الطلب
+Research,بحث
+Reserved,محجوز
+resolved,محلول
+Response JSON,استجابة JSON
+Restrict secondary use / analytics sharing,تقييد الاستخدام الثانوي / مشاركة التحليلات
+Result,النتيجة
+Resuscitation,إنعاش
+Revenue By Specialty,إيرادات حسب تخصص
+Review,مراجعة
+revoked,ملغى
+RF,RF
+Risk,مخاطر
+Role,دور
+Room Code,غرفة رمز
+Room Name,اسم الغرفة
+Routine,روتيني
+routine,روتيني
+Row {0}: Item belongs to a different company.,الصف {0}: الصنف ينتمي لشركة أخرى.
+Rule Name,اسم القاعدة
+S,S
 Sales Invoice,فاتورة بيع
+Sample Type,نوع العينة
+Saturday,السبت
+Schedule Lines,بنود الجدول
+Scheduled,مجدول
+Scheduled End,نهاية مجدولة
+Scheduled Start,بداية مجدولة
+Scheduled Time,الوقت المجدول
+Screening,فحص
+Scrub Nurse,ممرضة التعقيم
+Secondary,ثانوي
+secondary,ثانوي
+Secure Message,آمن رسالة
+Secure Messages,رسائل آمنة
+Sedation,تخدير
+Select a patient,اختر مريضاً
+Select Customer,اختر مريضاً
+Self,ذاتي
+Send appointment email reminders,إرسال تذكيرات المواعيد بالبريد
+Sender,المرسل
+Sent,مُرسل
+Serial No,رقم تسلسلي
+Series,سلسلة
+Service,خدمة
+Service Catalog,كتالوج الخدمات
+Service Charge,رسوم الخدمة
+Service Charge By Patient,خدمة رسوم حسب مريض
+Service Charge Line,بند رسوم الخدمة
+Service Charge Summary,خدمة رسوم ملخص
+Service Code,خدمة رمز
+Service Provider (Facility),مقدم الخدمة (المنشأة)
+Service Request,خدمة طلب
+Service request,خدمة طلب
+Service Title,عنوان الخدمة
+Service Type,نوع الخدمة
+Service Unit,وحدة الخدمة
 Settings,الإعدادات
 Setup,تهيئة
-Patient,مريض
-Patients,مرضى
-Healthcare Patient,مريض
-Billing customer,مريض
-Billing Customer,مريض
-Customer,مريض
-Customers,مرضى
-Customers / patients,مرضى
-New Customer,مريض جديد
-Customer Name,اسم المريض
-Customer Receipt,قبض من مريض
-Select Customer,اختر مريضاً
-Customer Profile,ملف المريض
-Patient Medical File,الملف الطبي للمريض
-Medical file / الملف الطبي,الملف الطبي
-MPI & Patient Access,سجل المرضى والوصول
-Patient Merge Log,سجل دمج المرضى
-Patient Portal,بوابة المريض
-Patient Queue,طابور المرضى
+severe,شديد
+Severity,الشدة
+Signature,التوقيع
+Signed,موقّع
+Signed On,تاريخ التوقيع
+Site Marked,الموقع مُعلّم
+Slot Duration (mins),مدة الموعد (دقائق)
+SMS,SMS
+sms,رسالة نصية
+Snomed Code,رمز SNOMED
+SNOMED Codes,رموز SNOMED
+SNOMED Concept ID,معرّف مفهوم SNOMED
+social,اجتماعي
+Source Model,النموذج المصدر
+Source Patient,المريض المصدر
+Specialty,التخصص
+Specialty (optional filter),التخصص (فلتر اختياري)
+Specialty Code,تخصص رمز
+Specialty Name,اسم التخصص
+Specimen / barcode ID,عينة / باركود ID
+spo2,تشبع الأكسجين
+SSN,SSN
+Start,البداية
+stat,عاجل
+State / Province,المنطقة / المحافظة
+Status,الحالة
+Stock Entry,حركة مخزون
+Stock Reconciliation,تسوية مخزون
+stopped,متوقف
+Store,مخزن
+Stores / warehouse,المخازن / المستودع
+Structured Body,المحتوى المنظم
+Structured Clinical Data,بيانات سريرية منظمة
+Structured Note,ملاحظة منظمة
+Structured Report Usage,منظم تقرير استخدام
+Structured Template,منظم قالب
+Subject,الموضوع
+Submitted,معتمد
+Substance / Agent,المادة / العامل
+Suffix,لاحقة
+Summary,ملخص
+Sunday,الأحد
+Supplier,مورد
+Supporting Attachment,مرفق داعم
+Surgical Case,حالة جراحية
+Surgical Team,الفريق الجراحي
+Surgical Team Member,عضو الفريق الجراحي
+survey,استبيان
+Swab,مسحة
+System,النظام
+T,T
+Tab 8,تبويب 8
+Tab 9,تبويب 9
+Target Patient,المريض المستهدف
+Task,مهمة
+Telecom (FHIR ContactPoint),وسائل الاتصال (FHIR ContactPoint)
+Telecom value is required on each row.,قيمة وسيلة الاتصال مطلوبة في كل صف.
+Telehealth,رعاية عن بُعد
+Telehealth Appointments,رعاية عن بُعد مواعيد
+temp,مؤقت
+Template Name,اسم القالب
+Test / Control,فحص / ضابط
+Test Name,اسم الفحص
+Tests,فحوص
+Thread ID,معرّف الموضوع
+Thursday,الخميس
+Tissue,نسيج
+To,إلى
+To Bed,To سرير
+Track,مسار
+Transcript,النص
+Transfer,تحويل
+transfer,تحويل
+Transfer Time,تحويل وقت
+Trauma,إصابة
+Treatment,علاج
+Triage Level,مستوى الفرز
+Triaged,مُفرز
+triaged,مُفرز
+Trigger,المُحفّز
+Tuesday,الثلاثاء
+Type,النوع
+Type Display,عرض النوع
+U,U
+UCUM Unit,وحدة UCUM
+UDI / GS1,UDI / GS1
+unable-to-assess,تعذّر التقييم
+unconfirmed,غير مؤكد
+Unit,الوحدة
+Unit Code,Unit Code
+Unit Manager,مدير الوحدة
+Unit Name,اسم الوحدة
+Unit Type,نوع الوحدة
+UNK,UNK
+Unknown,غير معروف
+unknown,غير معروف
+Unpaid,غير مدفوع
+Unpaid Booking Fees,غير مدفوع حجز رسوم
+UOM,UOM
+Urgent,عاجل
+urgent,عاجل
+Urine,بول
+url,رابط
+US,US
+Use,الاستخدام
+User,مستخدم
+User Account,حساب المستخدم
+usual,معتاد
+V,V
+Vaccine Name,اسم اللقاح
+Valid From,صالح من
+Valid To,صالح حتى
+Value,القيمة
+Value (primary),القيمة (أساسية)
+Value (secondary),القيمة (ثانوية)
+Values,القيم
+Verification Status,حالة التحقق
+Verified,مُحقق
+VI,VI
+virtual,افتراضي
+vital-signs,علامات حيوية
+Vitals,علامات حيوية
+Vitals & observations,العلامات الحيوية والقياسات
+Voice Dictation,الإملاء الصوتي
+W,W
+waitlist,قائمة انتظار
+Waived,معفى
+Walk-in Customer,مريض زائر
+Ward,القسم/الجناح
+Ward / unit,الجناح / الوحدة
+Ward Requisition,طلب قسم
+Ward Requisition Item,قسم طلب صنف
+Ward Requisition Status,قسم طلب حالة
+Warehouse,مستودع
+Warehouse / store notes,ملاحظات المستودع / المخزن
+Warehouse Store,مخزن المستودع
+Warning,تحذير
+Web,ويب
+Website,موقع ويب
+Website Description,وصف الموقع
+Website Display Order,ترتيب العرض في الموقع
+Wednesday,الأربعاء
+Weekly Schedule,الجدول الأسبوعي
+"When an MRN is recorded, exactly one row must be marked as Primary MRN.",عند تسجيل رقم ملف طبي، يجب تحديد صف واحد فقط كرقم ملف طبي أساسي.
+WHO Checklist Complete,اكتمال قائمة منظمة الصحة العالمية
+Witness,شاهد
+work,عمل
+Write,كتابة
+X12 EDI,معاملات X12 EDI
+X12 Payload,حمولة X12
+X12 Transaction,X12 معاملة
+XR,XR
+Y,Y
+🌍 Population Health,🌍 صحة السكان
+🏢 Organization & Setup,🏢 التنظيم والإعداد
+🏥 Inpatient · ADT · Nursing,🏥 التنويم · القبول والتحويل · التمريض
+👤 MPI & Patient Access,👤 سجل المرضى والوصول
+👥 HR & Users,👥 الموارد البشرية والمستخدمون
+💊 Pharmacy,💊 الصيدلية
+💰 Billing · Finance · ERP,💰 الفوترة · المالية · ERP
+📈 Reports · Clinical,📈 التقارير · السريرية
+📈 Reports · Inpatient,📈 التقارير · التنويم
+📈 Reports · Laboratory,📈 التقارير · المختبر
+📈 Reports · Pharmacy,📈 التقارير · الصيدلية
+📈 Reports · Radiology,📈 التقارير · الأشعة
+📈 Reports · RCM & Finance,📈 التقارير · التأمين والمالية
+📈 Reports · Scheduling & OPD,📈 التقارير · الجدولة والعيادات
+📈 Reports · Surgery,📈 التقارير · الجراحة
+📊 Dashboards & Portals,📊 لوحات المعلومات والبوابات
+📋 Clinical EMR,📋 السجل الطبي الإلكتروني
+📦 Inventory & Supply,📦 المخزون والتوريد
+🔪 Surgery · OT · Anesthesia,🔪 الجراحة · غرف العمليات · التخدير
+🚑 Emergency (ER),🚑 الطوارئ
+🛡️ Insurance & RCM,🛡️ التأمين وإدارة الإيرادات
+🧪 Laboratory (LIS),🧪 المختبر (نظام معلومات المختبر)
+🩺 Practitioners & OPD,🩺 الأطباء والعيادات الخارجية

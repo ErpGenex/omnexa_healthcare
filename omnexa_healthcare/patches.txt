@@ -11,3 +11,4 @@ omnexa_healthcare.patches.v1_0.sync_healthcare_report_roles
 omnexa_healthcare.patches.v1_0.seed_worldclass_masters
 omnexa_healthcare.patches.v1_0.seed_epic_parity
 omnexa_healthcare.patches.v1_0.seed_global_leader
+omnexa_healthcare.patches.v1_0.sync_healthcare_translations
