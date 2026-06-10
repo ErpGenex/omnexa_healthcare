@@ -37,6 +37,10 @@ class TestPublicHospitalSite(FrappeTestCase):
 		self.assertIn("urls", cfg)
 		self.assertTrue(cfg["hospital_name_ar"])
 
+	def test_get_site_config_without_params(self):
+		cfg = get_site_config()
+		self.assertEqual(cfg["company"], self.company)
+
 	def test_get_site_config_by_slug(self):
 		slug = frappe.db.get_value("Healthcare Branch Website", self.branch, "site_slug")
 		self.assertTrue(slug)

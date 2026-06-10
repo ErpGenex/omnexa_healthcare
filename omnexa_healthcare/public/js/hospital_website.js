@@ -84,8 +84,27 @@
 				args: this.siteArgs(),
 			});
 			this.config = r.message || {};
+			this.syncTenantUrl();
 			if (this.config.primary_color) {
 				document.documentElement.style.setProperty("--hc-primary", this.config.primary_color);
+			}
+		},
+
+		syncTenantUrl() {
+			const cfg = this.config || {};
+			const url = new URL(window.location.href);
+			let changed = false;
+			if (cfg.site_slug && !url.searchParams.get("site")) {
+				url.searchParams.set("site", cfg.site_slug);
+				changed = true;
+			} else if (!url.searchParams.get("site") && !url.searchParams.get("company") && cfg.company) {
+				url.searchParams.set("company", cfg.company);
+				if (cfg.branch) url.searchParams.set("branch", cfg.branch);
+				changed = true;
+			}
+			if (changed) {
+				window.history.replaceState({}, "", url);
+				this.params = url.searchParams;
 			}
 		},
 

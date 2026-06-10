@@ -30,6 +30,29 @@ DEPARTMENT_ICONS = {
 }
 
 
+def _default_hospital_context() -> dict | None:
+	"""Resolve tenant when /hospital is opened without query params."""
+	if frappe.db.exists("DocType", "Healthcare Branch Website"):
+		rows = frappe.get_all(
+			"Healthcare Branch Website",
+			filters={"is_enabled": 1},
+			fields=["name", "branch", "company", "site_slug"],
+			order_by="modified desc",
+			limit=1,
+		)
+		if rows:
+			return rows[0]
+
+	company = (
+		frappe.defaults.get_global_default("company")
+		or frappe.db.get_value("Company", {}, "name", order_by="creation asc")
+	)
+	if not company:
+		return None
+	branch = frappe.db.get_value("Branch", {"company": company}, "name", order_by="creation asc")
+	return {"name": None, "branch": branch, "company": company}
+
+
 def _resolve_site(*, site: str | None = None, company: str | None = None, branch: str | None = None) -> dict:
 	if site:
 		row = frappe.db.get_value(
@@ -71,6 +94,16 @@ def _resolve_site(*, site: str | None = None, company: str | None = None, branch
 		branch = frappe.db.get_value("Branch", {"company": company}, "name")
 		if branch:
 			return {"name": None, "branch": branch, "company": company}
+
+	ctx = _default_hospital_context()
+	if ctx:
+		if branch:
+			ctx["branch"] = branch
+		if company and ctx.get("company") and company != ctx["company"]:
+			frappe.throw(_("Branch does not belong to company."))
+		if company:
+			ctx["company"] = company
+		return ctx
 
 	frappe.throw(_("Site, branch or company is required."))
 
