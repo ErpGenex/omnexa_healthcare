@@ -1,0 +1,19 @@
+{
+	"actions": [],
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["visit_no", "planned_date", "procedure", "tooth_id", "status", "notes"],
+	"fields": [
+		{"fieldname": "visit_no", "fieldtype": "Int", "in_list_view": 1, "label": "Visit #", "reqd": 1},
+		{"fieldname": "planned_date", "fieldtype": "Date", "in_list_view": 1, "label": "Planned Date"},
+		{"fieldname": "procedure", "fieldtype": "Data", "in_list_view": 1, "label": "Procedure"},
+		{"fieldname": "tooth_id", "fieldtype": "Data", "label": "Tooth ID"},
+		{"default": "planned", "fieldname": "status", "fieldtype": "Select", "in_list_view": 1, "label": "Status", "options": "planned\nin_progress\ncompleted\ncancelled"},
+		{"fieldname": "notes", "fieldtype": "Small Text", "label": "Notes"}
+	],
+	"istable": 1,
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Dental Treatment Plan Visit",
+	"permissions": []
+}

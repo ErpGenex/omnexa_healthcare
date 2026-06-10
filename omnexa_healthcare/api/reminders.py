@@ -30,20 +30,24 @@ def send_appointment_reminders():
 
 
 def _send_reminder(appt: dict):
-	email = _patient_email(appt.patient)
-	if not email:
-		return
+	settings = frappe.get_cached_doc("Healthcare Settings")
 	try:
-		frappe.sendmail(
-			recipients=[email],
-			subject=_("Appointment reminder — {0}").format(appt.name),
-			message=_("Dear {0}, your appointment is scheduled on {1} with {2}.").format(
-				appt.patient_display or appt.patient,
-				appt.appointment_date,
-				appt.practitioner or _("your care team"),
-			),
-			now=True,
-		)
+		if settings.get("enable_sms_reminders") or settings.get("enable_whatsapp_reminders"):
+			from omnexa_healthcare.api.patient_notifications import send_appointment_confirmation
+
+			send_appointment_confirmation(appt.name, channels="sms,whatsapp")
+		email = _patient_email(appt.patient)
+		if email:
+			frappe.sendmail(
+				recipients=[email],
+				subject=_("Appointment reminder — {0}").format(appt.name),
+				message=_("Dear {0}, your appointment is scheduled on {1} with {2}.").format(
+					appt.patient_display or appt.patient,
+					appt.appointment_date,
+					appt.practitioner or _("your care team"),
+				),
+				now=True,
+			)
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Healthcare appointment reminder failed")
 

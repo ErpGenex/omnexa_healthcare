@@ -234,6 +234,15 @@ DOCTYPE_AR: dict[str, str] = {
 	"Healthcare Phi Access Log": "سجل وصول معلومات صحية",
 	"Healthcare Patient Push Notification": "إشعار دفع للمريض",
 	"Healthcare Mobile Device Token": "رمز جهاز محمول",
+	"Healthcare Specialty Module": "وحدة تخصص",
+	"Healthcare Dental Chart Entry": "إدخال مخطط أسنان",
+	"Healthcare Dental Treatment Plan": "خطة علاج أسنان",
+	"Healthcare Dental Treatment Plan Visit": "زيارة خطة علاج أسنان",
+	"Healthcare Orthodontic Case": "حالة تقويم أسنان",
+	"Healthcare Installment Plan": "خطة تقسيط",
+	"Healthcare Installment Plan Line": "بند خطة تقسيط",
+	"Healthcare Treatment Package": "باقة علاج",
+	"Healthcare Treatment Package Item": "بند باقة علاج",
 }
 
 # Report names (Healthcare …)

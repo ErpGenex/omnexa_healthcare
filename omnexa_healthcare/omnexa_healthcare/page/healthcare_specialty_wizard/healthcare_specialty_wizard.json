@@ -1,0 +1,12 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-specialty-wizard",
+	"page_name": "healthcare-specialty-wizard",
+	"standard": "Yes",
+	"title": "Specialty Onboarding Wizard",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"}
+	]
+}

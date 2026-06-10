@@ -13,3 +13,4 @@ omnexa_healthcare.patches.v1_0.seed_epic_parity
 omnexa_healthcare.patches.v1_0.seed_global_leader
 omnexa_healthcare.patches.v1_0.sync_healthcare_translations
 omnexa_healthcare.patches.v1_0.seed_specialty_modules
+omnexa_healthcare.patches.v1_0.seed_enterprise_gap_closure

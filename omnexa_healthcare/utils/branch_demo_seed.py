@@ -20,6 +20,7 @@ DEPARTMENTS: list[tuple[str, str, str]] = [
 	("PED", "Pediatrics", "Clinic"),
 	("ORT", "Orthopedics", "Clinic"),
 	("DER", "Dermatology", "Clinic"),
+	("DEN", "Dental Center", "Clinic"),
 	("RAD", "Radiology", "Service Unit"),
 	("LAB", "Laboratory", "Service Unit"),
 	("PHM", "Pharmacy", "Pharmacy"),
@@ -34,8 +35,54 @@ PRACTITIONERS: list[tuple[str, str, str]] = [
 	("PED", "Dr. Sara Mahmoud", "Pediatrics"),
 	("ORT", "Dr. Hisham Nabil", "Orthopedics"),
 	("DER", "Dr. Laila Samir", "Dermatology"),
+	("DEN", "Dr. Yasmine Fathy", "Dental"),
+	("ENT", "Dr. Karim Nasr", "ENT"),
+	("GYN", "Dr. Hala Refaat", "Gynecology"),
 	("RAD", "Dr. Youssef Anwar", "Radiology"),
 	("LAB", "Dr. Mona Adel", "Laboratory"),
+]
+
+SPECIALTY_LABEL_BY_CODE: dict[str, str] = {spec: label for spec, _name, label in PRACTITIONERS}
+
+CLINIC_ROTATION: list[tuple[str, str, str]] = [
+	("OPD", "GEN", "General Medicine"),
+	("CARD", "CAR", "Cardiology"),
+	("PED", "PED", "Pediatrics"),
+	("ORT", "ORT", "Orthopedics"),
+	("DER", "DER", "Dermatology"),
+	("DEN", "DEN", "Dental"),
+]
+
+DENTAL_DEMO_TEETH: list[tuple[str, str, str]] = [
+	("11", "O", "caries"),
+	("16", "M", "filled"),
+	("26", "D", "crown"),
+	("36", "Full", "root_canal"),
+	("46", "B", "healthy"),
+]
+
+TREATMENT_PACKAGES: list[tuple[str, str, str, float, list[tuple[str, float]]]] = [
+	(
+		f"{DEMO_MARKER}DENTAL-CHECKUP",
+		"Dental Checkup Package",
+		"Dental",
+		500.0,
+		[("Exam + Cleaning", 500.0)],
+	),
+	(
+		f"{DEMO_MARKER}ORTHO-START",
+		"Orthodontics Starter Package",
+		"Dental",
+		15000.0,
+		[("Consultation + Records", 2000.0), ("Metal Braces Phase 1", 13000.0)],
+	),
+	(
+		f"{DEMO_MARKER}CARDIO-SCREEN",
+		"Cardiology Screening Package",
+		"Cardiology",
+		1200.0,
+		[("ECG", 400.0), ("Echo", 800.0)],
+	),
 ]
 
 PATIENT_ROSTER: list[tuple[str, str, str, int]] = [
@@ -86,6 +133,10 @@ WEB_SERVICES: list[tuple[str, str, str, str, float, str]] = [
 	("CONS-PED", "Pediatrics Consultation", "PED", "PED", 300.0, "عيادة أطفال — حجز عبر الموقع"),
 	("CONS-ORT", "Orthopedics Consultation", "ORT", "ORT", 400.0, "عظام ومفاصل — حجز عبر الموقع"),
 	("CONS-DER", "Dermatology Consultation", "DER", "DER", 350.0, "جلدية — حجز عبر الموقع"),
+	("CONS-DEN", "Dental Consultation", "DEN", "DEN", 400.0, "عيادة أسنان — حجز عبر الموقع"),
+	("CONS-ENT", "ENT Consultation", "ENT", "OPD", 380.0, "أنف وأذن وحنجرة — حجز عبر الموقع"),
+	("CONS-GYN", "Gynecology Consultation", "GYN", "OPD", 420.0, "نساء وولادة — حجز عبر الموقع"),
+	("PKG-DENTAL", "Dental Checkup Package", "DEN", "DEN", 500.0, "باقة فحص وتنظيف أسنان"),
 	("LAB-CBC", "CBC Laboratory Panel", "LAB", "LAB", 250.0, "تحليل صورة دم كاملة"),
 	("RAD-CXR", "Chest X-Ray", "RAD", "RAD", 450.0, "أشعة صدر"),
 	("TEL-FU", "Telehealth Follow-up", "GEN", "OPD", 200.0, "متابعة عن بُعد"),
@@ -177,6 +228,11 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 	filters_base = {"company": company, "branch": branch}
 
 	delete_order = [
+		"Healthcare Orthodontic Case",
+		"Healthcare Dental Treatment Plan",
+		"Healthcare Dental Chart Entry",
+		"Healthcare Installment Plan",
+		"Healthcare Treatment Package",
 		"Healthcare Service Catalog",
 		"Healthcare Service Charge",
 		"Healthcare Medication Dispense",
@@ -218,10 +274,14 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 					extra["reporting_tag"] = REPORTING_TAG
 				if frappe.get_meta(dt).has_field("practitioner_name"):
 					names = frappe.get_all(dt, filters={**filters_base, "practitioner_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
-				elif frappe.get_meta(dt).has_field("department_name"):
+				elif frappe.get_meta(dt).has_field("unit_code"):
+					names = frappe.get_all(dt, filters={**filters_base, "unit_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif frappe.get_meta(dt).has_field("department_code"):
 					names = frappe.get_all(dt, filters={**filters_base, "department_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif dt == "Healthcare Service Catalog":
 					names = frappe.get_all(dt, filters={**filters_base, "service_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif dt == "Healthcare Treatment Package":
+					names = frappe.get_all(dt, filters={"package_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif dt == "Healthcare Payer":
 					names = frappe.get_all(dt, filters={"company": company, "payer_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif extra:
@@ -265,9 +325,11 @@ class _HospitalDemoSeeder:
 	def run(self) -> dict:
 		frappe.set_user("Administrator")
 		self._ensure_uom()
+		self._ensure_country()
 		self._seed_masters()
 		if self.patient_count:
 			self._seed_patients_and_journeys()
+			self._seed_specialty_excellence()
 		self._seed_website_services_and_bookings()
 		if self.include_financial:
 			self._seed_inventory_and_finance()
@@ -283,6 +345,9 @@ class _HospitalDemoSeeder:
 			"web_booking_url": self.ctx.get("web_booking_url"),
 			"published_services": len(self.ctx.get("published_services") or []),
 			"web_bookings": self.stats.get("Healthcare Appointment (Website)", 0),
+			"specialty_modules": self.ctx.get("specialty_modules_count", 0),
+			"dental_charts": self.stats.get("Healthcare Dental Chart Entry", 0),
+			"treatment_plans": self.stats.get("Healthcare Dental Treatment Plan", 0),
 		}
 
 	def _bump(self, key: str, n: int = 1) -> None:
@@ -293,6 +358,12 @@ class _HospitalDemoSeeder:
 			frappe.get_doc({"doctype": "UOM", "uom_name": "Nos"}).insert(ignore_permissions=True)
 		if not frappe.db.exists("UOM", "Box"):
 			frappe.get_doc({"doctype": "UOM", "uom_name": "Box"}).insert(ignore_permissions=True)
+
+	def _ensure_country(self, country: str = "Egypt") -> None:
+		if not frappe.db.exists("Country", country):
+			frappe.get_doc({"doctype": "Country", "country_name": country, "code": "EG"}).insert(
+				ignore_permissions=True
+			)
 
 	def _insert(self, doctype: str, data: dict):
 		doc = frappe.get_doc({"doctype": doctype, **data})
@@ -317,6 +388,11 @@ class _HospitalDemoSeeder:
 			},
 		)
 		self.ctx["facility"] = facility.name
+
+		from omnexa_healthcare.specialty_engine import seed_default_specialty_modules
+
+		seed_default_specialty_modules(company=self.company)
+		self.ctx["specialty_modules_count"] = frappe.db.count("Healthcare Specialty Module", {"is_active": 1})
 
 		depts: dict[str, str] = {}
 		units: dict[str, str] = {}
@@ -366,15 +442,21 @@ class _HospitalDemoSeeder:
 		self.ctx["beds"] = beds
 
 		practitioners: dict[str, str] = {}
-		for spec, name, _label in PRACTITIONERS:
-			if not frappe.db.exists("Healthcare Specialty", spec):
-				self._insert(
-					"Healthcare Specialty",
-					{"specialty_code": spec, "specialty_name": _label, "is_active": 1},
-				)
-			unit_key = {"GEN": "OPD", "CAR": "CARD", "PED": "PED", "ORT": "ORT", "DER": "DER", "RAD": "RAD", "LAB": "LAB"}.get(
-				spec, "OPD"
-			)
+		unit_map = {
+			"GEN": "OPD",
+			"CAR": "CARD",
+			"PED": "PED",
+			"ORT": "ORT",
+			"DER": "DER",
+			"DEN": "DEN",
+			"ENT": "OPD",
+			"GYN": "OPD",
+			"RAD": "RAD",
+			"LAB": "LAB",
+		}
+		for spec, name, label in PRACTITIONERS:
+			specialty_link = self._resolve_specialty(label, spec)
+			unit_key = unit_map.get(spec, "OPD")
 			schedule = [
 				{
 					"branch": self.branch,
@@ -382,7 +464,7 @@ class _HospitalDemoSeeder:
 					"from_time": "09:00:00",
 					"to_time": "17:00:00",
 					"slot_duration_mins": 30,
-					"specialty": spec,
+					"specialty": specialty_link,
 				}
 				for day in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 			]
@@ -398,7 +480,7 @@ class _HospitalDemoSeeder:
 							"branch": self.branch,
 							"facility_profile": facility.name,
 							"service_unit": units.get(unit_key),
-							"specialty": spec,
+							"specialty": specialty_link,
 							"consultation_fee": 350,
 							"is_active": 1,
 						}
@@ -428,7 +510,7 @@ class _HospitalDemoSeeder:
 		units = self.ctx["units"]
 		practitioners = self.ctx["practitioners"]
 		facility = self.ctx["facility"]
-		clinic_rotation = ["OPD", "CARD", "PED", "ORT", "DER"]
+		clinic_rotation = CLINIC_ROTATION
 		patients: list[str] = []
 
 		for idx, (given, family, gender, birth_year) in enumerate(PATIENT_ROSTER[: self.patient_count]):
@@ -464,7 +546,7 @@ class _HospitalDemoSeeder:
 					"gender": gender,
 					"birth_date": f"{birth_year}-06-15",
 					"birth_date_precision": "DMY",
-					"nationality": "EG",
+					"nationality": "Egypt",
 					"preferred_language": "ar",
 					"communication_language": "ar",
 					"marital_status": ["S", "M", "D", "W"][idx % 4],
@@ -525,8 +607,8 @@ class _HospitalDemoSeeder:
 					},
 				)
 
-			clinic = clinic_rotation[idx % len(clinic_rotation)]
-			pr_spec = {"OPD": "GEN", "CARD": "CAR", "PED": "PED", "ORT": "ORT", "DER": "DER"}[clinic]
+			clinic, pr_spec, _spec_label = clinic_rotation[idx % len(clinic_rotation)]
+			specialty_link = self._resolve_specialty(_spec_label, pr_spec)
 			appt_date = add_days(today(), -(idx % 14) + 3)
 			appt = self._insert(
 				"Healthcare Appointment",
@@ -538,7 +620,7 @@ class _HospitalDemoSeeder:
 					"department": depts[clinic],
 					"service_unit": units[clinic],
 					"practitioner": practitioners[pr_spec],
-					"specialty": pr_spec,
+					"specialty": specialty_link,
 					"appointment_date": f"{appt_date} {(9 + idx % 6):02d}:00:00",
 					"appointment_type": "Follow-up" if idx % 2 else "Consultation",
 					"status": "Completed" if getdate(appt_date) < getdate(today()) else "Scheduled",
@@ -713,6 +795,129 @@ class _HospitalDemoSeeder:
 
 		self.ctx["patients"] = patients
 
+	def _resolve_specialty(self, label: str, fallback_code: str | None = None) -> str:
+		code = frappe.db.get_value("Healthcare Specialty", {"specialty_name": label})
+		if code:
+			return code
+		if fallback_code and frappe.db.exists("Healthcare Specialty", fallback_code):
+			return fallback_code
+		doc = self._insert(
+			"Healthcare Specialty",
+			{"specialty_code": fallback_code or label[:12].upper().replace(" ", ""), "specialty_name": label, "is_active": 1},
+		)
+		return doc.name
+
+	def _seed_specialty_excellence(self) -> None:
+		"""Dental charts, treatment plans, ortho, packages, installments — all 15 specialty modules."""
+		practitioners = self.ctx.get("practitioners") or {}
+		patients = self.ctx.get("patients") or []
+		dental_pr = practitioners.get("DEN") or practitioners.get("GEN")
+		dental_spec = self._resolve_specialty("Dental", "DEN")
+
+		for package_code, package_name, spec_label, total_price, items in TREATMENT_PACKAGES:
+			if frappe.db.exists("Healthcare Treatment Package", package_code):
+				continue
+			spec_link = self._resolve_specialty(spec_label, SPECIALTY_LABEL_BY_CODE.get(spec_label, spec_label[:3].upper()))
+			self._insert(
+				"Healthcare Treatment Package",
+				{
+					"package_code": package_code,
+					"package_name": package_name,
+					"specialty": spec_link,
+					"total_price": total_price,
+					"company": self.company,
+					"is_active": 1,
+					"items": [{"procedure": proc, "qty": 1, "rate": rate, "amount": rate} for proc, rate in items],
+				},
+			)
+
+		for idx, patient in enumerate(patients):
+			encounter = frappe.db.get_value(
+				"Healthcare Encounter",
+				{"patient": patient, "company": self.company, "branch": self.branch},
+				"name",
+				order_by="modified desc",
+			)
+
+			if idx % 3 == 0 and dental_pr:
+				for tooth_id, surface, condition in DENTAL_DEMO_TEETH[:3 if idx % 6 else 5]:
+					self._insert(
+						"Healthcare Dental Chart Entry",
+						{
+							"patient": patient,
+							"encounter": encounter,
+							"practitioner": dental_pr,
+							"company": self.company,
+							"branch": self.branch,
+							"tooth_numbering_system": "FDI",
+							"tooth_id": tooth_id,
+							"surface": surface,
+							"condition": condition,
+							"status": "completed" if condition in ("filled", "crown") else "planned",
+							"treatment_plan": f"{DEMO_MARKER} demo charting",
+						},
+					)
+
+			if idx % 4 == 0 and dental_pr:
+				plan = self._insert(
+					"Healthcare Dental Treatment Plan",
+					{
+						"patient": patient,
+						"plan_title": f"{DEMO_MARKER} Multi-visit restorative plan",
+						"practitioner": dental_pr,
+						"specialty": dental_spec,
+						"company": self.company,
+						"branch": self.branch,
+						"status": "active",
+						"visits": [
+							{"visit_no": 1, "planned_date": add_days(today(), 7), "procedure": "Exam + X-ray", "tooth_id": "11", "status": "completed"},
+							{"visit_no": 2, "planned_date": add_days(today(), 14), "procedure": "Composite filling", "tooth_id": "11", "status": "planned"},
+							{"visit_no": 3, "planned_date": add_days(today(), 28), "procedure": "Crown prep", "tooth_id": "26", "status": "planned"},
+						],
+					},
+				)
+				if idx % 8 == 0:
+					self._insert(
+						"Healthcare Orthodontic Case",
+						{
+							"patient": patient,
+							"dental_treatment_plan": plan.name,
+							"appliance_type": "Metal Braces" if idx % 16 == 0 else "Clear Aligners",
+							"start_date": add_days(today(), -30),
+							"estimated_months": 18,
+							"company": self.company,
+							"branch": self.branch,
+							"status": "active",
+							"notes": f"{DEMO_MARKER} ortho demo case",
+						},
+					)
+
+			if idx % 6 == 0 and self.include_financial:
+				total = 6000.0 if idx % 12 == 0 else 3000.0
+				count = 6 if idx % 12 == 0 else 3
+				per = round(total / count, 2)
+				self._insert(
+					"Healthcare Installment Plan",
+					{
+						"patient": patient,
+						"total_amount": total,
+						"installment_count": count,
+						"frequency": "Monthly",
+						"company": self.company,
+						"branch": self.branch,
+						"status": "active",
+						"installments": [
+							{
+								"installment_no": n + 1,
+								"due_date": add_days(today(), 30 * (n + 1)),
+								"amount": per,
+								"paid": 1 if n == 0 else 0,
+							}
+							for n in range(count)
+						],
+					},
+				)
+
 	def _seed_website_services_and_bookings(self) -> None:
 		depts = self.ctx.get("departments") or {}
 		units = self.ctx.get("units") or {}
@@ -726,12 +931,14 @@ class _HospitalDemoSeeder:
 				published.append(service_code)
 				continue
 			service_type = "Telehealth" if code.startswith("TEL") else ("Procedure" if dept_key in ("LAB", "RAD") else "Consultation")
+			spec_label = SPECIALTY_LABEL_BY_CODE.get(spec, spec)
+			specialty_link = self._resolve_specialty(spec_label, spec)
 			self._insert(
 				"Healthcare Service Catalog",
 				{
 					"service_code": service_code,
 					"service_title": f"{DEMO_MARKER} {title}",
-					"specialty": spec,
+					"specialty": specialty_link,
 					"service_type": service_type,
 					"default_rate": rate,
 					"duration_mins": 30,
@@ -768,13 +975,16 @@ class _HospitalDemoSeeder:
 				},
 			)
 
-		clinic_specs = ["GEN", "CAR", "PED", "ORT", "DER"]
+		clinic_specs = [row[1] for row in CLINIC_ROTATION]
+		clinic_dept_map = {row[1]: row[0] for row in CLINIC_ROTATION}
+		clinic_label_map = {row[1]: row[2] for row in CLINIC_ROTATION}
 		for idx, (status, payment_status, day_offset) in enumerate(WEB_BOOKING_STATUSES):
 			if idx >= len(patients):
 				break
 			patient = patients[idx]
 			spec = clinic_specs[idx % len(clinic_specs)]
-			dept_key = {"GEN": "OPD", "CAR": "CARD", "PED": "PED", "ORT": "ORT", "DER": "DER"}[spec]
+			dept_key = clinic_dept_map[spec]
+			specialty_link = self._resolve_specialty(clinic_label_map[spec], spec)
 			appt_day = add_days(today(), day_offset)
 			hour = 10 + (idx % 5)
 			start = f"{appt_day} {hour:02d}:00:00"
@@ -791,7 +1001,7 @@ class _HospitalDemoSeeder:
 					"department": depts[dept_key],
 					"service_unit": units[dept_key],
 					"practitioner": practitioners[spec],
-					"specialty": spec,
+					"specialty": specialty_link,
 					"appointment_date": start,
 					"slot_end": end,
 					"appointment_type": "Consultation",

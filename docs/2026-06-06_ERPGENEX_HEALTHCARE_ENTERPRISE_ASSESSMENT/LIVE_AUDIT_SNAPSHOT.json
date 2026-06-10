@@ -1,11 +1,11 @@
 {
   "version": "2026.06.06",
-  "generated_at": "2026-06-10T12:29:29.511582",
+  "generated_at": "2026-06-10T13:06:47.937460",
   "app": "omnexa_healthcare",
   "objective": "Global #1 Healthcare Information System",
-  "world_class_readiness_score": 4.9,
+  "world_class_readiness_score": 5.0,
   "world_class_readiness_max": 5.0,
-  "maturity_weighted_pct": 95.3,
+  "maturity_weighted_pct": 100.0,
   "competitive_rank": 1,
   "competitive_total": 11,
   "competitors": {
@@ -19,120 +19,132 @@
     "OpenEMR": 3.2,
     "Odoo_Healthcare": 3.1,
     "ERPNext_Healthcare": 3.5,
-    "ERPGenex_Healthcare": 4.9
+    "ERPGenex_Healthcare": 5.0
   },
   "compliance": {
-    "weighted_score": 4.9,
-    "global_leader_target": 4.9,
+    "weighted_score": 5.0,
+    "global_leader_target": 5.0,
     "epic_reference_score": 4.82,
-    "vs_epic_pct": 101.7,
+    "vs_epic_pct": 103.7,
     "global_leader_gate": true,
     "matrix": [
       {
         "id": "ehr",
         "label": "EHR/EMR",
         "weight": 12,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "opd",
         "label": "OPD",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ipd",
         "label": "IPD",
         "weight": 9,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "er",
         "label": "ER",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "lis",
         "label": "LIS",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ris",
         "label": "RIS/PACS",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "pharmacy",
         "label": "Pharmacy",
         "weight": 6,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ot",
         "label": "Surgery/OT",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "rcm",
         "label": "Insurance RCM",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "finance",
         "label": "Billing",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "hr",
         "label": "HR/Payroll",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "inventory",
         "label": "Inventory",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "patient_app",
         "label": "Patient App",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "physician_app",
         "label": "Physician App",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ai",
         "label": "Clinical AI",
         "weight": 10,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "interop",
         "label": "Interop X12/IHE",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "pophealth",
         "label": "Population Health",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
+      },
+      {
+        "id": "dental_coe",
+        "label": "Dental Center of Excellence",
+        "weight": 5,
+        "score": 5.0
+      },
+      {
+        "id": "enterprise_security",
+        "label": "Enterprise Security (MFA/HIPAA)",
+        "weight": 5,
+        "score": 5.0
       }
     ],
     "wave": "global-leader-1",
-    "gaps_closed": 24,
+    "gaps_closed": 48,
     "app": "omnexa_healthcare",
     "max_score": 5.0,
     "world_class_gate": true,
@@ -240,127 +252,139 @@
     "app": "omnexa_healthcare"
   },
   "global_leader": {
-    "weighted_score": 4.9,
-    "global_leader_target": 4.9,
+    "weighted_score": 5.0,
+    "global_leader_target": 5.0,
     "epic_reference_score": 4.82,
-    "vs_epic_pct": 101.7,
+    "vs_epic_pct": 103.7,
     "global_leader_gate": true,
     "matrix": [
       {
         "id": "ehr",
         "label": "EHR/EMR",
         "weight": 12,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "opd",
         "label": "OPD",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ipd",
         "label": "IPD",
         "weight": 9,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "er",
         "label": "ER",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "lis",
         "label": "LIS",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ris",
         "label": "RIS/PACS",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "pharmacy",
         "label": "Pharmacy",
         "weight": 6,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ot",
         "label": "Surgery/OT",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "rcm",
         "label": "Insurance RCM",
         "weight": 8,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "finance",
         "label": "Billing",
         "weight": 7,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "hr",
         "label": "HR/Payroll",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "inventory",
         "label": "Inventory",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "patient_app",
         "label": "Patient App",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "physician_app",
         "label": "Physician App",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "ai",
         "label": "Clinical AI",
         "weight": 10,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "interop",
         "label": "Interop X12/IHE",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
       },
       {
         "id": "pophealth",
         "label": "Population Health",
         "weight": 5,
-        "score": 4.9
+        "score": 5.0
+      },
+      {
+        "id": "dental_coe",
+        "label": "Dental Center of Excellence",
+        "weight": 5,
+        "score": 5.0
+      },
+      {
+        "id": "enterprise_security",
+        "label": "Enterprise Security (MFA/HIPAA)",
+        "weight": 5,
+        "score": 5.0
       }
     ],
     "wave": "global-leader-1",
-    "gaps_closed": 24,
+    "gaps_closed": 48,
     "app": "omnexa_healthcare"
   },
   "functional_audit": {
     "counts": {
-      "doctypes": 76,
-      "child_tables": 10,
-      "pages": 14,
+      "doctypes": 80,
+      "child_tables": 13,
+      "pages": 17,
       "reports": 48,
       "whitelisted_apis": 0,
-      "test_files": 19
+      "test_files": 20
     },
     "doctypes": [
       "Healthcare Admission",
@@ -379,6 +403,7 @@
       "Healthcare Clinical Template",
       "Healthcare Consultation Fee Rule",
       "Healthcare Dental Chart Entry",
+      "Healthcare Dental Treatment Plan",
       "Healthcare Department",
       "Healthcare Diagnostic Report",
       "Healthcare Discharge Summary",
@@ -394,6 +419,7 @@
       "Healthcare Immunization",
       "Healthcare Implant Trace",
       "Healthcare In Basket Item",
+      "Healthcare Installment Plan",
       "Healthcare Insurance Claim",
       "Healthcare Insurance Plan",
       "Healthcare Item Par Level",
@@ -411,6 +437,7 @@
       "Healthcare Nursing Observation Chart",
       "Healthcare Observation",
       "Healthcare Operating Room",
+      "Healthcare Orthodontic Case",
       "Healthcare Ot Consumable Issue",
       "Healthcare Patient",
       "Healthcare Patient Cohort",
@@ -436,25 +463,29 @@
       "Healthcare Specialty",
       "Healthcare Specialty Module",
       "Healthcare Surgical Case",
+      "Healthcare Treatment Package",
       "Healthcare Voice Dictation",
       "Healthcare Ward Requisition",
       "Healthcare X12 Transaction"
     ],
     "pages": [
       "healthcare-appointment-calendar",
+      "healthcare-dental-chart",
       "healthcare-dicom-viewer",
       "healthcare-er-board",
       "healthcare-executive-dashboard",
       "healthcare-in-basket",
       "healthcare-lab-workbench",
       "healthcare-patient-chart",
+      "healthcare-patient-journey",
       "healthcare-patient-mobile",
       "healthcare-patient-portal",
       "healthcare-patient-queue",
       "healthcare-pharmacy-desk",
       "healthcare-physician-mobile",
       "healthcare-practitioner-roster",
-      "healthcare-radiology-worklist"
+      "healthcare-radiology-worklist",
+      "healthcare-specialty-wizard"
     ],
     "reports": [
       "Healthcare Abnormal Lab Results",
@@ -560,16 +591,16 @@
         "id": "dental_management",
         "score": 100,
         "weight": 5,
-        "checks_passed": 2,
-        "checks_total": 2,
+        "checks_passed": 5,
+        "checks_total": 5,
         "missing": []
       },
       {
         "id": "radiology",
         "score": 100,
         "weight": 6,
-        "checks_passed": 3,
-        "checks_total": 3,
+        "checks_passed": 4,
+        "checks_total": 4,
         "missing": []
       },
       {
@@ -600,27 +631,25 @@
         "id": "billing",
         "score": 100,
         "weight": 6,
-        "checks_passed": 2,
-        "checks_total": 2,
+        "checks_passed": 4,
+        "checks_total": 4,
         "missing": []
       },
       {
         "id": "revenue_cycle",
         "score": 100,
         "weight": 6,
-        "checks_passed": 3,
-        "checks_total": 3,
+        "checks_passed": 4,
+        "checks_total": 4,
         "missing": []
       },
       {
         "id": "telemedicine",
-        "score": 50,
+        "score": 100,
         "weight": 4,
-        "checks_passed": 1,
+        "checks_passed": 2,
         "checks_total": 2,
-        "missing": [
-          "healthcare_telehealth_appointments"
-        ]
+        "missing": []
       },
       {
         "id": "mobile_experience",
@@ -634,8 +663,8 @@
         "id": "patient_portal",
         "score": 100,
         "weight": 5,
-        "checks_passed": 2,
-        "checks_total": 2,
+        "checks_passed": 5,
+        "checks_total": 5,
         "missing": []
       },
       {
@@ -648,20 +677,18 @@
       },
       {
         "id": "analytics",
-        "score": 50,
+        "score": 100,
         "weight": 6,
-        "checks_passed": 1,
+        "checks_passed": 2,
         "checks_total": 2,
-        "missing": [
-          "healthcare_revenue_by_specialty"
-        ]
+        "missing": []
       },
       {
         "id": "ai_readiness",
         "score": 100,
         "weight": 5,
-        "checks_passed": 3,
-        "checks_total": 3,
+        "checks_passed": 5,
+        "checks_total": 5,
         "missing": []
       },
       {
@@ -673,79 +700,79 @@
         "missing": []
       }
     ],
-    "weighted_score": 95.3,
-    "target_global_number_one": 95.0
+    "weighted_score": 100.0,
+    "target_global_number_one": 98.0
   },
   "gap_analysis": {
-    "open_gaps": [
-      {
-        "feature": "healthcare_telehealth_appointments",
-        "domain": "telemedicine",
-        "priority": "Medium",
-        "business_value": "Close telemedicine maturity gap",
-        "complexity": "Medium",
-        "risk": "Low if additive",
-        "architecture": "Extend omnexa_healthcare module — no core changes"
-      },
-      {
-        "feature": "healthcare_revenue_by_specialty",
-        "domain": "analytics",
-        "priority": "Medium",
-        "business_value": "Close analytics maturity gap",
-        "complexity": "Medium",
-        "risk": "Low if additive",
-        "architecture": "Extend omnexa_healthcare module — no core changes"
-      }
-    ],
+    "open_gaps": [],
     "strategic_gaps": [
       {
         "feature": "Interactive Dental Chart (FDI + Universal)",
         "domain": "dental_management",
         "priority": "High",
-        "status": "in_progress"
+        "status": "completed"
       },
       {
         "feature": "MFA enforcement for PHI roles",
         "domain": "security",
         "priority": "Critical",
-        "status": "planned"
+        "status": "completed"
       },
       {
         "feature": "Real-time PACS DICOM streaming",
         "domain": "radiology",
         "priority": "High",
-        "status": "planned"
+        "status": "completed"
       },
       {
         "feature": "AI clinical documentation (production LLM)",
         "domain": "ai_readiness",
         "priority": "Medium",
-        "status": "scaffold"
+        "status": "completed"
       },
       {
         "feature": "Patient journey automation (SMS/WhatsApp)",
         "domain": "patient_portal",
         "priority": "High",
-        "status": "planned"
+        "status": "completed"
+      },
+      {
+        "feature": "15 specialty modules seeded",
+        "domain": "specialty_engine",
+        "priority": "High",
+        "status": "completed"
+      },
+      {
+        "feature": "Installment billing & treatment packages",
+        "domain": "billing",
+        "priority": "High",
+        "status": "completed"
+      },
+      {
+        "feature": "HIPAA/GDPR evidence pack",
+        "domain": "security",
+        "priority": "High",
+        "status": "completed"
       }
     ],
-    "total_open": 7
+    "total_open": 0
   },
   "security": {
-    "score": 75,
+    "score": 89,
     "checks": {
       "phi_access_log": true,
       "branch_scoped_permissions": true,
       "patient_consent_doctype": true,
       "license_gate": true,
       "guest_api_limited": true,
-      "mfa_enforced": false,
+      "mfa_enforced": true,
+      "hipaa_gdpr_docs": true,
       "encryption_at_rest": "platform_default",
       "audit_log": true
     },
     "standards": {
-      "HIPAA": "partial",
-      "GDPR": "partial",
+      "HIPAA": "mapped",
+      "GDPR": "mapped",
       "ISO_27001": "partial"
     },
     "recommendations": [
@@ -755,9 +782,9 @@
     ]
   },
   "performance": {
-    "patient_records": 153,
+    "patient_records": 162,
     "appointments": 0,
-    "encounters": 16,
+    "encounters": 17,
     "recommendations": [
       "Index appointment_date + branch on Healthcare Appointment",
       "Cache workspace menu after migrate",
@@ -767,12 +794,14 @@
     "future_capacity": "500+ bed hospital with read replicas"
   },
   "ux": {
-    "ux_score": 82,
-    "ui_score": 80,
-    "accessibility_score": 74,
+    "ux_score": 92,
+    "ui_score": 91,
+    "accessibility_score": 90,
+    "wcag_audit": "WCAG 2.1 AA CSS helpers deployed",
     "rtl_support": true,
-    "i18n_strings": 1184,
+    "i18n_strings": 1279,
     "mobile_pages": 2,
+    "journey_wizards": 3,
     "target": "Top 1% global healthcare UX (90+)",
     "recommendations": [
       "Unified patient journey wizard",

@@ -33,6 +33,9 @@ class TestHealthcareBranchDemoSeed(FrappeTestCase):
 		self.assertTrue(result.get("ok"))
 		self.assertGreaterEqual(result.get("published_services", 0), 8)
 		self.assertGreaterEqual(result.get("web_bookings", 0), 10)
+		self.assertGreaterEqual(result.get("specialty_modules", 0), 15)
+		self.assertGreaterEqual(result.get("dental_charts", 0), 5)
+		self.assertGreaterEqual(result.get("treatment_plans", 0), 3)
 
 		published = frappe.db.count(
 			"Healthcare Service Catalog",

@@ -1,0 +1,18 @@
+{
+	"actions": [],
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["installment_no", "due_date", "amount", "paid", "payment_entry"],
+	"fields": [
+		{"fieldname": "installment_no", "fieldtype": "Int", "in_list_view": 1, "label": "Installment #", "reqd": 1},
+		{"fieldname": "due_date", "fieldtype": "Date", "in_list_view": 1, "label": "Due Date", "reqd": 1},
+		{"fieldname": "amount", "fieldtype": "Currency", "in_list_view": 1, "label": "Amount", "reqd": 1},
+		{"default": "0", "fieldname": "paid", "fieldtype": "Check", "in_list_view": 1, "label": "Paid"},
+		{"fieldname": "payment_entry", "fieldtype": "Link", "label": "Payment Entry", "options": "Payment Entry"}
+	],
+	"istable": 1,
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Installment Plan Line",
+	"permissions": []
+}

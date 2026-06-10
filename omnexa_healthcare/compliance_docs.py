@@ -8,6 +8,43 @@ from __future__ import annotations
 import frappe
 
 COMPLIANCE_DOCS = {
+	"hipaa": {
+		"title": "HIPAA Security & Privacy Rule Mapping",
+		"version": "2026.06",
+		"sections": {
+			"Administrative Safeguards": [
+				"Healthcare Phi Access Log for minimum necessary access reviews.",
+				"Healthcare Patient Consent for treatment and data sharing.",
+				"MFA enforcement for PHI clinical roles (Healthcare Settings).",
+			],
+			"Technical Safeguards": [
+				"Branch-scoped permission_query_conditions on 26+ clinical DocTypes.",
+				"PHI audit logging on Patient and Encounter doc_events.",
+				"License gate and guest API restrictions on web booking.",
+			],
+			"Breach Notification": [
+				"Healthcare Phi Access Log export for incident response.",
+				"Change ticket and policy reference on Healthcare Settings.",
+			],
+		},
+	},
+	"gdpr": {
+		"title": "GDPR Healthcare Data Protection Guide",
+		"version": "2026.06",
+		"sections": {
+			"Lawful Basis & Consent": [
+				"Healthcare Patient Consent DocType with consent type and signed timestamp.",
+				"Patient right to restrict secondary use (consent flags).",
+			],
+			"Data Subject Rights": [
+				"Healthcare Patient Merge Log for identity resolution.",
+				"FHIR export for portable patient summary (IPS bundle).",
+			],
+			"Security of Processing": [
+				"MFA for clinical roles, PHI audit trail, encryption at rest (platform).",
+			],
+		},
+	},
 	"jci": {
 		"title": "JCI Hospital Information System Mapping",
 		"version": "2026.06",

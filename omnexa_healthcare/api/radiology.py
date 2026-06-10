@@ -64,13 +64,30 @@ def api_get_dicom_viewer_config(diagnostic_report: str) -> dict:
 	"""DICOMweb viewer configuration for embedded PACS viewer page."""
 	report = frappe.get_doc("Healthcare Diagnostic Report", diagnostic_report)
 	wado = report.pacs_wado_url or _pacs_url(frappe._dict(patient=report.patient, name=report.based_on_service_request))
+	stream = api_get_wado_rs_stream_url(diagnostic_report=diagnostic_report, internal=True)
 	return {
 		"report": report.name,
 		"patient": report.patient,
 		"wado_url": wado,
+		"wado_rs_stream_url": stream.get("stream_url"),
+		"wado_rs_frames_url": stream.get("frames_url"),
 		"viewer_mode": "dicomweb",
+		"streaming": True,
 		"ohif_compatible": True,
 	}
+
+
+@frappe.whitelist()
+def api_get_wado_rs_stream_url(diagnostic_report: str, study_uid: str | None = None, internal: bool = False) -> dict:
+	"""WADO-RS streaming endpoints for real-time PACS integration."""
+	report = frappe.get_doc("Healthcare Diagnostic Report", diagnostic_report)
+	base = (report.pacs_wado_url or frappe.db.get_single_value("Healthcare Settings", "pacs_wado_base_url") or "").rstrip("/")
+	if not base:
+		return {"stream_url": None, "frames_url": None, "error": "PACS WADO-RS base URL not configured"}
+	study = study_uid or report.name
+	stream_url = f"{base}/studies/{study}/series"
+	frames_url = f"{base}/studies/{study}/series/1/instances/1/frames/1"
+	return {"stream_url": stream_url, "frames_url": frames_url, "study_uid": study, "patient": report.patient}
 
 
 @frappe.whitelist()

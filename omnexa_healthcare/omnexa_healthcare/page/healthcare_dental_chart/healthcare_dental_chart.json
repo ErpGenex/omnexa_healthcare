@@ -1,0 +1,14 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-dental-chart",
+	"page_name": "healthcare-dental-chart",
+	"standard": "Yes",
+	"title": "Interactive Dental Chart",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Physician"},
+		{"role": "Desk User"}
+	]
+}

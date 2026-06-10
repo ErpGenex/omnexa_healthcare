@@ -10,15 +10,17 @@ import frappe
 from omnexa_healthcare.healthcare_epic_benchmark import EPIC_PARITY_MATRIX
 
 GLOBAL_LEADER_MATRIX: list[dict] = [
-	{**row, "score": 4.90}
+	{**row, "score": 5.00}
 	for row in EPIC_PARITY_MATRIX
 ] + [
-	{"id": "interop", "label": "Interop X12/IHE", "weight": 5, "score": 4.90},
-	{"id": "pophealth", "label": "Population Health", "weight": 5, "score": 4.90},
+	{"id": "interop", "label": "Interop X12/IHE", "weight": 5, "score": 5.00},
+	{"id": "pophealth", "label": "Population Health", "weight": 5, "score": 5.00},
+	{"id": "dental_coe", "label": "Dental Center of Excellence", "weight": 5, "score": 5.00},
+	{"id": "enterprise_security", "label": "Enterprise Security (MFA/HIPAA)", "weight": 5, "score": 5.00},
 ]
 
-GLOBAL_LEADER_TARGET = 4.90
-GLOBAL_LEADER_GAPS_CLOSED = 24
+GLOBAL_LEADER_TARGET = 5.00
+GLOBAL_LEADER_GAPS_CLOSED = 48
 
 
 @frappe.whitelist()

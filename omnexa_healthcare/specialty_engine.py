@@ -42,6 +42,18 @@ DEFAULT_SPECIALTY_MODULES: list[dict] = [
 		"chart_type": "none",
 		"encounter_sections": ["Growth Chart", "Immunization Review", "SOAP"],
 	},
+	{"module_code": "dermatology", "module_name": "Dermatology", "specialty_name": "Dermatology", "chart_type": "body_map", "encounter_sections": ["Lesion Description", "Distribution", "Biopsy Plan"]},
+	{"module_code": "ophthalmology", "module_name": "Ophthalmology", "specialty_name": "Ophthalmology", "chart_type": "custom", "encounter_sections": ["Visual Acuity", "IOP", "Fundoscopy"]},
+	{"module_code": "orthopedics", "module_name": "Orthopedics", "specialty_name": "Orthopedics", "chart_type": "body_map", "encounter_sections": ["Joint Exam", "ROM", "Imaging Review"]},
+	{"module_code": "ent", "module_name": "ENT", "specialty_name": "ENT", "chart_type": "none", "encounter_sections": ["Ear Exam", "Nose Exam", "Throat Exam"]},
+	{"module_code": "gynecology", "module_name": "Gynecology", "specialty_name": "Gynecology", "chart_type": "none", "encounter_sections": ["Obstetric History", "LMP", "Exam", "Plan"]},
+	{"module_code": "surgery", "module_name": "Surgery", "specialty_name": "Surgery", "chart_type": "none", "encounter_sections": ["Pre-Op", "Procedure", "Post-Op"]},
+	{"module_code": "psychiatry", "module_name": "Psychiatry", "specialty_name": "Psychiatry", "chart_type": "none", "encounter_sections": ["MSE", "Risk Assessment", "Plan"]},
+	{"module_code": "physiotherapy", "module_name": "Physiotherapy", "specialty_name": "Physiotherapy", "chart_type": "body_map", "encounter_sections": ["Assessment", "Treatment", "Home Program"]},
+	{"module_code": "oncology", "module_name": "Oncology", "specialty_name": "Oncology", "chart_type": "none", "encounter_sections": ["Staging", "Chemo Plan", "Supportive Care"]},
+	{"module_code": "neurology", "module_name": "Neurology", "specialty_name": "Neurology", "chart_type": "none", "encounter_sections": ["Neuro Exam", "Imaging", "Plan"]},
+	{"module_code": "urology", "module_name": "Urology", "specialty_name": "Urology", "chart_type": "none", "encounter_sections": ["History", "Exam", "Plan"]},
+	{"module_code": "gastroenterology", "module_name": "Gastroenterology", "specialty_name": "Gastroenterology", "chart_type": "none", "encounter_sections": ["GI History", "Exam", "Endoscopy Plan"]},
 ]
 
 
@@ -100,6 +112,7 @@ def get_specialty_module_config(specialty: str) -> dict:
 	frappe.throw(_("No active specialty module for {0}").format(specialty), title=_("Specialty Module"))
 
 
+@frappe.whitelist()
 def seed_default_specialty_modules(company: str | None = None) -> int:
 	created = 0
 	for spec in DEFAULT_SPECIALTY_MODULES:

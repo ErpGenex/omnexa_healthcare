@@ -15,11 +15,13 @@ frappe.pages["healthcare-dicom-viewer"].on_page_load = function (wrapper) {
 			args: { diagnostic_report: report.get_value() },
 			callback(r) {
 				const c = r.message || {};
-				if (c.wado_url) {
+				if (c.wado_rs_stream_url || c.wado_url) {
+					const stream = c.wado_rs_stream_url ? `<p class="small">${__("WADO-RS Stream")}: <code>${frappe.utils.escape_html(c.wado_rs_stream_url)}</code></p>` : "";
+					const url = c.wado_url || c.wado_rs_stream_url;
 					$frame.html(
-						`<p>${__("DICOMweb URL")}: <a href="${frappe.utils.escape_html(c.wado_url)}" target="_blank">${__(
+						`${stream}<p>${__("DICOMweb URL")}: <a href="${frappe.utils.escape_html(url)}" target="_blank">${__(
 							"Open in PACS viewer"
-						)}</a></p><iframe src="${frappe.utils.escape_html(c.wado_url)}" style="width:100%;height:500px;border:0"></iframe>`
+						)}</a></p><iframe src="${frappe.utils.escape_html(url)}" style="width:100%;height:500px;border:0"></iframe>`
 					);
 				} else {
 					$frame.html(`<p class="text-muted">${__("Configure PACS WADO URL on Healthcare Settings or report.")}</p>`);

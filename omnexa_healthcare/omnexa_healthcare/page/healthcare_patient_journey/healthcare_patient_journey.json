@@ -1,0 +1,14 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-patient-journey",
+	"page_name": "healthcare-patient-journey",
+	"standard": "Yes",
+	"title": "Patient Journey Wizard",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Physician"},
+		{"role": "Desk User"}
+	]
+}

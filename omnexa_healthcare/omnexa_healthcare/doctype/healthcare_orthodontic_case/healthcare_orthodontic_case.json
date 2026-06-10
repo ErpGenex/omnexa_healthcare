@@ -1,0 +1,28 @@
+{
+	"actions": [],
+	"autoname": "format:HOC-{YYYY}-{#####}",
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "dental_treatment_plan", "appliance_type", "start_date", "estimated_months", "column_break_1", "company", "branch", "status", "notes"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "in_list_view": 1, "label": "Patient", "options": "Healthcare Patient", "reqd": 1},
+		{"fieldname": "dental_treatment_plan", "fieldtype": "Link", "label": "Dental Treatment Plan", "options": "Healthcare Dental Treatment Plan"},
+		{"fieldname": "appliance_type", "fieldtype": "Select", "in_list_view": 1, "label": "Appliance Type", "options": "Metal Braces\nCeramic Braces\nClear Aligners\nRetainer\nOther", "reqd": 1},
+		{"fieldname": "start_date", "fieldtype": "Date", "in_list_view": 1, "label": "Start Date"},
+		{"fieldname": "estimated_months", "fieldtype": "Int", "label": "Estimated Duration (months)"},
+		{"fieldname": "column_break_1", "fieldtype": "Column Break"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch"},
+		{"default": "active", "fieldname": "status", "fieldtype": "Select", "in_list_view": 1, "label": "Status", "options": "planned\nactive\nretention\ncompleted\ncancelled"},
+		{"fieldname": "notes", "fieldtype": "Small Text", "label": "Notes"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Orthodontic Case",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

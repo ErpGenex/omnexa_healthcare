@@ -1,0 +1,28 @@
+{
+	"actions": [],
+	"autoname": "format:HDTP-{YYYY}-{#####}",
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "plan_title", "practitioner", "specialty", "column_break_1", "company", "branch", "status", "section_visits", "visits"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "in_list_view": 1, "label": "Patient", "options": "Healthcare Patient", "reqd": 1},
+		{"fieldname": "plan_title", "fieldtype": "Data", "in_list_view": 1, "label": "Plan Title", "reqd": 1},
+		{"fieldname": "practitioner", "fieldtype": "Link", "label": "Practitioner", "options": "Healthcare Practitioner"},
+		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty"},
+		{"fieldname": "column_break_1", "fieldtype": "Column Break"},
+		{"default": "draft", "fieldname": "status", "fieldtype": "Select", "in_list_view": 1, "label": "Status", "options": "draft\nactive\ncompleted\ncancelled"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch"},
+		{"fieldname": "section_visits", "fieldtype": "Section Break", "label": "Multi-Visit Plan"},
+		{"fieldname": "visits", "fieldtype": "Table", "label": "Visits", "options": "Healthcare Dental Treatment Plan Visit"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Dental Treatment Plan",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

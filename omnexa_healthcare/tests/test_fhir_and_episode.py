@@ -23,11 +23,11 @@ class TestFhirExportAndEpisode(FrappeTestCase):
 		ensure_currency_and_country()
 
 	def _make_company(self, label):
-		abbr = f"FE{label}{frappe.generate_hash(length=2).upper()}"
+		abbr = f"F{frappe.generate_hash(length=8).upper()}"
 		doc = frappe.get_doc(
 			{
 				"doctype": "Company",
-				"company_name": f"FHIR Co {label}",
+				"company_name": f"FHIR Co {label} {frappe.generate_hash(length=4)}",
 				"abbr": abbr,
 				"default_currency": "EGP",
 				"country": "Egypt",

@@ -10,9 +10,17 @@
 		"allow_cross_branch_appointments",
 		"allow_cross_branch_patient_access",
 		"send_appointment_reminders",
+		"enable_sms_reminders",
+		"sms_webhook_url",
+		"enable_whatsapp_reminders",
+		"whatsapp_webhook_url",
 		"reminder_hours_before",
 		"enable_phi_audit_log",
+		"enforce_mfa_for_phi_roles",
 		"pacs_wado_base_url",
+		"enable_ai_scheduling",
+		"enable_llm_clinical_documentation",
+		"llm_model_name",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -57,10 +65,38 @@
 			"label": "Send appointment email reminders"
 		},
 		{
+			"default": "1",
+			"fieldname": "enable_sms_reminders",
+			"fieldtype": "Check",
+			"label": "Enable SMS appointment reminders"
+		},
+		{
+			"fieldname": "sms_webhook_url",
+			"fieldtype": "Data",
+			"label": "SMS webhook URL"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_whatsapp_reminders",
+			"fieldtype": "Check",
+			"label": "Enable WhatsApp appointment reminders"
+		},
+		{
+			"fieldname": "whatsapp_webhook_url",
+			"fieldtype": "Data",
+			"label": "WhatsApp webhook URL"
+		},
+		{
 			"default": "24",
 			"fieldname": "reminder_hours_before",
 			"fieldtype": "Int",
 			"label": "Reminder hours before appointment"
+		},
+		{
+			"default": "1",
+			"fieldname": "enforce_mfa_for_phi_roles",
+			"fieldtype": "Check",
+			"label": "Enforce MFA for PHI clinical roles"
 		},
 		{
 			"default": "1",
@@ -72,6 +108,24 @@
 			"fieldname": "pacs_wado_base_url",
 			"fieldtype": "Data",
 			"label": "PACS WADO-RS base URL"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_ai_scheduling",
+			"fieldtype": "Check",
+			"label": "Enable AI scheduling optimizer"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_llm_clinical_documentation",
+			"fieldtype": "Check",
+			"label": "Enable LLM clinical documentation"
+		},
+		{
+			"default": "erpgenex-clinical-v1",
+			"fieldname": "llm_model_name",
+			"fieldtype": "Data",
+			"label": "LLM model name"
 		},
 		{
 			"default": "1",

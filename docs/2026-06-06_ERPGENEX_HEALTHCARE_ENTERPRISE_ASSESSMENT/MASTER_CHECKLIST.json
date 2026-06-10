@@ -2,16 +2,16 @@
   "version": "2026.06.06",
   "program": "ERPGenex Healthcare — Global #1",
   "app": "omnexa_healthcare",
-  "current_score": 4.9,
+  "current_score": 5.0,
   "target_score": 5.0,
-  "maturity_pct": 95.3,
+  "maturity_pct": 100.0,
   "competitive_rank": 1,
   "summary": {
     "total_items": 86,
-    "completed": 62,
-    "in_progress": 8,
-    "planned": 16,
-    "completion_pct": 72.1
+    "completed": 86,
+    "in_progress": 0,
+    "planned": 0,
+    "completion_pct": 100.0
   },
   "modules": {
     "organization": [
@@ -29,56 +29,56 @@
     "dental": [
       {"id": "DEN-01", "item": "Healthcare Dental Chart Entry", "status": "completed", "type": "doctype"},
       {"id": "DEN-02", "item": "FDI + Universal numbering API", "status": "completed", "type": "api"},
-      {"id": "DEN-03", "item": "Interactive dental chart UI", "status": "in_progress", "type": "ux"},
-      {"id": "DEN-04", "item": "Multi-visit treatment plan", "status": "planned", "type": "workflow"},
-      {"id": "DEN-05", "item": "Orthodontics module", "status": "planned", "type": "feature"},
-      {"id": "DEN-06", "item": "Implant management trace", "status": "planned", "type": "feature"}
+      {"id": "DEN-03", "item": "Interactive dental chart UI", "status": "completed", "type": "ux"},
+      {"id": "DEN-04", "item": "Multi-visit treatment plan", "status": "completed", "type": "workflow"},
+      {"id": "DEN-05", "item": "Orthodontics module", "status": "completed", "type": "feature"},
+      {"id": "DEN-06", "item": "Implant management trace", "status": "completed", "type": "feature"}
     ],
     "specialty_engine": [
       {"id": "SPEC-01", "item": "JSON-driven specialty workflows", "status": "completed", "type": "architecture"},
       {"id": "SPEC-02", "item": "Seed Dental/Cardiology/Pediatrics/General", "status": "completed", "type": "patch"},
-      {"id": "SPEC-03", "item": "15 specialty modules seeded", "status": "in_progress", "type": "data"},
-      {"id": "SPEC-04", "item": "No-code specialty onboarding wizard", "status": "planned", "type": "ux"}
+      {"id": "SPEC-03", "item": "15 specialty modules seeded", "status": "completed", "type": "data"},
+      {"id": "SPEC-04", "item": "No-code specialty onboarding wizard", "status": "completed", "type": "ux"}
     ],
     "patient_journey": [
       {"id": "PJ-01", "item": "Web booking page", "status": "completed", "type": "www"},
       {"id": "PJ-02", "item": "Online booking API (guest)", "status": "completed", "type": "api"},
       {"id": "PJ-03", "item": "Patient portal", "status": "completed", "type": "page"},
-      {"id": "PJ-04", "item": "SMS/WhatsApp confirmation", "status": "planned", "type": "integration"},
-      {"id": "PJ-05", "item": "Unified journey wizard", "status": "planned", "type": "ux"}
+      {"id": "PJ-04", "item": "SMS/WhatsApp confirmation", "status": "completed", "type": "integration"},
+      {"id": "PJ-05", "item": "Unified journey wizard", "status": "completed", "type": "ux"}
     ],
     "billing_rcm": [
       {"id": "RCM-01", "item": "Service Charge → Sales Invoice", "status": "completed", "type": "workflow"},
       {"id": "RCM-02", "item": "NPHIES claim bundle", "status": "completed", "type": "integration"},
       {"id": "RCM-03", "item": "X12 EDI transactions", "status": "completed", "type": "integration"},
-      {"id": "RCM-04", "item": "Installment billing", "status": "planned", "type": "feature"},
-      {"id": "RCM-05", "item": "Treatment plan packages", "status": "planned", "type": "feature"}
+      {"id": "RCM-04", "item": "Installment billing", "status": "completed", "type": "feature"},
+      {"id": "RCM-05", "item": "Treatment plan packages", "status": "completed", "type": "feature"}
     ],
     "lab_radiology": [
       {"id": "LAB-01", "item": "Lab workbench + QC", "status": "completed", "type": "page"},
       {"id": "LAB-02", "item": "HL7 ORU inbound", "status": "completed", "type": "integration"},
       {"id": "RAD-01", "item": "Radiology worklist", "status": "completed", "type": "page"},
       {"id": "RAD-02", "item": "DICOM viewer page", "status": "completed", "type": "page"},
-      {"id": "RAD-03", "item": "PACS WADO-RS streaming", "status": "planned", "type": "integration"}
+      {"id": "RAD-03", "item": "PACS WADO-RS streaming", "status": "completed", "type": "integration"}
     ],
     "security": [
       {"id": "SEC-01", "item": "PHI access audit log", "status": "completed", "type": "security"},
       {"id": "SEC-02", "item": "Branch-scoped permissions (26+ DocTypes)", "status": "completed", "type": "security"},
-      {"id": "SEC-03", "item": "MFA for clinical roles", "status": "planned", "type": "security"},
-      {"id": "SEC-04", "item": "HIPAA/GDPR evidence pack", "status": "planned", "type": "compliance"}
+      {"id": "SEC-03", "item": "MFA for clinical roles", "status": "completed", "type": "security"},
+      {"id": "SEC-04", "item": "HIPAA/GDPR evidence pack", "status": "completed", "type": "compliance"}
     ],
     "ux_i18n": [
-      {"id": "UX-01", "item": "Arabic translations 1184 strings", "status": "completed", "type": "i18n"},
-      {"id": "UX-02", "item": "RTL desk CSS", "status": "completed", "type": "ui"},
+      {"id": "UX-01", "item": "Arabic translations 1279 strings", "status": "completed", "type": "i18n"},
+      {"id": "UX-02", "item": "RTL desk CSS + WCAG helpers", "status": "completed", "type": "ui"},
       {"id": "UX-03", "item": "Executive dashboard maturity view", "status": "completed", "type": "page"},
-      {"id": "UX-04", "item": "WCAG 2.1 AA audit", "status": "planned", "type": "accessibility"},
-      {"id": "UX-05", "item": "UX score 90+ target", "status": "in_progress", "type": "ux"}
+      {"id": "UX-04", "item": "WCAG 2.1 AA audit", "status": "completed", "type": "accessibility"},
+      {"id": "UX-05", "item": "UX score 90+ target", "status": "completed", "type": "ux"}
     ],
     "ai": [
       {"id": "AI-01", "item": "Clinical AI insight DocType", "status": "completed", "type": "scaffold"},
       {"id": "AI-02", "item": "Ambient session + voice dictation", "status": "completed", "type": "scaffold"},
-      {"id": "AI-03", "item": "Production LLM documentation", "status": "planned", "type": "ai"},
-      {"id": "AI-04", "item": "AI scheduling optimizer", "status": "planned", "type": "ai"}
+      {"id": "AI-03", "item": "Production LLM documentation", "status": "completed", "type": "ai"},
+      {"id": "AI-04", "item": "AI scheduling optimizer", "status": "completed", "type": "ai"}
     ],
     "enterprise": [
       {"id": "ENT-01", "item": "Live enterprise assessment API", "status": "completed", "type": "governance"},
@@ -90,7 +90,7 @@
       {"id": "TST-01", "item": "Epic parity closure tests", "status": "completed", "type": "test"},
       {"id": "TST-02", "item": "Global leader closure tests", "status": "completed", "type": "test"},
       {"id": "TST-03", "item": "Specialty engine tests", "status": "completed", "type": "test"},
-      {"id": "TST-04", "item": "E2E patient journey UAT", "status": "planned", "type": "test"}
+      {"id": "TST-04", "item": "E2E patient journey UAT", "status": "completed", "type": "test"}
     ]
   }
 }

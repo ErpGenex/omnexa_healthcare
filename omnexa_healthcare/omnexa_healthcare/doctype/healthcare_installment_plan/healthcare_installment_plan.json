@@ -1,0 +1,30 @@
+{
+	"actions": [],
+	"autoname": "format:HIP-{YYYY}-{#####}",
+	"creation": "2026-06-06 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": ["patient", "service_charge", "sales_invoice", "total_amount", "installment_count", "frequency", "column_break_1", "company", "branch", "status", "section_lines", "installments"],
+	"fields": [
+		{"fieldname": "patient", "fieldtype": "Link", "in_list_view": 1, "label": "Patient", "options": "Healthcare Patient", "reqd": 1},
+		{"fieldname": "service_charge", "fieldtype": "Link", "label": "Service Charge", "options": "Healthcare Service Charge"},
+		{"fieldname": "sales_invoice", "fieldtype": "Link", "label": "Sales Invoice", "options": "Sales Invoice"},
+		{"fieldname": "total_amount", "fieldtype": "Currency", "in_list_view": 1, "label": "Total Amount", "reqd": 1},
+		{"fieldname": "installment_count", "fieldtype": "Int", "in_list_view": 1, "label": "Installment Count", "reqd": 1},
+		{"default": "Monthly", "fieldname": "frequency", "fieldtype": "Select", "label": "Frequency", "options": "Weekly\nMonthly\nQuarterly"},
+		{"fieldname": "column_break_1", "fieldtype": "Column Break"},
+		{"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+		{"fieldname": "branch", "fieldtype": "Link", "label": "Branch", "options": "Branch"},
+		{"default": "active", "fieldname": "status", "fieldtype": "Select", "in_list_view": 1, "label": "Status", "options": "draft\nactive\ncompleted\ncancelled"},
+		{"fieldname": "section_lines", "fieldtype": "Section Break", "label": "Installments"},
+		{"fieldname": "installments", "fieldtype": "Table", "label": "Installment Lines", "options": "Healthcare Installment Plan Line"}
+	],
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Installment Plan",
+	"permissions": [
+		{"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+		{"role": "Company Admin", "read": 1, "write": 1, "create": 1, "delete": 0},
+		{"role": "Desk User", "read": 1, "write": 1, "create": 1, "delete": 0}
+	],
+	"track_changes": 1
+}

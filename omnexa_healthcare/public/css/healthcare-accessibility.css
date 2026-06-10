@@ -1,0 +1,16 @@
+/* WCAG 2.1 AA helpers — ERPGenex Healthcare */
+:root {
+	--hc-focus-ring: #0d6efd;
+}
+.hc-focus-visible:focus-visible,
+.btn:focus-visible,
+.form-control:focus-visible {
+	outline: 3px solid var(--hc-focus-ring);
+	outline-offset: 2px;
+}
+@media (prefers-contrast: more) {
+	.text-muted { color: #333 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+	* { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
