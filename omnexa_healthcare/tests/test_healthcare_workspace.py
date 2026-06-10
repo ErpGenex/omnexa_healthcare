@@ -25,3 +25,12 @@ class TestHealthcareWorkspace(FrappeTestCase):
 
 	def test_healthcare_workspace_exists(self):
 		self.assertTrue(frappe.db.exists("Workspace", "Healthcare"))
+
+	def test_control_tower_does_not_truncate_sidebar(self):
+		"""omnexa_core desk sync must not replace Healthcare with the short HEALTHCARE_DESK layout."""
+		sync_healthcare_workspace_menu(save=True, rebuild=True)
+		from omnexa_core.install import run_workspace_desk_sync
+
+		run_workspace_desk_sync()
+		link_count = frappe.db.count("Workspace Link", {"parent": "Healthcare", "type": "Link"})
+		self.assertGreater(link_count, 145, msg=f"Healthcare sidebar truncated to {link_count} links")
