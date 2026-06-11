@@ -68,3 +68,41 @@ class TestHealthcareWebBookingAPI(FrappeTestCase):
 		self.assertTrue(
 			frappe.db.exists("Has Role", {"parent": email, "role": ["in", ["Patient Portal User", "Customer"]]})
 		)
+
+	def test_guest_book_appointment_online(self):
+		rows = get_published_services(self.company, self.branch)
+		service = next((row for row in rows if row.get("default_practitioner")), None)
+		if not service:
+			self.skipTest("No published service with default practitioner")
+		slot_date = getdate(today())
+		slots = []
+		for _ in range(14):
+			payload = get_booking_slots(self.company, self.branch, service["service_code"], str(slot_date))
+			slots = payload.get("slots") or []
+			if slots:
+				break
+			slot_date = add_days(slot_date, 1)
+		if not slots:
+			self.skipTest("No demo booking slots available in the next two weeks")
+
+		phone = f"+966598{frappe.generate_hash(length=6)[:6]}"
+		email = f"guest-{frappe.generate_hash(length=8)}@example.com"
+		frappe.set_user("Guest")
+		try:
+			result = book_appointment_online(
+				{
+					"company": self.company,
+					"branch": self.branch,
+					"service_code": service["service_code"],
+					"given_name": "Guest",
+					"family_name": "Booker",
+					"phone": phone,
+					"email": email,
+					"appointment_date": slots[0]["start"],
+					"slot_end": slots[0]["end"],
+				}
+			)
+		finally:
+			frappe.set_user("Administrator")
+		self.assertTrue(result.get("name"))
+		self.assertEqual(frappe.db.get_value("Healthcare Appointment", result["name"], "booking_channel"), "Website")

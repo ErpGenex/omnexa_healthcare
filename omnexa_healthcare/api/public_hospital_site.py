@@ -44,6 +44,56 @@ DEPARTMENT_ICONS = {
 	"pharmacy": "💊",
 }
 
+_DEMO_NAME_PREFIXES = ("DEMO-HC-", "DEMO-HC ", "HC-DEMO-", "HC-DEMO ")
+
+
+def _strip_demo_prefix(value: str) -> str:
+	text = (value or "").strip()
+	for prefix in _DEMO_NAME_PREFIXES:
+		if text.startswith(prefix):
+			return text[len(prefix) :].strip()
+	return text
+
+
+def _apply_department_doctor_filter(
+	department: str,
+	*,
+	conditions: list[str],
+	params: list,
+) -> None:
+	dept = frappe.db.get_value(
+		"Healthcare Department",
+		department,
+		["department_name", "department_code"],
+		as_dict=True,
+	)
+	if not dept:
+		return
+
+	practitioners = frappe.get_all(
+		"Healthcare Service Catalog",
+		filters={
+			"department": department,
+			"is_active": 1,
+			"publish_on_website": 1,
+			"default_practitioner": ["is", "set"],
+		},
+		pluck="default_practitioner",
+	)
+	practitioners = list({name for name in practitioners if name})
+	if practitioners:
+		conditions.append(f"p.name IN ({', '.join(['%s'] * len(practitioners))})")
+		params.extend(practitioners)
+		return
+
+	name_token = _strip_demo_prefix(dept.department_name or "")
+	code_token = _strip_demo_prefix(dept.department_code or "")
+	conditions.append(
+		"(pb.specialty IN (SELECT name FROM `tabHealthcare Specialty` WHERE specialty_name LIKE %s OR specialty_code LIKE %s) "
+		"OR s.specialty_name LIKE %s OR s.specialty_code LIKE %s OR pb.specialty LIKE %s)"
+	)
+	params.extend([f"%{name_token}%", f"%{code_token}%", f"%{name_token}%", f"%{code_token}%", f"%{code_token}%"])
+
 
 def _default_hospital_context() -> dict | None:
 	"""Resolve tenant when /hospital is opened without query params."""
@@ -359,13 +409,7 @@ def get_published_doctors(
 		conditions.append("pb.specialty = %s")
 		params.append(specialty)
 	if department:
-		dept = frappe.db.get_value("Healthcare Department", department, ["department_name", "department_code"], as_dict=True)
-		if dept:
-			conditions.append(
-				"(pb.specialty IN (SELECT name FROM `tabHealthcare Specialty` WHERE specialty_name LIKE %s) OR pb.specialty LIKE %s)"
-			)
-			like = f"%{dept.department_name}%"
-			params.extend([like, like])
+		_apply_department_doctor_filter(department, conditions=conditions, params=params)
 
 	rows = frappe.db.sql(
 		f"""
@@ -392,9 +436,24 @@ def get_published_doctors(
 	)
 
 	out = []
+	services = get_published_services(ctx.company, ctx.branch)
+	services_by_practitioner: dict[str, list[str]] = {}
+	services_by_department: dict[str, list[str]] = {}
+	for service in services:
+		code = service.get("service_code")
+		if not code:
+			continue
+		pr = service.get("default_practitioner")
+		if pr:
+			services_by_practitioner.setdefault(pr, []).append(code)
+		dep = service.get("department")
+		if dep:
+			services_by_department.setdefault(dep, []).append(code)
+
 	for row in rows:
-		services = get_published_services(ctx.company, ctx.branch)
-		service_codes = [s for s in services if s.get("default_practitioner") == row.name]
+		service_codes = services_by_practitioner.get(row.name) or []
+		if not service_codes and department:
+			service_codes = services_by_department.get(department, [])[:3]
 		out.append(
 			{
 				"name": row.name,
@@ -408,7 +467,7 @@ def get_published_doctors(
 				"specialty": row.specialty,
 				"specialty_name": row.specialty_name or row.specialty,
 				"consultation_fee": flt(row.consultation_fee),
-				"service_codes": [s.service_code for s in service_codes[:3]],
+				"service_codes": service_codes[:3],
 			}
 		)
 	return out

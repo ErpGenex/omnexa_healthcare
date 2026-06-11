@@ -35,6 +35,12 @@ def api_get_available_slots(
 def api_book_appointment(payload: str | dict) -> dict:
 	"""Create appointment from slot selection with fee preview."""
 	data = frappe.parse_json(payload) if isinstance(payload, str) else frappe._dict(payload or {})
+	return create_healthcare_appointment(data)
+
+
+def create_healthcare_appointment(data, *, ignore_permissions: bool = False) -> dict:
+	"""Insert Healthcare Appointment after slot validation."""
+	data = frappe._dict(data or {})
 	required = ("patient", "practitioner", "branch", "specialty", "appointment_date", "slot_end")
 	for key in required:
 		if not data.get(key):
@@ -66,9 +72,10 @@ def api_book_appointment(payload: str | dict) -> dict:
 			"booking_fee": flt(data.booking_fee) or flt(assignment.get("consultation_fee")),
 			"payment_status": data.payment_status or "Unpaid",
 			"status": "Scheduled",
+			"booking_channel": data.booking_channel or "Desk",
 		}
 	)
-	doc.insert()
+	doc.insert(ignore_permissions=ignore_permissions)
 	return {"name": doc.name, "booking_fee": doc.booking_fee}
 
 
@@ -99,7 +106,7 @@ def api_get_practitioner_roster(branch: str | None = None, roster_date: str | No
 	if branch:
 		practitioner_names = frappe.db.sql(
 			"""
-			SELECT DISTINCT parent FROM `tabHealthcare Practitioner Branch Assignment`
+			SELECT DISTINCT parent FROM `tabHealthcare Practitioner Branch`
 			WHERE branch = %s AND is_active = 1
 			""",
 			branch,

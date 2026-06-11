@@ -54,6 +54,13 @@ class TestPublicHospitalSite(FrappeTestCase):
 		self.assertGreaterEqual(len(docs), 3)
 		self.assertTrue(all(d.get("department_name") for d in depts))
 
+	def test_published_doctors_by_department(self):
+		depts = get_published_departments(branch=self.branch)
+		self.assertTrue(depts)
+		filtered = get_published_doctors(branch=self.branch, department=depts[0]["name"])
+		self.assertGreater(len(filtered), 0, msg="Department filter returned no doctors")
+		self.assertTrue(any(row.get("service_codes") for row in filtered))
+
 	def test_site_urls_for_desk(self):
 		frappe.set_user("Administrator")
 		urls = get_site_urls(self.branch)

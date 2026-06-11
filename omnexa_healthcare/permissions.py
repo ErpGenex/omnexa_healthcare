@@ -8,6 +8,8 @@ from omnexa_core.omnexa_core.user_context import apply_company_branch_defaults
 
 
 def enforce_branch_access_for_doc(doc, method=None):
+	if frappe.session.user == "Guest" or getattr(doc.flags, "ignore_branch_access", False):
+		return
 	enforce_branch_access(doc)
 
 

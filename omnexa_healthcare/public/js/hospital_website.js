@@ -90,6 +90,7 @@
 				patient: { ar: "المريض", en: "Patient" },
 				select_department: { ar: "اختر القسم", en: "Select department" },
 				select_doctor: { ar: "اختر الطبيب", en: "Select doctor" },
+				no_doctors: { ar: "لا يوجد أطباء منشورون لهذا القسم.", en: "No published doctors for this department." },
 				select_slot: { ar: "اختر الموعد", en: "Select time slot" },
 				complete_personal: { ar: "أكمل البيانات", en: "Complete personal details" },
 				booking_success: { ar: "تم الحجز بنجاح", en: "Booking confirmed" },
@@ -493,11 +494,18 @@
 			const loadDoctors = async () => {
 				const args = { ...this.siteArgs() };
 				if (state.department) args.department = state.department;
-				const r = await frappe.call({
+				let r = await frappe.call({
 					method: "omnexa_healthcare.api.public_hospital_site.get_published_doctors",
 					args,
 				});
 				doctors = r.message || [];
+				if (state.department && !doctors.length) {
+					r = await frappe.call({
+						method: "omnexa_healthcare.api.public_hospital_site.get_published_doctors",
+						args: this.siteArgs(),
+					});
+					doctors = r.message || [];
+				}
 			};
 
 			const syncPatientFromForm = () => {
@@ -570,12 +578,16 @@
 							</button>`
 								)
 								.join("")}</div>`
-						: `<div class="hc-empty">${this.t("select_doctor")}</div>`;
+						: `<div class="hc-empty">${this.t("no_doctors")}</div>`;
 					panel.querySelectorAll("[data-doc]").forEach((btn) => {
 						btn.addEventListener("click", () => {
 							state.practitioner = btn.dataset.doc;
 							const doc = doctors.find((x) => x.name === state.practitioner);
-							state.service_code = (doc && doc.service_codes && doc.service_codes[0]) || state.service_code;
+							state.service_code =
+								(doc && doc.service_codes && doc.service_codes[0]) ||
+								(services.find((s) => s.default_practitioner === state.practitioner) || {}).service_code ||
+								(services.find((s) => s.department === state.department) || {}).service_code ||
+								state.service_code;
 							state.slot = null;
 							state.step = 3;
 							render();

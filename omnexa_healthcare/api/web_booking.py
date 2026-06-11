@@ -13,7 +13,7 @@ from frappe.utils import cint, flt, get_datetime, validate_email_address, valida
 
 from frappe.utils import get_url
 
-from omnexa_healthcare.api.scheduling import api_book_appointment
+from omnexa_healthcare.api.scheduling import create_healthcare_appointment
 from omnexa_healthcare.scheduling_engine import get_available_slots
 
 
@@ -165,7 +165,7 @@ def book_appointment_online(payload: str | dict) -> dict:
 	if not slot_end and catalog.duration_mins:
 		slot_end = slot_start + timedelta(minutes=cint(catalog.duration_mins))
 
-	result = api_book_appointment(
+	result = create_healthcare_appointment(
 		frappe._dict(
 			{
 				"patient": patient,
@@ -181,11 +181,11 @@ def book_appointment_online(payload: str | dict) -> dict:
 				else "Consultation",
 				"booking_fee": flt(data.booking_fee) or flt(catalog.default_rate),
 				"payment_status": data.get("payment_status") or "Unpaid",
+				"booking_channel": "Website",
 			}
-		)
+		),
+		ignore_permissions=True,
 	)
-
-	frappe.db.set_value("Healthcare Appointment", result["name"], "booking_channel", "Website")
 	return {
 		**result,
 		"patient": patient,
