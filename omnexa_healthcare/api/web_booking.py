@@ -11,8 +11,18 @@ import frappe
 from frappe import _
 from frappe.utils import cint, flt, get_datetime
 
+from frappe.utils import get_url
+
 from omnexa_healthcare.api.scheduling import api_book_appointment
 from omnexa_healthcare.scheduling_engine import get_available_slots
+
+
+def _public_image(path: str | None) -> str:
+	if not path:
+		return ""
+	if path.startswith(("http://", "https://")):
+		return path
+	return get_url(path)
 
 
 @frappe.whitelist(allow_guest=True)
@@ -23,7 +33,7 @@ def get_published_services(company: str, branch: str) -> list[dict]:
 	if frappe.db.get_value("Branch", branch, "company") != company:
 		frappe.throw(_("Branch does not belong to company"))
 
-	return frappe.get_all(
+	rows = frappe.get_all(
 		"Healthcare Service Catalog",
 		filters={
 			"company": company,
@@ -42,10 +52,14 @@ def get_published_services(company: str, branch: str) -> list[dict]:
 			"department",
 			"default_practitioner",
 			"website_description",
+			"website_image",
 			"display_order",
 		],
 		order_by="display_order asc, service_title asc",
 	)
+	for row in rows:
+		row["website_image"] = _public_image(row.get("website_image"))
+	return rows
 
 
 @frappe.whitelist(allow_guest=True)

@@ -4,12 +4,12 @@
 	"autoname": "field:service_code",
 	"doctype": "DocType",
 	"engine": "InnoDB",
-	"field_order": ["service_code", "service_title", "specialty", "service_type", "default_item", "default_rate", "duration_mins", "company", "branch", "department", "default_practitioner", "column_break_web", "publish_on_website", "display_order", "website_description", "is_active"],
+	"field_order": ["service_code", "service_title", "specialty", "service_type", "default_item", "default_rate", "duration_mins", "company", "branch", "department", "default_practitioner", "column_break_web", "publish_on_website", "display_order", "website_description", "website_image", "is_active"],
 	"fields": [
 		{"fieldname": "service_code", "fieldtype": "Data", "label": "Service Code", "reqd": 1, "unique": 1, "in_list_view": 1},
 		{"fieldname": "service_title", "fieldtype": "Data", "label": "Service Title", "reqd": 1, "in_list_view": 1},
 		{"fieldname": "specialty", "fieldtype": "Link", "label": "Specialty", "options": "Healthcare Specialty", "in_list_view": 1},
-		{"fieldname": "service_type", "fieldtype": "Select", "label": "Service Type", "options": "Consultation\nFollow-up\nProcedure\nPackage\nTelehealth", "default": "Consultation", "reqd": 1},
+		{"fieldname": "service_type", "fieldtype": "Select", "label": "Service Type", "options": "Consultation\nFollow-up\nProcedure\nPackage\nTelehealth\nPharmacy\nLaboratory\nRadiology\nEmergency", "default": "Consultation", "reqd": 1},
 		{"fieldname": "default_item", "fieldtype": "Link", "label": "Default Item", "options": "Item"},
 		{"fieldname": "default_rate", "fieldtype": "Currency", "label": "Default Rate"},
 		{"fieldname": "duration_mins", "fieldtype": "Int", "label": "Duration (mins)", "default": "15"},
@@ -21,6 +21,7 @@
 		{"default": "0", "fieldname": "publish_on_website", "fieldtype": "Check", "label": "Publish on Website", "in_list_view": 1},
 		{"default": "100", "fieldname": "display_order", "fieldtype": "Int", "label": "Website Display Order"},
 		{"fieldname": "website_description", "fieldtype": "Small Text", "label": "Website Description"},
+		{"fieldname": "website_image", "fieldtype": "Attach Image", "label": "Website image"},
 		{"default": "1", "fieldname": "is_active", "fieldtype": "Check", "label": "Active", "in_list_view": 1}
 	],
 	"module": "Omnexa Healthcare",

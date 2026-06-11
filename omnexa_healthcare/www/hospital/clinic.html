@@ -1,0 +1,19 @@
+{% extends "templates/web.html" %}
+
+{% block title %}العيادة | Clinic{% endblock %}
+
+{% block page_content %}
+<div class="hc-site" data-page="clinic">
+  <header class="hc-header" id="hc-header"></header>
+  <section class="hc-clinic-hero" id="hc-clinic-hero"></section>
+  <section class="hc-section">
+    <div class="hc-wrap hc-clinic-grid" id="hc-clinic-page"></div>
+  </section>
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    HospitalSite.init("clinic");
+  });
+</script>
+{% endblock %}

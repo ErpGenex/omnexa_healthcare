@@ -18,6 +18,7 @@
 		"tab_break_website",
 		"publish_on_website",
 		"website_icon",
+		"website_image",
 		"website_description_ar",
 		"website_description_en",
 		"website_display_order",
@@ -104,6 +105,12 @@
 			"fieldtype": "Select",
 			"label": "Website icon",
 			"options": "general\ncardiology\northopedics\npediatrics\nobgyn\ninternal\nent\ndermatology\nophthalmology\ndentistry\nemergency\nlab\nradiology\npharmacy"
+		},
+		{
+			"fieldname": "website_image",
+			"fieldtype": "Attach Image",
+			"label": "Website image",
+			"description": "Clinic/department hero image on the public hospital site."
 		},
 		{
 			"fieldname": "website_description_ar",

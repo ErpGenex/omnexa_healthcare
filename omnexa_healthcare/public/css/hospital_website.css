@@ -521,3 +521,248 @@
 .hc-site[dir="rtl"] .hc-footer-grid {
 	direction: rtl;
 }
+
+/* —— Al-Hayat hospital theme (mockup parity) —— */
+.hc-site.hc-alhayat {
+	--hc-primary: #003366;
+	--hc-primary-light: #0a4f8c;
+	--hc-accent: #e8f2fb;
+}
+
+.hc-site .hc-hero-split {
+	display: grid;
+	grid-template-columns: 1.05fr 0.95fr;
+	min-height: 520px;
+	background: linear-gradient(180deg, #f4f9fd 0%, #ffffff 100%);
+	align-items: stretch;
+}
+
+.hc-site .hc-hero-visual img {
+	width: 100%;
+	height: 100%;
+	min-height: 420px;
+	object-fit: cover;
+	display: block;
+}
+
+.hc-site .hc-hero-copy {
+	padding: 56px 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: var(--hc-text);
+}
+
+.hc-site .hc-hero-copy h1 {
+	color: var(--hc-primary);
+	font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+	margin: 0 0 16px;
+	line-height: 1.35;
+}
+
+.hc-site .hc-hero-copy p {
+	color: var(--hc-muted);
+	line-height: 1.9;
+	margin: 0;
+}
+
+.hc-site .hc-features-bar.hc-features-pro {
+	margin-top: -36px;
+	border: 1px solid #e6eef6;
+}
+
+.hc-site .hc-feature-icon {
+	width: 42px;
+	height: 42px;
+	margin: 0 auto 8px;
+	border-radius: 50%;
+	background: var(--hc-accent);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--hc-primary);
+}
+
+.hc-site .hc-feature-icon svg {
+	width: 22px;
+	height: 22px;
+}
+
+.hc-site .hc-dept-card.hc-dept-pro {
+	border: 1px solid #e3edf7;
+	padding: 28px 16px;
+	text-decoration: none;
+	color: inherit;
+}
+
+.hc-site .hc-dept-card.hc-dept-pro:hover {
+	border-color: var(--hc-primary);
+	box-shadow: 0 12px 28px rgba(0, 51, 102, 0.12);
+}
+
+.hc-site .hc-dept-card.selected,
+.hc-site .hc-card.selected {
+	border-color: var(--hc-primary);
+	box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.15);
+}
+
+.hc-site .hc-service-card.hc-service-pro {
+	padding: 0;
+	overflow: hidden;
+}
+
+.hc-site .hc-service-card.hc-service-pro .hc-service-img {
+	height: 180px;
+	border-radius: 0;
+	margin: 0;
+}
+
+.hc-site .hc-service-card.hc-service-pro .hc-card-body {
+	padding: 18px 20px 22px;
+}
+
+.hc-site .hc-doctor-card.hc-doctor-pro {
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid #e6eef6;
+}
+
+.hc-site .hc-doctor-card.hc-doctor-pro .hc-doctor-photo {
+	height: 260px;
+	border-radius: 0;
+}
+
+.hc-site .hc-doctor-card.hc-doctor-pro .hc-doctor-body {
+	padding: 16px 18px 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1;
+}
+
+.hc-site .hc-doctor-card.hc-doctor-pro .hc-btn {
+	margin-top: auto;
+	width: 100%;
+	border-radius: 10px;
+}
+
+.hc-site .hc-doctor-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--hc-muted);
+	font-size: 0.9rem;
+}
+
+.hc-site .hc-steps.hc-steps-ring {
+	gap: 12px;
+}
+
+.hc-site .hc-step-ring {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	background: transparent;
+	border: 0;
+	padding: 0;
+}
+
+.hc-site .hc-step-ring .num {
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	border: 2px solid #d7e3ef;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 800;
+	color: var(--hc-muted);
+	background: #fff;
+}
+
+.hc-site .hc-step-ring.active .num {
+	background: var(--hc-primary);
+	border-color: var(--hc-primary);
+	color: #fff;
+}
+
+.hc-site .hc-step-ring.done .num {
+	border-color: #27ae60;
+	color: #27ae60;
+}
+
+.hc-site .hc-step-ring span {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: var(--hc-muted);
+	text-align: center;
+}
+
+.hc-site .hc-step-ring.active span {
+	color: var(--hc-primary);
+}
+
+.hc-site .hc-clinic-hero {
+	background: linear-gradient(180deg, #f0f7fc 0%, #ffffff 100%);
+	padding: 32px 0 0;
+}
+
+.hc-site .hc-clinic-hero-inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	align-items: center;
+}
+
+.hc-site .hc-clinic-hero img {
+	width: 100%;
+	max-height: 360px;
+	object-fit: contain;
+}
+
+.hc-site .hc-clinic-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.hc-site .hc-clinic-panel {
+	background: #fff;
+	border: 1px solid #e6eef6;
+	border-radius: var(--hc-radius);
+	padding: 24px;
+	box-shadow: var(--hc-shadow);
+}
+
+.hc-site .hc-clinic-panel h3 {
+	color: var(--hc-primary);
+	margin-top: 0;
+}
+
+.hc-site .hc-clinic-services li {
+	margin-bottom: 8px;
+	color: var(--hc-text);
+}
+
+.hc-site .hc-booking-shell .hc-panel {
+	border: 1px solid #e6eef6;
+}
+
+.hc-site .hc-slot.selected {
+	background: var(--hc-primary);
+	color: #fff;
+	border-color: var(--hc-primary);
+}
+
+@media (max-width: 960px) {
+	.hc-site .hc-hero-split,
+	.hc-site .hc-clinic-hero-inner,
+	.hc-site .hc-clinic-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.hc-site .hc-hero-copy {
+		padding: 32px 20px;
+	}
+}

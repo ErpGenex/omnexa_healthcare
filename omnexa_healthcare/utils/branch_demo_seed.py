@@ -1311,6 +1311,16 @@ class _HospitalDemoSeeder:
 				frappe.db.set_value("Healthcare Appointment", appt.name, "encounter", enc.name)
 
 	def _seed_branch_public_website(self) -> None:
+		from omnexa_healthcare.alhayat_demo_assets import (
+			ALHAYAT_COPY,
+			CLINIC_CARDIOLOGY_IMAGE,
+			DEPARTMENT_COPY,
+			DEPARTMENT_IMAGES,
+			DOCTOR_PHOTOS,
+			HERO_IMAGE,
+			SERVICE_IMAGES,
+		)
+
 		slug = frappe.scrub(self.branch).replace("_", "-")[:50]
 		dept_icons = {
 			"CARD": "cardiology",
@@ -1326,76 +1336,108 @@ class _HospitalDemoSeeder:
 		depts = self.ctx.get("departments") or {}
 		for code, dept_name in depts.items():
 			icon = dept_icons.get(code, "general")
+			copy = DEPARTMENT_COPY.get(code, {})
 			frappe.db.set_value(
 				"Healthcare Department",
 				dept_name,
 				{
 					"publish_on_website": 1 if code in dept_icons else 0,
 					"website_icon": icon,
+					"website_image": DEPARTMENT_IMAGES.get(code, CLINIC_CARDIOLOGY_IMAGE if code == "CARD" else ""),
 					"website_display_order": list(depts.keys()).index(code) * 10 if code in depts else 0,
-					"website_description_ar": f"قسم {code} — رعاية متخصصة",
-					"website_description_en": f"{code} department — specialized care",
+					"website_description_ar": copy.get("website_description_ar") or f"قسم {code} — رعاية متخصصة",
+					"website_description_en": copy.get("website_description_en") or f"{code} department — specialized care",
+					"website_services_ar": copy.get("website_services_ar", ""),
+					"website_services_en": copy.get("website_services_en", ""),
 				},
 				update_modified=False,
 			)
 
-		for spec, pr_name in (self.ctx.get("practitioners") or {}).items():
+		for idx, (spec, pr_name) in enumerate((self.ctx.get("practitioners") or {}).items()):
+			photo = DOCTOR_PHOTOS[idx % len(DOCTOR_PHOTOS)]
 			frappe.db.set_value(
 				"Healthcare Practitioner",
 				pr_name,
 				{
 					"publish_on_website": 1,
-					"years_of_experience": 8 + (len(spec) % 7),
-					"website_rating": 4.7 + (len(spec) % 3) * 0.1,
+					"website_photo": photo,
+					"years_of_experience": 8 + (idx % 12),
+					"website_rating": round(4.7 + (idx % 3) * 0.1, 1),
 					"website_bio_ar": "طبيب متخصص ذو خبرة واسعة في الرعاية السريرية.",
 					"website_bio_en": "Experienced specialist focused on high-quality patient care.",
 				},
 				update_modified=False,
 			)
 
+		for service_code in self.ctx.get("published_services") or []:
+			img = ""
+			if "LAB" in service_code:
+				img = SERVICE_IMAGES["Laboratory"]
+				st = "Laboratory"
+			elif "RAD" in service_code:
+				img = SERVICE_IMAGES["Radiology"]
+				st = "Radiology"
+			elif "PHM" in service_code:
+				img = SERVICE_IMAGES["Pharmacy"]
+				st = "Pharmacy"
+			elif "ER" in service_code:
+				img = SERVICE_IMAGES["Emergency"]
+				st = "Emergency"
+			else:
+				continue
+			updates = {"website_image": img, "service_type": st, "display_order": {"Laboratory": 30, "Radiology": 20, "Pharmacy": 10, "Emergency": 40}[st]}
+			frappe.db.set_value("Healthcare Service Catalog", service_code, updates, update_modified=False)
+
+		for code, title, spec, dept_key, rate, desc in (
+			("PHM-SHOP", "Hospital Pharmacy", "PHM", "PHM", 0.0, "صيدلية المستشفى — صرف الأدوية"),
+			("ER-24", "Emergency & Accidents", "ER", "ER", 0.0, "طوارئ وحوادث — رعاية على مدار الساعة"),
+		):
+			service_code = f"{DEMO_MARKER}{code}"
+			if not frappe.db.exists("Healthcare Service Catalog", service_code):
+				self._insert(
+					"Healthcare Service Catalog",
+					{
+						"service_code": service_code,
+						"service_title": f"{DEMO_MARKER} {title}",
+						"service_type": "Pharmacy" if dept_key == "PHM" else "Emergency",
+						"default_rate": rate,
+						"company": self.company,
+						"branch": self.branch,
+						"department": depts.get(dept_key),
+						"publish_on_website": 1,
+						"display_order": 5 if dept_key == "PHM" else 15,
+						"website_description": desc,
+						"website_image": SERVICE_IMAGES["Pharmacy" if dept_key == "PHM" else "Emergency"],
+						"is_active": 1,
+					},
+				)
+
 		site_url = f"/hospital?site={quote(slug)}"
+		website_payload = {
+			"is_enabled": 1,
+			"site_slug": slug,
+			"hospital_name_ar": ALHAYAT_COPY["hospital_name_ar"],
+			"hospital_name_en": f"{DEMO_MARKER} {ALHAYAT_COPY['hospital_name_en']}",
+			"tagline_ar": ALHAYAT_COPY["tagline_ar"],
+			"tagline_en": ALHAYAT_COPY["tagline_en"],
+			"hero_text_ar": ALHAYAT_COPY["hero_text_ar"],
+			"hero_text_en": ALHAYAT_COPY["hero_text_en"],
+			"hero_image": HERO_IMAGE,
+			"primary_color": "#003366",
+			"contact_phone": "+966 11 000 0000",
+			"contact_email": "info@alhayat-hospital.demo",
+			"working_hours_ar": ALHAYAT_COPY["working_hours_ar"],
+			"working_hours_en": ALHAYAT_COPY["working_hours_en"],
+			"stat_years": ALHAYAT_COPY["stat_years"],
+			"stat_doctors": ALHAYAT_COPY["stat_doctors"],
+			"stat_patients": ALHAYAT_COPY["stat_patients"],
+			"stat_departments": ALHAYAT_COPY["stat_departments"],
+			"enable_online_shop": 1,
+		}
 		if frappe.db.exists("Healthcare Branch Website", self.branch):
-			frappe.db.set_value(
-				"Healthcare Branch Website",
-				self.branch,
-				{
-					"is_enabled": 1,
-					"site_slug": slug,
-					"hospital_name_ar": "مستشفى الحياة",
-					"hospital_name_en": f"{DEMO_MARKER} Al-Hayat Hospital",
-					"tagline_ar": "رعايتكم... أولويتنا",
-					"tagline_en": "Your care... our priority",
-					"hero_text_ar": "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية.",
-					"hero_text_en": "A full-service hospital delivering comprehensive care with modern medical technology.",
-					"hero_image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80",
-					"contact_phone": "+20 100 000 0000",
-					"contact_email": "info@example.com",
-					"stat_years": 15,
-					"enable_online_shop": 1,
-				},
-				update_modified=False,
-			)
+			frappe.db.set_value("Healthcare Branch Website", self.branch, website_payload, update_modified=False)
 		else:
-			self._insert(
-				"Healthcare Branch Website",
-				{
-					"branch": self.branch,
-					"company": self.company,
-					"is_enabled": 1,
-					"site_slug": slug,
-					"hospital_name_ar": "مستشفى الحياة",
-					"hospital_name_en": f"{DEMO_MARKER} Al-Hayat Hospital",
-					"tagline_ar": "رعايتكم... أولويتنا",
-					"tagline_en": "Your care... our priority",
-					"hero_text_ar": "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية.",
-					"hero_text_en": "A full-service hospital delivering comprehensive care with modern medical technology.",
-					"hero_image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80",
-					"contact_phone": "+20 100 000 0000",
-					"contact_email": "info@example.com",
-					"stat_years": 15,
-					"enable_online_shop": 1,
-				},
-			)
+			self._insert("Healthcare Branch Website", {"branch": self.branch, "company": self.company, **website_payload})
 		self.ctx["hospital_site_url"] = site_url
 		self.ctx["web_booking_url"] = site_url
 		self._bump("Healthcare Branch Website")

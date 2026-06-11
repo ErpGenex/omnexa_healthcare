@@ -12,9 +12,20 @@ from frappe.utils import cint, flt, get_url
 from omnexa_healthcare.api.web_booking import get_published_services
 from omnexa_healthcare.scheduling_engine import get_available_slots
 
-DEFAULT_HERO_IMAGE = (
-	"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80"
-)
+try:
+	from omnexa_healthcare.alhayat_demo_assets import HERO_IMAGE as DEFAULT_HERO_IMAGE
+except Exception:
+	DEFAULT_HERO_IMAGE = (
+		"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80"
+	)
+
+
+def _public_url(path: str | None) -> str:
+	if not path:
+		return ""
+	if path.startswith(("http://", "https://", "/assets/")):
+		return get_url(path) if path.startswith("/") else path
+	return get_url(path)
 
 DEPARTMENT_ICONS = {
 	"general": "🏥",
@@ -133,6 +144,7 @@ def build_public_urls(*, branch: str, site_slug: str | None = None) -> dict:
 		"home": f"{base}{suffix}",
 		"doctors": f"{base}/doctors{suffix}",
 		"booking": f"{base}/booking{suffix}",
+		"clinic": f"{base}/clinic{suffix}",
 		"shop": f"{base}/shop{suffix}",
 		"legacy_booking": get_url(f"/healthcare-booking?company={frappe.db.get_value('Branch', branch, 'company')}&branch={branch}"),
 	}
@@ -198,8 +210,8 @@ def get_site_config(site: str | None = None, company: str | None = None, branch:
 		"tagline_en": (website.tagline_en if website else "") or "Your care... our priority",
 		"hero_text_ar": website.hero_text_ar if website else "",
 		"hero_text_en": website.hero_text_en if website else "",
-		"hero_image": (website.hero_image if website else "") or DEFAULT_HERO_IMAGE,
-		"logo": website.website_logo if website else "",
+		"hero_image": _public_url((website.hero_image if website else "") or DEFAULT_HERO_IMAGE),
+		"logo": _public_url(website.website_logo if website else ""),
 		"primary_color": (website.primary_color if website else "") or "#003366",
 		"contact": {
 			"phone": website.contact_phone if website else "",
@@ -257,6 +269,7 @@ def get_published_departments(
 			"department_name",
 			"department_code",
 			"website_icon",
+			"website_image",
 			"website_description_ar",
 			"website_description_en",
 			"website_display_order",
@@ -270,7 +283,58 @@ def get_published_departments(
 		row["icon"] = DEPARTMENT_ICONS.get(icon_key, DEPARTMENT_ICONS["general"])
 		row["services_ar"] = [line.strip() for line in (row.pop("website_services_ar") or "").splitlines() if line.strip()]
 		row["services_en"] = [line.strip() for line in (row.pop("website_services_en") or "").splitlines() if line.strip()]
+		row["image"] = _public_url(row.pop("website_image", None))
 	return rows
+
+
+@frappe.whitelist(allow_guest=True)
+def get_department_clinic(
+	department: str,
+	site: str | None = None,
+	company: str | None = None,
+	branch: str | None = None,
+) -> dict:
+	"""Single department/clinic page payload for public hospital site."""
+	ctx = _resolve_site(site=site, company=company, branch=branch)
+	if not frappe.db.exists("Healthcare Department", department):
+		frappe.throw(_("Department not found."), frappe.DoesNotExistError)
+	row = frappe.db.get_value(
+		"Healthcare Department",
+		department,
+		[
+			"name",
+			"branch",
+			"department_name",
+			"department_code",
+			"website_icon",
+			"website_image",
+			"website_description_ar",
+			"website_description_en",
+			"website_services_ar",
+			"website_services_en",
+		],
+		as_dict=True,
+	)
+	if not row or row.branch != ctx.branch:
+		frappe.throw(_("Department not found."), frappe.DoesNotExistError)
+	icon_key = (row.website_icon or "general").lower()
+	services_ar = [line.strip() for line in (row.website_services_ar or "").splitlines() if line.strip()]
+	services_en = [line.strip() for line in (row.website_services_en or "").splitlines() if line.strip()]
+	website = _website_doc(ctx.branch)
+	return {
+		"name": row.name,
+		"department_name": row.department_name,
+		"department_code": row.department_code,
+		"icon": DEPARTMENT_ICONS.get(icon_key, DEPARTMENT_ICONS["general"]),
+		"image": _public_url(row.website_image),
+		"description_ar": row.website_description_ar,
+		"description_en": row.website_description_en,
+		"services_ar": services_ar,
+		"services_en": services_en,
+		"working_hours_ar": (website.working_hours_ar if website else ""),
+		"working_hours_en": (website.working_hours_en if website else ""),
+		"booking_url": build_public_urls(branch=ctx.branch, site_slug=website.site_slug if website else None)["booking"],
+	}
 
 
 @frappe.whitelist(allow_guest=True)
@@ -336,7 +400,7 @@ def get_published_doctors(
 				"name": row.name,
 				"practitioner_name": row.practitioner_name,
 				"license_number": row.license_number,
-				"photo": row.website_photo,
+				"photo": _public_url(row.website_photo),
 				"years_of_experience": cint(row.years_of_experience) or 5,
 				"rating": flt(row.website_rating) or 4.8,
 				"bio_ar": row.website_bio_ar,

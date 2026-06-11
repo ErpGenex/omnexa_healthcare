@@ -1,13 +1,21 @@
 /* global frappe */
 (function () {
 	const STORAGE_LANG = "hc_site_lang";
+	const FEATURE_SVGS = {
+		care: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10z"/></svg>',
+		device: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/></svg>',
+		booking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+		lab: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v5l5 9a4 4 0 0 1-3.5 6H7.5A4 4 0 0 1 4 17l5-9V3z"/></svg>',
+		clinic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M6 21V7l6-4 6 4v14"/><path d="M9 11h6v6H9z"/></svg>',
+		emergency: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v6c0 5-3.5 8-8 8s-8-3-8-8V7l8-4z"/><path d="M12 8v4M10 10h4"/></svg>',
+	};
 	const FEATURES = [
-		{ icon: "🚑", ar: "طوارئ 24/7", en: "24/7 Emergency" },
-		{ icon: "🏥", ar: "عيادات خارجية", en: "Outpatient Clinics" },
-		{ icon: "📅", ar: "حجز سهل", en: "Easy Booking" },
-		{ icon: "🔬", ar: "نتائج المختبر", en: "Lab Results" },
-		{ icon: "⚕️", ar: "أحدث الأجهزة", en: "Latest Devices" },
-		{ icon: "💙", ar: "رعاية عالية الجودة", en: "High-Quality Care" },
+		{ key: "care", ar: "رعاية عالية الجودة", en: "High-Quality Care" },
+		{ key: "device", ar: "أحدث الأجهزة الطبية", en: "Latest Medical Equipment" },
+		{ key: "booking", ar: "حجز موعد بسهولة", en: "Easy Appointment Booking" },
+		{ key: "lab", ar: "نتائج التحاليل", en: "Lab Results" },
+		{ key: "clinic", ar: "عيادات خارجية", en: "Outpatient Clinics" },
+		{ key: "emergency", ar: "طوارئ 24 ساعة", en: "24-Hour Emergency" },
 	];
 
 	const SERVICE_IMAGES = {
@@ -39,6 +47,17 @@
 				home: { ar: "الرئيسية", en: "Home" },
 				doctors: { ar: "الأطباء", en: "Doctors" },
 				departments: { ar: "الأقسام", en: "Departments" },
+				clinics: { ar: "العيادات", en: "Clinics" },
+				about: { ar: "من نحن", en: "About" },
+				book_now_cta: { ar: "احجز موعد الآن", en: "Book Appointment Now" },
+				featured_services_sub: { ar: "كل ما تحتاجه تحت سقف واحد", en: "Everything you need under one roof" },
+				dept_sub: { ar: "تخصصات طبية متكاملة لرعايتكم", en: "Integrated medical specialties for your care" },
+				doctors_sub: { ar: "نخبة من الأطباء المتخصصين لرعايتكم", en: "A selection of specialized doctors for your care" },
+				booking_sub: { ar: "اختر موعدك المناسب بسهولة", en: "Choose your suitable appointment easily" },
+				view_all_doctors: { ar: "عرض جميع الأطباء", en: "View all doctors" },
+				working_hours: { ar: "أوقات العمل", en: "Working hours" },
+				services_offered: { ar: "الخدمات المقدمة", en: "Services provided" },
+				book_clinic: { ar: "احجز موعد في العيادة", en: "Book clinic appointment" },
 				booking: { ar: "حجز موعد", en: "Book Appointment" },
 				shop: { ar: "المتجر", en: "Shop" },
 				contact: { ar: "تواصل معنا", en: "Contact Us" },
@@ -113,6 +132,26 @@
 			if (!root) return;
 			root.dir = this.lang === "ar" ? "rtl" : "ltr";
 			root.lang = this.lang;
+			root.classList.add("hc-alhayat");
+		},
+
+		featuredServiceTypes() {
+			return ["Pharmacy", "Radiology", "Laboratory", "Emergency"];
+		},
+
+		pickFeaturedServices(rows) {
+			const order = this.featuredServiceTypes();
+			const picked = [];
+			order.forEach((type) => {
+				const row = rows.find((s) => s.service_type === type);
+				if (row) picked.push(row);
+			});
+			if (picked.length < 4) {
+				rows.forEach((s) => {
+					if (picked.length < 4 && !picked.includes(s)) picked.push(s);
+				});
+			}
+			return picked.slice(0, 4);
 		},
 
 		nameField() {
@@ -140,8 +179,10 @@
 			const suffix = this.querySuffix();
 			const nav = [
 				{ href: `/hospital${suffix}`, key: "home", page: "home" },
+				{ href: `/hospital${suffix}#hc-departments-section`, key: "departments", page: "home" },
 				{ href: `/hospital/doctors${suffix}`, key: "doctors", page: "doctors" },
 				{ href: `/hospital/booking${suffix}`, key: "booking", page: "booking" },
+				{ href: `/hospital${suffix}#hc-contact`, key: "contact", page: "home" },
 			];
 			if (cfg.features && cfg.features.shop) {
 				nav.push({ href: `/hospital/shop${suffix}`, key: "shop", page: "shop" });
@@ -202,29 +243,32 @@
 			const hero = document.getElementById("hc-home-hero");
 			if (hero) {
 				const heroImg = this.esc(cfg.hero_image || "");
-				const heroText = cfg[this.textField("hero_text")] || (
-					this.lang === "ar"
-						? "مستشفى متكامل يقدم رعاية صحية شاملة بأحدث التقنيات الطبية."
-						: "A full-service hospital delivering comprehensive care with modern medical technology."
-				);
-				hero.className = "hc-hero hc-hero-pro";
+				const heroText = cfg[this.textField("hero_text")] || "";
+				hero.className = "hc-hero hc-hero-split";
 				hero.innerHTML = `
-					<div class="hc-hero-bg" style="background-image:url('${heroImg}')"></div>
-					<div class="hc-wrap hc-hero-content">
+					<div class="hc-hero-visual"><img src="${heroImg}" alt=""></div>
+					<div class="hc-hero-copy">
 						<h1>${this.esc(cfg[this.textField("tagline")] || "")}</h1>
 						<p>${this.esc(heroText)}</p>
 						<div class="hc-hero-actions">
-							<a class="hc-btn hc-btn-light" href="/hospital/booking${suffix}">${this.t("book_now")}</a>
-							<a class="hc-btn hc-btn-outline hc-btn-hero-outline" href="#hc-contact">${this.t("contact_us")}</a>
+							<a class="hc-btn hc-btn-primary" href="/hospital/booking${suffix}">${this.t("book_now_cta")}</a>
+							<a class="hc-btn hc-btn-outline" href="#hc-contact">${this.t("contact_us")}</a>
 						</div>
 					</div>`;
 			}
 
 			const featuresBar = document.getElementById("hc-features-bar");
 			if (featuresBar) {
-				featuresBar.innerHTML = FEATURES.map((f) =>
-					`<div class="hc-feature-item"><span>${f.icon}</span>${this.lang === "ar" ? f.ar : f.en}</div>`
+				featuresBar.className = "hc-features-bar hc-features-pro";
+				featuresBar.innerHTML = FEATURES.map(
+					(f) =>
+						`<div class="hc-feature-item"><div class="hc-feature-icon">${FEATURE_SVGS[f.key] || ""}</div>${this.lang === "ar" ? f.ar : f.en}</div>`
 				).join("");
+			}
+
+			const deptTitle = document.getElementById("hc-dept-title");
+			if (deptTitle && deptTitle.nextElementSibling) {
+				deptTitle.nextElementSibling.textContent = this.t("dept_sub");
 			}
 
 			const stats = cfg.stats || {};
@@ -254,7 +298,7 @@
 				deptWrap.innerHTML = rows.length
 					? `<div class="hc-grid-4">${rows
 							.map(
-								(d) => `<a class="hc-card hc-dept-card" href="/hospital/booking${this.querySuffix({ department: d.name })}">
+								(d) => `<a class="hc-card hc-dept-card hc-dept-pro" href="/hospital/clinic${this.querySuffix({ department: d.name })}">
 									<div class="hc-dept-icon">${d.icon || "🏥"}</div>
 									<h3>${this.esc(d.department_name)}</h3>
 								</a>`
@@ -269,17 +313,22 @@
 					method: "omnexa_healthcare.api.web_booking.get_published_services",
 					args: { company: cfg.company, branch: cfg.branch },
 				});
-				const rows = (r.message || []).slice(0, 4);
+				const rows = this.pickFeaturedServices(r.message || []);
+				const servicesTitle = servicesWrap.previousElementSibling;
+				if (servicesTitle) {
+					const sub = servicesTitle.querySelector("p");
+					if (sub) sub.textContent = this.t("featured_services_sub");
+				}
 				servicesWrap.innerHTML = rows.length
 					? `<div class="hc-grid-4">${rows
 							.map((s) => {
-								const img = SERVICE_IMAGES[s.service_type] || SERVICE_IMAGES.default;
-								return `<div class="hc-card hc-service-card">
+								const img = s.website_image || SERVICE_IMAGES[s.service_type] || SERVICE_IMAGES.default;
+								return `<div class="hc-card hc-service-card hc-service-pro">
 									<img class="hc-service-img" src="${this.esc(img)}" alt="">
 									<div class="hc-card-body">
 										<h3>${this.esc(s.service_title)}</h3>
 										<p class="text-muted">${this.esc(s.website_description || "")}</p>
-										<a class="hc-btn hc-btn-light" href="/hospital/booking${this.querySuffix({ service: s.service_code })}">${this.t("book_now")}</a>
+										<a class="hc-btn hc-btn-primary" href="/hospital/booking${this.querySuffix({ service: s.service_code })}">${this.t("book_now")}</a>
 									</div>
 								</div>`;
 							})
@@ -289,6 +338,8 @@
 		},
 
 		async init_doctors() {
+			const sub = document.getElementById("hc-doctors-subtitle");
+			if (sub) sub.textContent = this.t("doctors_sub");
 			const wrap = document.getElementById("hc-doctors-page");
 			if (!wrap) return;
 			wrap.innerHTML = `<div class="hc-empty">${this.t("loading")}</div>`;
@@ -314,16 +365,24 @@
 					</div>
 					<div class="hc-grid-3">${filtered
 						.map(
-							(d) => `<div class="hc-card hc-doctor-card">
+							(d) => `<div class="hc-card hc-doctor-card hc-doctor-pro">
 								<div class="hc-doctor-photo">${d.photo ? `<img src="${this.esc(d.photo)}" alt="">` : "👨‍⚕️"}</div>
-								<h3>${this.esc(d.practitioner_name)}</h3>
-								<div>${this.esc(d.specialty_name || "")}</div>
-								<div class="hc-rating">★ ${this.esc(String(d.rating || "4.8"))}</div>
-								<div>${this.esc(String(d.years_of_experience || 5))} ${this.t("years_exp")}</div>
-								<a class="hc-btn hc-btn-primary" href="/hospital/booking${this.querySuffix({ practitioner: d.name })}">${this.t("book_now")}</a>
+								<div class="hc-doctor-body">
+									<h3>${this.esc(d.practitioner_name)}</h3>
+									<div>${this.esc(d.specialty_name || "")}</div>
+									<div>${this.esc(String(d.years_of_experience || 5))} ${this.t("years_exp")}</div>
+									<div class="hc-doctor-meta">
+										<span class="hc-rating">★ ${this.esc(String(d.rating || "4.9"))}</span>
+										<span>${this.lang === "ar" ? "ترخيص" : "License"}: ${this.esc(d.license_number || "—")}</span>
+									</div>
+									<a class="hc-btn hc-btn-primary" href="/hospital/booking${this.querySuffix({ practitioner: d.name })}">${this.t("book_now")}</a>
+								</div>
 							</div>`
 						)
-						.join("")}</div>`;
+						.join("")}</div>
+					<div style="text-align:center;margin-top:28px;">
+						<a class="hc-btn hc-btn-primary" href="/hospital/booking${this.querySuffix()}">${this.t("view_all_doctors")}</a>
+					</div>`;
 				wrap.querySelectorAll(".hc-pill").forEach((btn) => {
 					btn.addEventListener("click", () => {
 						filter = btn.dataset.filter;
@@ -334,7 +393,47 @@
 			render();
 		},
 
+		async init_clinic() {
+			const dept = this.params.get("department");
+			const hero = document.getElementById("hc-clinic-hero");
+			const wrap = document.getElementById("hc-clinic-page");
+			if (!dept || !wrap) {
+				if (wrap) wrap.innerHTML = `<div class="hc-empty">${this.lang === "ar" ? "اختر قسماً من الصفحة الرئيسية." : "Select a department from home."}</div>`;
+				return;
+			}
+			const r = await frappe.call({
+				method: "omnexa_healthcare.api.public_hospital_site.get_department_clinic",
+				args: { ...this.siteArgs(), department: dept },
+			});
+			const d = r.message || {};
+			const desc = this.lang === "ar" ? d.description_ar : d.description_en;
+			const services = (this.lang === "ar" ? d.services_ar : d.services_en) || [];
+			const hours = this.lang === "ar" ? d.working_hours_ar : d.working_hours_en;
+			if (hero) {
+				hero.innerHTML = `<div class="hc-wrap hc-clinic-hero-inner">
+					<div>${d.image ? `<img src="${this.esc(d.image)}" alt="">` : `<div style="font-size:5rem;text-align:center">${d.icon || "🏥"}</div>`}</div>
+					<div>
+						<p class="text-muted">${this.lang === "ar" ? "الرئيسية / العيادات" : "Home / Clinics"} / ${this.esc(d.department_name)}</p>
+						<h1 style="color:var(--hc-primary)">${this.esc(d.department_name)}</h1>
+						<p>${this.esc(desc || "")}</p>
+						<a class="hc-btn hc-btn-primary" href="/hospital/booking${this.querySuffix({ department: d.name })}">${this.t("book_clinic")}</a>
+					</div>
+				</div>`;
+			}
+			wrap.innerHTML = `
+				<div class="hc-clinic-panel">
+					<h3>${this.t("working_hours")}</h3>
+					<p>${this.esc(hours || (this.lang === "ar" ? "حسب جدول المستشفى" : "Per hospital schedule"))}</p>
+				</div>
+				<div class="hc-clinic-panel">
+					<h3>${this.t("services_offered")}</h3>
+					<ul class="hc-clinic-services">${services.map((s) => `<li>${this.esc(s)}</li>`).join("") || `<li>—</li>`}</ul>
+				</div>`;
+		},
+
 		async init_booking() {
+			const sub = document.getElementById("hc-booking-subtitle");
+			if (sub) sub.textContent = this.t("booking_sub");
 			const shell = document.getElementById("hc-booking-app");
 			if (!shell) return;
 			const cfg = this.config;
@@ -367,10 +466,12 @@
 
 			const render = async () => {
 				shell.innerHTML = `
-					<div class="hc-steps">${steps
+					<div class="hc-steps hc-steps-ring">${steps
 						.map(
 							(label, idx) =>
-								`<div class="hc-step ${state.step === idx + 1 ? "active" : ""} ${state.step > idx + 1 ? "done" : ""}">${idx + 1}. ${label}</div>`
+								`<div class="hc-step-ring ${state.step === idx + 1 ? "active" : ""} ${state.step > idx + 1 ? "done" : ""}">
+									<div class="num">${idx + 1}</div><span>${label}</span>
+								</div>`
 						)
 						.join("")}</div>
 					<div class="hc-panel" id="hc-booking-panel"></div>
@@ -381,10 +482,11 @@
 
 				const panel = document.getElementById("hc-booking-panel");
 				if (state.step === 1) {
-					panel.innerHTML = `<div class="hc-grid-4">${departments
+					panel.innerHTML = `<h3 style="margin-top:0;color:var(--hc-primary)">${this.lang === "ar" ? "اختر القسم الطبي" : "Choose medical department"}</h3>
+					<div class="hc-grid-4">${departments
 						.map(
 							(d) =>
-								`<button type="button" class="hc-card hc-dept-card" data-dept="${this.esc(d.name)}">
+								`<button type="button" class="hc-card hc-dept-card hc-dept-pro ${state.department === d.name ? "selected" : ""}" data-dept="${this.esc(d.name)}">
 									<div class="hc-dept-icon">${d.icon || "🏥"}</div>
 									<strong>${this.esc(d.department_name)}</strong>
 								</button>`
