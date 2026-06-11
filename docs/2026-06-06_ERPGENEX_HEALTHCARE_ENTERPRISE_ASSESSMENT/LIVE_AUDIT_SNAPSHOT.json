@@ -1,6 +1,6 @@
 {
   "version": "2026.06.06",
-  "generated_at": "2026-06-11T00:28:43.208924",
+  "generated_at": "2026-06-11T01:34:11.611718",
   "app": "omnexa_healthcare",
   "objective": "Global #1 Healthcare Information System",
   "world_class_readiness_score": 5.0,
@@ -954,9 +954,9 @@
     ]
   },
   "performance": {
-    "patient_records": 247,
-    "appointments": 10,
-    "encounters": 27,
+    "patient_records": 242,
+    "appointments": 0,
+    "encounters": 25,
     "recommendations": [
       "Index appointment_date + branch on Healthcare Appointment",
       "Cache workspace menu after migrate",

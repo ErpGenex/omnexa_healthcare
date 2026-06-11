@@ -14,6 +14,10 @@ class TestHealthcareWorkspace(FrappeTestCase):
 		self.assertGreater(stats["total_links"], 145)
 		self.assertGreater(stats["shortcuts"], 145)
 		self.assertGreater(stats.get("content_blocks", 0), 160)
+		ws = frappe.get_doc("Workspace", "Healthcare")
+		breaks = [l for l in ws.links if l.type == "Card Break"]
+		self.assertTrue(breaks)
+		self.assertTrue(all((l.link_count or 0) > 0 for l in breaks))
 
 	def test_workspace_coverage_counts(self):
 		cov = get_workspace_coverage()

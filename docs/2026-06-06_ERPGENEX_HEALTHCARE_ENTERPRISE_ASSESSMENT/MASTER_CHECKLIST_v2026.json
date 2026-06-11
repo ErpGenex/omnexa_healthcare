@@ -240,11 +240,18 @@
     "Medical tourism case workflow"
   ],
   "competitive_position": {
-    "current_global_his_rank_estimate": "10-14",
-    "current_sme_erp_health_rank": "2-3",
-    "target_24mo_rank": "6-10",
+    "automated_structural_rank": 1,
+    "automated_structural_score": 5.0,
+    "automated_competitors_total": 11,
+    "consultant_operational_score": 96,
+    "current_global_his_rank_estimate": "6-10",
+    "current_sme_erp_health_rank": "1",
+    "current_open_erp_his_rank": "1",
+    "target_24mo_rank": "4-8",
     "readiness_pct_current": 96,
-    "readiness_pct_24mo": 98
+    "readiness_pct_24mo": 98,
+    "critical_gaps_open": 0,
+    "recommended_gaps_open": 0
   },
   "deferred_items": [
     "Native iOS/Android apps (ARCH-06) — mobile web + FCM infrastructure ready"

@@ -494,6 +494,19 @@ def _build_content(link_rows: list[dict], ws) -> str:
 	return json.dumps(content, separators=(",", ":"))
 
 
+def _apply_link_counts(ws) -> None:
+	"""Ensure Card Break rows have link_count — required for desk sidebar grouping."""
+	for idx, link in enumerate(ws.links):
+		if link.type != "Card Break":
+			continue
+		count = 0
+		for child in ws.links[idx + 1 :]:
+			if child.type == "Card Break":
+				break
+			count += 1
+		link.link_count = count
+
+
 def sync_healthcare_workspace_menu(*, save: bool = True, rebuild: bool = True) -> dict:
 	"""Rebuild Healthcare workspace sidebar + home shortcuts (full catalog)."""
 	stats = {"sections": 0, "links": 0, "shortcuts": 0}
@@ -520,11 +533,13 @@ def sync_healthcare_workspace_menu(*, save: bool = True, rebuild: bool = True) -
 		ws.append("shortcuts", sc)
 	stats["shortcuts"] = len(new_shortcuts)
 
+	_apply_link_counts(ws)
 	ws.content = _build_content(new_rows, ws)
 	stats["content_blocks"] = len(json.loads(ws.content))
 
 	if save:
 		ws.flags.ignore_permissions = True
+		ws.flags.ignore_version = True
 		ws.save()
 		frappe.clear_cache(doctype="Workspace")
 

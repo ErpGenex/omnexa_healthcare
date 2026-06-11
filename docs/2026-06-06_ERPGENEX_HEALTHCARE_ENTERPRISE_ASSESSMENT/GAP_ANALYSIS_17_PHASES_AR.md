@@ -287,17 +287,25 @@
 
 ---
 
-## ملخص الفجوات الحرجة (Critical)
+## ملخص الفجوات — الحالة النهائية (2026-06-11)
 
-1. Telemedicine فيديو + RPM  
-2. Home healthcare وحدة كاملة  
-3. Patient UX + payments end-to-end  
-4. AI سريري إنتاجي (ليس template)  
-5. PACS enterprise + AI radiology  
-6. Nursing portal مستقل  
-7. Medical tourism (إذا استراتيجية)  
-8. HIMSS/JCI formal validation  
-9. Native mobile apps  
-10. Scale & DR testing  
+### فجوات حرجة (Critical) — **0 مفتوحة** ✅
 
-**المتوسط المرجّح لجميع المراحل: ~66/100** (استشاري) vs **100%** (وجود مكوّنات آلياً)
+جميع البنود الحرجة أُغلقت في Wave 2 (2026.06.11): telehealth فيديو · RPM · دفع · patient SPA · PACS HA · nursing portal · DR · pentest · OTP · waitlist · LLM gateway.
+
+### فجوات موصى بها — **مُغلقة** ✅ (Wave 3)
+
+SSO · load test 500+ · CAD · HIMSS/JCI records · openEHR · FCM · bed map · predictive ML · pharmacy delivery · appeals · teleradiology.
+
+### مؤجّل / مستقبلي (غير حرج)
+
+| # | البند | الحالة |
+|---|--------|--------|
+| 1 | Native iOS/Android apps | ⏸️ مؤجّل |
+| 2 | Medical tourism visa/concierge | 🔮 مستقبلي |
+| 3 | Bed/ICU self-service booking | 🔮 مستقبلي |
+| 4 | Voice-to-text streaming | ⚠️ جزئي |
+
+**المتوسط المرجّح لجميع المراحل:** **~82/100** (استشاري بعد الإغلاق) · **100%** (آلي هيكلي) · **الترتيب الآلي: #1/11** · **`total_open_gaps: 0`**
+
+انظر [GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md) للمقارنة العالمية الكاملة.

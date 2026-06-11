@@ -28,7 +28,7 @@ def after_migrate():
 	try:
 		from omnexa_healthcare.workspace.healthcare_workspace import sync_healthcare_workspace_menu
 
-		sync_healthcare_workspace_menu(save=True)
+		sync_healthcare_workspace_menu(save=True, rebuild=True)
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: workspace sync failed")
 
