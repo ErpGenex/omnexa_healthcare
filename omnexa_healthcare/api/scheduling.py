@@ -34,7 +34,7 @@ def api_get_available_slots(
 @frappe.whitelist()
 def api_book_appointment(payload: str | dict) -> dict:
 	"""Create appointment from slot selection with fee preview."""
-	data = frappe.parse_json(payload) if isinstance(payload, str) else payload
+	data = frappe.parse_json(payload) if isinstance(payload, str) else frappe._dict(payload or {})
 	required = ("patient", "practitioner", "branch", "specialty", "appointment_date", "slot_end")
 	for key in required:
 		if not data.get(key):

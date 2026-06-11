@@ -9,7 +9,7 @@ from datetime import timedelta
 
 import frappe
 from frappe import _
-from frappe.utils import cint, flt, get_datetime
+from frappe.utils import cint, flt, get_datetime, validate_email_address, validate_phone_number
 
 from frappe.utils import get_url
 
@@ -148,6 +148,13 @@ def book_appointment_online(payload: str | dict) -> dict:
 		phone=data.phone,
 		email=data.get("email"),
 	)
+	portal_user = _ensure_portal_user(
+		given_name=data.given_name,
+		family_name=data.family_name,
+		phone=data.phone,
+		email=data.get("email"),
+		company=data.company,
+	)
 
 	practitioner = data.get("practitioner") or catalog.default_practitioner
 	if not practitioner:
@@ -159,25 +166,30 @@ def book_appointment_online(payload: str | dict) -> dict:
 		slot_end = slot_start + timedelta(minutes=cint(catalog.duration_mins))
 
 	result = api_book_appointment(
-		{
-			"patient": patient,
-			"practitioner": practitioner,
-			"branch": data.branch,
-			"company": data.company,
-			"specialty": catalog.specialty,
-			"department": catalog.department,
-			"appointment_date": str(slot_start),
-			"slot_end": str(slot_end),
-			"appointment_type": catalog.service_type if catalog.service_type in ("Consultation", "Follow-up", "Telehealth") else "Consultation",
-			"booking_fee": flt(data.booking_fee) or flt(catalog.default_rate),
-			"payment_status": data.get("payment_status") or "Unpaid",
-		}
+		frappe._dict(
+			{
+				"patient": patient,
+				"practitioner": practitioner,
+				"branch": data.branch,
+				"company": data.company,
+				"specialty": catalog.specialty,
+				"department": catalog.department,
+				"appointment_date": str(slot_start),
+				"slot_end": str(slot_end),
+				"appointment_type": catalog.service_type
+				if catalog.service_type in ("Consultation", "Follow-up", "Telehealth")
+				else "Consultation",
+				"booking_fee": flt(data.booking_fee) or flt(catalog.default_rate),
+				"payment_status": data.get("payment_status") or "Unpaid",
+			}
+		)
 	)
 
 	frappe.db.set_value("Healthcare Appointment", result["name"], "booking_channel", "Website")
 	return {
 		**result,
 		"patient": patient,
+		"user": portal_user,
 		"message": _("Appointment booked successfully."),
 	}
 
@@ -231,3 +243,60 @@ def _resolve_or_create_patient(
 		}
 	).insert(ignore_permissions=True)
 	return doc.name
+
+
+def _portal_role() -> str:
+	return "Patient Portal User" if frappe.db.exists("Role", "Patient Portal User") else "Customer"
+
+
+def _portal_email(email: str | None, phone: str, company: str) -> str:
+	clean_email = (email or "").strip().lower()
+	if clean_email and validate_email_address(clean_email):
+		return clean_email
+	abbr = (frappe.db.get_value("Company", company, "abbr") or "HC").lower()
+	digits = "".join(ch for ch in (phone or "") if ch.isdigit())[-10:] or "0000000000"
+	return f"{abbr}.{digits}@patient.omnexa.portal"
+
+
+def _ensure_portal_user(
+	*,
+	given_name: str,
+	family_name: str,
+	phone: str,
+	email: str | None,
+	company: str,
+) -> str | None:
+	resolved_email = _portal_email(email, phone, company)
+	existing = frappe.db.get_value("User", resolved_email, "name")
+	if not existing and email:
+		existing = frappe.db.get_value("User", {"email": (email or "").strip().lower()}, "name")
+	if not existing and phone:
+		existing = frappe.db.get_value("User", {"mobile_no": phone}, "name")
+	if existing:
+		_ensure_portal_role(existing)
+		return existing
+
+	user_data = {
+		"doctype": "User",
+		"email": resolved_email,
+		"first_name": given_name,
+		"last_name": family_name,
+		"send_welcome_email": 0,
+		"user_type": "Website User",
+	}
+	try:
+		validate_phone_number(phone, throw=True)
+		user_data["mobile_no"] = phone
+	except Exception:
+		pass
+
+	user = frappe.get_doc(user_data).insert(ignore_permissions=True)
+	user.add_roles(_portal_role())
+	return user.name
+
+
+def _ensure_portal_role(user: str) -> None:
+	role = _portal_role()
+	if role and not frappe.db.exists("Has Role", {"parent": user, "role": role}):
+		doc = frappe.get_doc("User", user)
+		doc.add_roles(role)

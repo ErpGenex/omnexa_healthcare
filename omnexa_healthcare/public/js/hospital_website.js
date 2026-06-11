@@ -72,6 +72,28 @@
 				back: { ar: "السابق", en: "Back" },
 				confirm: { ar: "تأكيد الحجز", en: "Confirm booking" },
 				loading: { ar: "جاري التحميل...", en: "Loading..." },
+				step_department: { ar: "اختر القسم", en: "Department" },
+				step_doctor: { ar: "اختر الطبيب", en: "Doctor" },
+				step_time: { ar: "اختر الموعد", en: "Time" },
+				step_personal: { ar: "البيانات الشخصية", en: "Personal info" },
+				step_confirm: { ar: "تأكيد الحجز", en: "Confirm" },
+				choose_department: { ar: "اختر القسم الطبي", en: "Choose medical department" },
+				date: { ar: "التاريخ", en: "Date" },
+				no_slots: { ar: "لا توجد مواعيد متاحة.", en: "No slots available." },
+				first_name: { ar: "الاسم الأول", en: "First name" },
+				last_name: { ar: "اسم العائلة", en: "Last name" },
+				phone: { ar: "الجوال", en: "Phone" },
+				email: { ar: "البريد", en: "Email" },
+				booking_summary: { ar: "ملخص الحجز", en: "Booking summary" },
+				doctor: { ar: "الطبيب", en: "Doctor" },
+				slot: { ar: "الموعد", en: "Slot" },
+				patient: { ar: "المريض", en: "Patient" },
+				select_department: { ar: "اختر القسم", en: "Select department" },
+				select_doctor: { ar: "اختر الطبيب", en: "Select doctor" },
+				select_slot: { ar: "اختر الموعد", en: "Select time slot" },
+				complete_personal: { ar: "أكمل البيانات", en: "Complete personal details" },
+				booking_success: { ar: "تم الحجز بنجاح", en: "Booking confirmed" },
+				no_service: { ar: "لا توجد خدمة متاحة للحجز.", en: "No bookable service configured." },
 			};
 			return (map[key] && map[key][this.lang]) || key;
 		},
@@ -432,8 +454,11 @@
 		},
 
 		async init_booking() {
+			const title = document.getElementById("hc-booking-title");
+			if (title) title.textContent = this.t("booking");
 			const sub = document.getElementById("hc-booking-subtitle");
 			if (sub) sub.textContent = this.t("booking_sub");
+			document.title = `${this.t("booking")} | ${this.t("booking")}`;
 			const shell = document.getElementById("hc-booking-app");
 			if (!shell) return;
 			const cfg = this.config;
@@ -446,6 +471,7 @@
 				slot: null,
 				patient: {},
 			};
+			let doctors = [];
 
 			const [deptsR, doctorsR, servicesR] = await Promise.all([
 				frappe.call({ method: "omnexa_healthcare.api.public_hospital_site.get_published_departments", args: this.siteArgs() }),
@@ -453,16 +479,46 @@
 				frappe.call({ method: "omnexa_healthcare.api.web_booking.get_published_services", args: { company: cfg.company, branch: cfg.branch } }),
 			]);
 			const departments = deptsR.message || [];
-			const doctors = doctorsR.message || [];
+			doctors = doctorsR.message || [];
 			const services = servicesR.message || [];
 
 			const steps = [
-				this.lang === "ar" ? "اختر القسم" : "Department",
-				this.lang === "ar" ? "اختر الطبيب" : "Doctor",
-				this.lang === "ar" ? "اختر الموعد" : "Time",
-				this.lang === "ar" ? "البيانات الشخصية" : "Personal info",
-				this.lang === "ar" ? "تأكيد الحجز" : "Confirm",
+				this.t("step_department"),
+				this.t("step_doctor"),
+				this.t("step_time"),
+				this.t("step_personal"),
+				this.t("step_confirm"),
 			];
+
+			const loadDoctors = async () => {
+				const args = { ...this.siteArgs() };
+				if (state.department) args.department = state.department;
+				const r = await frappe.call({
+					method: "omnexa_healthcare.api.public_hospital_site.get_published_doctors",
+					args,
+				});
+				doctors = r.message || [];
+			};
+
+			const syncPatientFromForm = () => {
+				const given = document.getElementById("hc-given");
+				const family = document.getElementById("hc-family");
+				const phone = document.getElementById("hc-phone");
+				const email = document.getElementById("hc-email");
+				if (!given) return false;
+				state.patient = {
+					given_name: given.value.trim(),
+					family_name: family.value.trim(),
+					phone: phone.value.trim(),
+					email: email.value.trim(),
+				};
+				return !!(state.patient.given_name && state.patient.family_name && state.patient.phone);
+			};
+
+			const advance = () => {
+				state.step += 1;
+				render();
+			};
 
 			const render = async () => {
 				shell.innerHTML = `
@@ -477,12 +533,12 @@
 					<div class="hc-panel" id="hc-booking-panel"></div>
 					<div style="display:flex;justify-content:space-between;margin-top:16px;">
 						<button type="button" class="hc-btn hc-btn-outline" id="hc-book-back" ${state.step === 1 ? "disabled" : ""}>${this.t("back")}</button>
-						<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${state.step === 5 ? this.t("confirm") : this.t("next")}</button>
+						${state.step === 5 ? `<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${this.t("confirm")}</button>` : ""}
 					</div>`;
 
 				const panel = document.getElementById("hc-booking-panel");
 				if (state.step === 1) {
-					panel.innerHTML = `<h3 style="margin-top:0;color:var(--hc-primary)">${this.lang === "ar" ? "اختر القسم الطبي" : "Choose medical department"}</h3>
+					panel.innerHTML = `<h3 style="margin-top:0;color:var(--hc-primary)">${this.t("choose_department")}</h3>
 					<div class="hc-grid-4">${departments
 						.map(
 							(d) =>
@@ -497,36 +553,38 @@
 							state.department = btn.dataset.dept;
 							state.practitioner = "";
 							state.service_code = "";
-							btn.parentElement.querySelectorAll(".hc-card").forEach((c) => c.classList.remove("selected"));
-							btn.classList.add("selected");
+							state.slot = null;
+							state.step = 2;
+							render();
 						});
 					});
 				} else if (state.step === 2) {
-					const filtered = state.department
-						? doctors.filter((d) => (d.service_codes || []).length || true)
-						: doctors;
-					panel.innerHTML = `<div class="hc-grid-3">${filtered
-						.map(
-							(d) => `<button type="button" class="hc-card hc-doctor-card" data-doc="${this.esc(d.name)}">
+					await loadDoctors();
+					panel.innerHTML = doctors.length
+						? `<div class="hc-grid-3">${doctors
+								.map(
+									(d) => `<button type="button" class="hc-card hc-doctor-card ${state.practitioner === d.name ? "selected" : ""}" data-doc="${this.esc(d.name)}">
 								<div class="hc-doctor-photo" style="height:140px;">${d.photo ? `<img src="${this.esc(d.photo)}">` : "👨‍⚕️"}</div>
 								<strong>${this.esc(d.practitioner_name)}</strong>
 								<div>${this.esc(d.specialty_name || "")}</div>
 							</button>`
-						)
-						.join("")}</div>`;
+								)
+								.join("")}</div>`
+						: `<div class="hc-empty">${this.t("select_doctor")}</div>`;
 					panel.querySelectorAll("[data-doc]").forEach((btn) => {
 						btn.addEventListener("click", () => {
 							state.practitioner = btn.dataset.doc;
 							const doc = doctors.find((x) => x.name === state.practitioner);
 							state.service_code = (doc && doc.service_codes && doc.service_codes[0]) || state.service_code;
-							panel.querySelectorAll(".hc-card").forEach((c) => c.classList.remove("selected"));
-							btn.classList.add("selected");
+							state.slot = null;
+							state.step = 3;
+							render();
 						});
 					});
 				} else if (state.step === 3) {
 					panel.innerHTML = `
 						<div class="hc-field" style="max-width:280px;margin-bottom:16px;">
-							<label>${this.lang === "ar" ? "التاريخ" : "Date"}</label>
+							<label>${this.t("date")}</label>
 							<input type="date" id="hc-book-date" value="${this.esc(state.date)}">
 						</div>
 						<div class="hc-slot-grid" id="hc-slots">${this.t("loading")}</div>`;
@@ -558,15 +616,15 @@
 							? slots
 									.map(
 										(s) =>
-											`<button type="button" class="hc-slot" data-start="${this.esc(s.start)}" data-end="${this.esc(s.end)}">${this.esc(String(s.start).slice(11, 16))}</button>`
+											`<button type="button" class="hc-slot ${state.slot && state.slot.start === s.start ? "selected" : ""}" data-start="${this.esc(s.start)}" data-end="${this.esc(s.end)}">${this.esc(String(s.start).slice(11, 16))}</button>`
 									)
 									.join("")
-							: `<div class="hc-empty">${this.lang === "ar" ? "لا توجد مواعيد متاحة." : "No slots available."}</div>`;
+							: `<div class="hc-empty">${this.t("no_slots")}</div>`;
 						slotsEl.querySelectorAll(".hc-slot").forEach((btn) => {
 							btn.addEventListener("click", () => {
 								state.slot = { start: btn.dataset.start, end: btn.dataset.end };
-								slotsEl.querySelectorAll(".hc-slot").forEach((b) => b.classList.remove("selected"));
-								btn.classList.add("selected");
+								state.step = 4;
+								render();
 							});
 						});
 					};
@@ -575,67 +633,59 @@
 				} else if (state.step === 4) {
 					panel.innerHTML = `
 						<div class="hc-form-grid">
-							<div class="hc-field"><label>${this.lang === "ar" ? "الاسم الأول" : "First name"}</label><input id="hc-given" value="${this.esc(state.patient.given_name || "")}"></div>
-							<div class="hc-field"><label>${this.lang === "ar" ? "اسم العائلة" : "Last name"}</label><input id="hc-family" value="${this.esc(state.patient.family_name || "")}"></div>
-							<div class="hc-field"><label>${this.lang === "ar" ? "الجوال" : "Phone"}</label><input id="hc-phone" value="${this.esc(state.patient.phone || "")}"></div>
-							<div class="hc-field"><label>${this.lang === "ar" ? "البريد" : "Email"}</label><input id="hc-email" type="email" value="${this.esc(state.patient.email || "")}"></div>
+							<div class="hc-field"><label>${this.t("first_name")}</label><input id="hc-given" value="${this.esc(state.patient.given_name || "")}"></div>
+							<div class="hc-field"><label>${this.t("last_name")}</label><input id="hc-family" value="${this.esc(state.patient.family_name || "")}"></div>
+							<div class="hc-field"><label>${this.t("phone")}</label><input id="hc-phone" value="${this.esc(state.patient.phone || "")}"></div>
+							<div class="hc-field"><label>${this.t("email")}</label><input id="hc-email" type="email" value="${this.esc(state.patient.email || "")}"></div>
 						</div>`;
+					let personalTimer = null;
+					const tryAdvancePersonal = () => {
+						if (syncPatientFromForm()) {
+							state.step = 5;
+							render();
+						}
+					};
+					["hc-given", "hc-family", "hc-phone", "hc-email"].forEach((id) => {
+						document.getElementById(id)?.addEventListener("input", () => {
+							clearTimeout(personalTimer);
+							personalTimer = setTimeout(tryAdvancePersonal, 450);
+						});
+						document.getElementById(id)?.addEventListener("blur", tryAdvancePersonal);
+					});
 				} else if (state.step === 5) {
 					const doc = doctors.find((d) => d.name === state.practitioner);
 					panel.innerHTML = `
-						<h3>${this.lang === "ar" ? "ملخص الحجز" : "Booking summary"}</h3>
+						<h3>${this.t("booking_summary")}</h3>
 						<ul style="line-height:2;">
-							<li><b>${this.lang === "ar" ? "الطبيب" : "Doctor"}:</b> ${this.esc((doc && doc.practitioner_name) || state.practitioner)}</li>
-							<li><b>${this.lang === "ar" ? "الموعد" : "Slot"}:</b> ${this.esc(state.slot ? `${state.slot.start} — ${state.slot.end}` : "")}</li>
-							<li><b>${this.lang === "ar" ? "المريض" : "Patient"}:</b> ${this.esc(`${state.patient.given_name || ""} ${state.patient.family_name || ""}`.trim())}</li>
-							<li><b>${this.lang === "ar" ? "الجوال" : "Phone"}:</b> ${this.esc(state.patient.phone || "")}</li>
+							<li><b>${this.t("doctor")}:</b> ${this.esc((doc && doc.practitioner_name) || state.practitioner)}</li>
+							<li><b>${this.t("slot")}:</b> ${this.esc(state.slot ? `${state.slot.start} — ${state.slot.end}` : "")}</li>
+							<li><b>${this.t("patient")}:</b> ${this.esc(`${state.patient.given_name || ""} ${state.patient.family_name || ""}`.trim())}</li>
+							<li><b>${this.t("phone")}:</b> ${this.esc(state.patient.phone || "")}</li>
 						</ul>
 						<div id="hc-book-result"></div>`;
 				}
 
-				document.getElementById("hc-book-back").addEventListener("click", () => {
+				document.getElementById("hc-book-back")?.addEventListener("click", () => {
 					if (state.step > 1) {
 						state.step -= 1;
 						render();
 					}
 				});
-				document.getElementById("hc-book-next").addEventListener("click", async () => {
-					if (state.step === 4) {
-						state.patient = {
-							given_name: document.getElementById("hc-given").value.trim(),
-							family_name: document.getElementById("hc-family").value.trim(),
-							phone: document.getElementById("hc-phone").value.trim(),
-							email: document.getElementById("hc-email").value.trim(),
-						};
-					}
+				document.getElementById("hc-book-next")?.addEventListener("click", async () => {
 					if (state.step === 5) {
 						await this.submitBooking(state, cfg);
-						return;
 					}
-					if (state.step === 1 && !state.department) {
-						frappe.show_alert({ message: this.lang === "ar" ? "اختر القسم" : "Select department", indicator: "orange" });
-						return;
-					}
-					if (state.step === 2 && !state.practitioner) {
-						frappe.show_alert({ message: this.lang === "ar" ? "اختر الطبيب" : "Select doctor", indicator: "orange" });
-						return;
-					}
-					if (state.step === 3 && !state.slot) {
-						frappe.show_alert({ message: this.lang === "ar" ? "اختر الموعد" : "Select time slot", indicator: "orange" });
-						return;
-					}
-					if (state.step === 4 && !(state.patient.given_name && state.patient.family_name && state.patient.phone)) {
-						frappe.show_alert({ message: this.lang === "ar" ? "أكمل البيانات" : "Complete personal details", indicator: "orange" });
-						return;
-					}
-					state.step += 1;
-					render();
 				});
 			};
 
 			if (!state.service_code && state.practitioner) {
 				const doc = doctors.find((d) => d.name === state.practitioner);
 				state.service_code = (doc && doc.service_codes && doc.service_codes[0]) || "";
+			}
+			if (state.practitioner && state.service_code) {
+				state.step = 3;
+			} else if (state.department) {
+				state.step = 2;
 			}
 			render();
 		},
@@ -649,7 +699,7 @@
 				state.service_code = (services[0] && services[0].service_code) || "";
 			}
 			if (!state.service_code) {
-				frappe.msgprint(this.lang === "ar" ? "لا توجد خدمة متاحة للحجز." : "No bookable service configured.");
+				frappe.msgprint(this.t("no_service"));
 				return;
 			}
 			try {
@@ -673,7 +723,7 @@
 				const msg = r.message || {};
 				const el = document.getElementById("hc-book-result");
 				if (el) {
-					el.innerHTML = `<div class="alert alert-success">${this.lang === "ar" ? "تم الحجز بنجاح" : "Booking confirmed"}: <b>${this.esc(msg.name)}</b></div>`;
+					el.innerHTML = `<div class="alert alert-success">${this.t("booking_success")}: <b>${this.esc(msg.name)}</b></div>`;
 				}
 			} catch (err) {
 				frappe.msgprint((err && err.message) || "Booking failed");
