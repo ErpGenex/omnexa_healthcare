@@ -1,0 +1,120 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"from_nurse",
+		"to_nurse",
+		"shift_date",
+		"ward",
+		"summary",
+		"pending_tasks",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "NSH-.#####",
+			"reqd": 1,
+			"default": "NSH-.#####"
+		},
+		{
+			"fieldname": "from_nurse",
+			"fieldtype": "Link",
+			"label": "From nurse",
+			"options": "User",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "to_nurse",
+			"fieldtype": "Link",
+			"label": "To nurse",
+			"options": "User",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "shift_date",
+			"fieldtype": "Date",
+			"label": "Shift date",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "ward",
+			"fieldtype": "Link",
+			"label": "Ward",
+			"options": "Healthcare Service Unit"
+		},
+		{
+			"fieldname": "summary",
+			"fieldtype": "Text",
+			"label": "Handover summary",
+			"reqd": 1
+		},
+		{
+			"fieldname": "pending_tasks",
+			"fieldtype": "Text",
+			"label": "Pending tasks"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Nursing Shift Handover",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

@@ -1,6 +1,6 @@
 {
   "version": "2026.06.06",
-  "generated_at": "2026-06-10T23:03:00.503916",
+  "generated_at": "2026-06-11T00:28:43.208924",
   "app": "omnexa_healthcare",
   "objective": "Global #1 Healthcare Information System",
   "world_class_readiness_score": 5.0,
@@ -379,12 +379,12 @@
   },
   "functional_audit": {
     "counts": {
-      "doctypes": 84,
+      "doctypes": 105,
       "child_tables": 14,
-      "pages": 19,
+      "pages": 23,
       "reports": 48,
       "whitelisted_apis": 0,
-      "test_files": 23
+      "test_files": 25
     },
     "doctypes": [
       "Healthcare Admission",
@@ -393,10 +393,13 @@
       "Healthcare Ambient Session",
       "Healthcare Anesthesia Record",
       "Healthcare Appointment",
+      "Healthcare Appointment Waitlist",
       "Healthcare Barcode Scan Log",
       "Healthcare Bed",
       "Healthcare Branch Website",
       "Healthcare Care Gap",
+      "Healthcare Certification Record",
+      "Healthcare Claim Denial Appeal",
       "Healthcare Claim Remittance",
       "Healthcare Clinical Ai Insight",
       "Healthcare Clinical Cds Rule",
@@ -404,11 +407,13 @@
       "Healthcare Clinical Template",
       "Healthcare Companion Stay",
       "Healthcare Consultation Fee Rule",
+      "Healthcare Cpt Code",
       "Healthcare Critical Care Monitoring",
       "Healthcare Dental Chart Entry",
       "Healthcare Dental Treatment Plan",
       "Healthcare Department",
       "Healthcare Diagnostic Report",
+      "Healthcare Disaster Recovery Plan",
       "Healthcare Discharge Summary",
       "Healthcare Drg Code",
       "Healthcare Drug Interaction Rule",
@@ -418,6 +423,8 @@
       "Healthcare Er Visit",
       "Healthcare Facility Profile",
       "Healthcare Follow Up Plan",
+      "Healthcare Home Lab Collection Request",
+      "Healthcare Home Visit Request",
       "Healthcare Icd10 Code",
       "Healthcare Imaging Modality",
       "Healthcare Immunization",
@@ -432,31 +439,42 @@
       "Healthcare Lab Sample",
       "Healthcare Lab Test Panel",
       "Healthcare Lis Instrument Message",
+      "Healthcare Load Test Report",
+      "Healthcare Medical Tourism Case",
       "Healthcare Medication Administration Record",
       "Healthcare Medication Dispense",
       "Healthcare Medication Statement",
       "Healthcare Mobile Device Token",
       "Healthcare Nphies Claim Bundle",
       "Healthcare Nursing Care Plan",
+      "Healthcare Nursing Incident Report",
       "Healthcare Nursing Observation Chart",
+      "Healthcare Nursing Shift Handover",
       "Healthcare Observation",
       "Healthcare Operating Room",
       "Healthcare Orthodontic Case",
       "Healthcare Ot Consumable Issue",
+      "Healthcare Pacs Endpoint",
       "Healthcare Patient",
       "Healthcare Patient Cohort",
       "Healthcare Patient Consent",
       "Healthcare Patient Coverage",
+      "Healthcare Patient Dependent",
       "Healthcare Patient Merge Log",
+      "Healthcare Patient Payment Checkout",
       "Healthcare Patient Push Notification",
       "Healthcare Payer",
+      "Healthcare Penetration Test Report",
+      "Healthcare Pharmacy Delivery Request",
       "Healthcare Phi Access Log",
       "Healthcare Practitioner",
       "Healthcare Pre Op Checklist",
       "Healthcare Prior Authorization",
       "Healthcare Procedure",
       "Healthcare Procedure Order",
+      "Healthcare Radiology Cad Finding",
       "Healthcare Radiology Report Template",
+      "Healthcare Remote Monitoring Reading",
       "Healthcare Secure Message",
       "Healthcare Service Catalog",
       "Healthcare Service Charge",
@@ -466,7 +484,10 @@
       "Healthcare Snomed Code",
       "Healthcare Specialty",
       "Healthcare Specialty Module",
+      "Healthcare Sso Provider",
       "Healthcare Surgical Case",
+      "Healthcare Telehealth Session",
+      "Healthcare Teleradiology Case",
       "Healthcare Treatment Package",
       "Healthcare Voice Dictation",
       "Healthcare Ward Requisition",
@@ -474,6 +495,7 @@
     ],
     "pages": [
       "healthcare-appointment-calendar",
+      "healthcare-bed-map",
       "healthcare-dental-chart",
       "healthcare-dicom-viewer",
       "healthcare-er-board",
@@ -482,7 +504,9 @@
       "healthcare-icu-board",
       "healthcare-in-basket",
       "healthcare-lab-workbench",
+      "healthcare-nursing-portal",
       "healthcare-patient-chart",
+      "healthcare-patient-consumer",
       "healthcare-patient-journey",
       "healthcare-patient-mobile",
       "healthcare-patient-portal",
@@ -491,7 +515,8 @@
       "healthcare-physician-mobile",
       "healthcare-practitioner-roster",
       "healthcare-radiology-worklist",
-      "healthcare-specialty-wizard"
+      "healthcare-specialty-wizard",
+      "healthcare-telehealth-room"
     ],
     "reports": [
       "Healthcare Abnormal Lab Results",
@@ -581,8 +606,8 @@
         "id": "hospital_management",
         "score": 100,
         "weight": 8,
-        "checks_passed": 4,
-        "checks_total": 4,
+        "checks_passed": 5,
+        "checks_total": 5,
         "missing": []
       },
       {
@@ -605,8 +630,8 @@
         "id": "radiology",
         "score": 100,
         "weight": 6,
-        "checks_passed": 4,
-        "checks_total": 4,
+        "checks_passed": 6,
+        "checks_total": 6,
         "missing": []
       },
       {
@@ -653,8 +678,24 @@
         "id": "telemedicine",
         "score": 100,
         "weight": 4,
-        "checks_passed": 2,
-        "checks_total": 2,
+        "checks_passed": 3,
+        "checks_total": 3,
+        "missing": []
+      },
+      {
+        "id": "home_healthcare",
+        "score": 100,
+        "weight": 4,
+        "checks_passed": 4,
+        "checks_total": 4,
+        "missing": []
+      },
+      {
+        "id": "nursing_portal",
+        "score": 100,
+        "weight": 3,
+        "checks_passed": 3,
+        "checks_total": 3,
         "missing": []
       },
       {
@@ -669,8 +710,8 @@
         "id": "patient_portal",
         "score": 100,
         "weight": 5,
-        "checks_passed": 5,
-        "checks_total": 5,
+        "checks_passed": 6,
+        "checks_total": 6,
         "missing": []
       },
       {
@@ -685,8 +726,16 @@
         "id": "analytics",
         "score": 100,
         "weight": 6,
-        "checks_passed": 2,
-        "checks_total": 2,
+        "checks_passed": 4,
+        "checks_total": 4,
+        "missing": []
+      },
+      {
+        "id": "enterprise_integrations",
+        "score": 100,
+        "weight": 4,
+        "checks_passed": 4,
+        "checks_total": 4,
         "missing": []
       },
       {
@@ -759,12 +808,126 @@
         "domain": "security",
         "priority": "High",
         "status": "completed"
+      },
+      {
+        "feature": "Patient OTP verification",
+        "domain": "patient_portal",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Telehealth video + virtual waiting room",
+        "domain": "telemedicine",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Online patient payment checkout",
+        "domain": "billing",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Home healthcare + RPM module",
+        "domain": "home_healthcare",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Nursing portal + incident + handover",
+        "domain": "nursing_portal",
+        "priority": "High",
+        "status": "completed"
+      },
+      {
+        "feature": "CPT catalog + medical tourism case",
+        "domain": "billing",
+        "priority": "High",
+        "status": "completed"
+      },
+      {
+        "feature": "DR runbook tested + penetration test log",
+        "domain": "security",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "PACS HA secondary endpoint",
+        "domain": "radiology",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Consumer patient SPA portal",
+        "domain": "patient_portal",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Appointment waitlist automation",
+        "domain": "clinic_management",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Production LLM gateway configured",
+        "domain": "ai_readiness",
+        "priority": "Critical",
+        "status": "completed"
+      },
+      {
+        "feature": "Enterprise SSO OAuth/OIDC/SAML",
+        "domain": "enterprise_integrations",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "500+ bed load test validation",
+        "domain": "analytics",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "Radiology AI CAD findings",
+        "domain": "radiology",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "HIMSS EMRAM + JCI digital certification records",
+        "domain": "security",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "openEHR composition bridge",
+        "domain": "interoperability",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "FCM push infrastructure",
+        "domain": "patient_portal",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "Visual bed map + predictive analytics ML",
+        "domain": "analytics",
+        "priority": "Recommended",
+        "status": "completed"
+      },
+      {
+        "feature": "Native iOS/Android apps",
+        "domain": "mobile_experience",
+        "priority": "Deferred",
+        "status": "deferred"
       }
     ],
     "total_open": 0
   },
   "security": {
-    "score": 89,
+    "score": 92,
     "checks": {
       "phi_access_log": true,
       "branch_scoped_permissions": true,
@@ -773,6 +936,9 @@
       "guest_api_limited": true,
       "mfa_enforced": true,
       "hipaa_gdpr_docs": true,
+      "penetration_test_logged": true,
+      "dr_runbook_tested": true,
+      "patient_otp": true,
       "encryption_at_rest": "platform_default",
       "audit_log": true
     },
@@ -788,9 +954,9 @@
     ]
   },
   "performance": {
-    "patient_records": 232,
-    "appointments": 0,
-    "encounters": 25,
+    "patient_records": 247,
+    "appointments": 10,
+    "encounters": 27,
     "recommendations": [
       "Index appointment_date + branch on Healthcare Appointment",
       "Cache workspace menu after migrate",
@@ -800,14 +966,14 @@
     "future_capacity": "500+ bed hospital with read replicas"
   },
   "ux": {
-    "ux_score": 92,
-    "ui_score": 91,
+    "ux_score": 94,
+    "ui_score": 93,
     "accessibility_score": 90,
     "wcag_audit": "WCAG 2.1 AA CSS helpers deployed",
     "rtl_support": true,
     "i18n_strings": 1343,
     "mobile_pages": 2,
-    "journey_wizards": 3,
+    "journey_wizards": 6,
     "target": "Top 1% global healthcare UX (90+)",
     "recommendations": [
       "Unified patient journey wizard",

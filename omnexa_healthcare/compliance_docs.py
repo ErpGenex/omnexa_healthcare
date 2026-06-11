@@ -70,6 +70,48 @@ COMPLIANCE_DOCS = {
 			],
 		},
 	},
+	"himss_emram": {
+		"title": "HIMSS EMRAM Stage 6 Evidence Pack",
+		"version": "2026.06",
+		"sections": {
+			"Stage 6 — Data analytics": [
+				"Healthcare Executive Dashboard and 48 operational reports.",
+				"Predictive analytics: occupancy forecast and readmission risk APIs.",
+				"Population health cohorts and specialty revenue analytics.",
+			],
+			"Closed loop medication": [
+				"Healthcare Drug Interaction Rule and eMAR administration records.",
+				"Pharmacy dispensing desk with FEFO batch traceability.",
+			],
+			"Patient engagement": [
+				"Consumer patient SPA, OTP, online payments, telehealth video.",
+				"Hospital public website /hospital and activity portal routing.",
+			],
+			"Certification tracking": [
+				"Healthcare Certification Record DocType with HIMSS EMRAM stage.",
+			],
+		},
+	},
+	"jci_digital": {
+		"title": "JCI Digital Accreditation Readiness",
+		"version": "2026.06",
+		"sections": {
+			"Patient safety": [
+				"MRN identification, medication safety, surgical case verification.",
+				"Nursing incident reporting and shift handover workflows.",
+			],
+			"Clinical records": [
+				"FHIR Encounter export, PHI audit log, structured specialty templates.",
+			],
+			"Quality & performance": [
+				"Load test report for 500+ bed scale validation.",
+				"DR runbook tested and penetration test evidence.",
+			],
+			"Certification": [
+				"Healthcare Certification Record — JCI Digital accreditation ready.",
+			],
+		},
+	},
 	"iso_15189": {
 		"title": "ISO 15189 Laboratory QMS Guide",
 		"version": "2026.06",

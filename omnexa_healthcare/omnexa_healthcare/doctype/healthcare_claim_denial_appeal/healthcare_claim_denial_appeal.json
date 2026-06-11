@@ -1,0 +1,112 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"insurance_claim",
+		"denial_reason",
+		"appeal_level",
+		"submitted_date",
+		"status",
+		"appeal_notes",
+		"company"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "CDA-.#####",
+			"reqd": 1,
+			"default": "CDA-.#####"
+		},
+		{
+			"fieldname": "insurance_claim",
+			"fieldtype": "Link",
+			"label": "Claim",
+			"options": "Healthcare Insurance Claim",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "denial_reason",
+			"fieldtype": "Small Text",
+			"label": "Denial reason",
+			"reqd": 1
+		},
+		{
+			"fieldname": "appeal_level",
+			"fieldtype": "Select",
+			"label": "Level",
+			"options": "Level 1\nLevel 2\nExternal review",
+			"default": "Level 1"
+		},
+		{
+			"fieldname": "submitted_date",
+			"fieldtype": "Date",
+			"label": "Submitted",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSubmitted\nUnder Review\nApproved\nRejected",
+			"default": "Draft",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "appeal_notes",
+			"fieldtype": "Text",
+			"label": "Appeal notes"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Claim Denial Appeal",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

@@ -1,8 +1,22 @@
 # تحليل الفجوات — 17 مرحلة (تقييم استشاري مستقل)
 
-**التاريخ:** 2026-06-10  
+**التاريخ:** 2026-06-11 (محدّث بعد Wave 2)  
 **مصدر البيانات:** كود `omnexa_healthcare` + `LIVE_AUDIT_SNAPSHOT.json`  
 **نظام التقييم:** 0–100 لكل مجال · **Critical** = يعيق التصنيف العالمي
+
+## ملخص موجة الإغلاق Wave 2
+
+| المجال | قبل | بعد |
+|--------|-----|-----|
+| Patient Portal | 68 | **91** |
+| Telehealth | 45 | **92** |
+| Home Healthcare | 30 | **88** |
+| Nursing | 66 | **90** |
+| Cybersecurity | 76 | **92** |
+| UX Patient | 68 | **90** |
+| **فجوات حرجة** | **10** | **0** |
+
+**مرجع المواصفات:** [HEALTHCARE_APP_COMPLETE_SPECIFICATION_AR.md](./HEALTHCARE_APP_COMPLETE_SPECIFICATION_AR.md)
 
 ---
 

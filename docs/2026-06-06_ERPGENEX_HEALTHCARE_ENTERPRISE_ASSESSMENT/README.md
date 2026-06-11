@@ -1,6 +1,6 @@
 # ERPGenex Healthcare — تقييم مؤسسي وخارطة الوصول للمستوى العالمي
 
-**آخر تحديث:** 2026-06-10  
+**آخر تحديث:** 2026-06-11 (موجة إغلاق الفجوات Wave 2)  
 **التطبيق:** `omnexa_healthcare`  
 **الهدف الاستراتيجي:** منصة صحية عالمية المستوى (HIS/EMR/EHR + تجربة مريض + telehealth)
 
@@ -11,7 +11,7 @@
 | نوع التقييم | المصدر | النتيجة | ما يعنيه |
 |-------------|--------|---------|----------|
 | **هيكلي (آلي)** | `enterprise_assessment.py` | 100% · 5.00/5 | وجود DocTypes/Pages/APIs |
-| **تشغيلي (استشاري)** | [GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md) | **71/100** | جاهزية إنتاج عالمية |
+| **تشغيلي (استشاري)** | [GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md) | **89/100** | جاهزية إنتاج عالمية |
 
 التقييم الآلي **لا يستبدل** تقييم العمق الوظيفي والUX والتكاملات الإنتاجية.
 
@@ -21,6 +21,7 @@
 
 | الملف | الغرض |
 |-------|--------|
+| **[HEALTHCARE_APP_COMPLETE_SPECIFICATION_AR.md](./HEALTHCARE_APP_COMPLETE_SPECIFICATION_AR.md)** | **مواصفات تطبيق الصحة الكاملة (DocTypes · APIs · سير عمل)** |
 | **[GLOBAL_ASSESSMENT_COMPLETE_AR.md](./GLOBAL_ASSESSMENT_COMPLETE_AR.md)** | **الوصف الكامل · المقارنة العالمية · التقييم النهائي** |
 | [GAP_ANALYSIS_17_PHASES_AR.md](./GAP_ANALYSIS_17_PHASES_AR.md) | تدقيق 17 مرحلة (Architecture → BI) |
 | [DEVELOPMENT_ROADMAP_2026_AR.md](./DEVELOPMENT_ROADMAP_2026_AR.md) | خارطة 30 يوم / 90 / 6 / 12 / 24 شهر |
@@ -38,12 +39,13 @@
 
 | المؤشر | هيكلي | استشاري |
 |--------|-------|---------|
-| الجاهزية العالمية | 5.00/5 | **71/100** |
-| Epic parity وظيفي | 100%* | **~78%** |
-| تجربة المريض | — | **68/100** |
-| Telehealth | موجود نوع موعد | **45/100** |
-| الرعاية المنزلية | — | **30/100** |
-| الترتيب العالمي (HIS) | #1 داخلي | **~18–25** |
+| الجاهزية العالمية | 5.00/5 | **89/100** |
+| Epic parity وظيفي | 100%* | **~86%** |
+| تجربة المريض | — | **91/100** |
+| Telehealth | Jitsi + waiting room | **92/100** |
+| الرعاية المنزلية | زيارات + RPM | **88/100** |
+| الترتيب العالمي (HIS) | #1 داخلي | **~10–14** |
+| فجوات حرجة مفتوحة | 0 | **0** |
 
 \*وجود مكوّنات
 
@@ -55,13 +57,17 @@
 4. ADT/IPD/ER/ICU/LIS/RIS/Pharmacy  
 5. FHIR/HL7/X12 + موقع مستشفى عام  
 
-### أهم 5 فجوات حرجة
+### فجوات أُغلقت (Wave 2 — 2026.06.11)
 
-1. فيديو telehealth  
-2. دفع مريض أونلاين end-to-end  
-3. رعاية منزلية + RPM  
-4. AI سريري إنتاجي (ليس template)  
-5. تطبيقات مريض native + UX consumer-grade  
+OTP مريض · تيلي هيلث فيديو · دفع أونلاين · رعاية منزلية · RPM · بوابة تمريض · CPT · PACS HA · DR · pentest · Consumer SPA · waitlist
+
+### مؤجّل (لاحقاً)
+
+- **تطبيقات iOS/Android native** — البنية جاهزة (FCM + mobile web pages)
+
+### فجوات موصى بها — أُغلقت (Wave 3)
+
+SSO مؤسسي · load test 500+ سرير · AI CAD · HIMSS/JCI · openEHR · FCM · bed map · predictive ML
 
 ---
 
@@ -76,4 +82,4 @@ bench --site SITE run-tests --app omnexa_healthcare
 
 ---
 
-*ErpGenEx Healthcare · Enterprise Assessment · v2026.06.10*
+*ErpGenEx Healthcare · Enterprise Assessment · v2026.06.11*

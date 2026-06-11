@@ -1,0 +1,14 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-nursing-portal",
+	"page_name": "healthcare-nursing-portal",
+	"standard": "Yes",
+	"title": "Nursing Portal",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Nurse"},
+		{"role": "Desk User"}
+	]
+}

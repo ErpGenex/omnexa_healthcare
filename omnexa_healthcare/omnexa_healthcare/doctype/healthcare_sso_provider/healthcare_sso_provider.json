@@ -1,0 +1,112 @@
+{
+	"actions": [],
+	"autoname": "field:provider_name",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"provider_name",
+		"protocol",
+		"client_id",
+		"authorization_url",
+		"token_url",
+		"userinfo_url",
+		"saml_metadata_url",
+		"default_role",
+		"is_active"
+	],
+	"fields": [
+		{
+			"fieldname": "provider_name",
+			"fieldtype": "Data",
+			"label": "Provider name",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "protocol",
+			"fieldtype": "Select",
+			"label": "Protocol",
+			"options": "OAuth2\nOpenID Connect\nSAML 2.0",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "client_id",
+			"fieldtype": "Data",
+			"label": "Client ID"
+		},
+		{
+			"fieldname": "authorization_url",
+			"fieldtype": "Data",
+			"label": "Authorization URL"
+		},
+		{
+			"fieldname": "token_url",
+			"fieldtype": "Data",
+			"label": "Token URL"
+		},
+		{
+			"fieldname": "userinfo_url",
+			"fieldtype": "Data",
+			"label": "Userinfo URL"
+		},
+		{
+			"fieldname": "saml_metadata_url",
+			"fieldtype": "Data",
+			"label": "SAML metadata URL"
+		},
+		{
+			"fieldname": "default_role",
+			"fieldtype": "Link",
+			"label": "Default role",
+			"options": "Role"
+		},
+		{
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active",
+			"default": "1",
+			"in_list_view": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Sso Provider",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

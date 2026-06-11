@@ -1,0 +1,120 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"device_id",
+		"metric_type",
+		"value",
+		"unit",
+		"reading_datetime",
+		"alert_level",
+		"company"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "RPM-.#####",
+			"reqd": 1,
+			"default": "RPM-.#####"
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "device_id",
+			"fieldtype": "Data",
+			"label": "Device ID"
+		},
+		{
+			"fieldname": "metric_type",
+			"fieldtype": "Select",
+			"label": "Metric",
+			"options": "Blood Pressure\nHeart Rate\nSpO2\nGlucose\nWeight\nTemperature",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "value",
+			"fieldtype": "Float",
+			"label": "Value",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "unit",
+			"fieldtype": "Data",
+			"label": "Unit"
+		},
+		{
+			"fieldname": "reading_datetime",
+			"fieldtype": "Datetime",
+			"label": "Reading time",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "alert_level",
+			"fieldtype": "Select",
+			"label": "Alert",
+			"options": "Normal\nWarning\nCritical",
+			"default": "Normal"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Remote Monitoring Reading",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

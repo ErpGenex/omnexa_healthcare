@@ -1,0 +1,142 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"appointment",
+		"patient",
+		"practitioner",
+		"room_id",
+		"join_url",
+		"waiting_room_status",
+		"status",
+		"started_at",
+		"ended_at",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "THS-.#####",
+			"reqd": 1,
+			"default": "THS-.#####"
+		},
+		{
+			"fieldname": "appointment",
+			"fieldtype": "Link",
+			"label": "Appointment",
+			"options": "Healthcare Appointment",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"reqd": 1
+		},
+		{
+			"fieldname": "room_id",
+			"fieldtype": "Data",
+			"label": "Room ID",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "join_url",
+			"fieldtype": "Data",
+			"label": "Join URL"
+		},
+		{
+			"fieldname": "waiting_room_status",
+			"fieldtype": "Select",
+			"label": "Waiting room",
+			"options": "Not Joined\nPatient Waiting\nProvider Joined\nIn Session",
+			"default": "Not Joined"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Scheduled\nWaiting\nIn Progress\nCompleted\nCancelled",
+			"default": "Scheduled",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "started_at",
+			"fieldtype": "Datetime",
+			"label": "Started at"
+		},
+		{
+			"fieldname": "ended_at",
+			"fieldtype": "Datetime",
+			"label": "Ended at"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Telehealth Session",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

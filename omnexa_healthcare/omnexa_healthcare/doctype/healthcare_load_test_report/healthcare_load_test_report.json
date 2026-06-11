@@ -1,0 +1,122 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"test_date",
+		"scenario",
+		"bed_count",
+		"concurrent_users",
+		"avg_response_ms",
+		"p95_response_ms",
+		"error_rate_pct",
+		"status",
+		"notes"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "LTR-.#####",
+			"reqd": 1,
+			"default": "LTR-.#####"
+		},
+		{
+			"fieldname": "test_date",
+			"fieldtype": "Date",
+			"label": "Test date",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "scenario",
+			"fieldtype": "Data",
+			"label": "Scenario",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "bed_count",
+			"fieldtype": "Int",
+			"label": "Beds simulated",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "concurrent_users",
+			"fieldtype": "Int",
+			"label": "Concurrent users"
+		},
+		{
+			"fieldname": "avg_response_ms",
+			"fieldtype": "Float",
+			"label": "Avg response (ms)",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "p95_response_ms",
+			"fieldtype": "Float",
+			"label": "P95 response (ms)"
+		},
+		{
+			"fieldname": "error_rate_pct",
+			"fieldtype": "Float",
+			"label": "Error rate %"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Pass\nPass with notes\nFail",
+			"default": "Pass",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Text",
+			"label": "Notes"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Load Test Report",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

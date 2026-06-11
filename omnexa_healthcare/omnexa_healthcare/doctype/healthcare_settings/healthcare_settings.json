@@ -21,6 +21,25 @@
 		"enable_ai_scheduling",
 		"enable_llm_clinical_documentation",
 		"llm_model_name",
+		"llm_api_endpoint",
+		"portal_section",
+		"enable_patient_otp",
+		"otp_sms_webhook_url",
+		"enable_online_patient_payments",
+		"payment_gateway",
+		"telehealth_section",
+		"enable_telehealth_video",
+		"jitsi_server_url",
+		"home_health_section",
+		"enable_home_healthcare",
+		"enable_remote_monitoring",
+		"pacs_ha_section",
+		"pacs_secondary_url",
+		"enterprise_section",
+		"enable_enterprise_sso",
+		"enable_fcm_push",
+		"fcm_webhook_url",
+		"enable_radiology_cad",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -128,6 +147,114 @@
 			"fieldname": "llm_model_name",
 			"fieldtype": "Data",
 			"label": "LLM model name"
+		},
+		{
+			"fieldname": "llm_api_endpoint",
+			"fieldtype": "Data",
+			"label": "LLM API endpoint",
+			"description": "Production LLM gateway URL for clinical documentation."
+		},
+		{
+			"fieldname": "portal_section",
+			"fieldtype": "Section Break",
+			"label": "Patient portal"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_patient_otp",
+			"fieldtype": "Check",
+			"label": "Enable patient OTP verification"
+		},
+		{
+			"fieldname": "otp_sms_webhook_url",
+			"fieldtype": "Data",
+			"label": "OTP SMS webhook URL"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_online_patient_payments",
+			"fieldtype": "Check",
+			"label": "Enable online patient payments"
+		},
+		{
+			"default": "Manual",
+			"fieldname": "payment_gateway",
+			"fieldtype": "Select",
+			"label": "Payment gateway",
+			"options": "Manual\nStripe\nPaymob\nHyperPay"
+		},
+		{
+			"fieldname": "telehealth_section",
+			"fieldtype": "Section Break",
+			"label": "Telehealth"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_telehealth_video",
+			"fieldtype": "Check",
+			"label": "Enable telehealth video (WebRTC/Jitsi)"
+		},
+		{
+			"default": "https://meet.jit.si",
+			"fieldname": "jitsi_server_url",
+			"fieldtype": "Data",
+			"label": "Jitsi server URL"
+		},
+		{
+			"fieldname": "home_health_section",
+			"fieldtype": "Section Break",
+			"label": "Home healthcare"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_home_healthcare",
+			"fieldtype": "Check",
+			"label": "Enable home healthcare visits"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_remote_monitoring",
+			"fieldtype": "Check",
+			"label": "Enable remote patient monitoring"
+		},
+		{
+			"fieldname": "pacs_ha_section",
+			"fieldtype": "Section Break",
+			"label": "PACS high availability"
+		},
+		{
+			"fieldname": "pacs_secondary_url",
+			"fieldtype": "Data",
+			"label": "Secondary PACS WADO URL",
+			"description": "Failover endpoint for enterprise PACS HA."
+		},
+		{
+			"fieldname": "enterprise_section",
+			"fieldtype": "Section Break",
+			"label": "Enterprise integrations"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_enterprise_sso",
+			"fieldtype": "Check",
+			"label": "Enable enterprise SSO (OAuth/OIDC/SAML)"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_fcm_push",
+			"fieldtype": "Check",
+			"label": "Enable FCM push notifications"
+		},
+		{
+			"fieldname": "fcm_webhook_url",
+			"fieldtype": "Data",
+			"label": "FCM webhook URL"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_radiology_cad",
+			"fieldtype": "Check",
+			"label": "Enable radiology AI CAD"
 		},
 		{
 			"default": "1",

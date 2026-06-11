@@ -1,0 +1,14 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-telehealth-room",
+	"page_name": "healthcare-telehealth-room",
+	"standard": "Yes",
+	"title": "Telehealth Video Room",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Physician"},
+		{"role": "Desk User"},
+		{"role": "Patient Portal User"}
+	]
+}

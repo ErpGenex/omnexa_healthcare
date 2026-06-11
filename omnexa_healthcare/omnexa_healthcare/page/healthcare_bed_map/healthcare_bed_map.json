@@ -1,0 +1,14 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-bed-map",
+	"page_name": "healthcare-bed-map",
+	"standard": "Yes",
+	"title": "Visual Bed Map",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Desk User"},
+		{"role": "Nurse"}
+	]
+}

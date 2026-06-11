@@ -1,0 +1,13 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-patient-consumer",
+	"page_name": "healthcare-patient-consumer",
+	"standard": "Yes",
+	"title": "Patient Consumer App",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Customer"},
+		{"role": "Patient Portal User"}
+	]
+}

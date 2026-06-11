@@ -1,0 +1,120 @@
+# Copyright (c) 2026, Omnexa and contributors
+# License: MIT
+
+"""DocType definitions for recommended-gap closure wave 3 (native apps deferred)."""
+
+from __future__ import annotations
+
+GAP_CLOSURE_WAVE3_DOCTYPES: list[dict] = [
+	{
+		"name": "Healthcare Sso Provider",
+		"autoname": "field:provider_name",
+		"fields": [
+			("provider_name", "Data", "Provider name", {"reqd": 1, "unique": 1, "in_list_view": 1}),
+			("protocol", "Select", "Protocol", {"options": "OAuth2\nOpenID Connect\nSAML 2.0", "reqd": 1, "in_list_view": 1}),
+			("client_id", "Data", "Client ID"),
+			("authorization_url", "Data", "Authorization URL"),
+			("token_url", "Data", "Token URL"),
+			("userinfo_url", "Data", "Userinfo URL"),
+			("saml_metadata_url", "Data", "SAML metadata URL"),
+			("default_role", "Link", "Default role", {"options": "Role"}),
+			("is_active", "Check", "Active", {"default": "1", "in_list_view": 1}),
+		],
+	},
+	{
+		"name": "Healthcare Load Test Report",
+		"autoname": "naming_series:",
+		"naming_series": "LTR-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "LTR-.#####", "reqd": 1, "default": "LTR-.#####"}),
+			("test_date", "Date", "Test date", {"reqd": 1, "in_list_view": 1}),
+			("scenario", "Data", "Scenario", {"reqd": 1, "in_list_view": 1}),
+			("bed_count", "Int", "Beds simulated", {"reqd": 1, "in_list_view": 1}),
+			("concurrent_users", "Int", "Concurrent users"),
+			("avg_response_ms", "Float", "Avg response (ms)", {"in_list_view": 1}),
+			("p95_response_ms", "Float", "P95 response (ms)"),
+			("error_rate_pct", "Float", "Error rate %"),
+			("status", "Select", "Status", {"options": "Pass\nPass with notes\nFail", "default": "Pass", "in_list_view": 1}),
+			("notes", "Text", "Notes"),
+		],
+	},
+	{
+		"name": "Healthcare Radiology Cad Finding",
+		"autoname": "naming_series:",
+		"naming_series": "CAD-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "CAD-.#####", "reqd": 1, "default": "CAD-.#####"}),
+			("diagnostic_report", "Link", "Diagnostic report", {"options": "Healthcare Diagnostic Report", "reqd": 1, "in_list_view": 1}),
+			("patient", "Link", "Patient", {"options": "Healthcare Patient", "reqd": 1}),
+			("finding_type", "Select", "Finding type", {"options": "Nodule\nMass\nFracture\nHemorrhage\nOther", "reqd": 1, "in_list_view": 1}),
+			("confidence_score", "Percent", "AI confidence", {"in_list_view": 1}),
+			("region", "Data", "Anatomical region"),
+			("severity", "Select", "Severity", {"options": "Low\nMedium\nHigh", "default": "Medium"}),
+			("review_status", "Select", "Review", {"options": "Pending\nConfirmed\nRejected", "default": "Pending", "in_list_view": 1}),
+			("model_version", "Data", "Model version"),
+			("company", "Link", "Company", {"options": "Company", "reqd": 1}),
+		],
+	},
+	{
+		"name": "Healthcare Certification Record",
+		"autoname": "naming_series:",
+		"naming_series": "CERT-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "CERT-.#####", "reqd": 1, "default": "CERT-.#####"}),
+			("certification_type", "Select", "Type", {"options": "HIMSS EMRAM\nJCI Digital\nISO 27001\nHIPAA attestation", "reqd": 1, "in_list_view": 1}),
+			("stage_or_level", "Data", "Stage / level", {"in_list_view": 1}),
+			("assessment_date", "Date", "Assessment date", {"reqd": 1}),
+			("valid_until", "Date", "Valid until"),
+			("status", "Select", "Status", {"options": "In Progress\nAchieved\nRenewal Due", "default": "Achieved", "in_list_view": 1}),
+			("evidence_summary", "Text", "Evidence summary"),
+			("company", "Link", "Company", {"options": "Company", "reqd": 1}),
+		],
+	},
+	{
+		"name": "Healthcare Pharmacy Delivery Request",
+		"autoname": "naming_series:",
+		"naming_series": "PDR-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "PDR-.#####", "reqd": 1, "default": "PDR-.#####"}),
+			("patient", "Link", "Patient", {"options": "Healthcare Patient", "reqd": 1, "in_list_view": 1}),
+			("medication_dispense", "Link", "Dispense", {"options": "Healthcare Medication Dispense"}),
+			("delivery_address", "Small Text", "Address", {"reqd": 1}),
+			("scheduled_datetime", "Datetime", "Scheduled", {"in_list_view": 1}),
+			("courier", "Data", "Courier"),
+			("status", "Select", "Status", {"options": "Requested\nPacked\nOut for delivery\nDelivered\nCancelled", "default": "Requested", "in_list_view": 1}),
+			("company", "Link", "Company", {"options": "Company", "reqd": 1}),
+			("branch", "Link", "Branch", {"options": "Branch", "reqd": 1}),
+		],
+	},
+	{
+		"name": "Healthcare Claim Denial Appeal",
+		"autoname": "naming_series:",
+		"naming_series": "CDA-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "CDA-.#####", "reqd": 1, "default": "CDA-.#####"}),
+			("insurance_claim", "Link", "Claim", {"options": "Healthcare Insurance Claim", "reqd": 1, "in_list_view": 1}),
+			("denial_reason", "Small Text", "Denial reason", {"reqd": 1}),
+			("appeal_level", "Select", "Level", {"options": "Level 1\nLevel 2\nExternal review", "default": "Level 1"}),
+			("submitted_date", "Date", "Submitted", {"in_list_view": 1}),
+			("status", "Select", "Status", {"options": "Draft\nSubmitted\nUnder Review\nApproved\nRejected", "default": "Draft", "in_list_view": 1}),
+			("appeal_notes", "Text", "Appeal notes"),
+			("company", "Link", "Company", {"options": "Company", "reqd": 1}),
+		],
+	},
+	{
+		"name": "Healthcare Teleradiology Case",
+		"autoname": "naming_series:",
+		"naming_series": "TLR-.#####",
+		"fields": [
+			("naming_series", "Select", "Series", {"options": "TLR-.#####", "reqd": 1, "default": "TLR-.#####"}),
+			("diagnostic_report", "Link", "Study", {"options": "Healthcare Diagnostic Report", "reqd": 1, "in_list_view": 1}),
+			("patient", "Link", "Patient", {"options": "Healthcare Patient", "reqd": 1}),
+			("referring_facility", "Data", "Referring facility"),
+			("remote_radiologist", "Link", "Remote radiologist", {"options": "Healthcare Practitioner"}),
+			("priority", "Select", "Priority", {"options": "Routine\nUrgent\nSTAT", "default": "Routine", "in_list_view": 1}),
+			("status", "Select", "Status", {"options": "Queued\nReading\nReported\nCancelled", "default": "Queued", "in_list_view": 1}),
+			("turnaround_hours", "Float", "TAT hours"),
+			("company", "Link", "Company", {"options": "Company", "reqd": 1}),
+		],
+	},
+]
