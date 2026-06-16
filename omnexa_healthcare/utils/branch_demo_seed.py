@@ -294,8 +294,17 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 		pluck="parent",
 	)
 	patients = list(set(patient_names))
+	demo_family_units = frappe.get_all(
+		"Healthcare Family Unit",
+		filters={"company": company, "branch": branch, "family_number": ["like", f"{DEMO_MARKER}%"]},
+		pluck="name",
+	)
 
 	delete_order = [
+		"Healthcare Family Risk Score",
+		"Healthcare Preventive Care Plan",
+		"Healthcare Family History",
+		"Healthcare Family Unit",
 		"Healthcare Transfusion Order",
 		"Healthcare Blood Unit",
 		"Healthcare Blood Donor",
@@ -354,10 +363,18 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 			meta = frappe.get_meta(dt)
 			if meta.has_field("patient") and patients:
 				names = frappe.get_all(dt, filters={**scope, "patient": ["in", patients]}, pluck="name")
+			elif meta.has_field("family_unit") and demo_family_units:
+				names = frappe.get_all(
+					dt, filters={**scope, "family_unit": ["in", demo_family_units]}, pluck="name"
+				)
 			else:
 				if meta.has_field("reporting_tag"):
 					extra["reporting_tag"] = REPORTING_TAG
-				if meta.has_field("donor_name"):
+				if meta.has_field("family_number"):
+					names = frappe.get_all(
+						dt, filters={**scope, "family_number": ["like", f"{DEMO_MARKER}%"]}, pluck="name"
+					)
+				elif meta.has_field("donor_name"):
 					names = frappe.get_all(dt, filters={**scope, "donor_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif meta.has_field("unit_number"):
 					names = frappe.get_all(dt, filters={**scope, "unit_number": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
@@ -451,6 +468,7 @@ class _HospitalDemoSeeder:
 			"dental_charts": self.stats.get("Healthcare Dental Chart Entry", 0),
 			"treatment_plans": self.stats.get("Healthcare Dental Treatment Plan", 0),
 			"follow_up_plans": self.stats.get("Healthcare Follow Up Plan", 0),
+			"family_units": self.stats.get("Healthcare Family Unit", 0),
 		}
 
 	def _bump(self, key: str, n: int = 1) -> None:

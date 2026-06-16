@@ -171,3 +171,19 @@ def healthcare_quality_corrective_action_query_conditions(user=None):
 
 def healthcare_infection_surveillance_case_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Infection Surveillance Case", user)
+
+
+def healthcare_family_unit_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Family Unit", user)
+
+
+def healthcare_family_history_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Family History", user)
+
+
+def healthcare_preventive_care_plan_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Preventive Care Plan", user)
+
+
+def healthcare_family_risk_score_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Family Risk Score", user)

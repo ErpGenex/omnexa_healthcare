@@ -1,0 +1,146 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"family_unit",
+		"patient",
+		"condition_category",
+		"condition_description",
+		"icd10_code",
+		"icd11_code",
+		"snomed_code",
+		"relative_relationship",
+		"age_at_onset",
+		"notes",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HFH-.#####",
+			"reqd": 1,
+			"default": "HFH-.#####"
+		},
+		{
+			"fieldname": "family_unit",
+			"fieldtype": "Link",
+			"label": "Family unit",
+			"options": "Healthcare Family Unit",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Member patient",
+			"options": "Healthcare Patient",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "condition_category",
+			"fieldtype": "Select",
+			"label": "Category",
+			"options": "Diabetes\nHypertension\nHeart Disease\nCancer\nGenetic Disorder\nPsychiatric\nChronic Other",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "condition_description",
+			"fieldtype": "Data",
+			"label": "Condition",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "icd10_code",
+			"fieldtype": "Data",
+			"label": "ICD-10"
+		},
+		{
+			"fieldname": "icd11_code",
+			"fieldtype": "Data",
+			"label": "ICD-11"
+		},
+		{
+			"fieldname": "snomed_code",
+			"fieldtype": "Data",
+			"label": "SNOMED"
+		},
+		{
+			"fieldname": "relative_relationship",
+			"fieldtype": "Select",
+			"label": "Relative",
+			"options": "Self\nFather\nMother\nSibling\nChild\nGrandparent\nOther",
+			"reqd": 1
+		},
+		{
+			"fieldname": "age_at_onset",
+			"fieldtype": "Int",
+			"label": "Age at onset"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Family History",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

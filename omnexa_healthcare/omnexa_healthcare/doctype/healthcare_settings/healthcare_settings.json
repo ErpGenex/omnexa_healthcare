@@ -47,6 +47,7 @@
 		"enable_quality_capa",
 		"enable_infection_surveillance",
 		"enable_icd11",
+		"enable_family_medicine",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -303,6 +304,12 @@
 			"fieldname": "enable_icd11",
 			"fieldtype": "Check",
 			"label": "Enable ICD-11 terminology"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_family_medicine",
+			"fieldtype": "Check",
+			"label": "Enable family medicine / household care"
 		},
 		{
 			"default": "1",

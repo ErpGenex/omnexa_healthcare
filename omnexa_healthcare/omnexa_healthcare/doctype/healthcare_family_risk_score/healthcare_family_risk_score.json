@@ -1,0 +1,142 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"family_unit",
+		"patient",
+		"assessment_date",
+		"cardiovascular_risk_score",
+		"diabetes_risk_score",
+		"overall_risk_level",
+		"risk_factors_json",
+		"recommendations",
+		"computed_by",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HRS-.#####",
+			"reqd": 1,
+			"default": "HRS-.#####"
+		},
+		{
+			"fieldname": "family_unit",
+			"fieldtype": "Link",
+			"label": "Family unit",
+			"options": "Healthcare Family Unit",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "assessment_date",
+			"fieldtype": "Date",
+			"label": "Assessment date",
+			"reqd": 1,
+			"in_list_view": 1,
+			"default": "Today"
+		},
+		{
+			"fieldname": "cardiovascular_risk_score",
+			"fieldtype": "Int",
+			"label": "Cardiovascular risk %",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "diabetes_risk_score",
+			"fieldtype": "Int",
+			"label": "Diabetes risk %",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "overall_risk_level",
+			"fieldtype": "Select",
+			"label": "Overall risk",
+			"options": "Low\nMedium\nHigh\nCritical",
+			"default": "Low",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "risk_factors_json",
+			"fieldtype": "Long Text",
+			"label": "Risk factors (JSON)"
+		},
+		{
+			"fieldname": "recommendations",
+			"fieldtype": "Text",
+			"label": "Recommendations"
+		},
+		{
+			"fieldname": "computed_by",
+			"fieldtype": "Link",
+			"label": "Computed by",
+			"options": "User"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Family Risk Score",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

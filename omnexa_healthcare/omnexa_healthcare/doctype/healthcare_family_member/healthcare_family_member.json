@@ -1,0 +1,70 @@
+{
+	"actions": [],
+	"autoname": "hash",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"patient",
+		"relationship",
+		"is_primary_contact",
+		"enrollment_date",
+		"notes"
+	],
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "relationship",
+			"fieldtype": "Select",
+			"label": "Relationship",
+			"options": "Head\nSpouse\nChild\nParent\nSibling\nGrandparent\nGrandchild\nOther",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "is_primary_contact",
+			"fieldtype": "Check",
+			"label": "Primary contact",
+			"default": "0",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "enrollment_date",
+			"fieldtype": "Date",
+			"label": "Enrollment date"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Family Member",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1,
+	"istable": 1,
+	"editable_grid": 1
+}

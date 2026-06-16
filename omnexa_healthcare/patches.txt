@@ -19,4 +19,5 @@ omnexa_healthcare.patches.v1_0.seed_gap_closure_wave2
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave3
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave4
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave5
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave6
 omnexa_healthcare.patches.v1_0.sync_healthcare_workspace_full

@@ -167,6 +167,10 @@ permission_query_conditions = {
 	"Healthcare Physician Settlement": "omnexa_healthcare.permissions.healthcare_physician_settlement_query_conditions",
 	"Healthcare Quality Corrective Action": "omnexa_healthcare.permissions.healthcare_quality_corrective_action_query_conditions",
 	"Healthcare Infection Surveillance Case": "omnexa_healthcare.permissions.healthcare_infection_surveillance_case_query_conditions",
+	"Healthcare Family Unit": "omnexa_healthcare.permissions.healthcare_family_unit_query_conditions",
+	"Healthcare Family History": "omnexa_healthcare.permissions.healthcare_family_history_query_conditions",
+	"Healthcare Preventive Care Plan": "omnexa_healthcare.permissions.healthcare_preventive_care_plan_query_conditions",
+	"Healthcare Family Risk Score": "omnexa_healthcare.permissions.healthcare_family_risk_score_query_conditions",
 }
 
 # DocType Class
@@ -241,6 +245,10 @@ _BRANCH_VALIDATE = [
 	"Healthcare Physician Settlement",
 	"Healthcare Quality Corrective Action",
 	"Healthcare Infection Surveillance Case",
+	"Healthcare Family Unit",
+	"Healthcare Family History",
+	"Healthcare Preventive Care Plan",
+	"Healthcare Family Risk Score",
 ]
 
 for _dt in _BRANCH_VALIDATE:

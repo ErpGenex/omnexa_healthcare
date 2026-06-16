@@ -256,6 +256,117 @@ def seed_world_class_gap_operations(seeder) -> None:
 		)
 
 	seeder.ctx["world_class_gap_seeded"] = True
+	seed_family_medicine_demo(seeder)
+
+
+def seed_family_medicine_demo(seeder) -> None:
+	if not _has_doctype("Healthcare Family Unit"):
+		return
+
+	from frappe.utils import add_days, add_months, today
+
+	from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER
+
+	company = seeder.company
+	branch = seeder.branch
+	patients = seeder.ctx.get("patients") or []
+	if len(patients) < 4:
+		return
+
+	branch_tag = frappe.scrub(branch).upper()[:12]
+	family_number = f"{DEMO_MARKER}{branch_tag}-FAM-001"
+	fm_practitioner = (seeder.ctx.get("practitioners") or {}).get("FM")
+
+	head = patients[0]
+	spouse = patients[1]
+	child_a = patients[3]
+	child_b = patients[7] if len(patients) > 7 else patients[2]
+
+	fu_name = frappe.db.get_value("Healthcare Family Unit", {"family_number": family_number}, "name")
+	if not fu_name:
+		fu = seeder._insert(
+			"Healthcare Family Unit",
+			{
+				"family_number": family_number,
+				"family_name": f"{DEMO_MARKER} Hassan Household",
+				"head_of_family": head,
+				"primary_care_practitioner": fm_practitioner,
+				"household_status": "Active",
+				"shared_genetic_risk_notes": "Type 2 diabetes and hypertension in first-degree relatives — enhanced screening.",
+				"company": company,
+				"branch": branch,
+				"members": [
+					{"patient": head, "relationship": "Head", "is_primary_contact": 1, "enrollment_date": today()},
+					{"patient": spouse, "relationship": "Spouse", "enrollment_date": today()},
+					{"patient": child_a, "relationship": "Child", "enrollment_date": today()},
+					{"patient": child_b, "relationship": "Child", "enrollment_date": today()},
+				],
+			},
+		)
+		fu_name = fu.name
+	else:
+		fu_name = fu_name
+
+	history_specs = [
+		("Diabetes", "Type 2 diabetes mellitus", "Father", "E11", "5A11"),
+		("Hypertension", "Essential hypertension", "Mother", "I10", "BA00"),
+		("Heart Disease", "Coronary artery disease", "Grandparent", "I25", ""),
+	]
+	for cat, desc, rel, icd10, icd11 in history_specs:
+		if frappe.db.exists(
+			"Healthcare Family History",
+			{"family_unit": fu_name, "condition_description": desc, "relative_relationship": rel},
+		):
+			continue
+		seeder._insert(
+			"Healthcare Family History",
+			{
+				"family_unit": fu_name,
+				"condition_category": cat,
+				"condition_description": desc,
+				"relative_relationship": rel,
+				"icd10_code": icd10,
+				"icd11_code": icd11 or None,
+				"age_at_onset": 52 if cat != "Heart Disease" else 68,
+				"company": company,
+				"branch": branch,
+			},
+		)
+
+	plan_title = f"{DEMO_MARKER} Annual preventive bundle"
+	plan_name = frappe.db.get_value(
+		"Healthcare Preventive Care Plan",
+		{"family_unit": fu_name, "plan_title": plan_title},
+		"name",
+	)
+	if not plan_name:
+		seeder._insert(
+			"Healthcare Preventive Care Plan",
+			{
+				"family_unit": fu_name,
+				"patient": head,
+				"plan_title": plan_title,
+				"status": "Active",
+				"start_date": today(),
+				"end_date": add_months(today(), 12),
+				"practitioner": fm_practitioner,
+				"company": company,
+				"branch": branch,
+				"items": [
+					{"screening_name": "HbA1c", "due_date": add_days(today(), 14), "status": "Due"},
+					{"screening_name": "Lipid panel", "due_date": add_days(today(), 30), "status": "Scheduled"},
+					{"screening_name": "Blood pressure check", "due_date": add_days(today(), -5), "status": "Overdue"},
+					{"screening_name": "Influenza vaccine", "due_date": add_days(today(), 60), "status": "Due"},
+				],
+			},
+		)
+
+	if not frappe.db.exists("Healthcare Family Risk Score", {"family_unit": fu_name}):
+		from omnexa_healthcare.api.family_risk_engine import compute_family_risk
+
+		compute_family_risk(fu_name, head)
+
+	seeder.ctx["family_medicine_demo_unit"] = fu_name
 
 
 def _has_doctype(name: str) -> bool:

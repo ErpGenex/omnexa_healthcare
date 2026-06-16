@@ -118,6 +118,17 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		],
 	),
 	(
+		"👨‍👩‍👧 Family Medicine",
+		[
+			("Page", "healthcare-family-medicine-dashboard", "Family Medicine Dashboard"),
+			("Page", "healthcare-family-tree", "Family Medical Tree"),
+			("DocType", "Healthcare Family Unit", "Family Units"),
+			("DocType", "Healthcare Family History", "Family History"),
+			("DocType", "Healthcare Preventive Care Plan", "Preventive Care Plans"),
+			("DocType", "Healthcare Family Risk Score", "Family Risk Scores"),
+		],
+	),
+	(
 		"🩸 Blood Bank · CSSD · QMS",
 		[
 			("DocType", "Healthcare Blood Donor", "Blood Donors"),

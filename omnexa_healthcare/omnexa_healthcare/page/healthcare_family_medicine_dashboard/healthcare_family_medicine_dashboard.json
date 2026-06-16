@@ -1,0 +1,23 @@
+{
+	"content": null,
+	"creation": "2026-06-06 00:00:00",
+	"docstatus": 0,
+	"doctype": "Page",
+	"idx": 0,
+	"modified": "2026-06-06 00:00:00",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-family-medicine-dashboard",
+	"page_name": "healthcare-family-medicine-dashboard",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Physician"},
+		{"role": "FM Physician"},
+		{"role": "Desk User"},
+		{"role": "Nursing User"}
+	],
+	"script": null,
+	"standard": "Yes",
+	"system_page": 0,
+	"title": "Family Medicine Dashboard"
+}

@@ -154,6 +154,19 @@ MATURITY_DOMAINS: dict[str, dict[str, Any]] = {
 			"omnexa_healthcare.api.quality_management",
 		],
 	},
+	"family_medicine": {
+		"weight": 5,
+		"checks": [
+			"Healthcare Family Unit",
+			"Healthcare Family History",
+			"Healthcare Preventive Care Plan",
+			"Healthcare Family Risk Score",
+			"healthcare-family-medicine-dashboard",
+			"healthcare-family-tree",
+			"omnexa_healthcare.api.family_unit",
+			"omnexa_healthcare.api.family_risk_engine",
+		],
+	},
 	"specialty_engine": {
 		"weight": 4,
 		"checks": ["Healthcare Specialty Module", "omnexa_healthcare.specialty_engine"],
@@ -329,6 +342,7 @@ def run_gap_analysis(maturity: dict) -> dict[str, Any]:
 		{"feature": "Physician compensation engine", "domain": "physician_compensation", "priority": "High", "status": "completed"},
 		{"feature": "Quality CAPA + infection surveillance", "domain": "quality_management", "priority": "High", "status": "completed"},
 		{"feature": "ICD-11 terminology + ICD-10 crosswalk", "domain": "interoperability", "priority": "High", "status": "completed"},
+		{"feature": "Family Medicine — household unit, genogram, risk engine", "domain": "family_medicine", "priority": "Critical", "status": "completed"},
 		{"feature": "World-class hospital demo seed (39 depts / 50 patients)", "domain": "hospital_management", "priority": "High", "status": "completed"},
 		{"feature": "15 specialty modules seeded", "domain": "specialty_engine", "priority": "High", "status": "completed"},
 		{"feature": "Installment billing & treatment packages", "domain": "billing", "priority": "High", "status": "completed"},
