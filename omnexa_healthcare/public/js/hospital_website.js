@@ -198,7 +198,9 @@
 		renderChrome() {
 			const cfg = this.config || {};
 			const name = cfg[this.nameField()] || cfg.hospital_name_ar || "Hospital";
-			const logo = cfg.logo ? `<img src="${this.esc(cfg.logo)}" alt="">` : "🏥";
+			const logo = cfg.logo
+				? `<img src="${this.esc(cfg.logo)}" alt="" onerror="this.replaceWith(document.createTextNode('🏥'))">`
+				: "🏥";
 			const suffix = this.querySuffix();
 			const nav = [
 				{ href: `/hospital${suffix}`, key: "home", page: "home" },
@@ -263,13 +265,16 @@
 		async init_home() {
 			const cfg = this.config;
 			const suffix = this.querySuffix();
+			const hospitalName = cfg[this.nameField()] || cfg.hospital_name_ar || "Hospital";
 			const hero = document.getElementById("hc-home-hero");
 			if (hero) {
-				const heroImg = this.esc(cfg.hero_image || "");
+				const heroImg =
+					cfg.hero_image ||
+					"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80";
 				const heroText = cfg[this.textField("hero_text")] || "";
 				hero.className = "hc-hero hc-hero-split";
 				hero.innerHTML = `
-					<div class="hc-hero-visual"><img src="${heroImg}" alt=""></div>
+					<div class="hc-hero-visual"><img src="${this.esc(heroImg)}" alt="${this.esc(hospitalName)}" loading="eager"></div>
 					<div class="hc-hero-copy">
 						<h1>${this.esc(cfg[this.textField("tagline")] || "")}</h1>
 						<p>${this.esc(heroText)}</p>

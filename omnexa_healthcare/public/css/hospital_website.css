@@ -1,5 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap");
 
+/* Hide default Frappe website chrome on /hospital/* public pages */
+body:has(.hc-site) nav.navbar,
+body:has(.hc-site) .web-footer,
+body:has(.hc-site) .page-breadcrumbs,
+body:has(.hc-site) .page-header-wrapper,
+body:has(.hc-site) .page-footer {
+	display: none !important;
+}
+
+body:has(.hc-site) .page-content-wrapper {
+	padding: 0;
+	margin: 0;
+}
+
+body:has(.hc-site) main.container,
+body:has(.hc-site) main.my-4 {
+	max-width: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body:has(.hc-site) .page_content {
+	padding: 0;
+	margin: 0;
+}
+
 .hc-site {
 	--hc-primary: #003366;
 	--hc-primary-light: #0a4f8c;
