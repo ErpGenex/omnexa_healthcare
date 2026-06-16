@@ -158,6 +158,15 @@ permission_query_conditions = {
 	"Healthcare Surgical Case": "omnexa_healthcare.permissions.healthcare_surgical_case_query_conditions",
 	"Healthcare Companion Stay": "omnexa_healthcare.permissions.healthcare_companion_stay_query_conditions",
 	"Healthcare Critical Care Monitoring": "omnexa_healthcare.permissions.healthcare_critical_care_monitoring_query_conditions",
+	"Healthcare Blood Donor": "omnexa_healthcare.permissions.healthcare_blood_donor_query_conditions",
+	"Healthcare Blood Unit": "omnexa_healthcare.permissions.healthcare_blood_unit_query_conditions",
+	"Healthcare Transfusion Order": "omnexa_healthcare.permissions.healthcare_transfusion_order_query_conditions",
+	"Healthcare Cssd Instrument": "omnexa_healthcare.permissions.healthcare_cssd_instrument_query_conditions",
+	"Healthcare Sterilization Cycle": "omnexa_healthcare.permissions.healthcare_sterilization_cycle_query_conditions",
+	"Healthcare Physician Compensation Rule": "omnexa_healthcare.permissions.healthcare_physician_compensation_rule_query_conditions",
+	"Healthcare Physician Settlement": "omnexa_healthcare.permissions.healthcare_physician_settlement_query_conditions",
+	"Healthcare Quality Corrective Action": "omnexa_healthcare.permissions.healthcare_quality_corrective_action_query_conditions",
+	"Healthcare Infection Surveillance Case": "omnexa_healthcare.permissions.healthcare_infection_surveillance_case_query_conditions",
 }
 
 # DocType Class
@@ -223,6 +232,15 @@ _BRANCH_VALIDATE = [
 	"Healthcare Ambient Session",
 	"Healthcare Voice Dictation",
 	"Healthcare X12 Transaction",
+	"Healthcare Blood Donor",
+	"Healthcare Blood Unit",
+	"Healthcare Transfusion Order",
+	"Healthcare Cssd Instrument",
+	"Healthcare Sterilization Cycle",
+	"Healthcare Physician Compensation Rule",
+	"Healthcare Physician Settlement",
+	"Healthcare Quality Corrective Action",
+	"Healthcare Infection Surveillance Case",
 ]
 
 for _dt in _BRANCH_VALIDATE:

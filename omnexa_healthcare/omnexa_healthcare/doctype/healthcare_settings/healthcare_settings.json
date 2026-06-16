@@ -46,6 +46,7 @@
 		"enable_physician_compensation",
 		"enable_quality_capa",
 		"enable_infection_surveillance",
+		"enable_icd11",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -296,6 +297,12 @@
 			"fieldname": "enable_infection_surveillance",
 			"fieldtype": "Check",
 			"label": "Enable infection surveillance"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_icd11",
+			"fieldtype": "Check",
+			"label": "Enable ICD-11 terminology"
 		},
 		{
 			"default": "1",

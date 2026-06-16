@@ -1,0 +1,89 @@
+{
+	"actions": [],
+	"autoname": "field:code",
+	"creation": "2026-06-16 12:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"code",
+		"description",
+		"chapter",
+		"icd10_map",
+		"is_active"
+	],
+	"fields": [
+		{
+			"fieldname": "code",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "ICD-11 Code",
+			"reqd": 1,
+			"unique": 1
+		},
+		{
+			"fieldname": "description",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Description",
+			"reqd": 1
+		},
+		{
+			"fieldname": "chapter",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Chapter"
+		},
+		{
+			"description": "Equivalent ICD-10 code when mapped",
+			"fieldname": "icd10_map",
+			"fieldtype": "Data",
+			"label": "ICD-10 map (optional)"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Active"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-16 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Icd11 Code",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "System Manager",
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Company Admin",
+			"write": 1
+		},
+		{
+			"create": 1,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Desk User",
+			"write": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

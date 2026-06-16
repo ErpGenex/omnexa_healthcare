@@ -7,6 +7,7 @@
 	"field_order": [
 		"rank",
 		"icd10_code",
+		"icd11_code",
 		"description",
 		"column_break_omnexa_1",
 		"clinical_status",
@@ -29,6 +30,13 @@
 			"in_list_view": 1,
 			"label": "ICD-10 Code",
 			"description": "WHO ICD-10 code when coded; optional for narrative-only"
+		},
+		{
+			"fieldname": "icd11_code",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "ICD-11 Code",
+			"description": "WHO ICD-11 MMS code when coded"
 		},
 		{
 			"fieldname": "description",

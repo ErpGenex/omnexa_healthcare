@@ -62,6 +62,13 @@ def validate_icd10_code(code: str | None) -> None:
 		frappe.throw(_("ICD-10 code {0} is not in master or inactive.").format(code), title=_("ICD-10"))
 
 
+def validate_icd11_code(code: str | None) -> None:
+	if not code:
+		return
+	if not frappe.db.exists("Healthcare Icd11 Code", {"code": code, "is_active": 1}):
+		frappe.throw(_("ICD-11 code {0} is not in master or inactive.").format(code), title=_("ICD-11"))
+
+
 def _specialty_form(specialty: str | None) -> dict:
 	if not specialty:
 		return {}

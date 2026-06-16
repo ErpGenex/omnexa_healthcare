@@ -124,7 +124,40 @@ MATURITY_DOMAINS: dict[str, dict[str, Any]] = {
 		],
 	},
 	"ai_readiness": {"weight": 5, "checks": ["Healthcare Clinical Ai Insight", "Healthcare Ambient Session", "omnexa_healthcare.api.ai_clinical", "omnexa_healthcare.api.llm_clinical", "omnexa_healthcare.api.ai_scheduling"]},
-	"interoperability": {"weight": 7, "checks": ["omnexa_healthcare.api.fhir_rest", "omnexa_healthcare.api.hl7_messaging", "Healthcare X12 Transaction"]},
+	"interoperability": {"weight": 7, "checks": ["omnexa_healthcare.api.fhir_rest", "omnexa_healthcare.api.hl7_messaging", "Healthcare X12 Transaction", "Healthcare Icd11 Code", "omnexa_healthcare.api.icd11"]},
+	"blood_bank": {
+		"weight": 4,
+		"checks": [
+			"Healthcare Blood Donor",
+			"Healthcare Blood Unit",
+			"Healthcare Transfusion Order",
+			"omnexa_healthcare.api.blood_bank",
+		],
+	},
+	"cssd": {
+		"weight": 3,
+		"checks": ["Healthcare Cssd Instrument", "Healthcare Sterilization Cycle"],
+	},
+	"physician_compensation": {
+		"weight": 3,
+		"checks": [
+			"Healthcare Physician Compensation Rule",
+			"Healthcare Physician Settlement",
+			"omnexa_healthcare.api.physician_compensation",
+		],
+	},
+	"quality_management": {
+		"weight": 4,
+		"checks": [
+			"Healthcare Quality Corrective Action",
+			"Healthcare Infection Surveillance Case",
+			"omnexa_healthcare.api.quality_management",
+		],
+	},
+	"specialty_engine": {
+		"weight": 4,
+		"checks": ["Healthcare Specialty Module", "omnexa_healthcare.specialty_engine"],
+	},
 }
 
 
@@ -290,6 +323,13 @@ def run_gap_analysis(maturity: dict) -> dict[str, Any]:
 		{"feature": "Real-time PACS DICOM streaming", "domain": "radiology", "priority": "High", "status": "completed"},
 		{"feature": "AI clinical documentation (production LLM)", "domain": "ai_readiness", "priority": "Medium", "status": "completed"},
 		{"feature": "Patient journey automation (SMS/WhatsApp)", "domain": "patient_portal", "priority": "High", "status": "completed"},
+		{"feature": "29 specialty modules (world-class hospital)", "domain": "specialty_engine", "priority": "High", "status": "completed"},
+		{"feature": "Blood bank module (donor, unit, transfusion)", "domain": "blood_bank", "priority": "Critical", "status": "completed"},
+		{"feature": "CSSD sterilization tracking", "domain": "cssd", "priority": "Critical", "status": "completed"},
+		{"feature": "Physician compensation engine", "domain": "physician_compensation", "priority": "High", "status": "completed"},
+		{"feature": "Quality CAPA + infection surveillance", "domain": "quality_management", "priority": "High", "status": "completed"},
+		{"feature": "ICD-11 terminology + ICD-10 crosswalk", "domain": "interoperability", "priority": "High", "status": "completed"},
+		{"feature": "World-class hospital demo seed (39 depts / 50 patients)", "domain": "hospital_management", "priority": "High", "status": "completed"},
 		{"feature": "15 specialty modules seeded", "domain": "specialty_engine", "priority": "High", "status": "completed"},
 		{"feature": "Installment billing & treatment packages", "domain": "billing", "priority": "High", "status": "completed"},
 		{"feature": "HIPAA/GDPR evidence pack", "domain": "security", "priority": "High", "status": "completed"},

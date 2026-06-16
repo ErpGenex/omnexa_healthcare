@@ -57,6 +57,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Service Catalog", "Service Catalog"),
 			("DocType", "Healthcare Consultation Fee Rule", "Consultation Fees"),
 			("DocType", "Healthcare Icd10 Code", "ICD-10 Codes"),
+			("DocType", "Healthcare Icd11 Code", "ICD-11 Codes"),
 			("DocType", "Healthcare Cpt Code", "CPT Codes"),
 			("DocType", "Healthcare Appointment Waitlist", "Appointment Waitlist"),
 			("DocType", "Healthcare Telehealth Session", "Telehealth Sessions"),
@@ -114,6 +115,20 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Episode Of Care", "Episode of Care"),
 			("DocType", "Healthcare Procedure Order", "Procedure Order"),
 			("DocType", "Healthcare In Basket Item", "In Basket Items"),
+		],
+	),
+	(
+		"🩸 Blood Bank · CSSD · QMS",
+		[
+			("DocType", "Healthcare Blood Donor", "Blood Donors"),
+			("DocType", "Healthcare Blood Unit", "Blood Units"),
+			("DocType", "Healthcare Transfusion Order", "Transfusion Orders"),
+			("DocType", "Healthcare Cssd Instrument", "CSSD Instruments"),
+			("DocType", "Healthcare Sterilization Cycle", "Sterilization Cycles"),
+			("DocType", "Healthcare Physician Compensation Rule", "Compensation Rules"),
+			("DocType", "Healthcare Physician Settlement", "Physician Settlements"),
+			("DocType", "Healthcare Quality Corrective Action", "Quality CAPA"),
+			("DocType", "Healthcare Infection Surveillance Case", "Infection Surveillance"),
 		],
 	),
 	(

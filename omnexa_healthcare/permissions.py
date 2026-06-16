@@ -135,3 +135,39 @@ def healthcare_companion_stay_query_conditions(user=None):
 
 def healthcare_critical_care_monitoring_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Critical Care Monitoring", user)
+
+
+def healthcare_blood_donor_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Blood Donor", user)
+
+
+def healthcare_blood_unit_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Blood Unit", user)
+
+
+def healthcare_transfusion_order_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Transfusion Order", user)
+
+
+def healthcare_cssd_instrument_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Cssd Instrument", user)
+
+
+def healthcare_sterilization_cycle_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Sterilization Cycle", user)
+
+
+def healthcare_physician_compensation_rule_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Physician Compensation Rule", user)
+
+
+def healthcare_physician_settlement_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Physician Settlement", user)
+
+
+def healthcare_quality_corrective_action_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Quality Corrective Action", user)
+
+
+def healthcare_infection_surveillance_case_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Infection Surveillance Case", user)
