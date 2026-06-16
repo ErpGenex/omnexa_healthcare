@@ -1,0 +1,125 @@
+{
+	"actions": [],
+	"autoname": "field:rule_code",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"rule_code",
+		"practitioner",
+		"compensation_model",
+		"share_percent",
+		"fixed_amount",
+		"effective_from",
+		"effective_to",
+		"is_active",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "rule_code",
+			"fieldtype": "Data",
+			"label": "Rule code",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "compensation_model",
+			"fieldtype": "Select",
+			"label": "Model",
+			"options": "Fixed Salary\nRevenue Share\nPer Visit\nPer Procedure\nPer Surgery\nHourly\nTiered Commission",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "share_percent",
+			"fieldtype": "Percent",
+			"label": "Share %"
+		},
+		{
+			"fieldname": "fixed_amount",
+			"fieldtype": "Currency",
+			"label": "Fixed amount"
+		},
+		{
+			"fieldname": "effective_from",
+			"fieldtype": "Date",
+			"label": "Effective from",
+			"reqd": 1
+		},
+		{
+			"fieldname": "effective_to",
+			"fieldtype": "Date",
+			"label": "Effective to"
+		},
+		{
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active",
+			"default": "1",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Physician Compensation Rule",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

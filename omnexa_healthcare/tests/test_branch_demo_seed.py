@@ -26,23 +26,23 @@ class TestHealthcareBranchDemoSeed(FrappeTestCase):
 		result = seed_healthcare_hospital_demo(
 			self.company,
 			self.branch,
-			patients=20,
+			patients=30,
 			force=1,
 			include_financial=0,
 		)
 		self.assertTrue(result.get("ok"))
-		self.assertGreaterEqual(result.get("published_services", 0), 8)
-		self.assertGreaterEqual(result.get("web_bookings", 0), 10)
-		self.assertGreaterEqual(result.get("specialty_modules", 0), 15)
+		self.assertGreaterEqual(result.get("published_services", 0), 18)
+		self.assertGreaterEqual(result.get("web_bookings", 0), 20)
+		self.assertGreaterEqual(result.get("specialty_modules", 0), 28)
 		self.assertGreaterEqual(result.get("dental_charts", 0), 5)
 		self.assertGreaterEqual(result.get("treatment_plans", 0), 3)
-		self.assertGreaterEqual(result.get("follow_up_plans", 0), 12)
+		self.assertGreaterEqual(result.get("follow_up_plans", 0), 20)
 
 		published = frappe.db.count(
 			"Healthcare Service Catalog",
 			{"company": self.company, "branch": self.branch, "publish_on_website": 1},
 		)
-		self.assertGreaterEqual(published, 8)
+		self.assertGreaterEqual(published, 18)
 
 		web_appts = frappe.db.count(
 			"Healthcare Appointment",

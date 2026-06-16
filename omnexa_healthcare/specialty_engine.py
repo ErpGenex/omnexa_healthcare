@@ -56,6 +56,19 @@ DEFAULT_SPECIALTY_MODULES: list[dict] = [
 	{"module_code": "neurology", "module_name": "Neurology", "specialty_name": "Neurology", "chart_type": "none", "encounter_sections": ["Neuro Exam", "Imaging", "Plan"]},
 	{"module_code": "urology", "module_name": "Urology", "specialty_name": "Urology", "chart_type": "none", "encounter_sections": ["History", "Exam", "Plan"]},
 	{"module_code": "gastroenterology", "module_name": "Gastroenterology", "specialty_name": "Gastroenterology", "chart_type": "none", "encounter_sections": ["GI History", "Exam", "Endoscopy Plan"]},
+	{"module_code": "family_medicine", "module_name": "Family Medicine", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["SOAP", "Preventive Care", "Plan"]},
+	{"module_code": "nephrology", "module_name": "Nephrology", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Renal History", "Dialysis Plan", "Labs"]},
+	{"module_code": "pulmonology", "module_name": "Pulmonology", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Respiratory History", "PFT", "Plan"]},
+	{"module_code": "endocrinology", "module_name": "Endocrinology", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Endocrine History", "Labs", "Plan"]},
+	{"module_code": "rheumatology", "module_name": "Rheumatology", "specialty_name": "General Medicine", "chart_type": "body_map", "encounter_sections": ["Joint History", "Exam", "DMARD Plan"]},
+	{"module_code": "infectious_diseases", "module_name": "Infectious Diseases", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Exposure History", "Isolation", "Antimicrobial Plan"]},
+	{"module_code": "speech_therapy", "module_name": "Speech Therapy", "specialty_name": "Physiotherapy", "chart_type": "none", "encounter_sections": ["Assessment", "Therapy Plan", "Progress"]},
+	{"module_code": "occupational_therapy", "module_name": "Occupational Therapy", "specialty_name": "Physiotherapy", "chart_type": "none", "encounter_sections": ["ADL Assessment", "Goals", "Home Program"]},
+	{"module_code": "dialysis", "module_name": "Dialysis Center", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Access Review", "Session Plan", "Complications"]},
+	{"module_code": "fertility", "module_name": "Fertility & IVF", "specialty_name": "Gynecology", "chart_type": "none", "encounter_sections": ["Cycle Day", "Protocol", "Embryology Notes"]},
+	{"module_code": "neonatology", "module_name": "Neonatology", "specialty_name": "Pediatrics", "chart_type": "none", "encounter_sections": ["Gestational Age", "NICU Vitals", "Feeding Plan"]},
+	{"module_code": "anesthesia", "module_name": "Anesthesia", "specialty_name": "Surgery", "chart_type": "none", "encounter_sections": ["ASA Class", "Airway", "Anesthesia Plan"]},
+	{"module_code": "emergency_medicine", "module_name": "Emergency Medicine", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Triage", "Primary Survey", "Disposition"]},
 ]
 
 

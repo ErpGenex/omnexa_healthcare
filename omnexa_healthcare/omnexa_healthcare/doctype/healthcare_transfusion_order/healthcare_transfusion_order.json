@@ -1,0 +1,129 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"admission",
+		"blood_unit",
+		"cross_match_result",
+		"ordered_by",
+		"status",
+		"transfusion_datetime",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "TRF-.#####",
+			"reqd": 1,
+			"default": "TRF-.#####"
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission"
+		},
+		{
+			"fieldname": "blood_unit",
+			"fieldtype": "Link",
+			"label": "Blood unit",
+			"options": "Healthcare Blood Unit",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "cross_match_result",
+			"fieldtype": "Select",
+			"label": "Cross match",
+			"options": "Pending\nCompatible\nIncompatible",
+			"default": "Pending",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "ordered_by",
+			"fieldtype": "Link",
+			"label": "Ordered by",
+			"options": "Healthcare Practitioner"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nCross Match\nApproved\nTransfused\nCancelled",
+			"default": "Draft",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "transfusion_datetime",
+			"fieldtype": "Datetime",
+			"label": "Transfusion time"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Transfusion Order",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

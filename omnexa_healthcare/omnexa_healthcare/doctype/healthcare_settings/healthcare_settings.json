@@ -40,6 +40,12 @@
 		"enable_fcm_push",
 		"fcm_webhook_url",
 		"enable_radiology_cad",
+		"world_class_section",
+		"enable_blood_bank",
+		"enable_cssd",
+		"enable_physician_compensation",
+		"enable_quality_capa",
+		"enable_infection_surveillance",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -255,6 +261,41 @@
 			"fieldname": "enable_radiology_cad",
 			"fieldtype": "Check",
 			"label": "Enable radiology AI CAD"
+		},
+		{
+			"fieldname": "world_class_section",
+			"fieldtype": "Section Break",
+			"label": "World-class hospital modules"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_blood_bank",
+			"fieldtype": "Check",
+			"label": "Enable blood bank"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_cssd",
+			"fieldtype": "Check",
+			"label": "Enable CSSD / sterilization"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_physician_compensation",
+			"fieldtype": "Check",
+			"label": "Enable physician compensation engine"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_quality_capa",
+			"fieldtype": "Check",
+			"label": "Enable quality CAPA"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_infection_surveillance",
+			"fieldtype": "Check",
+			"label": "Enable infection surveillance"
 		},
 		{
 			"default": "1",

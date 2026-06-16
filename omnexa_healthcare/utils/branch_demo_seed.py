@@ -1,7 +1,7 @@
 # Copyright (c) 2026, Omnexa and contributors
 # License: MIT
 
-"""Branch-scoped multi-specialty hospital demo — 20 patients, all departments."""
+"""Branch-scoped multi-specialty hospital demo — world-class full hospital simulation."""
 
 from __future__ import annotations
 
@@ -11,50 +11,82 @@ import frappe
 from frappe import _
 from frappe.utils import add_days, cint, flt, getdate, now_datetime, today
 
+from omnexa_healthcare.world_class_demo_catalog import (
+	CLINIC_ROTATION,
+	DEFAULT_DEMO_PATIENTS,
+	DEPARTMENT_WEB_ICONS,
+	DEPARTMENTS,
+	MAX_DEMO_PATIENTS,
+	PATIENT_ROSTER,
+	PRACTITIONERS,
+	SPECIALTY_LABEL_BY_CODE,
+	WEB_SERVICES,
+)
+from omnexa_healthcare.follow_up_templates import FOLLOW_UP_PLAN_TEMPLATES, MULTI_VISIT_MODULE_CODES
+from omnexa_healthcare.world_class_demo_operations import seed_world_class_gap_operations
+
 DEMO_MARKER = "DEMO-HC-"
 REPORTING_TAG = "DEMO-HC"
 
-DEPARTMENTS: list[tuple[str, str, str]] = [
-	("OPD", "Outpatient", "Clinic"),
-	("CARD", "Cardiology", "Clinic"),
-	("PED", "Pediatrics", "Clinic"),
-	("ORT", "Orthopedics", "Clinic"),
-	("DER", "Dermatology", "Clinic"),
-	("DEN", "Dental Center", "Clinic"),
-	("RAD", "Radiology", "Service Unit"),
-	("LAB", "Laboratory", "Service Unit"),
-	("PHM", "Pharmacy", "Pharmacy"),
-	("ER", "Emergency", "Emergency"),
-	("IPD", "Inpatient Ward", "Ward"),
-	("ICU", "Intensive Care Unit", "ICU"),
-	("NICU", "Neonatal ICU (Yellow Nursery)", "NICU"),
-	("CMP", "Companion Lodging", "Companion Ward"),
-	("SUR", "Surgery", "Service Unit"),
+MODULE_CODES = [
+	"general_medicine",
+	"dental",
+	"cardiology",
+	"pediatrics",
+	"dermatology",
+	"ophthalmology",
+	"orthopedics",
+	"ent",
+	"gynecology",
+	"surgery",
+	"psychiatry",
+	"physiotherapy",
+	"oncology",
+	"neurology",
+	"urology",
+	"gastroenterology",
+	"family_medicine",
+	"nephrology",
+	"pulmonology",
+	"endocrinology",
+	"rheumatology",
+	"infectious_diseases",
+	"speech_therapy",
+	"occupational_therapy",
+	"dialysis",
+	"fertility",
+	"neonatology",
+	"anesthesia",
+	"emergency_medicine",
 ]
 
-PRACTITIONERS: list[tuple[str, str, str]] = [
-	("GEN", "Dr. Nadia Farouk", "General Medicine"),
-	("CAR", "Dr. Omar Khalil", "Cardiology"),
-	("PED", "Dr. Sara Mahmoud", "Pediatrics"),
-	("ORT", "Dr. Hisham Nabil", "Orthopedics"),
-	("DER", "Dr. Laila Samir", "Dermatology"),
-	("DEN", "Dr. Yasmine Fathy", "Dental"),
-	("ENT", "Dr. Karim Nasr", "ENT"),
-	("GYN", "Dr. Hala Refaat", "Gynecology"),
-	("RAD", "Dr. Youssef Anwar", "Radiology"),
-	("LAB", "Dr. Mona Adel", "Laboratory"),
-]
+MODULE_PRACTITIONER_KEYS: dict[str, str] = {
+	"orthopedics": "ORT",
+	"gynecology": "OBG",
+	"dental": "DEN",
+	"physiotherapy": "PTH",
+	"oncology": "ONC",
+	"cardiology": "CAR",
+	"psychiatry": "PSY",
+	"pediatrics": "PED",
+	"surgery": "SUR",
+	"dermatology": "DER",
+	"neurology": "NEU",
+	"gastroenterology": "GAS",
+	"ophthalmology": "OPH",
+	"urology": "URO",
+}
 
-SPECIALTY_LABEL_BY_CODE: dict[str, str] = {spec: label for spec, _name, label in PRACTITIONERS}
+_MULTI_VISIT_MODULES = [code for code in MODULE_CODES if code in MULTI_VISIT_MODULE_CODES]
 
-CLINIC_ROTATION: list[tuple[str, str, str]] = [
-	("OPD", "GEN", "General Medicine"),
-	("CARD", "CAR", "Cardiology"),
-	("PED", "PED", "Pediatrics"),
-	("ORT", "ORT", "Orthopedics"),
-	("DER", "DER", "Dermatology"),
-	("DEN", "DEN", "Dental"),
-]
+DEMO_FOLLOW_UP_ASSIGNMENTS: list[tuple[int, str, str, str]] = []
+for idx in range(min(len(PATIENT_ROSTER), 35)):
+	module_code = _MULTI_VISIT_MODULES[idx % len(_MULTI_VISIT_MODULES)]
+	cfg = FOLLOW_UP_PLAN_TEMPLATES[module_code]
+	plan_types = cfg.get("plan_types") or [cfg.get("default_plan_type")]
+	plan_type = plan_types[idx % len(plan_types)]
+	pr_key = MODULE_PRACTITIONER_KEYS.get(module_code, "GEN")
+	DEMO_FOLLOW_UP_ASSIGNMENTS.append((idx % len(PATIENT_ROSTER), module_code, plan_type, pr_key))
 
 DENTAL_DEMO_TEETH: list[tuple[str, str, str]] = [
 	("11", "O", "caries"),
@@ -62,30 +94,6 @@ DENTAL_DEMO_TEETH: list[tuple[str, str, str]] = [
 	("26", "D", "crown"),
 	("36", "Full", "root_canal"),
 	("46", "B", "healthy"),
-]
-
-# patient_index, module_code, plan_type, practitioner_key
-DEMO_FOLLOW_UP_ASSIGNMENTS: list[tuple[int, str, str, str]] = [
-	(0, "orthopedics", "rehabilitation", "ORT"),
-	(1, "gynecology", "antenatal", "GYN"),
-	(2, "physiotherapy", "physiotherapy", "ORT"),
-	(3, "oncology", "chemotherapy", "GEN"),
-	(4, "cardiology", "chronic_care", "CAR"),
-	(5, "surgery", "post_op", "GEN"),
-	(6, "pediatrics", "chronic_care", "PED"),
-	(7, "dermatology", "dermatology_course", "DER"),
-	(8, "neurology", "chronic_care", "GEN"),
-	(9, "gastroenterology", "chronic_care", "GEN"),
-	(10, "ophthalmology", "post_op", "GEN"),
-	(11, "urology", "post_op", "GEN"),
-	(12, "psychiatry", "psychotherapy", "GEN"),
-	(13, "dental", "dental", "DEN"),
-	(14, "orthopedics", "post_op", "ORT"),
-	(15, "gynecology", "postnatal", "GYN"),
-	(16, "cardiology", "chronic_care", "CAR"),
-	(17, "physiotherapy", "physiotherapy", "ORT"),
-	(18, "oncology", "chemotherapy", "GEN"),
-	(19, "surgery", "post_op", "GEN"),
 ]
 
 TREATMENT_PACKAGES: list[tuple[str, str, str, float, list[tuple[str, float]]]] = [
@@ -110,29 +118,6 @@ TREATMENT_PACKAGES: list[tuple[str, str, str, float, list[tuple[str, float]]]] =
 		1200.0,
 		[("ECG", 400.0), ("Echo", 800.0)],
 	),
-]
-
-PATIENT_ROSTER: list[tuple[str, str, str, int]] = [
-	("Ahmed", "Hassan", "male", 1982),
-	("Fatma", "Ali", "female", 1990),
-	("Mohamed", "Ibrahim", "male", 1975),
-	("Nour", "Said", "female", 2005),
-	("Khaled", "Mostafa", "male", 1968),
-	("Mariam", "Youssef", "female", 1988),
-	("Tarek", "Fouad", "male", 1995),
-	("Hana", "Karim", "female", 2010),
-	("Yasser", "Hamdy", "male", 1979),
-	("Dina", "Ashraf", "female", 1993),
-	("Samir", "Lotfy", "male", 1965),
-	("Rania", "Ezz", "female", 1986),
-	("Hossam", "Gamal", "male", 2000),
-	("Salma", "Reda", "female", 1972),
-	("Amr", "Zaki", "male", 1998),
-	("Nada", "Hesham", "female", 2008),
-	("Walid", "Osman", "male", 1980),
-	("Heba", "Magdy", "female", 1991),
-	("Karim", "Badr", "male", 1970),
-	("Layla", "Nasser", "female", 1984),
 ]
 
 PHARMACY_ITEMS: list[tuple[str, str, float]] = [
@@ -204,21 +189,6 @@ ICD10_SAMPLES = [
 	("K21.9", "Gastro-esophageal reflux disease"),
 ]
 
-WEB_SERVICES: list[tuple[str, str, str, str, float, str]] = [
-	("CONS-GEN", "General Medicine Consultation", "GEN", "OPD", 350.0, "استشارة طب عام — حجز عبر الموقع"),
-	("CONS-CARD", "Cardiology Consultation", "CAR", "CARD", 500.0, "استشارة قلب — حجز عبر الموقع"),
-	("CONS-PED", "Pediatrics Consultation", "PED", "PED", 300.0, "عيادة أطفال — حجز عبر الموقع"),
-	("CONS-ORT", "Orthopedics Consultation", "ORT", "ORT", 400.0, "عظام ومفاصل — حجز عبر الموقع"),
-	("CONS-DER", "Dermatology Consultation", "DER", "DER", 350.0, "جلدية — حجز عبر الموقع"),
-	("CONS-DEN", "Dental Consultation", "DEN", "DEN", 400.0, "عيادة أسنان — حجز عبر الموقع"),
-	("CONS-ENT", "ENT Consultation", "ENT", "OPD", 380.0, "أنف وأذن وحنجرة — حجز عبر الموقع"),
-	("CONS-GYN", "Gynecology Consultation", "GYN", "OPD", 420.0, "نساء وولادة — حجز عبر الموقع"),
-	("PKG-DENTAL", "Dental Checkup Package", "DEN", "DEN", 500.0, "باقة فحص وتنظيف أسنان"),
-	("LAB-CBC", "CBC Laboratory Panel", "LAB", "LAB", 250.0, "تحليل صورة دم كاملة"),
-	("RAD-CXR", "Chest X-Ray", "RAD", "RAD", 450.0, "أشعة صدر"),
-	("TEL-FU", "Telehealth Follow-up", "GEN", "OPD", 200.0, "متابعة عن بُعد"),
-]
-
 WEB_BOOKING_STATUSES: list[tuple[str, str, int]] = [
 	("Scheduled", "Paid", 5),
 	("Scheduled", "Unpaid", 4),
@@ -232,13 +202,25 @@ WEB_BOOKING_STATUSES: list[tuple[str, str, int]] = [
 	("Completed", "Paid", -4),
 	("Scheduled", "Partially Paid", 14),
 	("Scheduled", "Unpaid", 21),
+	("Scheduled", "Paid", 3),
+	("Scheduled", "Unpaid", 6),
+	("Arrived", "Paid", 1),
+	("Completed", "Paid", -5),
+	("Scheduled", "Paid", 8),
+	("Scheduled", "Unpaid", 11),
+	("Completed", "Paid", -6),
+	("Scheduled", "Partially Paid", 15),
+	("Scheduled", "Paid", 2),
+	("Scheduled", "Unpaid", 9),
+	("Arrived", "Unpaid", 0),
+	("Completed", "Paid", -7),
 ]
 
 
 def seed_healthcare_hospital_demo(
 	company: str,
 	branch: str,
-	patients: int = 20,
+	patients: int = DEFAULT_DEMO_PATIENTS,
 	force: int = 0,
 	include_financial: int = 1,
 ) -> dict:
@@ -248,7 +230,7 @@ def seed_healthcare_hospital_demo(
 	if frappe.db.get_value("Branch", branch, "company") != company:
 		frappe.throw(_("Branch does not belong to company"))
 
-	patient_count = max(1, min(50, cint(patients) or 20))
+	patient_count = max(1, min(MAX_DEMO_PATIENTS, cint(patients) or DEFAULT_DEMO_PATIENTS))
 	facility_key = f"{company}-{branch}-Hospital"
 	if cint(force):
 		reset_healthcare_demo_for_branch(company, branch, dry_run=0)
@@ -293,6 +275,16 @@ def _count_demo_patients(company: str, branch: str) -> int:
 	return len({p for p in patient_names if frappe.db.get_value("Healthcare Patient", p, "branch") == branch})
 
 
+def _demo_scope_filters(company: str, branch: str, doctype: str) -> dict:
+	meta = frappe.get_meta(doctype)
+	filters: dict = {}
+	if meta.has_field("company"):
+		filters["company"] = company
+	if meta.has_field("branch"):
+		filters["branch"] = branch
+	return filters
+
+
 def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0) -> dict:
 	"""Remove DEMO-HC healthcare records for a branch."""
 	stats: dict[str, int] = {}
@@ -302,9 +294,20 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 		pluck="parent",
 	)
 	patients = list(set(patient_names))
-	filters_base = {"company": company, "branch": branch}
 
 	delete_order = [
+		"Healthcare Transfusion Order",
+		"Healthcare Blood Unit",
+		"Healthcare Blood Donor",
+		"Healthcare Sterilization Cycle",
+		"Healthcare Cssd Instrument",
+		"Healthcare Physician Settlement",
+		"Healthcare Physician Compensation Rule",
+		"Healthcare Quality Corrective Action",
+		"Healthcare Infection Surveillance Case",
+		"Healthcare Telehealth Session",
+		"Healthcare Home Visit Request",
+		"Healthcare Remote Monitoring Reading",
 		"Healthcare Follow Up Plan",
 		"Healthcare Orthodontic Case",
 		"Healthcare Dental Treatment Plan",
@@ -341,31 +344,47 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 
 	for dt in delete_order:
 		names: list[str] = []
+		scope = _demo_scope_filters(company, branch, dt)
 		if dt == "Healthcare Patient" and patients:
 			names = [p for p in patients if frappe.db.get_value(dt, p, "branch") == branch]
 		elif dt == "Healthcare Facility Profile":
-			names = frappe.get_all(dt, filters={**filters_base, "facility_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+			names = frappe.get_all(dt, filters={**scope, "facility_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 		else:
 			extra = {}
-			if frappe.get_meta(dt).has_field("patient") and patients:
-				names = frappe.get_all(dt, filters={**filters_base, "patient": ["in", patients]}, pluck="name")
+			meta = frappe.get_meta(dt)
+			if meta.has_field("patient") and patients:
+				names = frappe.get_all(dt, filters={**scope, "patient": ["in", patients]}, pluck="name")
 			else:
-				if frappe.get_meta(dt).has_field("reporting_tag"):
+				if meta.has_field("reporting_tag"):
 					extra["reporting_tag"] = REPORTING_TAG
-				if frappe.get_meta(dt).has_field("practitioner_name"):
-					names = frappe.get_all(dt, filters={**filters_base, "practitioner_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
-				elif frappe.get_meta(dt).has_field("unit_code"):
-					names = frappe.get_all(dt, filters={**filters_base, "unit_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
-				elif frappe.get_meta(dt).has_field("department_code"):
-					names = frappe.get_all(dt, filters={**filters_base, "department_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				if meta.has_field("donor_name"):
+					names = frappe.get_all(dt, filters={**scope, "donor_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("unit_number"):
+					names = frappe.get_all(dt, filters={**scope, "unit_number": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("instrument_code"):
+					names = frappe.get_all(dt, filters={**scope, "instrument_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("rule_code"):
+					names = frappe.get_all(dt, filters={**scope, "rule_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("title") and dt == "Healthcare Quality Corrective Action":
+					names = frappe.get_all(dt, filters={**scope, "title": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("practitioner_name"):
+					names = frappe.get_all(dt, filters={**scope, "practitioner_name": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("unit_code"):
+					names = frappe.get_all(dt, filters={**scope, "unit_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+				elif meta.has_field("department_code"):
+					names = frappe.get_all(dt, filters={**scope, "department_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif dt == "Healthcare Service Catalog":
-					names = frappe.get_all(dt, filters={**filters_base, "service_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
+					names = frappe.get_all(
+						dt,
+						filters={"company": company, "service_code": ["like", f"{DEMO_MARKER}%"]},
+						pluck="name",
+					)
 				elif dt == "Healthcare Treatment Package":
 					names = frappe.get_all(dt, filters={"package_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif dt == "Healthcare Payer":
 					names = frappe.get_all(dt, filters={"company": company, "payer_code": ["like", f"{DEMO_MARKER}%"]}, pluck="name")
 				elif extra:
-					names = frappe.get_all(dt, filters={**filters_base, **extra}, pluck="name")
+					names = frappe.get_all(dt, filters={**scope, **extra}, pluck="name")
 		count = len(names)
 		stats[dt] = count
 		if dry_run or not names:
@@ -411,6 +430,7 @@ class _HospitalDemoSeeder:
 			self._seed_patients_and_journeys()
 			self._seed_critical_care_demo()
 			self._seed_specialty_excellence()
+			seed_world_class_gap_operations(self)
 		self._seed_website_services_and_bookings()
 		if self.include_financial:
 			self._seed_inventory_and_finance()
@@ -534,7 +554,7 @@ class _HospitalDemoSeeder:
 		self.ctx["units"] = units
 
 		beds: list[str] = []
-		for i in range(1, 11):
+		for i in range(1, 26):
 			bed = self._insert(
 				"Healthcare Bed",
 				{
@@ -572,21 +592,9 @@ class _HospitalDemoSeeder:
 		self.ctx["critical_beds"] = critical_beds
 
 		practitioners: dict[str, str] = {}
-		unit_map = {
-			"GEN": "OPD",
-			"CAR": "CARD",
-			"PED": "PED",
-			"ORT": "ORT",
-			"DER": "DER",
-			"DEN": "DEN",
-			"ENT": "OPD",
-			"GYN": "OPD",
-			"RAD": "RAD",
-			"LAB": "LAB",
-		}
-		for spec, name, label in PRACTITIONERS:
+		for spec, name, label, dept_code in PRACTITIONERS:
 			specialty_link = self._resolve_specialty(label, spec)
-			unit_key = unit_map.get(spec, "OPD")
+			unit_key = dept_code if dept_code in units else "OPD"
 			schedule = [
 				{
 					"branch": self.branch,
@@ -618,7 +626,8 @@ class _HospitalDemoSeeder:
 					"schedule": schedule,
 				},
 			)
-			practitioners[spec] = pr.name
+			if spec not in practitioners:
+				practitioners[spec] = pr.name
 		self.ctx["practitioners"] = practitioners
 
 		payer_code = f"{DEMO_MARKER}INS"
@@ -1165,19 +1174,18 @@ class _HospitalDemoSeeder:
 			if patient_idx >= len(patients):
 				continue
 			patient = patients[patient_idx]
-			specialty = frappe.db.get_value("Healthcare Specialty Module", module_code, "specialty")
-			if not specialty:
+			if module_code not in MULTI_VISIT_MODULE_CODES:
 				continue
 			existing = frappe.db.exists(
 				"Healthcare Follow Up Plan",
-				{"patient": patient, "specialty": specialty, "plan_type": plan_type, "plan_title": ["like", f"%{DEMO_MARKER}%"]},
+				{"patient": patient, "plan_type": plan_type, "plan_title": ["like", f"%{DEMO_MARKER}%"]},
 			)
 			if existing:
 				continue
 			try:
 				out = create_follow_up_plan(
 					patient=patient,
-					specialty=specialty,
+					specialty=module_code,
 					plan_type=plan_type,
 					plan_title=f"{DEMO_MARKER} {module_code.replace('_', ' ').title()} follow-up",
 					practitioner=practitioners.get(pr_key),
@@ -1204,30 +1212,31 @@ class _HospitalDemoSeeder:
 
 		for order, (code, title, spec, dept_key, rate, desc) in enumerate(WEB_SERVICES, start=1):
 			service_code = f"{DEMO_MARKER}{code}"
-			if frappe.db.exists("Healthcare Service Catalog", service_code):
-				published.append(service_code)
-				continue
 			service_type = "Telehealth" if code.startswith("TEL") else ("Procedure" if dept_key in ("LAB", "RAD") else "Consultation")
 			spec_label = SPECIALTY_LABEL_BY_CODE.get(spec, spec)
 			specialty_link = self._resolve_specialty(spec_label, spec)
+			payload = {
+				"service_title": f"{DEMO_MARKER} {title}",
+				"specialty": specialty_link,
+				"service_type": service_type,
+				"default_rate": rate,
+				"duration_mins": 30,
+				"company": self.company,
+				"branch": self.branch,
+				"department": depts.get(dept_key),
+				"default_practitioner": practitioners.get(spec),
+				"publish_on_website": 1,
+				"display_order": order * 10,
+				"website_description": desc,
+				"is_active": 1,
+			}
+			if frappe.db.exists("Healthcare Service Catalog", service_code):
+				frappe.db.set_value("Healthcare Service Catalog", service_code, payload, update_modified=False)
+				published.append(service_code)
+				continue
 			self._insert(
 				"Healthcare Service Catalog",
-				{
-					"service_code": service_code,
-					"service_title": f"{DEMO_MARKER} {title}",
-					"specialty": specialty_link,
-					"service_type": service_type,
-					"default_rate": rate,
-					"duration_mins": 30,
-					"company": self.company,
-					"branch": self.branch,
-					"department": depts.get(dept_key),
-					"default_practitioner": practitioners.get(spec),
-					"publish_on_website": 1,
-					"display_order": order * 10,
-					"website_description": desc,
-					"is_active": 1,
-				},
+				{"service_code": service_code, **payload},
 			)
 			published.append(service_code)
 
@@ -1322,17 +1331,7 @@ class _HospitalDemoSeeder:
 		)
 
 		slug = frappe.scrub(self.branch).replace("_", "-")[:50]
-		dept_icons = {
-			"CARD": "cardiology",
-			"PED": "pediatrics",
-			"ORT": "orthopedics",
-			"DER": "dermatology",
-			"DEN": "dentistry",
-			"RAD": "radiology",
-			"LAB": "lab",
-			"PHM": "pharmacy",
-			"ER": "emergency",
-		}
+		dept_icons = DEPARTMENT_WEB_ICONS
 		depts = self.ctx.get("departments") or {}
 		for code, dept_name in depts.items():
 			icon = dept_icons.get(code, "general")
@@ -1429,9 +1428,9 @@ class _HospitalDemoSeeder:
 			"working_hours_ar": ALHAYAT_COPY["working_hours_ar"],
 			"working_hours_en": ALHAYAT_COPY["working_hours_en"],
 			"stat_years": ALHAYAT_COPY["stat_years"],
-			"stat_doctors": ALHAYAT_COPY["stat_doctors"],
+			"stat_doctors": len(self.ctx.get("practitioners") or {}),
 			"stat_patients": ALHAYAT_COPY["stat_patients"],
-			"stat_departments": ALHAYAT_COPY["stat_departments"],
+			"stat_departments": len(depts),
 			"enable_online_shop": 1,
 		}
 		if frappe.db.exists("Healthcare Branch Website", self.branch):

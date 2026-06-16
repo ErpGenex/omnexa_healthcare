@@ -1,0 +1,132 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"unit_number",
+		"blood_group",
+		"component",
+		"donor",
+		"collection_date",
+		"expiry_date",
+		"status",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "BUN-.#####",
+			"reqd": 1,
+			"default": "BUN-.#####"
+		},
+		{
+			"fieldname": "unit_number",
+			"fieldtype": "Data",
+			"label": "Unit number",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "blood_group",
+			"fieldtype": "Select",
+			"label": "Blood group",
+			"options": "A+\nA-\nB+\nB-\nAB+\nAB-\nO+\nO-",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "component",
+			"fieldtype": "Select",
+			"label": "Component",
+			"options": "Whole Blood\nPacked RBC\nPlatelets\nFFP\nCryoprecipitate",
+			"default": "Packed RBC",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "donor",
+			"fieldtype": "Link",
+			"label": "Donor",
+			"options": "Healthcare Blood Donor"
+		},
+		{
+			"fieldname": "collection_date",
+			"fieldtype": "Date",
+			"label": "Collection date",
+			"reqd": 1
+		},
+		{
+			"fieldname": "expiry_date",
+			"fieldtype": "Date",
+			"label": "Expiry date",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Quarantine\nAvailable\nReserved\nIssued\nDiscarded",
+			"default": "Available",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Blood Unit",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}
