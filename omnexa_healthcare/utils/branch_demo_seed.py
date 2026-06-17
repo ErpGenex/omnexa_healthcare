@@ -83,7 +83,12 @@ DEMO_FOLLOW_UP_ASSIGNMENTS: list[tuple[int, str, str, str]] = []
 for idx in range(min(len(PATIENT_ROSTER), 35)):
 	module_code = _MULTI_VISIT_MODULES[idx % len(_MULTI_VISIT_MODULES)]
 	cfg = FOLLOW_UP_PLAN_TEMPLATES[module_code]
-	plan_types = cfg.get("plan_types") or [cfg.get("default_plan_type")]
+	templates = cfg.get("templates") or {}
+	plan_types = [pt for pt in (cfg.get("plan_types") or []) if pt in templates]
+	if not plan_types and cfg.get("default_plan_type") in templates:
+		plan_types = [cfg["default_plan_type"]]
+	if not plan_types:
+		continue
 	plan_type = plan_types[idx % len(plan_types)]
 	pr_key = MODULE_PRACTITIONER_KEYS.get(module_code, "GEN")
 	DEMO_FOLLOW_UP_ASSIGNMENTS.append((idx % len(PATIENT_ROSTER), module_code, plan_type, pr_key))

@@ -91,6 +91,15 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 					{"visit_objective": "Re-assessment & home program", "offset_days": 21},
 				],
 			},
+			"rehabilitation": {
+				"plan_title": "Physiotherapy rehabilitation program",
+				"visits": [
+					{"visit_objective": "Functional mobility assessment", "offset_days": 0},
+					{"visit_objective": "Strength & ROM session", "offset_days": 7},
+					{"visit_objective": "Gait & balance progress", "offset_days": 21},
+					{"visit_objective": "Home exercise program review", "offset_days": 42},
+				],
+			},
 		},
 	},
 	"oncology": {
@@ -106,6 +115,14 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 					{"visit_objective": "Cycle 2 pre-treatment review", "offset_days": 21},
 					{"visit_objective": "Cycle 2 toxicity review", "offset_days": 28},
 					{"visit_objective": "Mid-treatment imaging review", "offset_days": 42},
+				],
+			},
+			"chronic_care": {
+				"plan_title": "Oncology survivorship follow-up",
+				"visits": [
+					{"visit_objective": "Survivorship assessment", "offset_days": 0},
+					{"visit_objective": "3-month symptom review", "offset_days": 90},
+					{"visit_objective": "6-month labs & imaging review", "offset_days": 180},
 				],
 			},
 		},
@@ -124,6 +141,14 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 					{"visit_objective": "6-month comprehensive review", "offset_days": 180},
 				],
 			},
+			"post_op": {
+				"plan_title": "Cardiac post-procedure follow-up",
+				"visits": [
+					{"visit_objective": "Week 1 wound & vitals check", "offset_days": 7},
+					{"visit_objective": "Week 4 medication review", "offset_days": 28},
+					{"visit_objective": "Week 8 cardiac rehab clearance", "offset_days": 56},
+				],
+			},
 		},
 	},
 	"psychiatry": {
@@ -138,6 +163,14 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 					{"visit_objective": "Medication review week 2", "offset_days": 14},
 					{"visit_objective": "Therapy session week 4", "offset_days": 28},
 					{"visit_objective": "8-week outcome review", "offset_days": 56},
+				],
+			},
+			"chronic_care": {
+				"plan_title": "Psychiatric chronic care maintenance",
+				"visits": [
+					{"visit_objective": "Medication stability review", "offset_days": 0},
+					{"visit_objective": "6-week follow-up", "offset_days": 42},
+					{"visit_objective": "3-month outcome review", "offset_days": 90},
 				],
 			},
 		},
@@ -218,6 +251,14 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 					{"visit_objective": "3-month symptom & labs review", "offset_days": 90},
 				],
 			},
+			"post_op": {
+				"plan_title": "Post-procedure GI follow-up",
+				"visits": [
+					{"visit_objective": "Day 3 post-procedure check", "offset_days": 3},
+					{"visit_objective": "Week 2 symptom review", "offset_days": 14},
+					{"visit_objective": "Week 6 diet & recovery review", "offset_days": 42},
+				],
+			},
 		},
 	},
 	"ophthalmology": {
@@ -245,6 +286,14 @@ FOLLOW_UP_PLAN_TEMPLATES: dict[str, dict] = {
 				"visits": [
 					{"visit_objective": "Catheter removal review", "offset_days": 7},
 					{"visit_objective": "4-week recovery check", "offset_days": 28},
+				],
+			},
+			"chronic_care": {
+				"plan_title": "Urology chronic care follow-up",
+				"visits": [
+					{"visit_objective": "Initial urology assessment", "offset_days": 0},
+					{"visit_objective": "3-month labs review", "offset_days": 90},
+					{"visit_objective": "6-month comprehensive review", "offset_days": 180},
 				],
 			},
 		},

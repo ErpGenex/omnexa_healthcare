@@ -12,7 +12,12 @@ from pathlib import Path
 import frappe
 
 from omnexa_healthcare.hooks import app_title
-from omnexa_healthcare.i18n.healthcare_i18n_catalog import _has_untranslated_english, normalize_en, translate_to_ar
+from omnexa_healthcare.i18n.healthcare_i18n_catalog import (
+	JOURNEY_AR,
+	_has_untranslated_english,
+	normalize_en,
+	translate_to_ar,
+)
 from omnexa_healthcare.terminology import PATIENT_TERMINOLOGY_AR, PATIENT_TERMINOLOGY_EN
 from omnexa_healthcare.workspace.healthcare_workspace import REPORT_SECTIONS, WORKSPACE_SECTIONS
 
@@ -69,6 +74,7 @@ _EXTRA_STRINGS: tuple[str, ...] = (
 
 def collect_healthcare_strings() -> set[str]:
 	strings: set[str] = set(_EXTRA_STRINGS)
+	strings.update(JOURNEY_AR.keys())
 	strings.update(PATIENT_TERMINOLOGY_EN.keys())
 	strings.update(PATIENT_TERMINOLOGY_AR.keys())
 
@@ -141,6 +147,12 @@ def build_translation_maps(
 			stats["en_overrides"] += 1
 
 		ar_val = translate_to_ar(src)
+		if ar_val == src and src in existing_ar:
+			prev = existing_ar[src]
+			if prev and prev != src and not _has_untranslated_english(prev):
+				ar_val = prev
+				stats["ar_manual"] += 1
+
 		ar_rows[src] = ar_val
 		if ar_val != src:
 			stats["ar_translated"] += 1
@@ -154,6 +166,7 @@ def build_translation_maps(
 		if val and val != key and not _has_untranslated_english(val):
 			ar_rows[key] = val
 			stats["ar_manual"] += 1
+			stats["ar_translated"] += 1
 
 	return ar_rows, en_rows, stats
 

@@ -52,3 +52,32 @@ class TestFollowUpPlan(unittest.TestCase):
 
 	def test_all_template_modules_registered(self):
 		self.assertGreaterEqual(len(MULTI_VISIT_MODULE_CODES), 12)
+
+	def test_every_plan_type_has_template(self):
+		from omnexa_healthcare.follow_up_templates import FOLLOW_UP_PLAN_TEMPLATES
+
+		missing = []
+		for code, cfg in FOLLOW_UP_PLAN_TEMPLATES.items():
+			if not cfg.get("supports_multi_visit"):
+				continue
+			templates = cfg.get("templates") or {}
+			for pt in cfg.get("plan_types") or []:
+				if pt not in templates:
+					missing.append(f"{code}:{pt}")
+		self.assertEqual(missing, [], f"Missing follow-up templates: {missing}")
+
+	def test_cardiology_post_op_template(self):
+		spec = frappe.db.get_value("Healthcare Specialty Module", "cardiology", "specialty")
+		if not spec:
+			self.skipTest("Cardiology module not seeded")
+		tpl = get_follow_up_templates(spec, "post_op")
+		self.assertEqual(tpl["plan_type"], "post_op")
+		self.assertGreaterEqual(len(tpl["visits"]), 2)
+
+	def test_physiotherapy_rehabilitation_template(self):
+		spec = frappe.db.get_value("Healthcare Specialty Module", "physiotherapy", "specialty")
+		if not spec:
+			self.skipTest("Physiotherapy module not seeded")
+		tpl = get_follow_up_templates(spec, "rehabilitation")
+		self.assertEqual(tpl["plan_type"], "rehabilitation")
+		self.assertGreaterEqual(len(tpl["visits"]), 3)

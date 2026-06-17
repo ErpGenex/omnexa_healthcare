@@ -45,12 +45,26 @@ def _resolve_module_code(specialty: str) -> str | None:
 	return None
 
 
+def _merge_template_config(module_code: str, db_cfg: dict | None) -> dict:
+	"""Merge DB follow_up_workflow with code defaults (DB wins on conflict)."""
+	base = dict(FOLLOW_UP_PLAN_TEMPLATES.get(module_code, {}))
+	if not db_cfg:
+		return base
+	merged = {**base, **{k: v for k, v in db_cfg.items() if k not in ("templates", "plan_types", "default_plan_type")}}
+	base_templates = dict(base.get("templates") or {})
+	db_templates = dict(db_cfg.get("templates") or {})
+	merged["templates"] = {**base_templates, **db_templates}
+	if db_cfg.get("plan_types"):
+		merged["plan_types"] = db_cfg["plan_types"]
+	if db_cfg.get("default_plan_type"):
+		merged["default_plan_type"] = db_cfg["default_plan_type"]
+	return merged
+
+
 def _get_template_config(module_code: str) -> dict:
 	row = frappe.db.get_value("Healthcare Specialty Module", module_code, "follow_up_workflow", as_dict=False)
 	parsed = _json_load(row)
-	if parsed.get("templates"):
-		return parsed
-	return FOLLOW_UP_PLAN_TEMPLATES.get(module_code, {})
+	return _merge_template_config(module_code, parsed if parsed else None)
 
 
 @frappe.whitelist()

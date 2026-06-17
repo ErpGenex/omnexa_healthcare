@@ -30,7 +30,16 @@
 	}
 
 	function t(ar, en) {
-		return lang() === "ar" ? ar : en;
+		if (lang() === "en") {
+			return en;
+		}
+		if (typeof __ === "function") {
+			const translated = __(en);
+			if (translated && translated !== en) {
+				return translated;
+			}
+		}
+		return ar;
 	}
 
 	function esc(v) {
