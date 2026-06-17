@@ -187,3 +187,19 @@ def healthcare_preventive_care_plan_query_conditions(user=None):
 
 def healthcare_family_risk_score_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Family Risk Score", user)
+
+
+def healthcare_medication_request_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Medication Request", user)
+
+
+def healthcare_cds_alert_log_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Cds Alert Log", user)
+
+
+def healthcare_pharmacy_substitution_log_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Pharmacy Substitution Log", user)
+
+
+def healthcare_patient_erasure_request_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Patient Erasure Request", user)

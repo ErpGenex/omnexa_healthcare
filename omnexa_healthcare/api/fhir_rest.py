@@ -12,6 +12,8 @@ from omnexa_healthcare.api.fhir_export import (
 	get_fhir_allergy_intolerance,
 	get_fhir_clinical_condition,
 	get_fhir_encounter,
+	get_fhir_medication_request,
+	get_fhir_observation,
 	get_fhir_patient,
 )
 
@@ -21,11 +23,16 @@ READ_MAP = {
 	"Encounter": ("Healthcare Encounter", get_fhir_encounter, "encounter"),
 	"Condition": ("Healthcare Clinical Condition", get_fhir_clinical_condition, "condition"),
 	"AllergyIntolerance": ("Healthcare Allergy Intolerance", get_fhir_allergy_intolerance, "allergy_intolerance"),
+	"MedicationRequest": ("Healthcare Medication Request", get_fhir_medication_request, "medication_request"),
+	"Observation": ("Healthcare Observation", get_fhir_observation, "observation"),
 }
 
 WRITE_MAP = {
 	"Patient": "Healthcare Patient",
 	"Encounter": "Healthcare Encounter",
+	"Condition": "Healthcare Clinical Condition",
+	"AllergyIntolerance": "Healthcare Allergy Intolerance",
+	"Observation": "Healthcare Observation",
 }
 
 
@@ -59,10 +66,5 @@ def fhir_create(resource_type: str, payload: str | dict) -> dict:
 	if not doctype:
 		frappe.throw(_("Write not supported for {0}").format(resource_type))
 	data = frappe.parse_json(payload) if isinstance(payload, str) else payload
-	if resource_type == "Patient":
-		doc = frappe.get_doc({"doctype": doctype, **data}).insert()
-	elif resource_type == "Encounter":
-		doc = frappe.get_doc({"doctype": doctype, **data}).insert()
-	else:
-		frappe.throw(_("Unsupported write"))
+	doc = frappe.get_doc({"doctype": doctype, **data}).insert()
 	return fhir_read(resource_type, doc.name)

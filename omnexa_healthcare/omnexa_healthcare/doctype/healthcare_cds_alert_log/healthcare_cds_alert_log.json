@@ -1,0 +1,137 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"medication_request",
+		"patient",
+		"check_type",
+		"severity",
+		"message",
+		"overridden",
+		"override_reason",
+		"overridden_by",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "CAL-.#####",
+			"reqd": 1,
+			"default": "CAL-.#####"
+		},
+		{
+			"fieldname": "medication_request",
+			"fieldtype": "Link",
+			"label": "Medication Request",
+			"options": "Healthcare Medication Request",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "check_type",
+			"fieldtype": "Select",
+			"label": "Check type",
+			"options": "Drug-Drug\nDrug-Allergy\nDrug-Disease\nPregnancy\nLactation\nPediatric\nGeriatric\nRenal\nHepatic\nDuplicate\nMax Dose\nOther",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "severity",
+			"fieldtype": "Select",
+			"label": "Severity",
+			"options": "Info\nWarning\nCritical\nContraindicated",
+			"default": "Warning",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "message",
+			"fieldtype": "Text",
+			"label": "Message",
+			"reqd": 1
+		},
+		{
+			"fieldname": "overridden",
+			"fieldtype": "Check",
+			"label": "Overridden",
+			"default": "0",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "override_reason",
+			"fieldtype": "Small Text",
+			"label": "Override reason"
+		},
+		{
+			"fieldname": "overridden_by",
+			"fieldtype": "Link",
+			"label": "Overridden by",
+			"options": "User"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Cds Alert Log",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

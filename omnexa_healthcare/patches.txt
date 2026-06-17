@@ -20,4 +20,10 @@ omnexa_healthcare.patches.v1_0.seed_gap_closure_wave3
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave4
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave5
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave6
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave7
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave8
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave9
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave10
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave11
+omnexa_healthcare.patches.v1_0.seed_gap_closure_wave12
 omnexa_healthcare.patches.v1_0.sync_healthcare_workspace_full

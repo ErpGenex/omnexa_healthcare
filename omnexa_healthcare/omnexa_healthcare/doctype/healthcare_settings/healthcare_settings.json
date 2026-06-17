@@ -48,6 +48,15 @@
 		"enable_infection_surveillance",
 		"enable_icd11",
 		"enable_family_medicine",
+		"enable_erx",
+		"enable_advanced_cds",
+		"enforce_mfa_hard_block",
+		"enable_field_phi_masking",
+		"enable_fhir_bulk_export",
+		"enable_hl7_mllp",
+		"enable_predictive_analytics_v2",
+		"enable_care_gap_automation",
+		"native_mobile_deferred",
 		"lab_section",
 		"include_lab_observations_in_ips_bundle",
 		"pharmacy_section",
@@ -310,6 +319,61 @@
 			"fieldname": "enable_family_medicine",
 			"fieldtype": "Check",
 			"label": "Enable family medicine / household care"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_erx",
+			"fieldtype": "Check",
+			"label": "Enable global ePrescription (Medication Request)"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_advanced_cds",
+			"fieldtype": "Check",
+			"label": "Enable advanced CDSS (12 checks)"
+		},
+		{
+			"default": "1",
+			"fieldname": "enforce_mfa_hard_block",
+			"fieldtype": "Check",
+			"label": "Hard block PHI access without MFA"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_field_phi_masking",
+			"fieldtype": "Check",
+			"label": "Enable field-level PHI masking"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_fhir_bulk_export",
+			"fieldtype": "Check",
+			"label": "Enable FHIR Bulk $export"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_hl7_mllp",
+			"fieldtype": "Check",
+			"label": "Enable HL7 MLLP production listener"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_predictive_analytics_v2",
+			"fieldtype": "Check",
+			"label": "Enable predictive analytics v2"
+		},
+		{
+			"default": "1",
+			"fieldname": "enable_care_gap_automation",
+			"fieldtype": "Check",
+			"label": "Enable automated care gap detection"
+		},
+		{
+			"default": "1",
+			"fieldname": "native_mobile_deferred",
+			"fieldtype": "Check",
+			"label": "Native mobile apps deferred",
+			"read_only": 1
 		},
 		{
 			"default": "1",

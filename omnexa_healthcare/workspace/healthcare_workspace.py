@@ -118,6 +118,20 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		],
 	),
 	(
+		"💊 ePrescription · CDSS",
+		[
+			("Page", "healthcare-erx-writer", "ePrescription Writer"),
+			("Page", "healthcare-pharmacy-rx-verify", "Pharmacy Rx Verify"),
+			("DocType", "Healthcare Medication Request", "Medication Requests"),
+			("DocType", "Healthcare Drug Formulary", "Drug Formulary"),
+			("DocType", "Healthcare Rxnorm Code", "RxNorm Codes"),
+			("DocType", "Healthcare Cds Alert Log", "CDS Alert Log"),
+			("DocType", "Healthcare Prescription Signature", "Prescription Signatures"),
+			("DocType", "Healthcare Pharmacy Substitution Log", "Substitution Log"),
+			("DocType", "Healthcare Clinical Cds Rule", "CDS Rules"),
+		],
+	),
+	(
 		"👨‍👩‍👧 Family Medicine",
 		[
 			("Page", "healthcare-family-medicine-dashboard", "Family Medicine Dashboard"),

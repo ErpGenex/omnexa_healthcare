@@ -1,0 +1,148 @@
+{
+	"actions": [],
+	"autoname": "field:formulary_code",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"formulary_code",
+		"drug_name",
+		"rxnorm_code",
+		"generic_name",
+		"strength",
+		"dosage_form",
+		"is_controlled",
+		"schedule_class",
+		"is_active",
+		"max_daily_dose",
+		"pregnancy_category",
+		"renal_adjustment_notes",
+		"hepatic_adjustment_notes",
+		"company"
+	],
+	"fields": [
+		{
+			"fieldname": "formulary_code",
+			"fieldtype": "Data",
+			"label": "Formulary code",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "drug_name",
+			"fieldtype": "Data",
+			"label": "Drug name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "rxnorm_code",
+			"fieldtype": "Link",
+			"label": "RxNorm",
+			"options": "Healthcare Rxnorm Code",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "generic_name",
+			"fieldtype": "Data",
+			"label": "Generic name",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "strength",
+			"fieldtype": "Data",
+			"label": "Strength"
+		},
+		{
+			"fieldname": "dosage_form",
+			"fieldtype": "Data",
+			"label": "Dosage form"
+		},
+		{
+			"fieldname": "is_controlled",
+			"fieldtype": "Check",
+			"label": "Controlled substance",
+			"default": "0",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "schedule_class",
+			"fieldtype": "Select",
+			"label": "Schedule",
+			"options": "\nII\nIII\nIV\nV"
+		},
+		{
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active",
+			"default": "1",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "max_daily_dose",
+			"fieldtype": "Float",
+			"label": "Max daily dose"
+		},
+		{
+			"fieldname": "pregnancy_category",
+			"fieldtype": "Select",
+			"label": "Pregnancy category",
+			"options": "\nA\nB\nC\nD\nX"
+		},
+		{
+			"fieldname": "renal_adjustment_notes",
+			"fieldtype": "Small Text",
+			"label": "Renal adjustment"
+		},
+		{
+			"fieldname": "hepatic_adjustment_notes",
+			"fieldtype": "Small Text",
+			"label": "Hepatic adjustment"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Drug Formulary",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

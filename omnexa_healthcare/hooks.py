@@ -171,6 +171,10 @@ permission_query_conditions = {
 	"Healthcare Family History": "omnexa_healthcare.permissions.healthcare_family_history_query_conditions",
 	"Healthcare Preventive Care Plan": "omnexa_healthcare.permissions.healthcare_preventive_care_plan_query_conditions",
 	"Healthcare Family Risk Score": "omnexa_healthcare.permissions.healthcare_family_risk_score_query_conditions",
+	"Healthcare Medication Request": "omnexa_healthcare.permissions.healthcare_medication_request_query_conditions",
+	"Healthcare Cds Alert Log": "omnexa_healthcare.permissions.healthcare_cds_alert_log_query_conditions",
+	"Healthcare Pharmacy Substitution Log": "omnexa_healthcare.permissions.healthcare_pharmacy_substitution_log_query_conditions",
+	"Healthcare Patient Erasure Request": "omnexa_healthcare.permissions.healthcare_patient_erasure_request_query_conditions",
 }
 
 # DocType Class
@@ -249,6 +253,10 @@ _BRANCH_VALIDATE = [
 	"Healthcare Family History",
 	"Healthcare Preventive Care Plan",
 	"Healthcare Family Risk Score",
+	"Healthcare Medication Request",
+	"Healthcare Cds Alert Log",
+	"Healthcare Pharmacy Substitution Log",
+	"Healthcare Patient Erasure Request",
 ]
 
 for _dt in _BRANCH_VALIDATE:
@@ -269,6 +277,17 @@ doc_events["Healthcare Patient"]["after_insert"] = "omnexa_healthcare.api.audit_
 doc_events["Healthcare Patient"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
 doc_events["Healthcare Encounter"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
 doc_events["Healthcare Encounter"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+
+from omnexa_healthcare.gap_closure_wave9_defs import PHI_AUDIT_DOCTYPES as _PHI_AUDIT_DOCTYPES
+
+for _phi_dt in _PHI_AUDIT_DOCTYPES:
+	if _phi_dt in ("Healthcare Patient", "Healthcare Encounter"):
+		continue
+	doc_events.setdefault(_phi_dt, {})
+	if isinstance(doc_events[_phi_dt], dict):
+		doc_events[_phi_dt]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+		doc_events[_phi_dt]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+
 doc_events["Healthcare Diagnostic Report"] = {
 	"on_submit": "omnexa_healthcare.api.in_basket.notify_abnormal_diagnostic_report",
 }
@@ -317,7 +336,10 @@ scheduler_events = {
 
 # Request Events
 # ----------------
-before_request = ["omnexa_healthcare.license_gate.before_request"]
+before_request = [
+	"omnexa_healthcare.license_gate.before_request",
+	"omnexa_healthcare.healthcare_mfa.validate_phi_role_mfa",
+]
 # after_request = ["omnexa_healthcare.utils.after_request"]
 
 # Job Events

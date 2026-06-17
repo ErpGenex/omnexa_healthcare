@@ -1,0 +1,103 @@
+{
+	"actions": [],
+	"autoname": "hash",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"drug_name",
+		"rxnorm_code",
+		"formulary_item",
+		"dose",
+		"route",
+		"frequency",
+		"duration_days",
+		"quantity",
+		"instructions",
+		"is_controlled_substance"
+	],
+	"fields": [
+		{
+			"fieldname": "drug_name",
+			"fieldtype": "Data",
+			"label": "Drug name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "rxnorm_code",
+			"fieldtype": "Link",
+			"label": "RxNorm",
+			"options": "Healthcare Rxnorm Code",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "formulary_item",
+			"fieldtype": "Link",
+			"label": "Formulary",
+			"options": "Healthcare Drug Formulary"
+		},
+		{
+			"fieldname": "dose",
+			"fieldtype": "Data",
+			"label": "Dose",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "route",
+			"fieldtype": "Select",
+			"label": "Route",
+			"options": "Oral\nIV\nIM\nSC\nTopical\nInhalation\nOther",
+			"default": "Oral"
+		},
+		{
+			"fieldname": "frequency",
+			"fieldtype": "Data",
+			"label": "Frequency",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "duration_days",
+			"fieldtype": "Int",
+			"label": "Duration (days)"
+		},
+		{
+			"fieldname": "quantity",
+			"fieldtype": "Float",
+			"label": "Quantity",
+			"default": "1"
+		},
+		{
+			"fieldname": "instructions",
+			"fieldtype": "Small Text",
+			"label": "Instructions"
+		},
+		{
+			"fieldname": "is_controlled_substance",
+			"fieldtype": "Check",
+			"label": "Controlled substance",
+			"default": "0"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Medication Request Item",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1,
+	"istable": 1,
+	"editable_grid": 1
+}

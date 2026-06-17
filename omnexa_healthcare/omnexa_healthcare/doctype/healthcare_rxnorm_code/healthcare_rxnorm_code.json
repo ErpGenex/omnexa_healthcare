@@ -1,0 +1,93 @@
+{
+	"actions": [],
+	"autoname": "field:rxnorm_cui",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"rxnorm_cui",
+		"drug_name",
+		"generic_name",
+		"strength",
+		"dosage_form",
+		"is_active"
+	],
+	"fields": [
+		{
+			"fieldname": "rxnorm_cui",
+			"fieldtype": "Data",
+			"label": "RxNorm CUI",
+			"reqd": 1,
+			"unique": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "drug_name",
+			"fieldtype": "Data",
+			"label": "Drug name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "generic_name",
+			"fieldtype": "Data",
+			"label": "Generic name",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "strength",
+			"fieldtype": "Data",
+			"label": "Strength"
+		},
+		{
+			"fieldname": "dosage_form",
+			"fieldtype": "Data",
+			"label": "Dosage form"
+		},
+		{
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"label": "Active",
+			"default": "1",
+			"in_list_view": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Rxnorm Code",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

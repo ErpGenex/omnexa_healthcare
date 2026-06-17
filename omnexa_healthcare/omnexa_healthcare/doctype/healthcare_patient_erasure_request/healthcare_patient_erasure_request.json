@@ -1,0 +1,128 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"request_type",
+		"status",
+		"requested_by",
+		"requested_on",
+		"completed_on",
+		"notes",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "PER-.#####",
+			"reqd": 1,
+			"default": "PER-.#####"
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "request_type",
+			"fieldtype": "Select",
+			"label": "Request type",
+			"options": "Erasure\nRestriction\nPortability",
+			"default": "Erasure",
+			"reqd": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSubmitted\nIn Review\nCompleted\nRejected",
+			"default": "Draft",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "requested_by",
+			"fieldtype": "Link",
+			"label": "Requested by",
+			"options": "User"
+		},
+		{
+			"fieldname": "requested_on",
+			"fieldtype": "Datetime",
+			"label": "Requested on",
+			"default": "Now"
+		},
+		{
+			"fieldname": "completed_on",
+			"fieldtype": "Datetime",
+			"label": "Completed on"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Text",
+			"label": "Notes"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Patient Erasure Request",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1,
+	"is_submittable": 1
+}

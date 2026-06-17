@@ -1,0 +1,189 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"patient",
+		"practitioner",
+		"encounter",
+		"status",
+		"diagnosis",
+		"icd10_code",
+		"icd11_code",
+		"items",
+		"signed_on",
+		"signed_by",
+		"signature_hash",
+		"qr_token",
+		"verified_by_pharmacist",
+		"verified_on",
+		"dispense_reference",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HMR-.#####",
+			"reqd": 1,
+			"default": "HMR-.#####"
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"label": "Prescriber",
+			"options": "Healthcare Practitioner",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Draft\nSigned\nDispensed\nCancelled",
+			"default": "Draft",
+			"in_list_view": 1,
+			"read_only": 1
+		},
+		{
+			"fieldname": "diagnosis",
+			"fieldtype": "Small Text",
+			"label": "Diagnosis / indication",
+			"reqd": 1
+		},
+		{
+			"fieldname": "icd10_code",
+			"fieldtype": "Data",
+			"label": "ICD-10"
+		},
+		{
+			"fieldname": "icd11_code",
+			"fieldtype": "Data",
+			"label": "ICD-11"
+		},
+		{
+			"fieldname": "items",
+			"fieldtype": "Table",
+			"label": "Medications",
+			"options": "Healthcare Medication Request Item",
+			"reqd": 1
+		},
+		{
+			"fieldname": "signed_on",
+			"fieldtype": "Datetime",
+			"label": "Signed on",
+			"read_only": 1
+		},
+		{
+			"fieldname": "signed_by",
+			"fieldtype": "Link",
+			"label": "Signed by",
+			"options": "User",
+			"read_only": 1
+		},
+		{
+			"fieldname": "signature_hash",
+			"fieldtype": "Data",
+			"label": "Signature hash",
+			"read_only": 1
+		},
+		{
+			"fieldname": "qr_token",
+			"fieldtype": "Data",
+			"label": "QR token",
+			"read_only": 1
+		},
+		{
+			"fieldname": "verified_by_pharmacist",
+			"fieldtype": "Link",
+			"label": "Verified by",
+			"options": "User",
+			"read_only": 1
+		},
+		{
+			"fieldname": "verified_on",
+			"fieldtype": "Datetime",
+			"label": "Verified on",
+			"read_only": 1
+		},
+		{
+			"fieldname": "dispense_reference",
+			"fieldtype": "Link",
+			"label": "Dispense",
+			"options": "Healthcare Medication Dispense",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Medication Request",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1,
+	"is_submittable": 1
+}

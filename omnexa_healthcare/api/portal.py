@@ -122,3 +122,12 @@ def queue_patient_notification(patient: str, message: str, channel: str = "Push"
 		}
 	).insert(ignore_permissions=True)
 	return {"notification": doc.name, "status": doc.status}
+
+
+@frappe.whitelist()
+def list_portal_prescriptions(patient: str) -> list[dict]:
+	"""Patient portal — active and recent ePrescriptions."""
+	from omnexa_healthcare.api.erx import list_patient_prescriptions
+
+	return list_patient_prescriptions(patient, limit=50)
+

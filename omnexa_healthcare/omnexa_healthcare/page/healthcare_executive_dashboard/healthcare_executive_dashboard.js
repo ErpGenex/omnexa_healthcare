@@ -19,19 +19,23 @@ frappe.pages["healthcare-executive-dashboard"].on_page_load = function (wrapper)
 			const functional = a.functional_audit || {};
 			const counts = functional.counts || {};
 
-			const domainRows = (maturity.domains || [])
-				.map(
-					(d) =>
-						`<tr><td>${frappe.utils.escape_html(d.id)}</td><td>${d.score}%</td><td>${d.checks_passed}/${d.checks_total}</td></tr>`
-				)
-				.join("");
+			frappe.call({
+				method: "omnexa_healthcare.api.predictive_analytics.get_predictive_dashboard",
+				callback: (pr) => {
+					const pred = pr.message || {};
+					const domainRows = (maturity.domains || [])
+						.map(
+							(d) =>
+								`<tr><td>${frappe.utils.escape_html(d.id)}</td><td>${d.score}%</td><td>${d.checks_passed}/${d.checks_total}</td></tr>`
+						)
+						.join("");
 
-			$body.html(`
+					$body.html(`
 				<div class="row mb-3">
 					<div class="col-md-3"><div class="card"><div class="card-body"><h6>${__("World-Class Score")}</h6><h3>${a.world_class_readiness_score || 0} / 5</h3><small>${__("Rank")} #${a.competitive_rank || "-"} / ${a.competitive_total || "-"}</small></div></div></div>
 					<div class="col-md-3"><div class="card"><div class="card-body"><h6>${__("Maturity Index")}</h6><h3>${maturity.weighted_score || 0}%</h3><small>${__("Target")}: 95%</small></div></div></div>
 					<div class="col-md-3"><div class="card"><div class="card-body"><h6>${__("Security Score")}</h6><h3>${security.score || 0}%</h3></div></div></div>
-					<div class="col-md-3"><div class="card"><div class="card-body"><h6>${__("UX / UI / A11y")}</h6><h3>${ux.ux_score || 0} / ${ux.ui_score || 0} / ${ux.accessibility_score || 0}</h3></div></div></div>
+					<div class="col-md-3"><div class="card"><div class="card-body"><h6>${__("Open Care Gaps")}</h6><h3>${pred.open_care_gaps || 0}</h3><small>${pred.readmission_model || ""}</small></div></div></div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-md-12"><div class="card"><div class="card-header">${__("Platform Inventory")}</div><div class="card-body small">
@@ -40,9 +44,11 @@ frappe.pages["healthcare-executive-dashboard"].on_page_load = function (wrapper)
 				</div>
 				<div class="row">
 					<div class="col-md-7"><div class="card"><div class="card-header">${__("Maturity by Domain")}</div><div class="card-body p-0"><table class="table table-sm mb-0"><thead><tr><th>${__("Domain")}</th><th>${__("Score")}</th><th>${__("Checks")}</th></tr></thead><tbody>${domainRows}</tbody></table></div></div></div>
-					<div class="col-md-5"><div class="card"><div class="card-header">${__("Open Gaps")}</div><div class="card-body small"><ul class="mb-0">${(gaps.strategic_gaps || []).map((g) => `<li><b>${frappe.utils.escape_html(g.feature)}</b> — ${frappe.utils.escape_html(g.priority)} (${frappe.utils.escape_html(g.status)})</li>`).join("")}</ul></div></div></div>
+					<div class="col-md-5"><div class="card"><div class="card-header">${__("Open Gaps")}</div><div class="card-body small"><p>${__("Open")}: ${gaps.total_open || 0}</p><ul class="mb-0">${(gaps.strategic_gaps || []).filter((g) => g.status !== "completed" && g.status !== "deferred").map((g) => `<li><b>${frappe.utils.escape_html(g.feature)}</b></li>`).join("")}</ul></div></div></div>
 				</div>
 			`);
+				},
+			});
 		},
 	});
 };

@@ -93,6 +93,36 @@ def get_fhir_medication_statement(medication_statement: str) -> dict:
 
 
 @frappe.whitelist()
+def get_fhir_medication_request(medication_request: str) -> dict:
+	"""Return FHIR R4 MedicationRequest from Healthcare Medication Request."""
+	medication_request = (medication_request or "").strip()
+	if not medication_request:
+		frappe.throw(_("medication_request is required"))
+	if not frappe.db.exists("Healthcare Medication Request", medication_request):
+		frappe.throw(_("Medication Request not found."))
+	doc = frappe.get_doc("Healthcare Medication Request", medication_request)
+	meds = [
+		{
+			"resourceType": "Medication",
+			"code": {"text": row.drug_name, "coding": [{"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": row.rxnorm_code}] if row.rxnorm_code else []},
+		}
+		for row in doc.items or []
+	]
+	return {
+		"resourceType": "MedicationRequest",
+		"id": doc.name,
+		"status": "active" if doc.status == "Signed" else "draft",
+		"intent": "order",
+		"subject": {"reference": f"Patient/{doc.patient}"},
+		"requester": {"reference": f"Practitioner/{doc.practitioner}"},
+		"authoredOn": str(doc.signed_on or doc.creation),
+		"reasonCode": [{"text": doc.diagnosis}],
+		"medicationCodeableConcept": meds[0]["code"] if meds else {"text": doc.diagnosis},
+		"dosageInstruction": [{"text": row.instructions or f"{row.dose} {row.frequency}"} for row in doc.items or []],
+	}
+
+
+@frappe.whitelist()
 def get_fhir_immunization(immunization: str) -> dict:
 	"""Return a FHIR R4–style Immunization resource dict."""
 	immunization = (immunization or "").strip()
