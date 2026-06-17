@@ -1,146 +1,152 @@
 frappe.pages["healthcare-patient-consumer"].on_page_load = function (wrapper) {
-	const page = frappe.ui.make_app_page({
-		parent: wrapper,
-		title: __("My Health"),
-		single_column: true,
-	});
-	const $body = $(page.body);
-	const state = { patient: null, session_token: null };
-	const $hero = $(`<div class="patient-consumer-hero" style="padding:16px;background:linear-gradient(135deg,#0d6efd22,#19875422);border-radius:12px;margin-bottom:16px"></div>`).appendTo($body);
-	$hero.html(`<h4>${__("Consumer patient experience")}</h4><p class="text-muted">${__("OTP login, appointments, lab results, imaging, payments, and telehealth.")}</p>`);
-	const $tabs = $(`<ul class="nav nav-tabs" role="tablist"></ul>`).appendTo($body);
-	const $content = $(`<div class="tab-content" style="margin-top:12px"></div>`).appendTo($body);
-	const tabs = [
-		{ id: "otp", label: __("OTP Login") },
-		{ id: "appointments", label: __("Appointments") },
-		{ id: "labs", label: __("Lab Results") },
-		{ id: "imaging", label: __("Imaging") },
-		{ id: "pay", label: __("Pay") },
-		{ id: "tele", label: __("Telehealth") },
-		{ id: "family", label: __("Family") },
-	];
-	tabs.forEach((t, i) => {
-		$tabs.append(`<li class="nav-item"><a class="nav-link ${i ? "" : "active"}" data-tab="${t.id}" href="#">${t.label}</a></li>`);
-		$content.append(`<div class="tab-pane ${i ? "" : "active"}" data-pane="${t.id}"></div>`);
-	});
-	$tabs.on("click", "a", function (e) {
-		e.preventDefault();
-		const id = $(this).data("tab");
-		$tabs.find("a").removeClass("active");
-		$(this).addClass("active");
-		$content.find("[data-pane]").removeClass("active").filter(`[data-pane='${id}']`).addClass("active");
-		render_tab(id);
-	});
-	const $patientBar = $(`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>`).prependTo($body);
-	const patient = frappe.ui.form.make_control({
-		parent: $patientBar,
-		df: { fieldtype: "Link", options: "Healthcare Patient", label: __("Patient"), fieldname: "patient" },
-		render_input: true,
-	});
-	patient.$wrapper.css({ minWidth: "260px" });
-	patient.refresh();
-	patient.$input.on("change", () => {
-		state.patient = patient.get_value();
-		render_tab("appointments");
-	});
-	function pane(id) {
-		return $content.find(`[data-pane='${id}']`);
-	}
-	function render_tab(id) {
-		const p = state.patient || patient.get_value();
-		if (!p && id !== "otp") {
-			pane(id).html(`<p class="text-muted">${__("Select a patient record.")}</p>`);
-			return;
+	const OJ = window.OmnexaJourney;
+	if (!OJ || !OJ.mountDeskPage) return;
+	const state = {
+		step: 0,
+		clinic: null,
+		doctor: null,
+		patient: null,
+		sessionToken: null,
+		registration: {},
+		booking: null,
+		token: null,
+		payMethod: "Card",
+	};
+	const company = frappe.defaults.get_user_default("Company");
+	const branch = frappe.defaults.get_user_default("Branch");
+	const $mount = OJ.mountDeskPage(wrapper, __("My Health"));
+	$(wrapper).addClass("oj-patient-journey");
+
+	async function render() {
+		const $content = $(`<div></div>`);
+		const stepperIdx = state.step <= 0 ? 0 : state.step <= 2 ? state.step : state.step + 1;
+		if (state.step > 0) $content.append(OJ.stepper(stepperIdx));
+		const $panel = $(`<div class="oj-panel"></div>`).appendTo($content);
+
+		if (state.step === 0) {
+			$panel.html(`
+				<h4>${OJ.t("تسجيل الدخول / حساب جديد", "Login / New Account")}</h4>
+				<p class="oj-muted">${OJ.t("التسجيل الكامل إلزامي قبل الحجز", "Full registration required before booking")}</p>
+				<div class="oj-tabs" style="display:flex;gap:8px;margin-bottom:12px">
+					<button class="oj-btn oj-btn-primary oj-tab-reg">${OJ.t("حساب جديد", "Register")}</button>
+					<button class="oj-btn oj-btn-outline oj-tab-login">${OJ.t("دخول OTP", "OTP Login")}</button>
+				</div>
+				<div class="oj-reg-block">${OJ.registrationForm(state.registration, { showEmail: true })}</div>
+				<div class="oj-login-block" style="display:none">
+					<div class="oj-form-group"><label>${OJ.t("الجوال", "Mobile")}</label><input class="oj-login-phone" /></div>
+					<button class="oj-btn oj-btn-outline oj-send-login-otp">${OJ.t("إرسال OTP", "Send OTP")}</button>
+				</div>
+				<div class="oj-otp-block" style="display:none;margin-top:12px">${OJ.otpPanel()}</div>
+				<div style="margin-top:12px"><button class="oj-btn oj-btn-primary oj-reg-submit">${OJ.t("تسجيل وإرسال OTP", "Register & Send OTP")}</button></div>
+			`);
+			$panel.find(".oj-tab-reg").on("click", () => {
+				$panel.find(".oj-reg-block,.oj-reg-submit").show();
+				$panel.find(".oj-login-block").hide();
+			});
+			$panel.find(".oj-tab-login").on("click", () => {
+				$panel.find(".oj-reg-block,.oj-reg-submit").hide();
+				$panel.find(".oj-login-block").show();
+			});
+			$panel.find(".oj-reg-submit").on("click", async () => {
+				const payload = { ...OJ.readRegistrationForm($panel), company, branch };
+				const res = await OJ.call("omnexa_healthcare.api.web_booking.register_for_booking", { payload });
+				state.patient = { name: res.patient, patient_name: res.patient_name };
+				state.registration = payload;
+				$panel.find(".oj-otp-block").show();
+				if (res.demo_otp) frappe.show_alert({ message: `OTP: ${res.demo_otp}`, indicator: "blue" });
+			});
+			$panel.find(".oj-send-login-otp").on("click", async () => {
+				const mobile = $panel.find(".oj-login-phone").val();
+				await OJ.call("omnexa_healthcare.api.patient_registration.login_patient_otp", { mobile });
+				$panel.find(".oj-otp-block").show();
+			});
+			$panel.find(".oj-otp-block").on("click", ".oj-resend-otp", async () => {
+				const mobile = state.registration.phone || $panel.find(".oj-login-phone").val();
+				await OJ.call("omnexa_healthcare.api.patient_otp.send_patient_otp", { mobile, patient: state.patient && state.patient.name });
+			});
+			$panel.find(".oj-otp-block").on("input", ".oj-otp-code", async function () {
+				if (String($(this).val()).length !== 6) return;
+				const mobile = state.registration.phone || $panel.find(".oj-login-phone").val();
+				const res = await OJ.call("omnexa_healthcare.api.web_booking.verify_for_booking", {
+					mobile,
+					otp: $(this).val(),
+					patient: state.patient.name,
+				});
+				state.sessionToken = res.session_token;
+				state.step = 1;
+				render();
+			});
+		} else if (state.step === 1) {
+			$panel.html(OJ.loading());
+			const clinics = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_clinics", { company, branch });
+			$panel.empty().append(`<h4>${OJ.t("اختيار العيادة", "Choose Clinic")}</h4>`);
+			$panel.append(OJ.clinicGrid(clinics, (c) => { state.clinic = c; state.step = 2; render(); }));
+		} else if (state.step === 2) {
+			const doctors = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_doctors", { company, branch, specialty: state.clinic.specialty });
+			$panel.html(`<h4>${OJ.t("اختيار الطبيب", "Choose Doctor")}</h4>`);
+			$panel.append(OJ.doctorGrid(doctors, (d) => { state.doctor = d; state.step = 3; render(); }));
+		} else if (state.step === 3) {
+			$panel.html(`
+				<h4>${OJ.t("تأكيد الحجز", "Confirm")}</h4>
+				<p>${OJ.esc(state.patient.patient_name)} · ${OJ.esc(state.doctor.practitioner_name)}</p>
+				<button class="oj-btn oj-btn-primary oj-book">${OJ.t("تأكيد الحجز", "Confirm booking")}</button>
+			`);
+			$panel.find(".oj-book").on("click", async () => {
+				const now = frappe.datetime.now_datetime();
+				const res = await OJ.call("omnexa_healthcare.api.journey_desk.create_reception_booking", {
+					patient: state.patient.name,
+					practitioner: state.doctor.name,
+					company,
+					branch,
+					specialty: state.clinic.specialty,
+					appointment_date: now,
+					slot_end: frappe.datetime.add_to_date(now, { minutes: 30 }),
+					booking_fee: 300,
+					session_token: state.sessionToken,
+				});
+				state.booking = res;
+				state.token = res;
+				state.step = 4;
+				render();
+			});
+		} else if (state.step === 4) {
+			$panel.html(`<h4>${OJ.t("تذكرة الزيارة", "Visit Token")}</h4>${OJ.visitTokenCard(state.token)}<button class="oj-btn oj-btn-primary oj-pay-step">${OJ.t("السداد", "Pay")}</button>`);
+			$panel.find(".oj-pay-step").on("click", () => { state.step = 5; render(); });
+		} else if (state.step === 5) {
+			const $pay = OJ.paymentMethods(state.payMethod, (m) => { state.payMethod = m; render(); });
+			$panel.html(`<h4>${OJ.t("السداد", "Payment")}</h4>`).append($pay);
+			$panel.append(`<button class="oj-btn oj-btn-success oj-do-pay">${OJ.t("ادفع الآن", "Pay now")}</button>`);
+			$panel.find(".oj-do-pay").on("click", async () => {
+				await OJ.call("omnexa_healthcare.api.journey_desk.record_cashier_payment", { appointment: state.token.name, payment_method: state.payMethod });
+				state.step = 6;
+				render();
+			});
+		} else if (state.step === 6) {
+			$panel.html(`
+				<h4>${OJ.t("الدخول للعيادة", "Clinic Entry")}</h4>
+				<div class="oj-token-card"><div class="oj-qr-placeholder">✓</div><p>${OJ.t("تم السداد — امسح QR عند الباب", "Paid — scan QR at clinic door")}</p></div>
+				<button class="oj-btn oj-btn-primary oj-file">${OJ.t("الملف الطبي", "Medical file")}</button>
+			`);
+			$panel.find(".oj-file").on("click", () => { state.step = 7; render(); });
+		} else {
+			const chart = await OJ.call("omnexa_healthcare.api.journey_desk.get_physician_workbench", { patient: state.patient.name });
+			$panel.html(`<h4>${OJ.t("ملخص الملف الطبي", "Medical File Summary")}</h4>${OJ.physicianModules(chart)}`);
 		}
-		if (id === "otp") render_otp();
-		if (id === "appointments") load_appointments(p);
-		if (id === "labs") load_labs(p);
-		if (id === "imaging") load_imaging(p);
-		if (id === "pay") render_pay(p);
-		if (id === "tele") render_tele(p);
-		if (id === "family") load_family(p);
-	}
-	function render_otp() {
-		const $p = pane("otp").empty();
-		$p.append(`<div class="form-group"><label>${__("Mobile")}</label><input class="form-control otp-mobile" /></div>`);
-		$p.append(`<div class="form-group"><label>${__("OTP")}</label><input class="form-control otp-code" /></div>`);
-		$p.append(`<button class="btn btn-default btn-sm btn-send-otp">${__("Send OTP")}</button> `);
-		$p.append(`<button class="btn btn-primary btn-sm btn-verify-otp">${__("Verify")}</button>`);
-		$p.find(".btn-send-otp").on("click", () => {
-			frappe.call({
-				method: "omnexa_healthcare.api.patient_otp.send_patient_otp",
-				args: { mobile: $p.find(".otp-mobile").val(), patient: state.patient },
-				callback(r) {
-					if (r.message && r.message.demo_otp) frappe.msgprint(__("Demo OTP: {0}", [r.message.demo_otp]));
-					else frappe.show_alert({ message: __("OTP sent"), indicator: "green" });
-				},
-			});
+
+		const journeySteps = state.step <= 0 ? 0 : state.step <= 2 ? state.step : state.step + 1;
+		if (state.step > 0) $content.find(".oj-stepper .oj-step").each(function (i) {
+			$(this).toggleClass("active", i + 1 === journeySteps).toggleClass("done", i + 1 < journeySteps);
 		});
-		$p.find(".btn-verify-otp").on("click", () => {
-			frappe.call({
-				method: "omnexa_healthcare.api.patient_otp.verify_patient_otp",
-				args: { mobile: $p.find(".otp-mobile").val(), otp: $p.find(".otp-code").val(), patient: state.patient },
-				callback(r) {
-					state.session_token = (r.message || {}).session_token;
-					frappe.show_alert({ message: __("Verified"), indicator: "green" });
-				},
-			});
+
+		const $shell = OJ.shell({
+			title: OJ.t("بوابة المريض — Omnexa Journey", "Patient Portal — Omnexa Journey"),
+			subtitle: OJ.t("سجّل · احجز · ادفع · تابع ملفك", "Register · Book · Pay · Track"),
+			role: OJ.t("مريض", "Patient"),
+			sidebar: OJ.defaultSidebar("patient"),
+			body: $content.html(),
 		});
+		$mount.empty().append($shell);
 	}
-	function load_appointments(p) {
-		frappe.call({
-			method: "omnexa_healthcare.api.portal.get_my_appointments",
-			args: { patient: p },
-			callback(r) {
-				const rows = r.message || [];
-				pane("appointments").html(rows.length ? `<pre>${JSON.stringify(rows, null, 2)}</pre>` : `<p>${__("No appointments.")}</p>`);
-			},
-		});
-	}
-	function load_labs(p) {
-		frappe.call({
-			method: "omnexa_healthcare.api.portal.get_my_lab_results",
-			args: { patient: p },
-			callback(r) {
-				pane("labs").html(`<pre>${JSON.stringify(r.message || [], null, 2)}</pre>`);
-			},
-		});
-	}
-	function load_imaging(p) {
-		frappe.call({
-			method: "omnexa_healthcare.api.patient_dicom_portal.get_my_imaging_study_urls",
-			args: { patient: p },
-			callback(r) {
-				pane("imaging").html(`<pre>${JSON.stringify(r.message || [], null, 2)}</pre>`);
-			},
-		});
-	}
-	function render_pay(p) {
-		const $p = pane("pay").empty();
-		$p.append(`<div class="form-group"><label>${__("Amount")}</label><input class="form-control pay-amount" type="number" value="100" /></div>`);
-		$p.append(`<button class="btn btn-primary btn-sm">${__("Create checkout")}</button><div class="pay-result" style="margin-top:8px"></div>`);
-		$p.find("button").on("click", () => {
-			const company = frappe.defaults.get_user_default("Company");
-			frappe.call({
-				method: "omnexa_healthcare.api.patient_payment.create_payment_checkout",
-				args: { patient: p, amount: $p.find(".pay-amount").val(), company },
-				callback(r) {
-					$p.find(".pay-result").html(`<a href="${frappe.utils.escape_html((r.message || {}).checkout_url || "#")}" target="_blank">${__("Open checkout")}</a>`);
-				},
-			});
-		});
-	}
-	function render_tele(p) {
-		pane("tele").html(`<p>${__("Open Telehealth Video Room from workspace after booking a telehealth appointment.")}</p><a class="btn btn-default btn-sm" href="/app/healthcare-telehealth-room">${__("Telehealth room")}</a>`);
-	}
-	function load_family(p) {
-		frappe.call({
-			method: "omnexa_healthcare.api.patient_dependents.list_dependents",
-			args: { guardian_patient: p },
-			callback(r) {
-				pane("family").html(`<pre>${JSON.stringify(r.message || [], null, 2)}</pre>`);
-			},
-		});
-	}
-	render_tab("otp");
+
+	render();
 };

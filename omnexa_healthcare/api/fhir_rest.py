@@ -18,6 +18,26 @@ from omnexa_healthcare.api.fhir_export import (
 )
 
 
+def get_fhir_device(device_id: str) -> dict:
+	if frappe.db.exists("Healthcare Medical Device", device_id):
+		doc = frappe.get_doc("Healthcare Medical Device", device_id)
+	else:
+		name = frappe.db.get_value("Healthcare Medical Device", {"device_code": device_id}, "name")
+		if not name:
+			frappe.throw(_("Device not found"))
+		doc = frappe.get_doc("Healthcare Medical Device", name)
+	return {
+		"resourceType": "Device",
+		"id": doc.name,
+		"identifier": [{"system": "omnexa/device-code", "value": doc.device_code}],
+		"deviceName": [{"name": doc.device_name, "type": "user-friendly-name"}],
+		"type": {"text": doc.device_type},
+		"manufacturer": doc.manufacturer or "",
+		"modelNumber": doc.model_number or "",
+		"status": "active" if doc.status == "Active" else "inactive",
+	}
+
+
 READ_MAP = {
 	"Patient": ("Healthcare Patient", get_fhir_patient, "patient"),
 	"Encounter": ("Healthcare Encounter", get_fhir_encounter, "encounter"),
@@ -25,6 +45,7 @@ READ_MAP = {
 	"AllergyIntolerance": ("Healthcare Allergy Intolerance", get_fhir_allergy_intolerance, "allergy_intolerance"),
 	"MedicationRequest": ("Healthcare Medication Request", get_fhir_medication_request, "medication_request"),
 	"Observation": ("Healthcare Observation", get_fhir_observation, "observation"),
+	"Device": ("Healthcare Medical Device", get_fhir_device, "device"),
 }
 
 WRITE_MAP = {

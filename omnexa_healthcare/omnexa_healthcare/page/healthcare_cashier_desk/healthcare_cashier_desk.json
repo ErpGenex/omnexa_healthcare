@@ -1,0 +1,9 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-cashier-desk",
+	"page_name": "healthcare-cashier-desk",
+	"title": "Cashier Desk",
+	"standard": "Yes",
+	"roles": [{"role": "System Manager"}, {"role": "Company Admin"}, {"role": "Desk User"}]
+}

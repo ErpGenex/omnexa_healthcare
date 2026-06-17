@@ -476,6 +476,8 @@
 				date: new Date().toISOString().slice(0, 10),
 				slot: null,
 				patient: {},
+				patientId: "",
+				sessionToken: "",
 			};
 			let doctors = [];
 
@@ -493,6 +495,7 @@
 				this.t("step_doctor"),
 				this.t("step_time"),
 				this.t("step_personal"),
+				this.t("otp") || "OTP",
 				this.t("step_confirm"),
 			];
 
@@ -518,14 +521,30 @@
 				const family = document.getElementById("hc-family");
 				const phone = document.getElementById("hc-phone");
 				const email = document.getElementById("hc-email");
+				const nid = document.getElementById("hc-nid");
+				const birth = document.getElementById("hc-birth");
+				const gender = document.getElementById("hc-gender");
 				if (!given) return false;
 				state.patient = {
 					given_name: given.value.trim(),
 					family_name: family.value.trim(),
 					phone: phone.value.trim(),
 					email: email.value.trim(),
+					national_id: nid ? nid.value.trim() : "",
+					birth_date: birth ? birth.value : "",
+					gender: gender ? gender.value : "",
+					company: cfg.company,
+					branch: cfg.branch,
 				};
-				return !!(state.patient.given_name && state.patient.family_name && state.patient.phone);
+				return !!(
+					state.patient.given_name &&
+					state.patient.family_name &&
+					state.patient.phone &&
+					state.patient.email &&
+					state.patient.national_id &&
+					state.patient.birth_date &&
+					state.patient.gender
+				);
 			};
 
 			const advance = () => {
@@ -546,7 +565,7 @@
 					<div class="hc-panel" id="hc-booking-panel"></div>
 					<div style="display:flex;justify-content:space-between;margin-top:16px;">
 						<button type="button" class="hc-btn hc-btn-outline" id="hc-book-back" ${state.step === 1 ? "disabled" : ""}>${this.t("back")}</button>
-						${state.step === 5 ? `<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${this.t("confirm")}</button>` : ""}
+						${state.step === 6 ? `<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${this.t("confirm")}</button>` : ""}
 					</div>`;
 
 				const panel = document.getElementById("hc-booking-panel");
@@ -649,27 +668,57 @@
 					await loadSlots();
 				} else if (state.step === 4) {
 					panel.innerHTML = `
+						<p class="hc-muted" style="margin-top:0">${this.t("registration_required") || "Full registration required before booking"}</p>
 						<div class="hc-form-grid">
 							<div class="hc-field"><label>${this.t("first_name")}</label><input id="hc-given" value="${this.esc(state.patient.given_name || "")}"></div>
 							<div class="hc-field"><label>${this.t("last_name")}</label><input id="hc-family" value="${this.esc(state.patient.family_name || "")}"></div>
+							<div class="hc-field"><label>${this.t("national_id") || "National ID"}</label><input id="hc-nid" value="${this.esc(state.patient.national_id || "")}"></div>
 							<div class="hc-field"><label>${this.t("phone")}</label><input id="hc-phone" value="${this.esc(state.patient.phone || "")}"></div>
 							<div class="hc-field"><label>${this.t("email")}</label><input id="hc-email" type="email" value="${this.esc(state.patient.email || "")}"></div>
-						</div>`;
-					let personalTimer = null;
-					const tryAdvancePersonal = () => {
-						if (syncPatientFromForm()) {
+							<div class="hc-field"><label>${this.t("birth_date") || "Birth date"}</label><input id="hc-birth" type="date" value="${this.esc(state.patient.birth_date || "")}"></div>
+							<div class="hc-field"><label>${this.t("gender") || "Gender"}</label>
+								<select id="hc-gender"><option value="">${this.t("select") || "Select"}</option>
+								<option value="male">${this.t("male") || "Male"}</option><option value="female">${this.t("female") || "Female"}</option></select></div>
+						</div>
+						<button type="button" class="hc-btn hc-btn-primary" id="hc-reg-next" style="margin-top:12px">${this.t("register_send_otp") || "Register & Send OTP"}</button>`;
+					document.getElementById("hc-reg-next")?.addEventListener("click", async () => {
+						if (!syncPatientFromForm()) {
+							frappe.msgprint(this.t("fill_all_fields") || "Please fill all required fields");
+							return;
+						}
+						try {
+							const r = await frappe.call({
+								method: "omnexa_healthcare.api.web_booking.register_for_booking",
+								args: { payload: state.patient },
+							});
+							state.patientId = (r.message && r.message.patient) || "";
+							if (r.message && r.message.demo_otp) frappe.show_alert({ message: `OTP: ${r.message.demo_otp}`, indicator: "blue" });
 							state.step = 5;
 							render();
+						} catch (e) {
+							frappe.msgprint((e && e.message) || "Registration failed");
 						}
-					};
-					["hc-given", "hc-family", "hc-phone", "hc-email"].forEach((id) => {
-						document.getElementById(id)?.addEventListener("input", () => {
-							clearTimeout(personalTimer);
-							personalTimer = setTimeout(tryAdvancePersonal, 450);
-						});
-						document.getElementById(id)?.addEventListener("blur", tryAdvancePersonal);
 					});
 				} else if (state.step === 5) {
+					panel.innerHTML = `
+						<h3>${this.t("otp") || "OTP Verification"}</h3>
+						<div class="hc-field" style="max-width:240px"><label>${this.t("otp_code") || "OTP Code"}</label><input id="hc-otp" maxlength="6"></div>
+						<button type="button" class="hc-btn hc-btn-primary" id="hc-otp-verify">${this.t("verify") || "Verify"}</button>`;
+					document.getElementById("hc-otp-verify")?.addEventListener("click", async () => {
+						const otp = document.getElementById("hc-otp").value;
+						try {
+							const r = await frappe.call({
+								method: "omnexa_healthcare.api.web_booking.verify_for_booking",
+								args: { mobile: state.patient.phone, otp, patient: state.patientId },
+							});
+							state.sessionToken = (r.message && r.message.session_token) || "";
+							state.step = 6;
+							render();
+						} catch (e) {
+							frappe.msgprint((e && e.message) || "OTP failed");
+						}
+					});
+				} else if (state.step === 6) {
 					const doc = doctors.find((d) => d.name === state.practitioner);
 					panel.innerHTML = `
 						<h3>${this.t("booking_summary")}</h3>
@@ -689,7 +738,7 @@
 					}
 				});
 				document.getElementById("hc-book-next")?.addEventListener("click", async () => {
-					if (state.step === 5) {
+					if (state.step === 6) {
 						await this.submitBooking(state, cfg);
 					}
 				});
@@ -728,10 +777,8 @@
 							branch: cfg.branch,
 							service_code: state.service_code,
 							practitioner: state.practitioner,
-							given_name: state.patient.given_name,
-							family_name: state.patient.family_name,
-							phone: state.patient.phone,
-							email: state.patient.email,
+							patient: state.patientId,
+							session_token: state.sessionToken,
 							appointment_date: state.slot.start,
 							slot_end: state.slot.end,
 						},

@@ -1,0 +1,9 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-physician-workbench",
+	"page_name": "healthcare-physician-workbench",
+	"title": "Physician Workbench",
+	"standard": "Yes",
+	"roles": [{"role": "System Manager"}, {"role": "Physician"}, {"role": "Company Admin"}, {"role": "Desk User"}]
+}

@@ -1,0 +1,137 @@
+{
+	"actions": [],
+	"autoname": "format:HMD-{device_code}",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"device_code",
+		"device_name",
+		"device_type",
+		"manufacturer",
+		"model_number",
+		"serial_number",
+		"integration_protocol",
+		"fhir_device_id",
+		"company",
+		"branch",
+		"status",
+		"last_sync_at"
+	],
+	"fields": [
+		{
+			"fieldname": "device_code",
+			"fieldtype": "Data",
+			"label": "Device code",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "device_name",
+			"fieldtype": "Data",
+			"label": "Device name",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "device_type",
+			"fieldtype": "Select",
+			"label": "Device type",
+			"options": "Vital Signs Monitor\nInfusion Pump\nVentilator\nDefibrillator\nPulse Oximeter\nECG\nLab Analyzer\nImaging Modality\nWearable RPM\nOther",
+			"default": "Vital Signs Monitor",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "manufacturer",
+			"fieldtype": "Data",
+			"label": "Manufacturer"
+		},
+		{
+			"fieldname": "model_number",
+			"fieldtype": "Data",
+			"label": "Model"
+		},
+		{
+			"fieldname": "serial_number",
+			"fieldtype": "Data",
+			"label": "Serial number"
+		},
+		{
+			"fieldname": "integration_protocol",
+			"fieldtype": "Select",
+			"label": "Protocol",
+			"options": "HL7_ORU\nFHIR_Observation\nASTM\nDICOM\nMQTT\nREST_API",
+			"default": "FHIR_Observation",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "fhir_device_id",
+			"fieldtype": "Data",
+			"label": "FHIR Device ID"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch"
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Active\nInactive\nMaintenance",
+			"default": "Active",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "last_sync_at",
+			"fieldtype": "Datetime",
+			"label": "Last sync"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-06 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Medical Device",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"report": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"export": 1,
+			"report": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

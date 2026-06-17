@@ -13,6 +13,11 @@ from frappe.utils import cint, flt, get_datetime, validate_email_address, valida
 
 from frappe.utils import get_url
 
+from omnexa_healthcare.api.patient_registration import (
+	assert_booking_allowed,
+	register_patient_online,
+	verify_registration_and_session,
+)
 from omnexa_healthcare.api.scheduling import create_healthcare_appointment
 from omnexa_healthcare.scheduling_engine import get_available_slots
 
@@ -111,12 +116,23 @@ def get_booking_slots(
 
 @frappe.whitelist(allow_guest=True)
 def book_appointment_online(payload: str | dict) -> dict:
-	"""Create a website booking for a published service."""
+	"""Create a website booking — requires verified patient session (full registration + OTP)."""
 	data = frappe.parse_json(payload) if isinstance(payload, str) else frappe._dict(payload or {})
-	required = ("company", "branch", "service_code", "appointment_date", "slot_end", "given_name", "family_name", "phone")
+	required = (
+		"company",
+		"branch",
+		"service_code",
+		"appointment_date",
+		"slot_end",
+		"patient",
+		"session_token",
+	)
 	for key in required:
 		if not data.get(key):
 			frappe.throw(_("{0} is required").format(key.replace("_", " ").title()))
+
+	assert_booking_allowed(data.patient, session_token=data.session_token, online=True)
+	patient = data.patient
 
 	catalog = frappe.db.get_value(
 		"Healthcare Service Catalog",
@@ -139,22 +155,6 @@ def book_appointment_online(payload: str | dict) -> dict:
 	)
 	if not catalog:
 		frappe.throw(_("Service is not available for online booking."))
-
-	patient = _resolve_or_create_patient(
-		company=data.company,
-		branch=data.branch,
-		given_name=data.given_name,
-		family_name=data.family_name,
-		phone=data.phone,
-		email=data.get("email"),
-	)
-	portal_user = _ensure_portal_user(
-		given_name=data.given_name,
-		family_name=data.family_name,
-		phone=data.phone,
-		email=data.get("email"),
-		company=data.company,
-	)
 
 	practitioner = data.get("practitioner") or catalog.default_practitioner
 	if not practitioner:
@@ -189,9 +189,21 @@ def book_appointment_online(payload: str | dict) -> dict:
 	return {
 		**result,
 		"patient": patient,
-		"user": portal_user,
+		"user": frappe.db.get_value("Healthcare Patient", patient, "portal_user"),
 		"message": _("Appointment booked successfully."),
 	}
+
+
+@frappe.whitelist(allow_guest=True)
+def register_for_booking(payload: str | dict) -> dict:
+	"""Step 1: Full patient registration + OTP (online booking gate)."""
+	return register_patient_online(payload)
+
+
+@frappe.whitelist(allow_guest=True)
+def verify_for_booking(mobile: str, otp: str, patient: str) -> dict:
+	"""Step 2: OTP verification — returns session_token for booking."""
+	return verify_registration_and_session(mobile, otp, patient)
 
 
 def _resolve_or_create_patient(

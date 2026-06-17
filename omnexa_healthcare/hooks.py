@@ -28,12 +28,22 @@ required_apps = ["omnexa_core", "omnexa_accounting"]
 app_include_css = [
 	"/assets/omnexa_healthcare/css/healthcare-rtl.css",
 	"/assets/omnexa_healthcare/css/healthcare-accessibility.css",
+	"/assets/omnexa_healthcare/css/omnexa-journey.css",
 ]
-app_include_js = "/assets/omnexa_healthcare/js/healthcare_terminology.js"
+app_include_js = [
+	"/assets/omnexa_healthcare/js/healthcare_terminology.js",
+	"/assets/omnexa_healthcare/js/omnexa-journey.js",
+]
 
 # include js, css files in header of web template
-web_include_css = "/assets/omnexa_healthcare/css/hospital_website.css"
-web_include_js = "/assets/omnexa_healthcare/js/hospital_website.js"
+web_include_css = [
+	"/assets/omnexa_healthcare/css/hospital_website.css",
+	"/assets/omnexa_healthcare/css/omnexa-journey.css",
+]
+web_include_js = [
+	"/assets/omnexa_healthcare/js/hospital_website.js",
+	"/assets/omnexa_healthcare/js/omnexa-journey.js",
+]
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "omnexa_healthcare/public/scss/website"

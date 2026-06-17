@@ -17,6 +17,17 @@ WorkspaceLink = tuple[str, str, str]  # link_type, link_to, label
 # Curated sections (priority order) — anything missing is auto-added at the end.
 WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 	(
+		"🌐 Omnexa Journey Experience",
+		[
+			("Page", "healthcare-reception-desk", "Reception Desk"),
+			("Page", "healthcare-cashier-desk", "Cashier / Treasury"),
+			("Page", "healthcare-physician-workbench", "Physician Workbench"),
+			("Page", "healthcare-patient-consumer", "Patient Portal Journey"),
+			("Page", "healthcare-patient-queue", "Smart Queue Board"),
+			("Page", "healthcare-demo-hub", "Demo Hub & Role Logins"),
+		],
+	),
+	(
 		"📊 Dashboards & Portals",
 		[
 			("Page", "healthcare-executive-dashboard", "Executive Dashboard"),

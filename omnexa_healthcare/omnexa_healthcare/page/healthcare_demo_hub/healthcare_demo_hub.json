@@ -1,0 +1,9 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-demo-hub",
+	"page_name": "healthcare-demo-hub",
+	"title": "Healthcare Demo Hub",
+	"standard": "Yes",
+	"roles": [{"role": "System Manager"}]
+}

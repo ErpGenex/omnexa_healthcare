@@ -69,6 +69,18 @@ DEFAULT_SPECIALTY_MODULES: list[dict] = [
 	{"module_code": "neonatology", "module_name": "Neonatology", "specialty_name": "Pediatrics", "chart_type": "none", "encounter_sections": ["Gestational Age", "NICU Vitals", "Feeding Plan"]},
 	{"module_code": "anesthesia", "module_name": "Anesthesia", "specialty_name": "Surgery", "chart_type": "none", "encounter_sections": ["ASA Class", "Airway", "Anesthesia Plan"]},
 	{"module_code": "emergency_medicine", "module_name": "Emergency Medicine", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Triage", "Primary Survey", "Disposition"]},
+	{"module_code": "plastic_surgery", "module_name": "Plastic & Reconstructive Surgery", "specialty_name": "Surgery", "chart_type": "body_map", "encounter_sections": ["Assessment", "Surgical Plan", "Photos"]},
+	{"module_code": "vascular_surgery", "module_name": "Vascular Surgery", "specialty_name": "Surgery", "chart_type": "none", "encounter_sections": ["Vascular History", "Duplex", "Plan"]},
+	{"module_code": "pain_management", "module_name": "Pain Management", "specialty_name": "General Medicine", "chart_type": "body_map", "encounter_sections": ["Pain Score", "Modalities", "Plan"]},
+	{"module_code": "palliative_care", "module_name": "Palliative & Hospice Care", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Goals of Care", "Symptom Control", "Family Meeting"]},
+	{"module_code": "sports_medicine", "module_name": "Sports Medicine", "specialty_name": "Orthopedics", "chart_type": "body_map", "encounter_sections": ["Injury History", "Functional Exam", "Return to Play"]},
+	{"module_code": "geriatrics", "module_name": "Geriatrics", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Cognitive Screen", "Falls Risk", "Polypharmacy Review"]},
+	{"module_code": "nuclear_medicine", "module_name": "Nuclear Medicine", "specialty_name": "Radiology", "chart_type": "none", "encounter_sections": ["Tracer Plan", "Dosimetry", "Report"]},
+	{"module_code": "sleep_medicine", "module_name": "Sleep Medicine", "specialty_name": "General Medicine", "chart_type": "none", "encounter_sections": ["Sleep History", "PSG Results", "CPAP Plan"]},
+	{"module_code": "bariatrics", "module_name": "Bariatric Surgery", "specialty_name": "Surgery", "chart_type": "none", "encounter_sections": ["BMI History", "Comorbidities", "Surgical Plan"]},
+	{"module_code": "interventional_radiology", "module_name": "Interventional Radiology", "specialty_name": "Radiology", "chart_type": "none", "encounter_sections": ["Indication", "Procedure", "Post-procedure Care"]},
+	{"module_code": "pathology", "module_name": "Anatomic Pathology", "specialty_name": "Laboratory", "chart_type": "none", "encounter_sections": ["Specimen", "Gross", "Microscopy"]},
+	{"module_code": "maxillofacial", "module_name": "Oral & Maxillofacial Surgery", "specialty_name": "Dental", "chart_type": "dental_fdi", "encounter_sections": ["Facial Trauma", "Imaging", "Surgical Plan"]},
 ]
 
 

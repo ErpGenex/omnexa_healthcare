@@ -181,6 +181,26 @@ MATURITY_DOMAINS: dict[str, dict[str, Any]] = {
 			"omnexa_healthcare.api.family_risk_engine",
 		],
 	},
+	"patient_experience": {
+		"weight": 5,
+		"checks": [
+			"healthcare-reception-desk",
+			"healthcare-cashier-desk",
+			"healthcare-physician-workbench",
+			"healthcare-patient-consumer",
+			"omnexa_healthcare.api.journey_desk",
+			"omnexa_healthcare.api.patient_registration",
+			"registration_status",
+		],
+	},
+	"medical_devices": {
+		"weight": 4,
+		"checks": [
+			"Healthcare Medical Device",
+			"omnexa_healthcare.api.device_integration",
+			"omnexa_healthcare.api.fhir_rest",
+		],
+	},
 	"eprescription": {
 		"weight": 6,
 		"checks": [
@@ -267,6 +287,8 @@ def _check_item(item: str) -> bool:
 	if frappe.db.exists("Page", item):
 		return True
 	if frappe.db.exists("Report", item):
+		return True
+	if "." not in item and frappe.db.has_column("Healthcare Patient", item):
 		return True
 	return False
 

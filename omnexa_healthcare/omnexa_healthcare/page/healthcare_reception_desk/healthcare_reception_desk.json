@@ -1,0 +1,9 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-reception-desk",
+	"page_name": "healthcare-reception-desk",
+	"title": "Reception Desk",
+	"standard": "Yes",
+	"roles": [{"role": "System Manager"}, {"role": "Company Admin"}, {"role": "Desk User"}, {"role": "Nursing User"}]
+}
