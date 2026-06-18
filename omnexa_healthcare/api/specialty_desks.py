@@ -9,19 +9,24 @@ import frappe
 from frappe import _
 from frappe.utils import flt, getdate, now_datetime, today
 
+from omnexa_healthcare.api.erp_desk_helpers import safe_doctype_fields
+
 
 @frappe.whitelist()
 def get_morgue_dashboard(branch: str | None = None, company: str | None = None) -> dict:
+	if not frappe.db.exists("DocType", "Healthcare Morgue Case"):
+		return {"cases": [], "open_count": 0, "missing_doctype": True}
+
 	filters: dict = {}
 	if branch:
 		filters["branch"] = branch
 	if company:
 		filters["company"] = company
-	open_status = ["Admitted", "admitted", "Stored", "stored", "Pending Release"]
+	open_status = ["Admitted", "Stored", "Pending Release"]
 	cases = frappe.get_all(
 		"Healthcare Morgue Case",
-		filters={**filters, "status": ["in", open_status]} if frappe.db.count("Healthcare Morgue Case", filters) else filters,
-		fields=["name", "patient", "body_tag", "status", "intake_datetime", "branch"],
+		filters={**filters, "status": ["in", open_status]},
+		fields=["name", "patient", "patient_display", "body_tag", "status", "intake_datetime", "branch", "storage_location"],
 		order_by="intake_datetime desc",
 		limit=50,
 	)
@@ -29,13 +34,16 @@ def get_morgue_dashboard(branch: str | None = None, company: str | None = None) 
 		cases = frappe.get_all(
 			"Healthcare Morgue Case",
 			filters=filters,
-			fields=["name", "patient", "body_tag", "status", "intake_datetime", "branch"],
+			fields=["name", "patient", "patient_display", "body_tag", "status", "intake_datetime", "branch", "storage_location"],
 			order_by="modified desc",
 			limit=20,
 		)
 	for row in cases:
-		row["patient_name"] = frappe.db.get_value("Healthcare Patient", row.patient, "full_name") if row.patient else ""
-	return {"cases": cases, "open_count": len(cases)}
+		if not row.get("patient_display") and row.get("patient"):
+			row["patient_name"] = frappe.db.get_value("Healthcare Patient", row.patient, "full_name") or ""
+		else:
+			row["patient_name"] = row.get("patient_display") or ""
+	return {"cases": cases, "open_count": len([c for c in cases if c.get("status") in open_status])}
 
 
 @frappe.whitelist()
@@ -50,17 +58,28 @@ def release_morgue_case(morgue_case: str, released_to: str | None = None) -> dic
 	return {"ok": True, "name": doc.name, "status": doc.status}
 
 
+def _service_request_list_fields() -> list[str]:
+	return [f for f in ["name", "patient", "request_title", "status", "authored_on"] if frappe.db.has_column("Healthcare Service Request", f)]
+
+
+def _bed_list_fields() -> list[str]:
+	return [f for f in ["name", "bed_label", "bed_type", "status", "service_unit", "ward_service_unit"] if frappe.db.has_column("Healthcare Bed", f)]
+
+
 @frappe.whitelist()
 def get_bed_board(branch: str, ward: str | None = None) -> dict:
 	if not branch:
 		frappe.throw(_("branch is required"))
 	bed_filters = {"branch": branch}
-	if ward:
-		bed_filters["ward_service_unit"] = ward
+	ward_field = "ward_service_unit" if frappe.db.has_column("Healthcare Bed", "ward_service_unit") else (
+		"service_unit" if frappe.db.has_column("Healthcare Bed", "service_unit") else None
+	)
+	if ward and ward_field:
+		bed_filters[ward_field] = ward
 	beds = frappe.get_all(
 		"Healthcare Bed",
 		filters=bed_filters,
-		fields=["name", "bed_label", "bed_type", "status", "ward_service_unit"],
+		fields=_bed_list_fields() or ["name", "bed_label", "status"],
 		order_by="bed_label asc",
 		limit=200,
 	)
@@ -116,17 +135,34 @@ def get_ot_schedule(branch: str, schedule_date: str | None = None) -> list[dict]
 	return rows
 
 
-@frappe.whitelist()
-def get_dialysis_schedule(branch: str) -> list[dict]:
-	"""Dialysis sessions from appointments in dialysis-related specialties."""
+def _dialysis_specialties() -> list[str]:
 	specs = frappe.get_all(
 		"Healthcare Specialty",
 		filters={"specialty_name": ["like", "%Dialysis%"]},
 		pluck="name",
 		limit=5,
 	)
-	if not specs:
+	if not specs and frappe.db.has_column("Healthcare Specialty", "module_code"):
 		specs = frappe.get_all("Healthcare Specialty", filters={"module_code": "dialysis"}, pluck="name", limit=5)
+	return specs
+
+
+def _ld_specialties() -> list[str]:
+	specs = frappe.get_all(
+		"Healthcare Specialty",
+		filters={"specialty_name": ["like", "%Obstetric%"]},
+		pluck="name",
+		limit=5,
+	)
+	if not specs and frappe.db.has_column("Healthcare Specialty", "module_code"):
+		specs = frappe.get_all("Healthcare Specialty", filters={"module_code": "neonatology"}, pluck="name", limit=5)
+	return specs
+
+
+@frappe.whitelist()
+def get_dialysis_schedule(branch: str) -> list[dict]:
+	"""Dialysis sessions from appointments in dialysis-related specialties."""
+	specs = _dialysis_specialties()
 	filters = {
 		"branch": branch,
 		"appointment_date": [">=", f"{today()} 00:00:00"],
@@ -145,14 +181,7 @@ def get_dialysis_schedule(branch: str) -> list[dict]:
 
 @frappe.whitelist()
 def get_ld_board(branch: str) -> list[dict]:
-	specs = frappe.get_all(
-		"Healthcare Specialty",
-		filters={"specialty_name": ["like", "%Obstetric%"]},
-		pluck="name",
-		limit=5,
-	)
-	if not specs:
-		specs = frappe.get_all("Healthcare Specialty", filters={"module_code": "neonatology"}, pluck="name", limit=5)
+	specs = _ld_specialties()
 	filters = {"branch": branch, "status": ["in", ["admitted", "Admitted"]]}
 	if specs and frappe.db.has_column("Healthcare Admission", "specialty"):
 		filters["specialty"] = ["in", specs]
@@ -208,8 +237,11 @@ def get_patient_results_portal(patient: str) -> dict:
 	rad = frappe.get_all(
 		"Healthcare Diagnostic Report",
 		filters={"patient": patient, "report_category": "radiology", "status": ["in", ["final", "preliminary"]]},
-		fields=["name", "report_title", "conclusion", "findings", "effective_datetime", "status", "pacs_wado_url"],
-		order_by="effective_datetime desc",
+		fields=safe_doctype_fields(
+			"Healthcare Diagnostic Report",
+			["name", "report_title", "conclusion", "findings", "effective_datetime", "status", "pacs_wado_url"],
+		),
+		order_by="effective_datetime desc" if frappe.db.has_column("Healthcare Diagnostic Report", "effective_datetime") else "modified desc",
 		limit=20,
 	)
 	return {"lab_results": lab, "radiology_results": rad}
@@ -256,10 +288,12 @@ def get_rehab_orders(company: str | None = None, branch: str | None = None) -> d
 	rows = frappe.get_all(
 		"Healthcare Service Request",
 		filters={**filters, "request_category": ["in", ["physiotherapy", "rehabilitation", "Rehabilitation"]]},
-		fields=["name", "patient", "request_title", "status", "order_date"],
+		fields=_service_request_list_fields() or ["name", "patient", "status"],
 		order_by="modified desc",
 		limit=30,
 	) if frappe.db.exists("DocType", "Healthcare Service Request") else []
+	for row in rows:
+		row["order_date"] = row.get("authored_on") or row.get("modified") or ""
 	return {"orders": rows, "count": len(rows)}
 
 
@@ -269,27 +303,36 @@ def get_nutrition_orders(company: str | None = None, branch: str | None = None) 
 	rows = frappe.get_all(
 		"Healthcare Service Request",
 		filters={**filters, "request_category": ["in", ["nutrition", "dietetics", "Nutrition"]]},
-		fields=["name", "patient", "request_title", "status", "order_date"],
+		fields=_service_request_list_fields() or ["name", "patient", "status"],
 		order_by="modified desc",
 		limit=30,
 	) if frappe.db.exists("DocType", "Healthcare Service Request") else []
+	for row in rows:
+		row["order_date"] = row.get("authored_on") or row.get("modified") or ""
 	return {"orders": rows, "count": len(rows)}
 
 
 @frappe.whitelist()
 def get_appointments_directory(company: str | None = None, branch: str | None = None) -> dict:
 	branch = branch or frappe.defaults.get_user_default("Branch")
-	filters: dict = {}
+	company = company or frappe.defaults.get_user_default("Company")
+	from frappe.utils import add_days
+
+	filters: dict = {"status": ["not in", ["Cancelled"]]}
 	if branch:
 		filters["branch"] = branch
 	if company:
 		filters["company"] = company
+	# Today + upcoming week so newly booked visits always appear
+	window_start = f"{add_days(today(), -1)} 00:00:00"
+	window_end = f"{add_days(today(), 14)} 23:59:59"
+	filters["appointment_date"] = ["between", [window_start, window_end]]
 	rows = frappe.get_all(
 		"Healthcare Appointment",
 		filters=filters,
-		fields=["name", "patient", "patient_display", "practitioner", "appointment_date", "status", "specialty"],
+		fields=["name", "patient", "patient_display", "practitioner", "appointment_date", "status", "specialty", "payment_status"],
 		order_by="appointment_date desc",
-		limit=50,
+		limit=100,
 	)
 	return {"appointments": rows, "count": len(rows)}
 
@@ -301,12 +344,20 @@ def get_patients_directory(company: str | None = None, branch: str | None = None
 		filters["company"] = company
 	if branch and frappe.db.has_column("Healthcare Patient", "branch"):
 		filters["branch"] = branch
+	fields = [f for f in ["name", "full_name", "gender", "birth_date"] if frappe.db.has_column("Healthcare Patient", f)]
 	rows = frappe.get_all(
 		"Healthcare Patient",
 		filters=filters,
-		fields=["name", "full_name", "mobile", "gender", "date_of_birth"],
+		fields=fields or ["name"],
 		order_by="modified desc",
 		limit=50,
 	)
+	for row in rows:
+		row["mobile"] = frappe.db.get_value(
+			"Healthcare Patient Telecom",
+			{"parent": row.name, "parenttype": "Healthcare Patient"},
+			"value",
+			order_by="rank asc",
+		) or ""
 	return {"patients": rows, "count": len(rows)}
 

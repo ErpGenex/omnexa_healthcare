@@ -34,7 +34,10 @@ app_include_js = [
 	"/assets/omnexa_healthcare/js/healthcare_terminology.js",
 	"/assets/omnexa_healthcare/js/omnexa-journey.js",
 	"/assets/omnexa_healthcare/js/omnexa-journey-kit.js",
+	"/assets/omnexa_healthcare/js/healthcare-navbar-lang.js",
 	"/assets/omnexa_healthcare/js/healthcare-portal-factory.js",
+	"/assets/omnexa_healthcare/js/dental-interactive-chart.js",
+	"/assets/omnexa_healthcare/js/healthcare-department-desk.js",
 ]
 
 # include js, css files in header of web template
@@ -185,6 +188,8 @@ permission_query_conditions = {
 	"Healthcare Family Risk Score": "omnexa_healthcare.permissions.healthcare_family_risk_score_query_conditions",
 	"Healthcare Medication Request": "omnexa_healthcare.permissions.healthcare_medication_request_query_conditions",
 	"Healthcare Cds Alert Log": "omnexa_healthcare.permissions.healthcare_cds_alert_log_query_conditions",
+	"Healthcare Er Visit": "omnexa_healthcare.permissions.healthcare_er_visit_query_conditions",
+	"Healthcare Morgue Case": "omnexa_healthcare.permissions.healthcare_morgue_case_query_conditions",
 	"Healthcare Pharmacy Substitution Log": "omnexa_healthcare.permissions.healthcare_pharmacy_substitution_log_query_conditions",
 	"Healthcare Patient Erasure Request": "omnexa_healthcare.permissions.healthcare_patient_erasure_request_query_conditions",
 }
@@ -238,6 +243,7 @@ _BRANCH_VALIDATE = [
 	"Healthcare Patient Consent",
 	"Healthcare Lab Qc Log",
 	"Healthcare Er Visit",
+	"Healthcare Morgue Case",
 	"Healthcare In Basket Item",
 	"Healthcare Adt Transfer",
 	"Healthcare Companion Stay",

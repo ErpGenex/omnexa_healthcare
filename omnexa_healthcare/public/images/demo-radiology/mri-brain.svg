@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Demo MRI brain">
+  <rect width="640" height="480" fill="#0b0b10"/>
+  <ellipse cx="320" cy="230" rx="150" ry="170" fill="#1a1f2e" stroke="#4a6080" stroke-width="3"/>
+  <path d="M220 200 Q320 120 420 200 Q380 320 320 350 Q260 320 220 200" fill="#2a3348" opacity="0.85"/>
+  <ellipse cx="280" cy="220" rx="28" ry="40" fill="#3d4d66"/>
+  <ellipse cx="360" cy="220" rx="28" ry="40" fill="#3d4d66"/>
+  <text x="320" y="430" text-anchor="middle" fill="#c8b6ff" font-family="Arial,sans-serif" font-size="22">Demo MRI Brain</text>
+</svg>

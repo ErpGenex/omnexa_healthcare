@@ -11,6 +11,7 @@ import frappe
 from frappe import _
 from frappe.utils import cint, flt, getdate, now_datetime, today
 
+from omnexa_healthcare.api.erp_desk_helpers import get_accounts_summary, get_purchases_summary
 from omnexa_healthcare.api.inventory_healthcare import get_par_level_alerts
 from omnexa_healthcare.api.pharmacy import api_check_drug_interactions, api_pharmacy_pos_dispense, api_select_fefo_batch
 
@@ -58,10 +59,62 @@ def _default_pharmacy_warehouse(company: str, branch: str | None = None) -> str 
 	return frappe.db.get_value("Warehouse", {"company": company, "is_group": 0}, "name")
 
 
+def _item_selling_rate(item: str) -> float:
+	code = _item_code(item)
+	if not code:
+		return 0.0
+	if frappe.db.has_column("Item", "standard_selling_rate"):
+		std = frappe.db.get_value("Item", item, "standard_selling_rate")
+		if std and flt(std) > 0:
+			return flt(std)
+	if frappe.db.has_column("Item", "standard_rate"):
+		std = frappe.db.get_value("Item", item, "standard_rate")
+		if std and flt(std) > 0:
+			return flt(std)
+	rate = frappe.db.sql(
+		"""
+		SELECT rate FROM `tabSales Invoice Item`
+		WHERE item_code = %s AND rate > 0
+		ORDER BY modified DESC LIMIT 1
+		""",
+		(code,),
+	)
+	return flt(rate[0][0]) if rate else 0.0
+
+
+def _demo_pharmacy_rate(item_code: str) -> float:
+	try:
+		from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER, PHARMACY_ITEMS
+
+		code = (item_code or "").upper()
+		if not code.startswith(DEMO_MARKER):
+			return 0.0
+		for short, _label, rate in PHARMACY_ITEMS:
+			if code == f"{DEMO_MARKER}{short}":
+				return flt(rate)
+	except Exception:
+		return 0.0
+	return 0.0
+
+
+def _item_rate(item: str) -> float:
+	rate = _item_selling_rate(item)
+	if rate > 0:
+		return rate
+	return _demo_pharmacy_rate(_item_code(item))
+
+
+def _normalize_drug_text(value: str) -> str:
+	import re
+
+	return re.sub(r"[^a-z0-9]", "", (value or "").lower())
+
+
 def _resolve_item_for_medication(medication_text: str, company: str) -> dict | None:
 	text = (medication_text or "").strip().lower()
 	if not text:
 		return None
+	norm_text = _normalize_drug_text(text)
 
 	if frappe.db.has_column("Healthcare Drug Formulary", "default_item"):
 		for row in frappe.get_all(
@@ -71,18 +124,19 @@ def _resolve_item_for_medication(medication_text: str, company: str) -> dict | N
 			limit=200,
 		):
 			for token in (row.drug_name, row.generic_name):
-				if token and token.lower() in text and row.default_item:
+				if token and (token.lower() in text or _normalize_drug_text(token) in norm_text) and row.default_item:
 					return {
 						"item": row.default_item,
 						"item_code": _item_code(row.default_item),
 						"label": row.drug_name,
+						"rate": _item_rate(row.default_item),
 						"source": "formulary",
 					}
 
 	from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER, PHARMACY_ITEMS
 
 	for code, label, rate in PHARMACY_ITEMS:
-		if label.lower() in text or code.lower() in text:
+		if label.lower() in text or code.lower() in text or _normalize_drug_text(label) in norm_text:
 			item_code = f"{DEMO_MARKER}{code}"
 			item_name = frappe.db.get_value("Item", {"item_code": item_code, "company": company}, "name")
 			if item_name:
@@ -90,15 +144,51 @@ def _resolve_item_for_medication(medication_text: str, company: str) -> dict | N
 					"item": item_name,
 					"item_code": item_code,
 					"label": label,
-					"rate": rate,
+						"rate": rate or _item_rate(item_name),
 					"source": "demo_item",
 				}
 	return None
 
 
+def ensure_pharmacy_pos_items(company: str | None = None) -> dict:
+	"""Enable healthcare demo pharmacy items for embedded Retail POS."""
+	from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER, PHARMACY_ITEMS
+
+	company = (company or "").strip() or frappe.defaults.get_user_default("Company") or ""
+	if not company:
+		return {"enabled": 0}
+	enabled = 0
+	item_codes = [f"{DEMO_MARKER}{code}" for code, _, _ in PHARMACY_ITEMS]
+	has_pos_field = frappe.db.has_column("Item", "show_in_retail_pos")
+	has_product_type = frappe.db.has_column("Item", "product_type")
+	for item_code in item_codes:
+		row = frappe.db.get_value(
+			"Item",
+			{"item_code": item_code, "company": company},
+			["name", "show_in_retail_pos", "is_sales_item", "product_type"],
+			as_dict=True,
+		)
+		if not row:
+			continue
+		values: dict = {}
+		if has_pos_field and not cint(row.show_in_retail_pos):
+			values["show_in_retail_pos"] = 1
+		if not cint(row.is_sales_item):
+			values["is_sales_item"] = 1
+		if has_product_type and not row.product_type:
+			values["product_type"] = "Consumable"
+		if values:
+			frappe.db.set_value("Item", row.name, values, update_modified=False)
+			enabled += 1
+	if enabled:
+		frappe.db.commit()
+	return {"enabled": enabled, "company": company}
+
+
 @frappe.whitelist()
 def get_pharmacy_full_dashboard(company: str | None = None, branch: str | None = None) -> dict:
 	company, branch = _resolve_company_branch(company, branch)
+	ensure_pharmacy_pos_items(company)
 	warehouse = _default_pharmacy_warehouse(company, branch)
 	patient_filter = {"branch": branch} if branch else {}
 	rx_pending = frappe.db.count(
@@ -175,21 +265,32 @@ def search_pharmacy_pos_items(query: str = "", company: str | None = None, wareh
 	warehouse = warehouse or _default_pharmacy_warehouse(company)
 	limit = min(cint(limit) or 20, 50)
 	q = (query or "").strip()
-	filters: dict = {"company": company, "is_stock_item": 1}
+	filters: dict = {"company": company, "disabled": 0}
+	if frappe.db.has_column("Item", "is_sales_item"):
+		filters["is_sales_item"] = 1
+	elif frappe.db.has_column("Item", "is_stock_item"):
+		filters["is_stock_item"] = 1
+	if frappe.db.has_column("Item", "show_in_retail_pos"):
+		filters["show_in_retail_pos"] = 1
 	if q:
 		filters["item_name"] = ["like", f"%{q}%"]
+	else:
+		from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER
+
+		filters["item_code"] = ["like", f"{DEMO_MARKER}%"]
+	fields = ["name", "item_code", "item_name"]
+	if frappe.db.has_column("Item", "current_stock_qty"):
+		fields.append("current_stock_qty")
 	rows = frappe.get_all(
 		"Item",
 		filters=filters,
-		fields=["name", "item_code", "item_name", "standard_rate"],
+		fields=fields,
 		order_by="item_name asc",
 		limit=limit,
 	)
 	for row in rows:
-		row["on_hand"] = _warehouse_qty(row.name, warehouse) if warehouse else flt(
-			frappe.db.get_value("Item", row.name, "current_stock_qty")
-		)
-		row["rate"] = flt(row.standard_rate)
+		row["on_hand"] = _warehouse_qty(row.name, warehouse) if warehouse else flt(row.get("current_stock_qty"))
+		row["rate"] = _item_rate(row.name)
 	return rows
 
 
@@ -199,7 +300,7 @@ def get_patient_prescriptions_enriched(patient: str, company: str | None = None,
 	warehouse = warehouse or _default_pharmacy_warehouse(company, branch)
 	rows = frappe.get_all(
 		"Healthcare Medication Statement",
-		filters={"patient": patient, "status": ["in", ["active", "Active", "draft", "Draft"]]},
+		filters={"patient": patient, "status": ["in", ["active", "Active", "draft", "Draft", "on-hold", "On Hold"]]},
 		fields=["name", "medication_text", "dosage_text", "status", "encounter", "modified"],
 		order_by="modified desc",
 		limit=20,
@@ -207,6 +308,7 @@ def get_patient_prescriptions_enriched(patient: str, company: str | None = None,
 	for row in rows:
 		resolved = _resolve_item_for_medication(row.medication_text, company)
 		row["resolved_item"] = resolved.get("item") if resolved else None
+		row["resolved_item_code"] = resolved.get("item_code") if resolved else None
 		row["item_label"] = resolved.get("label") if resolved else ""
 		row["rate"] = flt(resolved.get("rate")) if resolved else 0
 		if row.get("resolved_item") and warehouse:
@@ -263,7 +365,7 @@ def pharmacy_pos_checkout(
 				title=_("Stock"),
 			)
 		out = api_pharmacy_pos_dispense(patient, item, qty, warehouse, branch, company)
-		rate = flt(line.get("rate") or frappe.db.get_value("Item", item, "standard_rate"))
+		rate = flt(line.get("rate") or _item_rate(item))
 		total += rate * qty
 		results.append({**out, "item": item, "qty": qty, "rate": rate})
 
@@ -439,46 +541,53 @@ def link_formulary_to_demo_items(company: str | None = None) -> dict:
 
 
 @frappe.whitelist()
+def check_pharmacy_dispense_cds(patient: str, lines: str | list | None = None) -> dict:
+	"""Clinical decision support — drug interactions for cart lines."""
+	if not patient:
+		return {"alerts": []}
+	raw = lines
+	if isinstance(raw, str):
+		raw = json.loads(raw) if raw.strip().startswith("[") else []
+	if not isinstance(raw, list):
+		raw = []
+	seen: set[str] = set()
+	alerts: list[dict] = []
+	for row in raw:
+		item = (row or {}).get("item") or (row or {}).get("item_code")
+		if not item or item in seen:
+			continue
+		seen.add(item)
+		for alert in api_check_drug_interactions(patient, item) or []:
+			alerts.append(
+				{
+					"severity": alert.get("severity") or "Info",
+					"message": alert.get("message") or alert.get("description") or str(alert),
+				}
+			)
+	return {"alerts": alerts}
+
+
+@frappe.whitelist()
 def get_pharmacy_accounts_summary(company: str | None = None, branch: str | None = None, limit: int = 15) -> dict:
 	company, branch = _resolve_company_branch(company, branch)
-	limit = min(int(limit or 15), 50)
-	out: dict = {"sales_invoices": [], "payment_entries": [], "revenue_today": 0.0, "collections_today": 0.0}
-	if frappe.db.exists("DocType", "Sales Invoice"):
-		filters = {"company": company, "docstatus": 1}
-		out["sales_invoices"] = frappe.get_all(
-			"Sales Invoice", filters=filters,
-			fields=["name", "customer", "posting_date", "grand_total", "status"],
-			order_by="posting_date desc", limit=limit,
-		)
-	if frappe.db.exists("DocType", "Payment Entry"):
-		out["payment_entries"] = frappe.get_all(
-			"Payment Entry",
-			filters={"company": company, "docstatus": 1, "payment_type": "Receive"},
-			fields=["name", "party", "posting_date", "paid_amount", "mode_of_payment"],
-			order_by="posting_date desc", limit=limit,
-		)
-	return out
+	return get_accounts_summary(company, branch, limit)
 
 
 @frappe.whitelist()
 def get_pharmacy_purchases_summary(company: str | None = None, branch: str | None = None, limit: int = 15) -> dict:
 	company, _branch = _resolve_company_branch(company, branch)
 	limit = min(int(limit or 15), 50)
-	out: dict = {"purchase_orders": [], "material_receipts": []}
-	if frappe.db.exists("DocType", "Purchase Order"):
-		out["purchase_orders"] = frappe.get_all(
-			"Purchase Order", filters={"company": company},
-			fields=["name", "supplier", "transaction_date", "grand_total", "status"],
-			order_by="transaction_date desc", limit=limit,
-		)
-	if frappe.db.exists("DocType", "Stock Entry"):
-		out["material_receipts"] = frappe.get_all(
-			"Stock Entry",
-			filters={"company": company, "purpose": "Material Receipt", "docstatus": 1},
-			fields=["name", "posting_date", "total_amount", "remarks"],
-			order_by="posting_date desc", limit=limit,
-		)
-	return out
+	base = get_purchases_summary(company, limit)
+	return {
+		"purchase_orders": base.get("purchase_orders") or [],
+		"material_receipts": [
+			row
+			for row in (base.get("stock_entries") or [])
+			if (row.get("purpose") or "") in ("Material Receipt", "Purchase Receipt", "Receive")
+		]
+		or base.get("stock_entries")
+		or [],
+	}
 
 
 @frappe.whitelist()

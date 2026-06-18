@@ -28,3 +28,5 @@ omnexa_healthcare.patches.v1_0.seed_gap_closure_wave11
 omnexa_healthcare.patches.v1_0.seed_gap_closure_wave12
 omnexa_healthcare.patches.v1_0.sync_healthcare_workspace_full
 omnexa_healthcare.patches.v1_0.sync_follow_up_plan_templates
+omnexa_healthcare.patches.v1_0.sync_lab_print_format
+omnexa_healthcare.patches.v1_0.sync_radiology_demo_images

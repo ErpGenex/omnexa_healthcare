@@ -5,12 +5,12 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 		return;
 	}
 	const state = { step: 1, clinic: null, doctor: null, patient: null, appointment: null, token: null, regMode: "search" };
-	const company = frappe.defaults.get_user_default("Company");
-	const branch = frappe.defaults.get_user_default("Branch");
+	const { company, branch } = OJ.resolveCompanyBranch();
 	const $mount = OJ.mountDeskPage(wrapper, __("Reception Desk"));
 
 	async function render() {
 		const kpis = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_kpis", { company, branch });
+		const todayAppts = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_today_appointments", { company, branch });
 		const kpiCards = [
 			{ value: kpis.appointments_today, label: OJ.t("مواعيد اليوم", "Appointments Today") },
 			{ value: kpis.new_patients_today, label: OJ.t("مرضى جدد", "New Patients") },
@@ -18,6 +18,30 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			{ value: kpis.avg_wait_mins + " " + OJ.t("د", "min"), label: OJ.t("متوسط الانتظار", "Avg Wait") },
 		];
 		const $body = $(`<div></div>`);
+		const apptRows = (todayAppts || []).map((a) => ({
+			name: a.name,
+			patient_display: a.patient_display || a.patient,
+			practitioner: a.practitioner,
+			appointment_date: a.appointment_date,
+			status: a.status,
+			payment_status: a.payment_status,
+		}));
+		$body.append(`<div class="oj-panel oj-reception-appts" style="margin-bottom:16px">
+			<h4>${OJ.t("مواعيد اليوم", "Today's Appointments")} (${apptRows.length})</h4>
+			${OJ.dataTable(
+				[
+					{ field: "name", label: OJ.t("الموعد", "Appointment") },
+					{ field: "patient_display", label: OJ.t("المريض", "Patient") },
+					{ field: "practitioner", label: OJ.t("الطبيب", "Doctor") },
+					{ field: "appointment_date", label: OJ.t("الوقت", "Time") },
+					{ field: "status", label: OJ.t("الحالة", "Status") },
+					{ field: "payment_status", label: OJ.t("السداد", "Payment") },
+				],
+				apptRows
+			)}
+			<button type="button" class="oj-btn oj-btn-sm oj-btn-outline oj-open-appts" style="margin-top:8px">${OJ.t("كل المواعيد", "All Appointments")}</button>
+		</div>`);
+		$body.find(".oj-open-appts").on("click", () => frappe.set_route("healthcare-appointments-desk"));
 		$body.append(OJ.stepper(state.step));
 		const $panel = $(`<div class="oj-panel"></div>`).appendTo($body);
 
@@ -25,7 +49,11 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			$panel.html(OJ.loading());
 			const clinics = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_clinics", { company, branch });
 			$panel.empty().append(`<h4>${OJ.t("اختيار العيادة", "Choose Clinic")}</h4>`);
-			$panel.append(OJ.clinicGrid(clinics, (c) => { state.clinic = c; state.step = 2; render(); }));
+			if (!clinics.length) {
+				$panel.append(`<p class="oj-muted">${OJ.t("لا توجد عيادات لهذا الفرع", "No clinics for this branch")}</p>`);
+			} else {
+				$panel.append(OJ.clinicGrid(clinics, (c) => { state.clinic = c; state.step = 2; render(); }));
+			}
 		} else if (state.step === 2) {
 			$panel.html(OJ.loading());
 			const doctors = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_doctors", {
@@ -85,19 +113,26 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			`);
 			$panel.find(".oj-back").on("click", () => { state.step = 3; render(); });
 			$panel.find(".oj-confirm").on("click", async () => {
-				const now = frappe.datetime.now_datetime();
-				const res = await OJ.call("omnexa_healthcare.api.journey_desk.create_reception_booking", {
-					patient: state.patient.name,
-					practitioner: state.doctor.name,
-					company, branch,
-					specialty: state.clinic.specialty,
-					appointment_date: now,
-					slot_end: frappe.datetime.add_to_date(now, { minutes: 30 }),
-					booking_fee: 300,
-				});
-				state.token = res;
-				state.step = 5;
-				render();
+				try {
+					const now = frappe.datetime.now_datetime();
+					const patientId = state.patient.name || state.patient.patient;
+					if (!patientId) {
+						return frappe.msgprint(OJ.t("اختر مريضاً", "Select a patient"));
+					}
+					const res = await OJ.call("omnexa_healthcare.api.journey_desk.create_reception_booking", {
+						patient: patientId,
+						practitioner: state.doctor.name,
+						company, branch,
+						specialty: state.clinic.specialty,
+						appointment_date: now,
+						booking_fee: 300,
+					});
+					state.token = res;
+					state.step = 5;
+					render();
+				} catch (e) {
+					OJ.showCallError(e);
+				}
 			});
 		} else {
 			$panel.html(`
@@ -108,6 +143,7 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 					<button class="oj-btn oj-btn-outline oj-new">${OJ.t("مريض جديد", "New Patient")}</button>
 				</div>
 			`);
+			OJ.bindVisitTokenCard($panel, state.token);
 			$panel.find(".oj-to-pay").on("click", () => frappe.set_route("healthcare-cashier-desk"));
 			$panel.find(".oj-new").on("click", () => {
 				Object.assign(state, { step: 1, clinic: null, doctor: null, patient: null, appointment: null, token: null });
@@ -121,10 +157,11 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			role: OJ.t("موظف استقبال", "Receptionist"),
 			kpis: kpiCards,
 			sidebar: OJ.defaultSidebar("reception"),
-			body: $body.html(),
+			bodyEl: $body,
+			homeRoute: "/app/healthcare-demo-hub",
 		});
 		$mount.empty().append($shell);
 	}
 
-	render();
+	render().catch((e) => OJ.showCallError(e));
 };

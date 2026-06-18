@@ -1,0 +1,190 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "format:MOR-{YYYY}-{#####}",
+	"creation": "2026-06-18 12:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"patient",
+		"patient_display",
+		"company",
+		"branch",
+		"body_tag",
+		"intake_datetime",
+		"status",
+		"storage_location",
+		"encounter",
+		"admission",
+		"cause_of_death",
+		"released_to",
+		"release_datetime",
+		"notes"
+	],
+	"fields": [
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "body_tag",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Body Tag / ID",
+			"reqd": 1
+		},
+		{
+			"default": "Now",
+			"fieldname": "intake_datetime",
+			"fieldtype": "Datetime",
+			"in_list_view": 1,
+			"label": "Intake Date/Time",
+			"reqd": 1
+		},
+		{
+			"default": "Admitted",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Admitted\nStored\nPending Release\nReleased",
+			"reqd": 1
+		},
+		{
+			"fieldname": "storage_location",
+			"fieldtype": "Data",
+			"label": "Storage Location"
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Encounter",
+			"options": "Healthcare Encounter"
+		},
+		{
+			"fieldname": "admission",
+			"fieldtype": "Link",
+			"label": "Admission",
+			"options": "Healthcare Admission"
+		},
+		{
+			"fieldname": "cause_of_death",
+			"fieldtype": "Small Text",
+			"label": "Cause of Death (summary)"
+		},
+		{
+			"fieldname": "released_to",
+			"fieldtype": "Data",
+			"label": "Released To"
+		},
+		{
+			"fieldname": "release_datetime",
+			"fieldtype": "Datetime",
+			"label": "Release Date/Time"
+		},
+		{
+			"fieldname": "notes",
+			"fieldtype": "Small Text",
+			"label": "Notes"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-18 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Morgue Case",
+	"naming_rule": "Expression",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 1,
+			"email": 1,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "System Manager",
+			"share": 1,
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"email": 1,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Company Admin",
+			"share": 0,
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Desk User",
+			"share": 0,
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Healthcare Nurse",
+			"share": 0,
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"export": 1,
+			"print": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Healthcare Physician",
+			"share": 0,
+			"write": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

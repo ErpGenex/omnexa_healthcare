@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Demo chest X-ray">
+  <rect width="640" height="480" fill="#0a0a12"/>
+  <ellipse cx="320" cy="200" rx="120" ry="150" fill="#1a2530" opacity="0.9"/>
+  <ellipse cx="220" cy="210" rx="55" ry="90" fill="#243040"/>
+  <ellipse cx="420" cy="210" rx="55" ry="90" fill="#243040"/>
+  <rect x="290" y="120" width="60" height="90" rx="8" fill="#2e3d4d"/>
+  <text x="320" y="420" text-anchor="middle" fill="#7ec8e3" font-family="Arial,sans-serif" font-size="22">Demo Chest X-Ray (PA)</text>
+</svg>

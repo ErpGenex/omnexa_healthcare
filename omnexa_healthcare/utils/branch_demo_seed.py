@@ -23,6 +23,9 @@ from omnexa_healthcare.world_class_demo_catalog import (
 	WEB_SERVICES,
 )
 from omnexa_healthcare.follow_up_templates import FOLLOW_UP_PLAN_TEMPLATES, MULTI_VISIT_MODULE_CODES
+from omnexa_healthcare.utils.lab_demo_catalog import LAB_DEMO_ORDER_ROTATION
+from omnexa_healthcare.utils.lab_demo_seed import build_lab_report_payload, ensure_lab_demo_catalog
+from omnexa_healthcare.utils.radiology_demo_catalog import demo_study_for_index
 from omnexa_healthcare.world_class_demo_operations import seed_world_class_gap_operations
 
 DEMO_MARKER = "DEMO-HC-"
@@ -542,6 +545,7 @@ class _HospitalDemoSeeder:
 		from omnexa_healthcare.specialty_engine import seed_default_specialty_modules
 
 		seed_default_specialty_modules(company=self.company)
+		ensure_lab_demo_catalog(self.company)
 		self.ctx["specialty_modules_count"] = frappe.db.count("Healthcare Specialty Module", {"is_active": 1})
 
 		depts: dict[str, str] = {}
@@ -810,6 +814,10 @@ class _HospitalDemoSeeder:
 				frappe.db.set_value("Healthcare Appointment", appt.name, "encounter", enc.name)
 
 				if idx % 2 == 0:
+					panel_code = "LAB-COMPLETE" if idx == 0 else LAB_DEMO_ORDER_ROTATION[(idx // 2) % len(LAB_DEMO_ORDER_ROTATION)]
+					panel_title = build_lab_report_payload(
+						panel_code, patient.name, self.company, self.branch
+					)["report_title"]
 					srq = self._insert(
 						"Healthcare Service Request",
 						{
@@ -821,12 +829,12 @@ class _HospitalDemoSeeder:
 							"status": "completed",
 							"intent": "order",
 							"request_category": "laboratory",
-							"request_title": "CBC + Chemistry Panel",
+							"request_title": panel_title,
 							"priority": "routine",
 							"authored_on": f"{appt_date} {(10 + idx % 5):02d}:15:00",
 						},
 					)
-					sample = self._insert(
+					self._insert(
 						"Healthcare Lab Sample",
 						{
 							"naming_series": "LSP-.#####",
@@ -840,24 +848,20 @@ class _HospitalDemoSeeder:
 							"sample_type": "Blood",
 						},
 					)
-					self._insert(
-						"Healthcare Diagnostic Report",
-						{
-							"naming_series": "DGR-.#####",
-							"patient": patient.name,
-							"company": self.company,
-							"branch": self.branch,
-							"based_on_service_request": srq.name,
-							"status": "final",
-							"report_category": "laboratory",
-							"report_title": "CBC + Chemistry Panel",
-							"conclusion": "Within normal limits (demo).",
-							"effective_datetime": f"{appt_date} {(11 + idx % 4):02d}:00:00",
-						},
+					report_payload = build_lab_report_payload(
+						panel_code,
+						patient.name,
+						self.company,
+						self.branch,
+						service_request=srq.name,
+						encounter=enc.name,
 					)
+					report_payload["effective_datetime"] = f"{appt_date} {(11 + idx % 4):02d}:00:00"
+					self._insert("Healthcare Diagnostic Report", report_payload)
 
 				if idx % 3 == 0:
 					modality = frappe.db.get_value("Healthcare Imaging Modality", {"modality_code": "XR"}, "name")
+					study = demo_study_for_index(idx)
 					rad_data = {
 						"naming_series": "SRQ-.#####",
 						"patient": patient.name,
@@ -867,28 +871,29 @@ class _HospitalDemoSeeder:
 						"status": "completed",
 						"intent": "order",
 						"request_category": "imaging",
-						"request_title": "Chest X-Ray",
+						"request_title": study["title"],
 						"priority": "routine",
 						"authored_on": f"{appt_date} {(11 + idx % 3):02d}:00:00",
 					}
 					if modality:
 						rad_data["modality"] = modality
 					rad_req = self._insert("Healthcare Service Request", rad_data)
-					self._insert(
-						"Healthcare Diagnostic Report",
-						{
-							"naming_series": "DGR-.#####",
-							"patient": patient.name,
-							"company": self.company,
-							"branch": self.branch,
-							"based_on_service_request": rad_req.name,
-							"status": "final",
-							"report_category": "radiology",
-							"report_title": "Chest X-Ray",
-							"conclusion": "No acute cardiopulmonary abnormality (demo).",
-							"effective_datetime": f"{appt_date} {(12 + idx % 3):02d}:00:00",
-						},
-					)
+					rad_report = {
+						"naming_series": "DGR-.#####",
+						"patient": patient.name,
+						"company": self.company,
+						"branch": self.branch,
+						"based_on_service_request": rad_req.name,
+						"status": "final",
+						"report_category": "radiology",
+						"report_title": study["title"],
+						"findings": study["findings"],
+						"conclusion": study["conclusion"],
+						"effective_datetime": f"{appt_date} {(12 + idx % 3):02d}:00:00",
+					}
+					if frappe.db.has_column("Healthcare Diagnostic Report", "pacs_wado_url"):
+						rad_report["pacs_wado_url"] = study["image"]
+					self._insert("Healthcare Diagnostic Report", rad_report)
 
 				self._insert(
 					"Healthcare Observation",
@@ -1052,6 +1057,32 @@ class _HospitalDemoSeeder:
 					"status": "active",
 					"company": self.company,
 					"branch": self.branch,
+				},
+			)
+		self._seed_morgue_demo(patients)
+
+	def _seed_morgue_demo(self, patients: list) -> None:
+		if not frappe.db.exists("DocType", "Healthcare Morgue Case") or len(patients) < 16:
+			return
+		demo_cases = [
+			(patients[8], f"{DEMO_MARKER}TAG-001", "Stored", "Chamber A-1", "Cardiac arrest (demo)"),
+			(patients[12], f"{DEMO_MARKER}TAG-002", "Pending Release", "Chamber B-2", "Awaiting family (demo)"),
+			(patients[15], f"{DEMO_MARKER}TAG-003", "Admitted", "Intake Bay", "Pending documentation (demo)"),
+		]
+		for patient, tag, status, location, cause in demo_cases:
+			if frappe.db.exists("Healthcare Morgue Case", {"body_tag": tag, "branch": self.branch}):
+				continue
+			self._insert(
+				"Healthcare Morgue Case",
+				{
+					"patient": patient,
+					"company": self.company,
+					"branch": self.branch,
+					"body_tag": tag,
+					"intake_datetime": f"{add_days(today(), -2)} 14:00:00",
+					"status": status,
+					"storage_location": location,
+					"cause_of_death": cause,
 				},
 			)
 
@@ -1495,6 +1526,8 @@ class _HospitalDemoSeeder:
 			}
 			if _item_has_field("standard_rate"):
 				item_payload["standard_rate"] = rate
+			if _item_has_field("standard_selling_rate"):
+				item_payload["standard_selling_rate"] = rate
 			if _item_has_field("product_type"):
 				item_payload["product_type"] = "Consumable"
 			item = self._insert("Item", item_payload)

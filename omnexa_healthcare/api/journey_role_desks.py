@@ -121,11 +121,13 @@ def get_manager_dashboard(company: str | None = None, branch: str | None = None)
 def get_nurse_dashboard(company: str | None = None, branch: str | None = None) -> dict:
 	company, branch = _scope(company, branch)
 	filters = _appt_filters(company, branch, {"status": ["in", ACTIVE_APPOINTMENT_STATUSES]})
+	queue_fields = [f for f in ["name", "patient", "patient_display", "practitioner", "queue_number", "status", "payment_status", "appointment_date"] if frappe.db.has_column("Healthcare Appointment", f)]
+	order_by = "queue_number asc, modified desc" if frappe.db.has_column("Healthcare Appointment", "queue_number") else "appointment_date asc, modified desc"
 	queue = frappe.get_all(
 		"Healthcare Appointment",
 		filters=filters,
-		fields=["name", "patient", "patient_display", "practitioner", "queue_number", "status", "payment_status"],
-		order_by="queue_number asc, modified desc",
+		fields=queue_fields or ["name", "patient", "status"],
+		order_by=order_by,
 		limit=15,
 	)
 	for row in queue:

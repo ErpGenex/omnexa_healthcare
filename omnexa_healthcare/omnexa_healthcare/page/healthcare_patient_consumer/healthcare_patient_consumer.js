@@ -93,14 +93,14 @@ frappe.pages["healthcare-patient-consumer"].on_page_load = function (wrapper) {
 			`);
 			$panel.find(".oj-book").on("click", async () => {
 				const now = frappe.datetime.now_datetime();
+				const patientId = state.patient.name || state.patient.patient;
 				const res = await OJ.call("omnexa_healthcare.api.journey_desk.create_reception_booking", {
-					patient: state.patient.name,
+					patient: patientId,
 					practitioner: state.doctor.name,
 					company,
 					branch,
 					specialty: state.clinic.specialty,
 					appointment_date: now,
-					slot_end: frappe.datetime.add_to_date(now, { minutes: 30 }),
 					booking_fee: 300,
 					session_token: state.sessionToken,
 				});
@@ -111,6 +111,7 @@ frappe.pages["healthcare-patient-consumer"].on_page_load = function (wrapper) {
 			});
 		} else if (state.step === 4) {
 			$panel.html(`<h4>${OJ.t("تذكرة الزيارة", "Visit Token")}</h4>${OJ.visitTokenCard(state.token)}<button class="oj-btn oj-btn-primary oj-pay-step">${OJ.t("السداد", "Pay")}</button>`);
+			OJ.bindVisitTokenCard($panel, state.token);
 			$panel.find(".oj-pay-step").on("click", () => { state.step = 5; render(); });
 		} else if (state.step === 5) {
 			const $pay = OJ.paymentMethods(state.payMethod, (m) => { state.payMethod = m; render(); });
@@ -143,7 +144,7 @@ frappe.pages["healthcare-patient-consumer"].on_page_load = function (wrapper) {
 			subtitle: OJ.t("سجّل · احجز · ادفع · تابع ملفك", "Register · Book · Pay · Track"),
 			role: OJ.t("مريض", "Patient"),
 			sidebar: OJ.defaultSidebar("patient"),
-			body: $content.html(),
+			bodyEl: $content,
 		});
 		$mount.empty().append($shell);
 	}

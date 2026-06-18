@@ -8,6 +8,8 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
+from base64 import b64encode
+from io import BytesIO
 
 import frappe
 from frappe import _
@@ -18,11 +20,147 @@ from omnexa_healthcare.api.scheduling import create_healthcare_appointment
 from omnexa_healthcare.scheduling_engine import get_available_slots
 
 
+def _patient_search_fields() -> list[str]:
+	return [f for f in ["name", "full_name", "gender", "birth_date", "branch"] if frappe.db.has_column("Healthcare Patient", f)]
+
+
+def _patient_search_row(patient: dict, match_type: str, match_value: str) -> dict:
+	display = patient.get("full_name") or ""
+	return {**patient, "patient_name": display, "match_type": match_type, "match_value": match_value}
+
+
 def _journey_token(appointment: str, patient: str) -> str:
 	secret = frappe.get_site_config().get("secret_key") or "omnexa-journey"
 	raw = json.dumps({"appt": appointment, "patient": patient, "ts": str(now_datetime())}, sort_keys=True)
 	sig = hmac.new(secret.encode(), raw.encode(), hashlib.sha256).hexdigest()[:24]
 	return f"JRN-{appointment}-{sig}"
+
+
+def _qr_data_uri(payload: str) -> str | None:
+	text = (payload or "").strip()
+	if not text:
+		return None
+	try:
+		from pyqrcode import create as qrcreate
+	except Exception:
+		return None
+	url = qrcreate(text)
+	stream = BytesIO()
+	try:
+		url.svg(stream, scale=5, background="#ffffff", module_color="#003366")
+		svg = stream.getvalue().decode().replace("\n", "")
+	finally:
+		stream.close()
+	return f"data:image/svg+xml;base64,{b64encode(svg.encode()).decode()}"
+
+
+def _patient_mobile(patient: str) -> str:
+	system_field = "contact_system" if frappe.db.has_column("Healthcare Patient Telecom", "contact_system") else "system"
+	for system in ("mobile", "phone", "sms"):
+		filters = {"parent": patient, system_field: system}
+		value = frappe.db.get_value(
+			"Healthcare Patient Telecom",
+			filters,
+			"value",
+			order_by="rank asc",
+		)
+		if value:
+			return value
+	# Any phone-like value
+	rows = frappe.get_all(
+		"Healthcare Patient Telecom",
+		filters={"parent": patient},
+		fields=["value"],
+		order_by="rank asc",
+		limit=3,
+	)
+	return rows[0].value if rows else ""
+
+
+def _visit_token_context(appointment: str) -> dict:
+	if not frappe.db.exists("Healthcare Appointment", appointment):
+		frappe.throw(_("Appointment not found."))
+	doc = frappe.get_doc("Healthcare Appointment", appointment)
+	token = ""
+	if frappe.db.has_column("Healthcare Appointment", "journey_token"):
+		token = doc.journey_token or ""
+	if not token:
+		token = _journey_token(doc.name, doc.patient)
+	qr_payload = token or doc.name
+	queue_number = cint(str(doc.name).split("-")[-1]) % 1000 or 0
+	return {
+		"appointment": doc.name,
+		"appointment_id": doc.name,
+		"patient": doc.patient,
+		"patient_display": doc.patient_display or doc.patient,
+		"practitioner": doc.practitioner,
+		"specialty": doc.specialty,
+		"appointment_date": str(doc.appointment_date or ""),
+		"payment_status": doc.payment_status,
+		"status": doc.status,
+		"queue_number": queue_number,
+		"journey_token": token,
+		"qr_token": token,
+		"qr_data_uri": _qr_data_uri(qr_payload),
+		"patient_phone": _patient_mobile(doc.patient),
+		"company": doc.company,
+		"branch": doc.branch,
+	}
+
+
+def _visit_token_print_html(ctx: dict) -> str:
+	qr_img = f'<img src="{ctx["qr_data_uri"]}" alt="QR" width="160" height="160" />' if ctx.get("qr_data_uri") else ""
+	return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><title>{frappe.utils.escape_html(ctx["appointment"])}</title>
+	<style>
+	body{{font-family:Arial,sans-serif;text-align:center;padding:24px;color:#003366}}
+	.card{{max-width:360px;margin:0 auto;border:2px solid #003366;border-radius:12px;padding:20px}}
+	h1{{font-size:18px;margin:0 0 8px}} .id{{font-size:20px;font-weight:800}} .muted{{color:#64748b}}
+	</style></head><body><div class="card">
+	<h1>{_("Visit Token")}</h1>
+	<div class="id">{frappe.utils.escape_html(ctx["appointment"])}</div>
+	<p>{_("Queue")}: <strong>{ctx["queue_number"]}</strong></p>
+	<p>{frappe.utils.escape_html(ctx["patient_display"])}</p>
+	<p class="muted">{frappe.utils.escape_html(ctx["appointment_date"])}</p>
+	{qr_img}
+	<p>{frappe.utils.escape_html(ctx.get("payment_status") or "")}</p>
+	<p class="muted" style="font-size:11px">{frappe.utils.escape_html(ctx.get("journey_token") or "")}</p>
+	</div></body></html>"""
+
+
+@frappe.whitelist()
+def get_visit_token_qr(payload: str) -> dict:
+	return {"data_uri": _qr_data_uri(payload)}
+
+
+@frappe.whitelist()
+def get_visit_token_details(appointment: str) -> dict:
+	return _visit_token_context(appointment)
+
+
+@frappe.whitelist()
+def get_visit_token_share(appointment: str) -> dict:
+	ctx = _visit_token_context(appointment)
+	message = _("Visit token {0} — Queue {1} — {2} — Ref: {3}").format(
+		ctx["appointment"],
+		ctx["queue_number"],
+		ctx["patient_display"],
+		ctx["journey_token"] or ctx["appointment"],
+	)
+	phone = (ctx.get("patient_phone") or "").replace(" ", "").replace("+", "")
+	if phone.startswith("0"):
+		phone = f"20{phone[1:]}"
+	return {"phone": phone, "message": message}
+
+
+@frappe.whitelist()
+def download_visit_token_pdf(appointment: str):
+	ctx = _visit_token_context(appointment)
+	html = _visit_token_print_html(ctx)
+	from frappe.utils.pdf import get_pdf
+
+	frappe.local.response.filename = f"{appointment}-token.pdf"
+	frappe.local.response.filecontent = get_pdf(html)
+	frappe.local.response.type = "pdf"
 
 
 @frappe.whitelist()
@@ -234,11 +372,11 @@ def search_patient_quick(query: str, branch: str | None = None) -> list[dict]:
 		p = frappe.db.get_value(
 			"Healthcare Patient",
 			id_row.parent,
-			["name", "patient_name", "gender", "birth_date", "branch"],
+			_patient_search_fields(),
 			as_dict=True,
 		)
 		if p and (not branch or p.branch == branch):
-			results.append({**p, "match_type": id_row.identifier_type, "match_value": id_row.value})
+			results.append(_patient_search_row(p, id_row.identifier_type, id_row.value))
 	# Telecom
 	for tel in frappe.get_all(
 		"Healthcare Patient Telecom",
@@ -248,20 +386,57 @@ def search_patient_quick(query: str, branch: str | None = None) -> list[dict]:
 	):
 		if any(r["name"] == tel.parent for r in results):
 			continue
-		p = frappe.db.get_value("Healthcare Patient", tel.parent, ["name", "patient_name", "gender", "birth_date", "branch"], as_dict=True)
+		p = frappe.db.get_value("Healthcare Patient", tel.parent, _patient_search_fields(), as_dict=True)
 		if p and (not branch or p.branch == branch):
-			results.append({**p, "match_type": "Mobile", "match_value": tel.value})
+			results.append(_patient_search_row(p, "Mobile", tel.value))
 	# Name
 	if len(q) >= 3:
+		or_filters = []
+		for field in ("full_name", "given_name", "family_name"):
+			if frappe.db.has_column("Healthcare Patient", field):
+				or_filters.append([field, "like", f"%{q}%"])
+		name_filters = {**({"branch": branch} if branch else {})}
 		for p in frappe.get_all(
 			"Healthcare Patient",
-			filters={"patient_name": ["like", f"%{q}%"], **({"branch": branch} if branch else {})},
-			fields=["name", "patient_name", "gender", "birth_date", "branch"],
+			filters=name_filters,
+			or_filters=or_filters or None,
+			fields=_patient_search_fields(),
 			limit=10,
-		):
+		) if or_filters else []:
 			if not any(r["name"] == p.name for r in results):
-				results.append({**p, "match_type": "Name", "match_value": p.patient_name})
+				results.append(_patient_search_row(p, "Name", p.get("full_name") or q))
 	return results[:15]
+
+
+@frappe.whitelist()
+def get_reception_today_appointments(company: str | None = None, branch: str | None = None) -> list[dict]:
+	company = company or frappe.defaults.get_user_default("Company")
+	branch = branch or frappe.defaults.get_user_default("Branch")
+	filters: dict = {
+		"appointment_date": ["between", [f"{today()} 00:00:00", f"{today()} 23:59:59"]],
+		"status": ["not in", ["Cancelled"]],
+	}
+	if branch:
+		filters["branch"] = branch
+	if company:
+		filters["company"] = company
+	return frappe.get_all(
+		"Healthcare Appointment",
+		filters=filters,
+		fields=[
+			"name",
+			"patient",
+			"patient_display",
+			"practitioner",
+			"specialty",
+			"appointment_date",
+			"status",
+			"payment_status",
+			"booking_fee",
+		],
+		order_by="appointment_date asc",
+		limit=50,
+	)
 
 
 @frappe.whitelist()
@@ -293,11 +468,11 @@ def create_reception_booking(
 				"company": company,
 				"specialty": specialty,
 				"appointment_date": appointment_date,
-				"slot_end": slot_end or appointment_date,
+				"slot_end": slot_end,
 				"appointment_type": appointment_type,
 				"booking_fee": flt(booking_fee),
 				"payment_status": "Unpaid",
-				"booking_channel": "Reception Desk",
+				"booking_channel": "Desk",
 			}
 		)
 	)
@@ -326,6 +501,7 @@ def issue_visit_token(appointment: str) -> dict:
 		"queue_number": queue_number,
 		"journey_token": journey_token,
 		"qr_token": journey_token,
+		"qr_data_uri": _qr_data_uri(journey_token),
 		"payment_status": doc.payment_status,
 		"status": doc.status,
 		"practitioner": doc.practitioner,
@@ -379,23 +555,73 @@ def get_cashier_queue(company: str, branch: str) -> list[dict]:
 def record_cashier_payment(appointment: str, payment_method: str = "Cash", amount: float | None = None) -> dict:
 	doc = frappe.get_doc("Healthcare Appointment", appointment)
 	amount = flt(amount or doc.booking_fee)
+	charge_name = doc.service_charge or _create_cashier_service_charge(doc, amount)
+	if not doc.service_charge:
+		doc.db_set("service_charge", charge_name, update_modified=False)
 	doc.payment_status = "Paid" if amount >= flt(doc.booking_fee) else "Partially Paid"
 	doc.save(ignore_permissions=True)
-	frappe.get_doc(
+	return {
+		"ok": True,
+		"appointment": doc.name,
+		"service_charge": charge_name,
+		"payment_status": doc.payment_status,
+		"method": payment_method,
+		"amount": amount,
+	}
+
+
+def _fallback_billing_item(company: str) -> str | None:
+	from omnexa_healthcare.utils.branch_demo_seed import DEMO_MARKER
+
+	for code in (f"{DEMO_MARKER}OPD-SVC",):
+		name = frappe.db.get_value("Item", {"item_code": code, "company": company}, "name")
+		if name:
+			return name
+	return frappe.db.get_value(
+		"Item",
+		{"company": company, "is_sales_item": 1, "disabled": 0},
+		"name",
+		order_by="modified desc",
+	)
+
+
+def _create_cashier_service_charge(appt, amount: float) -> str:
+	from omnexa_healthcare.api.billing_automation import _resolve_appointment_fee
+	from omnexa_healthcare.patient_billing import ensure_patient_billing_account
+
+	billing_customer = ensure_patient_billing_account(appt.patient) or frappe.db.get_value(
+		"Healthcare Patient", appt.patient, "billing_customer"
+	)
+	if not billing_customer:
+		frappe.throw(_("Patient billing account could not be resolved."), title=_("Billing"))
+
+	item, rate = _resolve_appointment_fee(appt)
+	line_rate = flt(amount) or flt(rate) or flt(appt.booking_fee)
+	if not item:
+		item = _fallback_billing_item(appt.company)
+
+	line: dict = {
+		"qty": 1,
+		"rate": line_rate,
+		"description": _("Consultation fee — {0}").format(appt.name),
+	}
+	if item:
+		line["item"] = item
+
+	charge = frappe.get_doc(
 		{
 			"doctype": "Healthcare Service Charge",
-			"patient": doc.patient,
-			"company": doc.company,
-			"branch": doc.branch,
-			"charge_type": "Consultation",
-			"description": _("Consultation fee — {0}").format(doc.name),
-			"amount": amount,
-			"status": "Submitted",
-			"reference_doctype": "Healthcare Appointment",
-			"reference_name": doc.name,
+			"patient": appt.patient,
+			"billing_customer": billing_customer,
+			"company": appt.company,
+			"branch": appt.branch,
+			"posting_date": getdate(appt.appointment_date or today()),
+			"status": "Draft",
+			"items": [line],
 		}
-	).insert(ignore_permissions=True)
-	return {"ok": True, "appointment": doc.name, "payment_status": doc.payment_status, "method": payment_method, "amount": amount}
+	)
+	charge.insert(ignore_permissions=True)
+	return charge.name
 
 
 @frappe.whitelist()

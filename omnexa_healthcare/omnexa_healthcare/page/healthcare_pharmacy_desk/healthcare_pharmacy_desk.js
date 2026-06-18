@@ -26,16 +26,30 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 	}
 
 	const TAB_NAV_MAP = {
+		pos: "pos",
 		products: "products",
 		customers: "accounts",
-		suppliers: "purchases",
-		purchases: "purchases",
+		suppliers: "purchase",
+		purchases: "purchase",
 		inventory: "stock",
 		reports: "accounts",
 		offers: "pos",
 		expenses: "accounts",
 		settings: "products",
 	};
+
+	function syncPosNavActive(nav) {
+		if (!state.pos || !state.pos.$root) return;
+		const key = nav || "pos";
+		state.pos.$root.find(".retail-pos__nav-item").removeClass("is-active");
+		state.pos.$root.find(`.retail-pos__nav-item[data-nav="${key}"]`).addClass("is-active");
+	}
+
+	function stashPos() {
+		if (state.pos && state.pos.$root && state.pos.$root.parent().length) {
+			state.pos.$root.detach();
+		}
+	}
 
 	function tabBtn(id, label) {
 		const cls = state.tab === id ? "oj-btn-primary" : "oj-btn-outline";
@@ -125,7 +139,7 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 				callback(r) {
 					pos.state.invoiceDetail = r.message;
 					if (typeof pos.render_cart === "function") pos.render_cart();
-					refreshCdsFromPos($(".oj-cds-mount"));
+					refreshCdsFromPos($(".oj-pharmacy-rx-drawer .oj-cds-mount"));
 					resolve(r.message);
 				},
 				error: reject,
@@ -200,34 +214,45 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 		});
 	}
 
-	function renderRxPanel($panel) {
-		$panel.html(`
-			<div class="oj-panel oj-pharmacy-rx-panel">
-				<h4>${OJ.t("صرف الروشتة", "Prescription Dispense")}</h4>
-				<p class="oj-muted">${OJ.t("Retail POS من النظام + ربط المريض", "Core Retail POS + patient linkage")}</p>
-				${OJ.patientSearchBar({ placeholder: OJ.t("مريض — MRN / اسم / جوال", "Patient search") })}
-				<div class="oj-cds-mount"></div>
-				<div class="oj-rx-mount" style="margin-top:10px"></div>
+	function renderRxToolbar($toolbar, $drawer) {
+		$toolbar.html(`
+			<div class="oj-pharmacy-rx-toolbar-inner">
+				<div class="oj-pharmacy-rx-toolbar-title">${OJ.t("صرف الروشتة", "Prescription Dispense")}</div>
+				<div class="oj-pharmacy-rx-toolbar-field">
+					<label class="oj-pharmacy-rx-label">${OJ.t("رقم الروشتة / اسم المريض", "Prescription ID / Patient Name")}</label>
+					<div class="oj-search-bar oj-pharmacy-rx-search">
+						<input type="text" class="oj-patient-query" placeholder="${OJ.t("MRN / اسم / جوال", "MRN / name / mobile")}" />
+						<button type="button" class="oj-btn oj-btn-primary oj-patient-search-btn">${OJ.t("بحث", "Search")}</button>
+					</div>
+					<small class="oj-muted">${OJ.t("أدخل المعرف أو الاسم للبحث", "Enter ID/Name for your search")}</small>
+					<div class="oj-patient-search-results"></div>
+				</div>
 			</div>`);
-		OJ.bindPatientSearch($panel, (row) => {
+		$drawer.html(`<div class="oj-cds-mount"></div><div class="oj-rx-mount"></div>`);
+		OJ.bindPatientSearch($toolbar, (row) => {
 			state.patient = row.patient || row.name;
-			loadRx($panel.find(".oj-rx-mount"), state.patient);
+			loadRx($drawer.find(".oj-rx-mount"), state.patient);
 			setPatientBillingCustomer(state.patient);
-			refreshCdsFromPos($panel.find(".oj-cds-mount"));
+			refreshCdsFromPos($drawer.find(".oj-cds-mount"));
+			$drawer.show();
 		}, branch);
-		if (state.patient) loadRx($panel.find(".oj-rx-mount"), state.patient);
+		if (state.patient) {
+			loadRx($drawer.find(".oj-rx-mount"), state.patient);
+			$drawer.show();
+		}
 	}
 
 	async function ensureRetailPos($host) {
 		if (state.pos && state.pos.$root) {
 			$host.empty().append(state.pos.$root);
+			syncPosNavActive("pos");
 			return state.pos;
 		}
 		const pos = await OJ.embedRetailPos($host[0], {
+			hideSidebar: true,
 			onNavigate(nav) {
 				const tab = TAB_NAV_MAP[nav] || nav;
-				if (tab === "pos") return;
-				switchTab(tab);
+				switchTab(tab, nav);
 			},
 			onBeforeCompleteSale(posState, proceed) {
 				if (!state.patient) {
@@ -275,19 +300,14 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 			const origRenderCart = state.pos.render_cart.bind(state.pos);
 			state.pos.render_cart = function () {
 				origRenderCart();
-				refreshCdsFromPos($(".oj-cds-mount"));
+				refreshCdsFromPos($(".oj-pharmacy-rx-drawer .oj-cds-mount"));
 			};
 		}
 		return state.pos;
 	}
 
 	async function renderPosTab($body) {
-		$body.html(`
-			<div class="oj-pharmacy-pos-row">
-				<div class="oj-pharmacy-rx-col"></div>
-				<div class="oj-retail-pos-host"></div>
-			</div>`);
-		renderRxPanel($body.find(".oj-pharmacy-rx-col"));
+		$body.html(`<div class="oj-retail-pos-host oj-retail-pos-host--full"></div>`);
 		await ensureRetailPos($body.find(".oj-retail-pos-host"));
 	}
 
@@ -534,6 +554,7 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 			renderPosTab($tabBody).catch((e) => OJ.showCallError(e));
 			return;
 		}
+		stashPos();
 		if (state.pos && window.omnexa_core && omnexa_core.retail_product_manager) {
 			omnexa_core.retail_product_manager.close();
 		}
@@ -548,12 +569,20 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 		}
 	}
 
-	function switchTab(tab) {
+	function switchTab(tab, posNav) {
+		if (state.tab === tab && tab !== "pos") return;
 		state.tab = tab;
-		const $tabs = $(".oj-pharmacy-tabs");
+		const $tabs = $(".oj-pharmacy-toolbar");
 		$tabs.find(".oj-tab-btn").removeClass("oj-btn-primary").addClass("oj-btn-outline");
 		$tabs.find(`.oj-tab-btn[data-tab="${tab}"]`).removeClass("oj-btn-outline").addClass("oj-btn-primary");
+		$(".oj-pharmacy-rx-toolbar").toggle(tab === "pos");
+		$(".oj-pharmacy-rx-drawer").toggle(tab === "pos" && !!state.patient);
 		renderTabBody($(".oj-pharmacy-tab-body"));
+		if (tab === "pos") {
+			syncPosNavActive("pos");
+		} else if (posNav) {
+			syncPosNavActive(posNav);
+		}
 	}
 
 	async function reloadDashboard() {
@@ -570,14 +599,18 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 			{ value: data.low_stock_items, label: OJ.t("نواقص", "Low Stock") },
 		];
 		const $body = $(`<div class="oj-pharmacy-layout"></div>`);
-		const $tabs = $(`<div class="oj-filter-bar oj-pharmacy-tabs"></div>`).appendTo($body);
-		$tabs.append(tabBtn("pos", OJ.t("نقطة البيع", "Point of Sale")));
-		$tabs.append(tabBtn("products", OJ.t("الأصناف", "Products")));
-		$tabs.append(tabBtn("purchase", OJ.t("المشتريات", "Purchases")));
-		$tabs.append(tabBtn("stock", OJ.t("المخzون", "Inventory")));
-		$tabs.append(tabBtn("accounts", OJ.t("الحسابات", "Accounts")));
+		const $toolbar = $(`<div class="oj-filter-bar oj-pharmacy-toolbar"></div>`).appendTo($body);
+		const $tabBtns = $(`<div class="oj-pharmacy-tab-btns"></div>`).appendTo($toolbar);
+		$tabBtns.append(tabBtn("pos", OJ.t("نقطة البيع", "Point of Sale")));
+		$tabBtns.append(tabBtn("products", OJ.t("الأصناف", "Products")));
+		$tabBtns.append(tabBtn("purchase", OJ.t("المشتريات", "Purchases")));
+		$tabBtns.append(tabBtn("stock", OJ.t("المخزون", "Inventory")));
+		$tabBtns.append(tabBtn("accounts", OJ.t("الحسابات", "Accounts")));
+		const $rxToolbar = $(`<div class="oj-pharmacy-rx-toolbar"></div>`).appendTo($toolbar);
+		const $rxDrawer = $(`<div class="oj-pharmacy-rx-drawer" style="display:none"></div>`).appendTo($body);
+		renderRxToolbar($rxToolbar, $rxDrawer);
 		const $tabBody = $(`<div class="oj-pharmacy-tab-body"></div>`).appendTo($body);
-		$tabs.find(".oj-tab-btn").on("click", function () {
+		$toolbar.find(".oj-tab-btn").on("click", function () {
 			switchTab($(this).attr("data-tab"));
 		});
 		const $shell = OJ.shell({

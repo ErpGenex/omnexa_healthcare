@@ -38,3 +38,10 @@ def after_migrate():
 		sync_report_roles()
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: report role sync failed")
+
+	try:
+		from omnexa_healthcare.patches.v1_0.sync_lab_print_format import execute as sync_lab_print
+
+		sync_lab_print()
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: lab print format sync failed")

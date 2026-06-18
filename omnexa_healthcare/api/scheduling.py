@@ -40,11 +40,20 @@ def api_book_appointment(payload: str | dict) -> dict:
 
 def create_healthcare_appointment(data, *, ignore_permissions: bool = False) -> dict:
 	"""Insert Healthcare Appointment after slot validation."""
+	from frappe.utils import add_to_date, cint
+
 	data = frappe._dict(data or {})
-	required = ("patient", "practitioner", "branch", "specialty", "appointment_date", "slot_end")
+	required = ("patient", "practitioner", "branch", "specialty", "appointment_date")
 	for key in required:
 		if not data.get(key):
 			frappe.throw(_("{0} is required").format(key.replace("_", " ").title()))
+
+	start_dt = get_datetime(data.appointment_date)
+	end_dt = get_datetime(data.slot_end) if data.get("slot_end") else None
+	default_mins = cint(frappe.db.get_single_value("Healthcare Settings", "default_appointment_duration_mins") or 30)
+	if not end_dt or end_dt <= start_dt:
+		end_dt = add_to_date(start_dt, minutes=default_mins)
+	data.slot_end = end_dt
 
 	validate_practitioner_appointment(
 		practitioner=data.practitioner,

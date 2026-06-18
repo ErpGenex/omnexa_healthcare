@@ -108,6 +108,7 @@ ROLE_DOCTYPE_NAMES: dict[str, list[str]] = {
 		"Healthcare Appointment",
 		"Healthcare Observation",
 		"Healthcare Medication Administration Record",
+		"Healthcare Morgue Case",
 	],
 	"Healthcare Manager": ["Healthcare Appointment", "Healthcare Patient"],
 	"Healthcare Pharmacist": [

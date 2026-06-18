@@ -28,7 +28,10 @@
 		"pacs_wado_url",
 		"structured_template",
 		"report_reference",
-		"performer"
+		"performer",
+		"sb_lab_results",
+		"lab_panel",
+		"lab_results"
 	],
 	"fields": [
 		{
@@ -147,6 +150,26 @@
 			"fieldtype": "Table",
 			"label": "Findings",
 			"options": "Healthcare Diagnostic Report Finding"
+		},
+		{
+			"fieldname": "sb_lab_results",
+			"fieldtype": "Section Break",
+			"label": "Laboratory Results",
+			"depends_on": "eval:doc.report_category=='laboratory'"
+		},
+		{
+			"fieldname": "lab_panel",
+			"fieldtype": "Link",
+			"label": "Lab Panel",
+			"options": "Healthcare Lab Test Panel",
+			"depends_on": "eval:doc.report_category=='laboratory'"
+		},
+		{
+			"fieldname": "lab_results",
+			"fieldtype": "Table",
+			"label": "Lab Results",
+			"options": "Healthcare Lab Result Line",
+			"depends_on": "eval:doc.report_category=='laboratory'"
 		},
 		{
 			"default": "0",

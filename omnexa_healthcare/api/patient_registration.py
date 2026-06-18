@@ -73,7 +73,9 @@ def is_registration_complete(patient: str, *, require_verified: bool = False) ->
 	if not frappe.db.exists("Healthcare Patient", patient):
 		return False
 	doc = frappe.get_doc("Healthcare Patient", patient)
-	status = getattr(doc, "registration_status", None) or _infer_status(doc)
+	status = getattr(doc, "registration_status", None)
+	if status not in ("Complete", "Verified"):
+		status = _infer_status(doc)
 	if require_verified:
 		return status == "Verified"
 	return status in ("Complete", "Verified")

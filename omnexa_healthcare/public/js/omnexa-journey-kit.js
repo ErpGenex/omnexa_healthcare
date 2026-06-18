@@ -115,7 +115,6 @@
 
 	function userMenuHtml() {
 		const name = frappe.session.user_fullname || frappe.session.user;
-		const lang = currentLang();
 		return `<div class="oj-user-menu">
 			<button type="button" class="oj-user-btn" aria-haspopup="true" aria-expanded="false">
 				<span class="oj-user-avatar">${OJ.esc((name || "U").charAt(0).toUpperCase())}</span>
@@ -125,10 +124,6 @@
 			<div class="oj-user-dropdown" role="menu">
 				<div class="oj-user-dropdown-title">${OJ.t("الحساب", "Account")}</div>
 				<a href="/app/user-profile" class="oj-user-dropdown-item" role="menuitem">⚙ ${OJ.t("الملف الشخصي", "Profile")}</a>
-				<div class="oj-user-dropdown-divider"></div>
-				<div class="oj-user-dropdown-title">${OJ.t("اللغة", "Language")}</div>
-				<button type="button" class="oj-user-dropdown-item ${lang === "ar" ? "active" : ""}" data-oj-lang="ar" role="menuitem">🇸🇦 ${OJ.t("العربية", "Arabic")}</button>
-				<button type="button" class="oj-user-dropdown-item ${lang === "en" ? "active" : ""}" data-oj-lang="en" role="menuitem">🇬🇧 English</button>
 			</div>
 		</div>`;
 	}
@@ -140,11 +135,62 @@
 			$menu.toggleClass("open");
 			$(this).attr("aria-expanded", $menu.hasClass("open"));
 		});
-		$menu.find("[data-oj-lang]").on("click", function (e) {
-			e.preventDefault();
-			switchLanguage($(this).attr("data-oj-lang"));
-		});
 		$(document).on("click.ojUserMenu", () => $menu.removeClass("open"));
+	}
+
+	function patientSearchBar(options) {
+		const placeholder = (options && options.placeholder) || OJ.t("بحث مريض", "Search patient");
+		return `<div class="oj-search-bar oj-patient-search-bar">
+			<input type="text" class="oj-patient-query" placeholder="${OJ.esc(placeholder)}" />
+			<button type="button" class="oj-btn oj-btn-primary oj-patient-search-btn">${OJ.t("بحث", "Search")}</button>
+		</div>
+		<div class="oj-patient-search-results"></div>`;
+	}
+
+	function bindPatientSearch($root, onSelect, branch) {
+		const run = async () => {
+			const query = ($root.find(".oj-patient-query").val() || "").trim();
+			const $results = $root.find(".oj-patient-search-results").html(OJ.loading());
+			if (!query || query.length < 2) {
+				$results.html(`<p class="oj-muted">${OJ.t("أدخل حرفين على الأقل", "Enter at least 2 characters")}</p>`);
+				return;
+			}
+			const rows = await OJ.call("omnexa_healthcare.api.journey_desk.search_patient_quick", {
+				query,
+				branch: branch || frappe.defaults.get_user_default("Branch"),
+			});
+			if (!rows.length) {
+				$results.html(`<p class="oj-muted">${OJ.t("لا نتائج", "No results")}</p>`);
+				return;
+			}
+			const html = rows
+				.map(
+					(r) =>
+						`<button type="button" class="oj-btn oj-btn-outline oj-patient-pick" style="margin:4px" data-patient="${OJ.esc(r.patient || r.name)}">
+							<strong>${OJ.esc(r.full_name || r.patient_display || r.name)}</strong>
+							<span class="oj-muted"> · ${OJ.esc(r.name || r.patient || "")}</span>
+						</button>`
+				)
+				.join("");
+			$results.html(html);
+			$results.find(".oj-patient-pick").on("click", function () {
+				const patient = $(this).attr("data-patient");
+				const row = rows.find((x) => (x.patient || x.name) === patient) || { patient, name: patient };
+				onSelect && onSelect(row);
+			});
+		};
+		$root.find(".oj-patient-search-btn").on("click", run);
+		$root.find(".oj-patient-query").on("keydown", (e) => {
+			if (e.key === "Enter") run();
+		});
+	}
+
+	function alertList(alerts) {
+		const items = (alerts || [])
+			.map((a) => `<li class="oj-alert oj-alert-${OJ.esc(a.level || "info")}">${OJ.esc(a.text || "")}</li>`)
+			.join("");
+		if (!items) return `<p class="oj-muted">${OJ.t("لا تنبيهات", "No alerts")}</p>`;
+		return `<ul class="oj-alert-list">${items}</ul>`;
 	}
 
 	OJ.shell = function (options) {
@@ -246,6 +292,23 @@
 				{ id: "queue", label: OJ.t("الطابور", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
 				{ id: "icu", label: OJ.t("ICU", "ICU"), icon: "🏥", route: "/app/healthcare-icu-board" },
 			],
+			lab: [
+				{ id: "home", label: OJ.t("المعمل", "Laboratory"), icon: "🔬", route: "/app/healthcare-lab-workbench", active: true },
+				{ id: "samples", label: OJ.t("العينات", "Samples"), icon: "🧪", route: "List/Healthcare Lab Sample" },
+				{ id: "reports", label: OJ.t("النتائج", "Results"), icon: "📄", route: "List/Healthcare Diagnostic Report" },
+				{ id: "devices", label: OJ.t("الأجهزة", "Devices"), icon: "🔌", route: "/app/healthcare-device-admin" },
+			],
+			radiology: [
+				{ id: "home", label: OJ.t("الأشعة", "Radiology"), icon: "🩻", route: "/app/healthcare-radiology-worklist", active: true },
+				{ id: "orders", label: OJ.t("الطلبات", "Orders"), icon: "📋", route: "List/Healthcare Service Request" },
+				{ id: "dicom", label: OJ.t("عارض DICOM", "DICOM Viewer"), icon: "🖼", route: "/app/healthcare-dicom-viewer" },
+				{ id: "devices", label: OJ.t("الأجهزة", "Devices"), icon: "🔌", route: "/app/healthcare-device-admin" },
+			],
+			dental: [
+				{ id: "home", label: OJ.t("عيادة الأسنان", "Dental Clinic"), icon: "🦷", route: "/app/healthcare-dental-chart", active: true },
+				{ id: "plans", label: OJ.t("خطط العلاج", "Treatment Plans"), icon: "📋", route: "List/Healthcare Dental Treatment Plan" },
+				{ id: "appts", label: OJ.t("المواعيد", "Appointments"), icon: "📅", route: "/app/healthcare-appointments-desk" },
+			],
 			admin: [
 				{ id: "demo", label: OJ.t("مركز الديمو", "Demo Hub"), icon: "🎯", route: "/app/healthcare-demo-hub", active: true },
 				{ id: "devices", label: OJ.t("الأجهزة", "Devices"), icon: "🔌", route: "/app/healthcare-device-admin" },
@@ -266,5 +329,8 @@
 		wrapLegacyDesk,
 		defaultSidebar,
 		switchLanguage,
+		patientSearchBar,
+		bindPatientSearch,
+		alertList,
 	});
 })(window);

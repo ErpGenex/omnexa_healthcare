@@ -8,14 +8,15 @@ frappe.pages["healthcare-appointments-desk"].on_page_load = function (wrapper) {
 		sidebarRole: "reception",
 		api: "omnexa_healthcare.api.specialty_desks.get_appointments_directory",
 		rowsField: "appointments",
-		tableTitleAr: "البيانات",
-		tableTitleEn: "Records",
+		tableTitleAr: "مواعيد اليوم والقادمة",
+		tableTitleEn: "Today & Upcoming Appointments",
 		columns: [
 			{ field: "name", ar: "الموعد", en: "Appointment" },
 			{ field: "patient_display", ar: "المريض", en: "Patient" },
 			{ field: "practitioner", ar: "الطبيب", en: "Doctor" },
 			{ field: "appointment_date", ar: "التاريخ", en: "Date" },
 			{ field: "status", ar: "الحالة", en: "Status" },
+			{ field: "payment_status", ar: "السداد", en: "Payment" },
 		],
 		links: [
 			{ labelAr: "موعد جديد", labelEn: "New Appointment", route: "/app/healthcare-appointment/new-healthcare-appointment-1", icon: "➕" },

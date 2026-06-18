@@ -52,7 +52,7 @@ def finalize_ambient_note(session: str) -> dict:
 
 
 def _generate_soap_draft(transcript: str, patient: str) -> str:
-	patient_name = frappe.db.get_value("Healthcare Patient", patient, "patient_name") or patient
+	patient_name = frappe.db.get_value("Healthcare Patient", patient, "full_name") or patient
 	return f"""<h4>Subjective</h4>
 <p>Patient {frappe.utils.escape_html(patient_name)} — ambient transcript captured {now_datetime()}.</p>
 <blockquote>{frappe.utils.escape_html(transcript[:4000])}</blockquote>

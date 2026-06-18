@@ -203,3 +203,11 @@ def healthcare_pharmacy_substitution_log_query_conditions(user=None):
 
 def healthcare_patient_erasure_request_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Patient Erasure Request", user)
+
+
+def healthcare_er_visit_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Er Visit", user)
+
+
+def healthcare_morgue_case_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Morgue Case", user)

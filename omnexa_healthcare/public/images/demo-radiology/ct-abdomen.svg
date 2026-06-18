@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Demo CT abdomen">
+  <rect width="640" height="480" fill="#0c0c14"/>
+  <circle cx="320" cy="240" r="160" fill="#1c2834" stroke="#3a5568" stroke-width="4"/>
+  <ellipse cx="320" cy="250" rx="90" ry="70" fill="#2a3848"/>
+  <ellipse cx="250" cy="230" rx="35" ry="45" fill="#334455"/>
+  <ellipse cx="390" cy="230" rx="35" ry="45" fill="#334455"/>
+  <text x="320" y="430" text-anchor="middle" fill="#9ad4ff" font-family="Arial,sans-serif" font-size="22">Demo CT Abdomen</text>
+</svg>
