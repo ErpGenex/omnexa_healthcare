@@ -420,9 +420,12 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 	}
 
 	function destroyNativePurchaseReceipt() {
-		if (state.prForm && state.prForm.$wrapper) {
+		if (state.prForm) {
+			if (typeof cur_frm !== "undefined" && cur_frm === state.prForm) {
+				cur_frm = null;
+			}
 			try {
-				state.prForm.$wrapper.empty();
+				if (state.prForm.$wrapper) state.prForm.$wrapper.empty();
 			} catch (e) {
 				/* ignore */
 			}
@@ -433,20 +436,31 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 	function mountNativePurchaseReceipt($host, docname) {
 		if (!$host || !$host.length) return;
 		destroyNativePurchaseReceipt();
-		$host.empty().addClass("oj-pharmacy-pr-embed");
-		const frm = new frappe.ui.form.Form("Purchase Receipt", $host[0], true);
-		frm.setup();
-		state.prForm = frm;
-		if (docname) {
-			frm.refresh(docname);
-			return;
-		}
+		$host.empty().addClass("oj-pharmacy-pr-embed").html(`<p class="oj-muted">${OJ.t("جاري التحميل...", "Loading...")}</p>`);
+
 		frappe.model.with_doctype("Purchase Receipt", () => {
-			const doc = frappe.model.get_new_doc("Purchase Receipt");
-			doc.company = company;
-			if (state.warehouse) doc.set_warehouse = state.warehouse;
-			if (branch && frappe.meta.has_field("Purchase Receipt", "branch")) doc.branch = branch;
-			frm.refresh(doc.name);
+			if (!$host.closest("body").length) return;
+			$host.empty();
+			try {
+				const frm = new frappe.ui.form.Form("Purchase Receipt", $host[0], true);
+				state.prForm = frm;
+				if (docname) {
+					frm.refresh(docname);
+					return;
+				}
+				const doc = frappe.model.get_new_doc("Purchase Receipt");
+				doc.company = company;
+				if (state.warehouse) doc.set_warehouse = state.warehouse;
+				if (branch && frappe.meta.has_field("Purchase Receipt", "branch")) doc.branch = branch;
+				frm.refresh(doc.name);
+			} catch (e) {
+				$host.html(`<p class="oj-muted">${OJ.esc(e.message || String(e))}</p>
+					<button type="button" class="oj-btn oj-btn-primary oj-pr-open-route">${OJ.t("فتح في النظام", "Open in ERP")}</button>`);
+				$host.find(".oj-pr-open-route").on("click", () => {
+					frappe.route_options = { company, set_warehouse: state.warehouse, branch };
+					frappe.set_route("Form", "Purchase Receipt", "new");
+				});
+			}
 		});
 	}
 
@@ -547,6 +561,9 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 	}
 
 	function renderTabBody($tabBody) {
+		if (state.tab !== "purchase") {
+			destroyNativePurchaseReceipt();
+		}
 		if (state.tab === "pos") {
 			renderPosTab($tabBody).catch((e) => OJ.showCallError(e));
 			return;
