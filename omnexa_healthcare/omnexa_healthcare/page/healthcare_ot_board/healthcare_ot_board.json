@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-ot-board",
+ "page_name": "healthcare-ot-board",
+ "standard": "Yes",
+ "title": "OT Board",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

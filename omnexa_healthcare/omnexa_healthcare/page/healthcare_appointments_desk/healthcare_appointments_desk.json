@@ -1,0 +1,12 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-appointments-desk",
+ "page_name": "healthcare-appointments-desk",
+ "standard": "Yes",
+ "title": "Appointments Desk",
+ "roles": [
+  { "role": "System Manager" },
+  { "role": "Desk User" }
+ ]
+}

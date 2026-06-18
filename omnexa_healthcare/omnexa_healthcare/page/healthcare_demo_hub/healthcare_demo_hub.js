@@ -1,90 +1,75 @@
 frappe.pages["healthcare-demo-hub"].on_page_load = function (wrapper) {
-	const page = frappe.ui.make_app_page({
-		parent: wrapper,
-		title: __("Healthcare Demo Hub"),
-		single_column: true,
-	});
+	const OJ = window.OmnexaJourney;
+	if (!OJ || !OJ.mountDeskPage) {
+		frappe.ui.make_app_page({ parent: wrapper, title: __("Healthcare Demo Hub"), single_column: true });
+		return;
+	}
+	const $mount = OJ.mountDeskPage(wrapper, __("Healthcare Demo Hub"));
 
-	frappe.call({
-		method: "omnexa_healthcare.api.healthcare_role_demo.get_healthcare_demo_credentials",
-		callback(r) {
-			const data = r.message || {};
-			const users = (data.users || [])
-				.map(
-					(u) =>
-						`<tr><td>${frappe.utils.escape_html(u.role)}</td><td><code>${frappe.utils.escape_html(u.email)}</code></td><td><a href="${frappe.utils.escape_html(u.route)}">${frappe.utils.escape_html(u.workspace)}</a></td></tr>`
-				)
-				.join("");
-			$(page.body).html(`
-				<div class="panel panel-default">
-					<div class="panel-heading"><h4>${__("Healthcare Role Demo")}</h4></div>
-					<div class="panel-body">
-						<p>${__("Password for all demo users")}: <code>${frappe.utils.escape_html(data.password || "")}</code></p>
-						<button class="btn btn-primary btn-seed-demo">${__("Seed Hospital + Role Demo")}</button>
-						<hr>
-						<table class="table table-bordered table-sm">
-							<thead><tr><th>${__("Role")}</th><th>${__("Email")}</th><th>${__("Workspace")}</th></tr></thead>
-							<tbody>${users || `<tr><td colspan="3">${__("Run seed first")}</td></tr>`}</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="panel panel-default" style="margin-top:16px">
-					<div class="panel-heading"><h4>${__("Site Admin — Purge")}</h4></div>
-					<div class="panel-body">
-						<p class="text-muted">${__("System Manager only. Irreversible.")}</p>
-						<button class="btn btn-danger btn-purge-branches">${__("Delete ALL Branches")}</button>
-						<button class="btn btn-danger btn-purge-companies">${__("Delete ALL Companies")}</button>
-					</div>
-				</div>
-			`);
-
-			$(page.body).find(".btn-seed-demo").on("click", () => {
-				frappe.call({
-					method: "omnexa_healthcare.api.healthcare_role_demo.seed_full_healthcare_demo",
-					args: { patients: 50 },
-					freeze: true,
-					callback(res) {
-						frappe.msgprint(res.message.message || __("Demo ready"));
-						frappe.set_route("healthcare-demo-hub");
-					},
-				});
+	async function render() {
+		const [creds, groups] = await Promise.all([
+			OJ.call("omnexa_healthcare.api.healthcare_role_demo.get_healthcare_demo_credentials"),
+			OJ.call("omnexa_healthcare.api.portal_catalog.get_grouped_portal_catalog"),
+		]);
+		const $body = $("<div class='oj-demo-hub'></div>");
+		$body.append(`<div class="oj-panel"><h4>${OJ.t("حسابات الديمو", "Demo Accounts")}</h4>
+			<p class="oj-muted">${OJ.t("كلمة المرور", "Password")}: <code>${OJ.esc(creds.password)}</code></p>
+			<div class="oj-filter-bar">
+				<button type="button" class="oj-btn oj-btn-primary oj-seed-demo">${OJ.t("زرع المستشفى + الديمو", "Seed Hospital + Demo")}</button>
+				<button type="button" class="oj-btn oj-btn-outline oj-sync-perms">${OJ.t("مزامنة الصلاحيات", "Sync Permissions")}</button>
+				<button type="button" class="oj-btn oj-btn-outline oj-seed-devices">${OJ.t("أجهزة تجريبية", "Seed Demo Devices")}</button>
+			</div>
+			${OJ.dataTable(
+				[
+					{ field: "role", label: OJ.t("الدور", "Role") },
+					{ field: "email", label: OJ.t("البريد", "Email") },
+					{ field: "name", label: OJ.t("الاسم", "Name") },
+					{ field: "route", label: OJ.t("البوابة", "Portal") },
+				],
+				(creds.users || []).map((u) => ({ ...u, route: u.route }))
+			)}
+		</div>`);
+		$body.append(`<div class="oj-panel" style="margin-top:16px"><h4>${OJ.t("جميع البوابات", "All Portals")}</h4></div>`);
+		$body.find(".oj-panel").last().append(OJ.portalCategoryGrid(groups || []));
+		$body.find(".oj-seed-demo").on("click", () => {
+			frappe.call({
+				method: "omnexa_healthcare.api.healthcare_role_demo.seed_full_healthcare_demo",
+				args: { patients: 50 },
+				freeze: true,
+				callback(r) {
+					frappe.msgprint(r.message.message || __("Demo ready"));
+					render();
+				},
 			});
-
-			$(page.body).find(".btn-purge-branches").on("click", () => {
-				frappe.prompt(
-					[{ fieldname: "confirm", label: __('Type "DELETE ALL BRANCHES"'), reqd: 1 }],
-					(v) => {
-						frappe.call({
-							method: "omnexa_core.omnexa_core.site_admin_tools.purge_all_branches",
-							args: { confirm_text: v.confirm },
-							freeze: true,
-							callback(res) {
-								frappe.msgprint(__("Deleted {0} branches", [res.message.count]));
-							},
-						});
-					},
-					__("Confirm branch purge"),
-					__("Delete")
-				);
+		});
+		$body.find(".oj-sync-perms").on("click", () => {
+			frappe.call({
+				method: "omnexa_healthcare.utils.healthcare_demo_permissions.sync_healthcare_demo_permissions",
+				freeze: true,
+				callback() {
+					frappe.show_alert({ message: __("Permissions synced"), indicator: "green" });
+				},
 			});
-
-			$(page.body).find(".btn-purge-companies").on("click", () => {
-				frappe.prompt(
-					[{ fieldname: "confirm", label: __('Type "DELETE ALL COMPANIES"'), reqd: 1 }],
-					(v) => {
-						frappe.call({
-							method: "omnexa_core.omnexa_core.site_admin_tools.purge_all_companies",
-							args: { confirm_text: v.confirm },
-							freeze: true,
-							callback(res) {
-								frappe.msgprint(__("Deleted {0} companies", [res.message.count]));
-							},
-						});
-					},
-					__("Confirm company purge"),
-					__("Delete")
-				);
+		});
+		$body.find(".oj-seed-devices").on("click", () => {
+			frappe.call({
+				method: "omnexa_healthcare.api.device_integration.seed_demo_medical_devices",
+				freeze: true,
+				callback() {
+					frappe.show_alert({ message: __("Devices seeded"), indicator: "green" });
+				},
 			});
-		},
-	});
+		});
+		const $shell = OJ.shell({
+			title: OJ.t("مركز تجربة Omnexa Healthcare", "Omnexa Healthcare Demo Hub"),
+			subtitle: OJ.t("كل البوابات · كل الأدوار · كل الأقسام", "All portals · roles · departments"),
+			role: OJ.t("مدير النظام", "System Manager"),
+			sidebar: OJ.defaultSidebar("admin"),
+			bodyEl: $body,
+			homeRoute: "/app/healthcare-demo-hub",
+		});
+		$mount.empty().append($shell);
+	}
+
+	render().catch((e) => OJ.showCallError(e));
 };

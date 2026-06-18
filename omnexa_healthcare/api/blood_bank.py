@@ -29,6 +29,26 @@ def list_available_units(blood_group: str | None = None, branch: str | None = No
 
 
 @frappe.whitelist()
+def api_get_blood_bank_dashboard(branch: str | None = None, company: str | None = None) -> dict:
+	units = list_available_units(branch=branch, company=company)
+	orders = []
+	if frappe.db.exists("DocType", "Healthcare Transfusion Order"):
+		filters: dict = {}
+		if branch:
+			filters["branch"] = branch
+		if company:
+			filters["company"] = company
+		orders = frappe.get_all(
+			"Healthcare Transfusion Order",
+			filters=filters,
+			fields=["name", "patient", "blood_group", "status", "order_date"],
+			order_by="modified desc",
+			limit=30,
+		)
+	return {"units": units, "orders": orders, "count": len(units)}
+
+
+@frappe.whitelist()
 def approve_transfusion_order(order: str) -> dict:
 	doc = frappe.get_doc("Healthcare Transfusion Order", order)
 	if doc.status not in ("Draft", "Cross Match"):

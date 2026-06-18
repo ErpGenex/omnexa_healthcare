@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-dialysis-desk",
+ "page_name": "healthcare-dialysis-desk",
+ "standard": "Yes",
+ "title": "Dialysis Desk",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

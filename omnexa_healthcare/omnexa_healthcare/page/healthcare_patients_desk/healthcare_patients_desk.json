@@ -1,0 +1,12 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-patients-desk",
+ "page_name": "healthcare-patients-desk",
+ "standard": "Yes",
+ "title": "Patients Desk",
+ "roles": [
+  { "role": "System Manager" },
+  { "role": "Desk User" }
+ ]
+}

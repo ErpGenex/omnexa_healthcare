@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-optometry-desk",
+ "page_name": "healthcare-optometry-desk",
+ "standard": "Yes",
+ "title": "Optometry Desk",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

@@ -33,6 +33,8 @@ app_include_css = [
 app_include_js = [
 	"/assets/omnexa_healthcare/js/healthcare_terminology.js",
 	"/assets/omnexa_healthcare/js/omnexa-journey.js",
+	"/assets/omnexa_healthcare/js/omnexa-journey-kit.js",
+	"/assets/omnexa_healthcare/js/healthcare-portal-factory.js",
 ]
 
 # include js, css files in header of web template

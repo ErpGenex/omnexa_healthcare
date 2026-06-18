@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-blood-desk",
+ "page_name": "healthcare-blood-desk",
+ "standard": "Yes",
+ "title": "Blood Bank",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

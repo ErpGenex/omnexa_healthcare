@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-ld-board",
+ "page_name": "healthcare-ld-board",
+ "standard": "Yes",
+ "title": "L&D Board",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

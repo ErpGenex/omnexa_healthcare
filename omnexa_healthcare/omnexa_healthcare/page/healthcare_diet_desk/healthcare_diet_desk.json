@@ -1,0 +1,16 @@
+{
+ "doctype": "Page",
+ "module": "Omnexa Healthcare",
+ "name": "healthcare-diet-desk",
+ "page_name": "healthcare-diet-desk",
+ "standard": "Yes",
+ "title": "Nutrition Desk",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Desk User"
+  }
+ ]
+}

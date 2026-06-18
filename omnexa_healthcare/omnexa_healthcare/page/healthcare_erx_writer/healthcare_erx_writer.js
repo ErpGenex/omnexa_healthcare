@@ -47,7 +47,11 @@ frappe.pages["healthcare-erx-writer"].on_page_load = function (wrapper) {
 
 	page.set_primary_action(__("Create & Sign"), () => {
 		const p = patient.get_value(), pr = practitioner.get_value(), dx = diagnosis.get_value();
-		if (!p || !pr || !dx || !lines.length) return frappe.msgprint(__("Complete patient, prescriber, diagnosis and add medications"));
+		if (!p || !pr || !dx || !lines.length) {
+			return frappe.msgprint(
+				__("Complete patient, prescriber, diagnosis and add medications")
+			);
+		}
 		frappe.call({
 			method: "omnexa_healthcare.api.erx.create_medication_request",
 			args: { patient: p, practitioner: pr, diagnosis: dx, items: lines, company: frappe.defaults.get_default("company"), branch: frappe.defaults.get_user_default("Branch") },

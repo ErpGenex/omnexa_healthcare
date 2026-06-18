@@ -19,6 +19,8 @@
 	--oj-shadow: 0 8px 32px rgba(0, 51, 102, 0.1);
 	--oj-shadow-sm: 0 2px 12px rgba(0, 51, 102, 0.06);
 	--oj-font: "Tajawal", "Segoe UI", system-ui, sans-serif;
+	--oj-font-base: 14px;
+	--oj-font-scale: 1.12;
 }
 
 /* Desk page full-bleed */
@@ -31,9 +33,11 @@
 .oj-shell {
 	display: flex;
 	font-family: var(--oj-font);
+	font-size: var(--oj-font-base);
 	background: var(--oj-bg);
 	color: var(--oj-text);
 	min-height: 100vh;
+	line-height: 1.5;
 }
 
 .oj-shell * {
@@ -61,7 +65,7 @@
 	padding: 10px 4px;
 	border-radius: var(--oj-radius-sm);
 	color: rgba(255, 255, 255, 0.75);
-	font-size: 0.65rem;
+	font-size: 0.8rem;
 	text-align: center;
 	text-decoration: none;
 	transition: background 0.2s, color 0.2s;
@@ -135,7 +139,101 @@
 	display: flex;
 	align-items: center;
 	gap: 16px;
-	font-size: 0.85rem;
+	font-size: 0.95rem;
+}
+
+/* User menu + language switch */
+.oj-user-menu {
+	position: relative;
+}
+
+.oj-user-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	border: 1px solid rgba(0, 51, 102, 0.12);
+	background: var(--oj-card);
+	border-radius: 999px;
+	padding: 6px 12px 6px 6px;
+	font-family: var(--oj-font);
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--oj-text);
+	cursor: pointer;
+	box-shadow: var(--oj-shadow-sm);
+}
+
+.oj-user-avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: var(--oj-primary);
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.9rem;
+	font-weight: 800;
+}
+
+.oj-user-caret {
+	font-size: 0.7rem;
+	color: var(--oj-muted);
+}
+
+.oj-user-dropdown {
+	display: none;
+	position: absolute;
+	top: calc(100% + 8px);
+	inset-inline-end: 0;
+	min-width: 220px;
+	background: var(--oj-card);
+	border: 1px solid rgba(0, 51, 102, 0.1);
+	border-radius: var(--oj-radius-sm);
+	box-shadow: var(--oj-shadow);
+	padding: 8px;
+	z-index: 100;
+}
+
+.oj-user-menu.open .oj-user-dropdown {
+	display: block;
+}
+
+.oj-user-dropdown-title {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--oj-muted);
+	padding: 6px 10px 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.oj-user-dropdown-item {
+	display: block;
+	width: 100%;
+	text-align: start;
+	border: 0;
+	background: transparent;
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-family: var(--oj-font);
+	font-size: 0.95rem;
+	color: var(--oj-text);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.oj-user-dropdown-item:hover,
+.oj-user-dropdown-item.active {
+	background: var(--oj-accent);
+	color: var(--oj-primary);
+	font-weight: 700;
+}
+
+.oj-user-dropdown-divider {
+	height: 1px;
+	background: rgba(0, 51, 102, 0.08);
+	margin: 6px 0;
 }
 
 .oj-pill {
@@ -148,7 +246,7 @@
 
 .oj-title-row h1 {
 	margin: 0 0 16px;
-	font-size: 1.35rem;
+	font-size: 1.65rem;
 	font-weight: 800;
 	color: var(--oj-primary);
 }
@@ -170,13 +268,13 @@
 }
 
 .oj-kpi-value {
-	font-size: 1.75rem;
+	font-size: 2rem;
 	font-weight: 800;
 	line-height: 1.2;
 }
 
 .oj-kpi-label {
-	font-size: 0.8rem;
+	font-size: 0.95rem;
 	opacity: 0.9;
 	margin-top: 4px;
 }
@@ -228,7 +326,7 @@
 }
 
 .oj-step-label {
-	font-size: 0.7rem;
+	font-size: 0.85rem;
 	color: var(--oj-muted);
 	line-height: 1.2;
 }
@@ -280,13 +378,13 @@
 .oj-clinic-card h4,
 .oj-doctor-card h4 {
 	margin: 0 0 6px;
-	font-size: 1rem;
+	font-size: 1.1rem;
 	color: var(--oj-primary);
 }
 
 .oj-muted {
 	color: var(--oj-muted);
-	font-size: 0.85rem;
+	font-size: 0.95rem;
 }
 
 .oj-clinic-stats {
@@ -326,10 +424,10 @@
 	gap: 8px;
 	border: 0;
 	border-radius: 999px;
-	padding: 11px 24px;
+	padding: 12px 26px;
 	font-family: var(--oj-font);
 	font-weight: 700;
-	font-size: 0.9rem;
+	font-size: 0.95rem;
 	cursor: pointer;
 	transition: opacity 0.2s, transform 0.1s;
 }
@@ -484,7 +582,7 @@
 
 .oj-form-group label {
 	display: block;
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 	font-weight: 600;
 	margin-bottom: 4px;
 	color: var(--oj-muted);
@@ -493,10 +591,11 @@
 .oj-form-group input,
 .oj-form-group select {
 	width: 100%;
-	padding: 10px 14px;
+	padding: 11px 14px;
 	border: 1px solid rgba(0, 51, 102, 0.15);
 	border-radius: var(--oj-radius-sm);
 	font-family: var(--oj-font);
+	font-size: 0.95rem;
 }
 
 .oj-search-bar {
@@ -522,9 +621,36 @@
 .oj-footer {
 	margin-top: auto;
 	padding-top: 16px;
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 	color: var(--oj-muted);
 	border-top: 1px solid rgba(0, 51, 102, 0.08);
+}
+
+/* Data tables in portal factory */
+.oj-data-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+}
+
+.oj-data-table th,
+.oj-data-table td {
+	padding: 12px 14px;
+	border-bottom: 1px solid rgba(0, 51, 102, 0.08);
+	text-align: start;
+}
+
+.oj-data-table th {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: var(--oj-primary);
+	background: var(--oj-accent);
+}
+
+.oj-body h4 {
+	font-size: 1.1rem;
+	margin: 16px 0 10px;
+	color: var(--oj-primary);
 }
 
 .oj-nav-actions {

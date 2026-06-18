@@ -113,6 +113,52 @@ ROLE_SPECS: list[dict] = [
 		"sections": [
 			("📊 Analytics", [
 				("Page", "healthcare-executive-dashboard", "Executive Dashboard"),
+				("Page", "healthcare-demo-hub", "Demo Hub"),
+			]),
+		],
+	},
+	{
+		"role": "Healthcare Pharmacist",
+		"workspace": "Healthcare Pharmacy",
+		"title": "💊 Pharmacy Desk",
+		"default_route": "/app/healthcare-pharmacy-desk",
+		"email": "pharmacist@demo.health",
+		"first_name": "Layla",
+		"last_name": "Pharmacist",
+		"sections": [
+			("✨ Omnexa Journey", [
+				("Page", "healthcare-pharmacy-desk", "Pharmacy Desk"),
+				("Page", "healthcare-pharmacy-rx-verify", "Rx Verify"),
+			]),
+		],
+	},
+	{
+		"role": "Healthcare CFO",
+		"workspace": "Healthcare Finance",
+		"title": "💼 Finance Desk",
+		"default_route": "/app/healthcare-finance-desk",
+		"email": "cfo@demo.health",
+		"first_name": "Hana",
+		"last_name": "Finance",
+		"sections": [
+			("💼 Finance", [
+				("Page", "healthcare-finance-desk", "Finance Desk"),
+				("Page", "healthcare-cashier-desk", "Cashier Desk"),
+			]),
+		],
+	},
+	{
+		"role": "Healthcare Manager",
+		"workspace": "Healthcare Manager",
+		"title": "📊 Hospital Manager",
+		"default_route": "/app/healthcare-executive-dashboard",
+		"email": "manager@demo.health",
+		"first_name": "Karim",
+		"last_name": "Manager",
+		"sections": [
+			("📊 Management", [
+				("Page", "healthcare-executive-dashboard", "Executive Dashboard"),
+				("Page", "healthcare-demo-hub", "Demo Hub"),
 			]),
 		],
 	},
