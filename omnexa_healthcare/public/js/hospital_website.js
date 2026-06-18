@@ -478,6 +478,8 @@
 				patient: {},
 				patientId: "",
 				sessionToken: "",
+				token: null,
+				bookingComplete: false,
 			};
 			let doctors = [];
 
@@ -495,7 +497,6 @@
 				this.t("step_doctor"),
 				this.t("step_time"),
 				this.t("step_personal"),
-				this.t("otp") || "OTP",
 				this.t("step_confirm"),
 			];
 
@@ -539,12 +540,54 @@
 				return !!(
 					state.patient.given_name &&
 					state.patient.family_name &&
-					state.patient.phone &&
-					state.patient.email &&
-					state.patient.national_id &&
-					state.patient.birth_date &&
-					state.patient.gender
+					state.patient.phone
 				);
+			};
+
+			const renderVisitToken = (token) => {
+				if (!token) return "";
+				const appt = token.appointment_id || token.name || "";
+				const qr = token.qr_data_uri
+					? `<img src="${this.esc(token.qr_data_uri)}" alt="QR" width="140" height="140" style="margin:12px auto;display:block" />`
+					: `<div class="hc-muted">${this.t("loading")}</div>`;
+				return `<div class="hc-token-card" data-appt="${this.esc(appt)}" style="max-width:360px;margin:16px auto;text-align:center;border:2px solid var(--hc-primary);border-radius:12px;padding:20px">
+					<h4 style="margin:0 0 8px;color:var(--hc-primary)">${this.lang === "ar" ? "تذكرة الزيارة" : "Visit Token"}</h4>
+					<div style="font-size:1.2rem;font-weight:800">${this.esc(appt)}</div>
+					<p>${this.lang === "ar" ? "رقم الدور" : "Queue"}: <strong>${this.esc(token.queue_number || "—")}</strong></p>
+					${qr}
+					<div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+						<button type="button" class="hc-btn hc-btn-outline hc-token-print">${this.lang === "ar" ? "طباعة" : "Print"}</button>
+						<button type="button" class="hc-btn hc-btn-outline hc-token-pdf">PDF</button>
+						<button type="button" class="hc-btn hc-btn-primary hc-token-wa">${this.lang === "ar" ? "واتساب" : "WhatsApp"}</button>
+					</div>
+				</div>`;
+			};
+
+			const bindVisitTokenActions = (token) => {
+				const appt = token.appointment_id || token.name;
+				document.querySelector(".hc-token-print")?.addEventListener("click", () => {
+					const w = window.open("", "_blank", "width=480,height=640");
+					if (!w) return;
+					const qr = token.qr_data_uri ? `<img src="${token.qr_data_uri}" width="160" height="160" />` : "";
+					w.document.write(`<!DOCTYPE html><html><body style="font-family:Arial;text-align:center;padding:24px">
+						<h2>${appt}</h2><p>${token.queue_number || ""}</p>${qr}</body></html>`);
+					w.document.close();
+					w.focus();
+					setTimeout(() => { w.print(); w.close(); }, 400);
+				});
+				document.querySelector(".hc-token-pdf")?.addEventListener("click", () => {
+					window.open(`/api/method/omnexa_healthcare.api.journey_desk.download_visit_token_pdf?appointment=${encodeURIComponent(appt)}`, "_blank");
+				});
+				document.querySelector(".hc-token-wa")?.addEventListener("click", async () => {
+					const r = await frappe.call({
+						method: "omnexa_healthcare.api.journey_desk.get_visit_token_share",
+						args: { appointment: appt },
+					});
+					const data = r.message || {};
+					const text = encodeURIComponent(data.message || appt);
+					const phone = (data.phone || "").replace(/\D/g, "");
+					window.open(phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`, "_blank");
+				});
 			};
 
 			const advance = () => {
@@ -565,7 +608,7 @@
 					<div class="hc-panel" id="hc-booking-panel"></div>
 					<div style="display:flex;justify-content:space-between;margin-top:16px;">
 						<button type="button" class="hc-btn hc-btn-outline" id="hc-book-back" ${state.step === 1 ? "disabled" : ""}>${this.t("back")}</button>
-						${state.step === 6 ? `<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${this.t("confirm")}</button>` : ""}
+						${state.step === 5 && !state.bookingComplete ? `<button type="button" class="hc-btn hc-btn-primary" id="hc-book-next">${this.t("confirm")}</button>` : ""}
 					</div>`;
 
 				const panel = document.getElementById("hc-booking-panel");
@@ -652,7 +695,7 @@
 							? slots
 									.map(
 										(s) =>
-											`<button type="button" class="hc-slot ${state.slot && state.slot.start === s.start ? "selected" : ""}" data-start="${this.esc(s.start)}" data-end="${this.esc(s.end)}">${this.esc(String(s.start).slice(11, 16))}</button>`
+											`<button type="button" class="hc-slot ${state.slot && state.slot.start === s.start ? "selected" : ""}" data-start="${this.esc(s.start)}" data-end="${this.esc(s.end)}">${this.esc(String(s.start).slice(11, 16))}${s.walk_in ? " *" : ""}</button>`
 									)
 									.join("")
 							: `<div class="hc-empty">${this.t("no_slots")}</div>`;
@@ -668,7 +711,7 @@
 					await loadSlots();
 				} else if (state.step === 4) {
 					panel.innerHTML = `
-						<p class="hc-muted" style="margin-top:0">${this.t("registration_required") || "Full registration required before booking"}</p>
+						<p class="hc-muted" style="margin-top:0">${this.lang === "ar" ? "سجّل بياناتك أو سيتم ربط حسابك إن كنت مسجلاً مسبقاً" : "Enter your details — existing patients are matched by mobile"}</p>
 						<div class="hc-form-grid">
 							<div class="hc-field"><label>${this.t("first_name")}</label><input id="hc-given" value="${this.esc(state.patient.given_name || "")}"></div>
 							<div class="hc-field"><label>${this.t("last_name")}</label><input id="hc-family" value="${this.esc(state.patient.family_name || "")}"></div>
@@ -678,21 +721,24 @@
 							<div class="hc-field"><label>${this.t("birth_date") || "Birth date"}</label><input id="hc-birth" type="date" value="${this.esc(state.patient.birth_date || "")}"></div>
 							<div class="hc-field"><label>${this.t("gender") || "Gender"}</label>
 								<select id="hc-gender"><option value="">${this.t("select") || "Select"}</option>
-								<option value="male">${this.t("male") || "Male"}</option><option value="female">${this.t("female") || "Female"}</option></select></div>
+								<option value="male" ${state.patient.gender === "male" ? "selected" : ""}>${this.t("male") || "Male"}</option>
+								<option value="female" ${state.patient.gender === "female" ? "selected" : ""}>${this.t("female") || "Female"}</option></select></div>
 						</div>
-						<button type="button" class="hc-btn hc-btn-primary" id="hc-reg-next" style="margin-top:12px">${this.t("register_send_otp") || "Register & Send OTP"}</button>`;
+						<button type="button" class="hc-btn hc-btn-primary" id="hc-reg-next" style="margin-top:12px">${this.lang === "ar" ? "متابعة الحجز" : "Continue to booking"}</button>`;
 					document.getElementById("hc-reg-next")?.addEventListener("click", async () => {
 						if (!syncPatientFromForm()) {
-							frappe.msgprint(this.t("fill_all_fields") || "Please fill all required fields");
+							frappe.msgprint(this.lang === "ar" ? "أدخل الاسم والجوال" : "Enter name and mobile");
 							return;
 						}
 						try {
 							const r = await frappe.call({
-								method: "omnexa_healthcare.api.web_booking.register_for_booking",
+								method: "omnexa_healthcare.api.web_booking.ensure_patient_for_website_booking",
 								args: { payload: state.patient },
 							});
 							state.patientId = (r.message && r.message.patient) || "";
-							if (r.message && r.message.demo_otp) frappe.show_alert({ message: `OTP: ${r.message.demo_otp}`, indicator: "blue" });
+							if (r.message && r.message.created === false) {
+								frappe.show_alert({ message: this.lang === "ar" ? "تم ربط حساب موجود" : "Existing account linked", indicator: "green" });
+							}
 							state.step = 5;
 							render();
 						} catch (e) {
@@ -700,35 +746,27 @@
 						}
 					});
 				} else if (state.step === 5) {
-					panel.innerHTML = `
-						<h3>${this.t("otp") || "OTP Verification"}</h3>
-						<div class="hc-field" style="max-width:240px"><label>${this.t("otp_code") || "OTP Code"}</label><input id="hc-otp" maxlength="6"></div>
-						<button type="button" class="hc-btn hc-btn-primary" id="hc-otp-verify">${this.t("verify") || "Verify"}</button>`;
-					document.getElementById("hc-otp-verify")?.addEventListener("click", async () => {
-						const otp = document.getElementById("hc-otp").value;
-						try {
-							const r = await frappe.call({
-								method: "omnexa_healthcare.api.web_booking.verify_for_booking",
-								args: { mobile: state.patient.phone, otp, patient: state.patientId },
-							});
-							state.sessionToken = (r.message && r.message.session_token) || "";
-							state.step = 6;
-							render();
-						} catch (e) {
-							frappe.msgprint((e && e.message) || "OTP failed");
-						}
-					});
-				} else if (state.step === 6) {
 					const doc = doctors.find((d) => d.name === state.practitioner);
-					panel.innerHTML = `
-						<h3>${this.t("booking_summary")}</h3>
-						<ul style="line-height:2;">
-							<li><b>${this.t("doctor")}:</b> ${this.esc((doc && doc.practitioner_name) || state.practitioner)}</li>
-							<li><b>${this.t("slot")}:</b> ${this.esc(state.slot ? `${state.slot.start} — ${state.slot.end}` : "")}</li>
-							<li><b>${this.t("patient")}:</b> ${this.esc(`${state.patient.given_name || ""} ${state.patient.family_name || ""}`.trim())}</li>
-							<li><b>${this.t("phone")}:</b> ${this.esc(state.patient.phone || "")}</li>
-						</ul>
-						<div id="hc-book-result"></div>`;
+					if (state.bookingComplete && state.token) {
+						panel.innerHTML = `
+							<h3>${this.t("booking_success")}</h3>
+							<ul style="line-height:2;">
+								<li><b>${this.t("doctor")}:</b> ${this.esc((doc && doc.practitioner_name) || state.practitioner)}</li>
+								<li><b>${this.t("slot")}:</b> ${this.esc(state.slot ? `${state.slot.start} — ${state.slot.end}` : "")}</li>
+							</ul>
+							<div id="hc-book-result">${renderVisitToken(state.token)}</div>`;
+						bindVisitTokenActions(state.token);
+					} else {
+						panel.innerHTML = `
+							<h3>${this.t("booking_summary")}</h3>
+							<ul style="line-height:2;">
+								<li><b>${this.t("doctor")}:</b> ${this.esc((doc && doc.practitioner_name) || state.practitioner)}</li>
+								<li><b>${this.t("slot")}:</b> ${this.esc(state.slot ? `${state.slot.start} — ${state.slot.end}` : "")}</li>
+								<li><b>${this.t("patient")}:</b> ${this.esc(`${state.patient.given_name || ""} ${state.patient.family_name || ""}`.trim())}</li>
+								<li><b>${this.t("phone")}:</b> ${this.esc(state.patient.phone || "")}</li>
+							</ul>
+							<div id="hc-book-result"></div>`;
+					}
 				}
 
 				document.getElementById("hc-book-back")?.addEventListener("click", () => {
@@ -738,8 +776,9 @@
 					}
 				});
 				document.getElementById("hc-book-next")?.addEventListener("click", async () => {
-					if (state.step === 6) {
-						await this.submitBooking(state, cfg);
+					if (state.step === 5 && !state.bookingComplete) {
+						const ok = await this.submitBooking(state, cfg);
+						if (ok) render();
 					}
 				});
 			};
@@ -757,6 +796,10 @@
 		},
 
 		async submitBooking(state, cfg) {
+			if (!state.slot) {
+				frappe.msgprint(this.t("select_slot") || "Select a time slot");
+				return false;
+			}
 			if (!state.service_code) {
 				const services = (await frappe.call({
 					method: "omnexa_healthcare.api.web_booking.get_published_services",
@@ -766,7 +809,7 @@
 			}
 			if (!state.service_code) {
 				frappe.msgprint(this.t("no_service"));
-				return;
+				return false;
 			}
 			try {
 				const r = await frappe.call({
@@ -778,19 +821,17 @@
 							service_code: state.service_code,
 							practitioner: state.practitioner,
 							patient: state.patientId,
-							session_token: state.sessionToken,
 							appointment_date: state.slot.start,
 							slot_end: state.slot.end,
 						},
 					},
 				});
-				const msg = r.message || {};
-				const el = document.getElementById("hc-book-result");
-				if (el) {
-					el.innerHTML = `<div class="alert alert-success">${this.t("booking_success")}: <b>${this.esc(msg.name)}</b></div>`;
-				}
+				state.token = r.message || {};
+				state.bookingComplete = true;
+				return true;
 			} catch (err) {
 				frappe.msgprint((err && err.message) || "Booking failed");
+				return false;
 			}
 		},
 

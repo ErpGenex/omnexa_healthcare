@@ -15,8 +15,11 @@ from frappe.utils import get_url
 
 from omnexa_healthcare.api.patient_registration import (
 	assert_booking_allowed,
+	register_patient_full,
 	register_patient_online,
 	verify_registration_and_session,
+	_phone_patient,
+	_normalize_phone,
 )
 from omnexa_healthcare.api.scheduling import create_healthcare_appointment
 from omnexa_healthcare.scheduling_engine import get_available_slots
@@ -105,7 +108,9 @@ def get_booking_slots(
 	if not practitioner:
 		frappe.throw(_("No practitioner configured for this service."))
 
-	slots = get_available_slots(practitioner, branch, date, specialty=catalog.specialty)
+	slots = get_available_slots(
+		practitioner, branch, date, specialty=catalog.specialty, include_walk_in=True
+	)
 	return {
 		"service": catalog,
 		"practitioner": practitioner,
@@ -116,23 +121,24 @@ def get_booking_slots(
 
 @frappe.whitelist(allow_guest=True)
 def book_appointment_online(payload: str | dict) -> dict:
-	"""Create a website booking — requires verified patient session (full registration + OTP)."""
+	"""Create a website booking — guest flow skips OTP when session_token is omitted."""
 	data = frappe.parse_json(payload) if isinstance(payload, str) else frappe._dict(payload or {})
 	required = (
 		"company",
 		"branch",
 		"service_code",
 		"appointment_date",
-		"slot_end",
 		"patient",
-		"session_token",
 	)
 	for key in required:
 		if not data.get(key):
 			frappe.throw(_("{0} is required").format(key.replace("_", " ").title()))
 
-	assert_booking_allowed(data.patient, session_token=data.session_token, online=True)
 	patient = data.patient
+	if data.get("session_token"):
+		assert_booking_allowed(patient, session_token=data.session_token, online=True)
+	else:
+		assert_booking_allowed(patient, online=False)
 
 	catalog = frappe.db.get_value(
 		"Healthcare Service Catalog",
@@ -186,8 +192,13 @@ def book_appointment_online(payload: str | dict) -> dict:
 		),
 		ignore_permissions=True,
 	)
+	from omnexa_healthcare.api.journey_desk import issue_visit_token
+
+	appt_name = result.get("name") or result.get("appointment")
+	token = issue_visit_token(appt_name) if appt_name else {}
 	return {
 		**result,
+		**token,
 		"patient": patient,
 		"user": frappe.db.get_value("Healthcare Patient", patient, "portal_user"),
 		"message": _("Appointment booked successfully."),
@@ -204,6 +215,86 @@ def register_for_booking(payload: str | dict) -> dict:
 def verify_for_booking(mobile: str, otp: str, patient: str) -> dict:
 	"""Step 2: OTP verification — returns session_token for booking."""
 	return verify_registration_and_session(mobile, otp, patient)
+
+
+@frappe.whitelist(allow_guest=True)
+def ensure_patient_for_website_booking(payload: str | dict) -> dict:
+	"""Find or create patient + portal account without OTP (public website booking)."""
+	data = frappe._dict(frappe.parse_json(payload) if isinstance(payload, str) else payload or {})
+	for key in ("given_name", "family_name", "phone", "company", "branch"):
+		if not data.get(key):
+			frappe.throw(_("{0} is required").format(key.replace("_", " ").title()))
+
+	phone = _normalize_phone(data.phone)
+	existing = _phone_patient(phone, data.branch)
+	if existing:
+		doc = frappe.get_doc("Healthcare Patient", existing)
+		user = _ensure_portal_user(
+			given_name=doc.given_name,
+			family_name=doc.family_name,
+			phone=phone,
+			email=data.get("email"),
+			company=data.company,
+		)
+		if frappe.db.has_column("Healthcare Patient", "portal_user"):
+			frappe.db.set_value("Healthcare Patient", existing, "portal_user", user)
+		return {
+			"patient": existing,
+			"patient_name": doc.full_name or f"{doc.given_name} {doc.family_name}",
+			"portal_user": user,
+			"created": False,
+			"message": _("Existing patient linked."),
+		}
+
+	reg_payload = {
+		"given_name": data.given_name,
+		"family_name": data.family_name,
+		"gender": data.get("gender") or "male",
+		"birth_date": data.get("birth_date") or frappe.utils.today(),
+		"phone": phone,
+		"national_id": data.get("national_id") or f"WEB-{phone[-8:]}-{frappe.generate_hash(length=4)}",
+		"company": data.company,
+		"branch": data.branch,
+	}
+	if data.get("email"):
+		reg_payload["email"] = data.email
+	result = register_patient_full(reg_payload)
+	user = _ensure_portal_user(
+		given_name=data.given_name,
+		family_name=data.family_name,
+		phone=phone,
+		email=data.get("email"),
+		company=data.company,
+	)
+	if frappe.db.has_column("Healthcare Patient", "portal_user"):
+		frappe.db.set_value("Healthcare Patient", result["patient"], "portal_user", user)
+	return {
+		**result,
+		"portal_user": user,
+		"created": True,
+		"message": _("Patient account created."),
+	}
+
+
+@frappe.whitelist(allow_guest=True)
+def register_and_book_website(payload: str | dict) -> dict:
+	"""One-shot: ensure patient (no OTP) + book appointment + visit token."""
+	data = frappe._dict(frappe.parse_json(payload) if isinstance(payload, str) else payload or {})
+	patient_fields = data.get("patient") or data
+	patient_info = ensure_patient_for_website_booking(patient_fields)
+	booking = book_appointment_online(
+		{
+			"company": data.company or patient_fields.company,
+			"branch": data.branch or patient_fields.branch,
+			"service_code": data.service_code,
+			"practitioner": data.get("practitioner"),
+			"patient": patient_info["patient"],
+			"appointment_date": data.appointment_date,
+			"slot_end": data.get("slot_end"),
+			"booking_fee": data.get("booking_fee"),
+		}
+	)
+	return {**patient_info, **booking}
 
 
 def _resolve_or_create_patient(

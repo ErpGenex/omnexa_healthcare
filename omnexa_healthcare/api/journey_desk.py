@@ -127,17 +127,17 @@ def _visit_token_print_html(ctx: dict) -> str:
 	</div></body></html>"""
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_visit_token_qr(payload: str) -> dict:
 	return {"data_uri": _qr_data_uri(payload)}
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_visit_token_details(appointment: str) -> dict:
 	return _visit_token_context(appointment)
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_visit_token_share(appointment: str) -> dict:
 	ctx = _visit_token_context(appointment)
 	message = _("Visit token {0} — Queue {1} — {2} — Ref: {3}").format(
@@ -152,7 +152,7 @@ def get_visit_token_share(appointment: str) -> dict:
 	return {"phone": phone, "message": message}
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def download_visit_token_pdf(appointment: str):
 	ctx = _visit_token_context(appointment)
 	html = _visit_token_print_html(ctx)
@@ -339,7 +339,7 @@ def get_reception_doctors(company: str, branch: str, specialty: str | None = Non
 				"status": ["in", ["Scheduled", "Arrived", "In Consultation"]],
 			},
 		)
-		slots = get_available_slots(r.name, branch, today(), specialty=spec) if spec else []
+		slots = get_available_slots(r.name, branch, today(), specialty=spec, include_walk_in=True) if spec else []
 		next_slot = slots[0]["start"] if slots else _("Today")
 		out.append(
 			{
@@ -437,6 +437,18 @@ def get_reception_today_appointments(company: str | None = None, branch: str | N
 		order_by="appointment_date asc",
 		limit=50,
 	)
+
+
+@frappe.whitelist()
+def get_reception_booking_slots(
+	practitioner: str,
+	branch: str,
+	date: str | None = None,
+	specialty: str | None = None,
+) -> list[dict]:
+	"""Available slots for reception booking; falls back to walk-in slot for today."""
+	date = date or today()
+	return get_available_slots(practitioner, branch, date, specialty=specialty, include_walk_in=True)
 
 
 @frappe.whitelist()

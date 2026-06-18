@@ -14,10 +14,12 @@ A-,A-
 AB+,AB+
 AB-,AB-
 Abatement Date/Time,تاريخ/وقت زوال الأعراض
+Abnormal,غير طبيعي
 Abnormal Lab Results,نتائج مختبر غير طبيعية
 Abnormal Result,نتيجة غير طبيعية
 Accepted,مقبول
 Accessed On,تاريخ الوصول
+Account,الحساب
 Achieved,Achieved
 Acknowledged,مُقرّ به
 Action,إجراء
@@ -36,6 +38,7 @@ Address Line 2,سطر العنوان 2
 Address Type,نوع العنوان
 Address Use,استخدام العنوان
 Adjustment,تسوية
+Admin & Integration,الإدارة والتكامل
 Administered At,تاريخ الإعطاء
 Administered By,أُعطي بواسطة
 Administrative,إداري
@@ -49,6 +52,7 @@ Admission patient must match.,يجب أن يتطابق مريض القبول.
 Admission Reference,مرجع القبول
 Admissions,القبول
 Admit,قبول
+Admitted,تاريخ القبول
 admitted,مُقبول
 ADT Transfer,تحويل قبول/خروج/تحويل
 Adt Transfer,تحويل قبول/خروج/تحويل
@@ -60,6 +64,7 @@ AI Insights,رؤى الذكاء الاصطناعي
 Alert,تنبيه
 Alert Level,مستوى التنبيه
 Algorithm,Algorithm
+All Portals,جميع البوابات
 Allergies,الحساسيات
 Allergies / adverse reactions (summary),الحساسيات / التفاعلات الضارة (ملخص)
 Allergy,حساسية
@@ -100,9 +105,11 @@ Appointment Type,نوع الموعد
 Appointment Utilization,موعد استخدام
 Appointment Waitlist,Appointment Waitlist
 Appointments,المواعيد
+Appointments Desk,مواعيد مكتب
 Appointments Today,مواعيد اليوم
 Approved,موافق عليه
 Approved Amount,المبلغ المعتمد
+Arabic,العربية
 Archive,Archive
 Archived,مؤرشف
 Arrival,الوصول
@@ -164,6 +171,9 @@ Birth Date Precision,دقة تاريخ الميلاد
 Birth Order,ترتيب الولادة
 Birth Time,وقت الولادة
 Blood,دم
+Blood Bank,Blood Bank
+Blood Des,Blood Des
+Blood Desk,Blood Desk
 Blood Donor,Blood Donor
 Blood Donors,Blood Donors
 Blood group,Blood group
@@ -174,6 +184,7 @@ Blood unit,Blood unit
 Blood Units,Blood Units
 blood_pressure,ضغط الدم
 Body Site,موضع الجسم
+Body Tag / ID,Body Tag / ID
 body_height,الطول
 body_map,Body Map
 body_temperature,درجة الحرارة
@@ -215,6 +226,7 @@ Cashier / Treasury,الخزينة / الصندوق
 Cashier Desk,مكتب الخزينة
 Cashier — Visit Payments,الخزينة — سداد الزيارات
 Category,الفئة
+Cause of Death (summary),Cause of Death (ملخص)
 CAUTI,CAUTI
 CDS Alert Log,CDS Alert Log
 Cds Alert Log,Cds Alert Log
@@ -257,6 +269,7 @@ Client ID,Client ID
 Clinic,العيادة
 Clinic / Branch Assignments,تعيينات العيادة / الفرع
 Clinic Entry,الدخول للعيادة
+Clinical,سريري
 Clinical (summary),سريري (ملخص)
 Clinical Ai Insight,سريري Ai رؤية
 Clinical Cds Rule,قاعدة دعم قراري سريري
@@ -333,9 +346,11 @@ Controlled substance,Controlled substance
 Coordinator,Coordinator
 Copay %,مشاركة تكلفة %
 Copay Amount,مبلغ المشاركة في التكلفة
+Core,النواة
 Corporate,مؤسسي
 corrected,مصحح
 Corrective action,Corrective action
+Could not load data,تعذر تحميل البيانات
 counseling,إرشاد
 Country,الدولة
 Country of origin,Country of origin
@@ -403,6 +418,7 @@ Delete ALL Companies,حذف جميع الشركات
 Deleted {0} branches,تم حذف {0} فرع
 Deleted {0} companies,تم حذف {0} شركة
 Delivered,Delivered
+Demo Accounts,حسابات الديمو
 Demo Hub,Demo Hub
 Demo Hub & Role Logins,مركز التجربة وتسجيلات الأدوار
 Demo ready,التجربة جاهزة
@@ -421,6 +437,7 @@ Department,القسم
 Department Code,قسم رمز
 Department Head,رئيس القسم
 Department Name,اسم القسم
+Departments,أقسام وتخصصات
 Departments count,Departments count
 Dependent patient,Dependent patient
 dermatology,dermatology
@@ -428,6 +445,7 @@ dermatology_course,دورة علاج جلدية
 Description,الوصف
 Desk,مكتب
 Details,التفاصيل
+Device Admin,Device Admin
 Device code,جهاز رمز
 Device ID,جهاز ID
 Device name,Device name
@@ -443,12 +461,15 @@ Diagnostic Report,تشخيصي تقرير
 Diagnostic report,تشخيصي تقرير
 Diagnostic Report Finding,نتيجة التقرير التشخيصي
 Diagnostic Reports,التقارير التشخيصية
+Dialysis Desk,Dialysis Desk
 DICOM,DICOM
 DICOM Modality,DICOM طريقة
 DICOM Viewer,عارض DICOM
 Dicom Viewer,عارض DICOM
 Dictated By,أملاه
+Diet Desk,Diet Desk
 differential,تشخيص تفريقي
+Digital,رقمي
 Direction,الاتجاه
 Disaster Recovery Plan,Disaster Recovery Plan
 Discarded,Discarded
@@ -648,6 +669,7 @@ FHIR_Observation,FHIR_Observation
 filled,محشو
 final,نهائي
 Finalized,نهائي
+Finance Desk,مالية مكتب
 Finding (narrative),النتيجة (سردية)
 Finding Code,رمز النتيجة
 Finding type,Finding type
@@ -730,6 +752,7 @@ Healthcare Appointment Utilization,موعد استخدام
 Healthcare Appointment Waitlist,Healthcare Appointment Waitlist
 Healthcare Barcode Scan Log,سجل مسح باركود
 Healthcare Bed,سرير
+Healthcare Blood Desk,Healthcare Blood Desk
 Healthcare Blood Donor,Healthcare Blood Donor
 Healthcare Blood Unit,Healthcare Blood Unit
 Healthcare Branch Website,Healthcare Branch Website
@@ -806,6 +829,7 @@ Healthcare Lab Panel Volume,حجم لوحات المختبر
 Healthcare Lab Qc Log,سجل ضبط جودة مختبر
 Healthcare Lab Reference Range,مدى مرجعي مختبر
 Healthcare Lab Rejection Rate,معدل رفض عينات المختبر
+Healthcare Lab Result Line,Healthcare Lab Result Line
 Healthcare Lab Sample,عينة مختبر
 Healthcare Lab TAT Analysis,تحليل زمن دورة المختبر
 Healthcare Lab Test Panel,لوحة فحص مختبر
@@ -822,6 +846,7 @@ Healthcare Medication Request,دواء طلب
 Healthcare Medication Request Item,دواء طلب صنف
 Healthcare Medication Statement,وصفة دواء
 Healthcare Mobile Device Token,رمز جهاز محمول
+Healthcare Morgue Case,Healthcare Morgue Case
 Healthcare Nphies Claim Bundle,حزمة مطالبة نفيس
 Healthcare Nursing Care Plan,خطة رعاية تمريضية
 Healthcare Nursing Incident Report,Healthcare Nursing Incident Report
@@ -847,7 +872,7 @@ Healthcare Patient Merge Log,سجل دمج مرضى
 Healthcare Patient Payment Checkout,Healthcare Patient Payment Checkout
 Healthcare Patient Portal,بوابة المريض
 Healthcare Patient Push Notification,إشعار دفع للمريض
-Healthcare Patient Queue,طابور المرضى
+Healthcare Patient Queue,انتظار المرضى
 Healthcare Patient Telecom,اتصالات المريض
 Healthcare Payer,جهة تأمين
 Healthcare Payer Aging,أعمار مطالبات جهات التأمين
@@ -882,6 +907,7 @@ Healthcare Radiology Cad Finding,Healthcare Radiology Cad Finding
 Healthcare Radiology Report Template,قالب تقرير أشعة
 Healthcare Radiology TAT,زمن دورة الأشعة
 Healthcare Radiology Worklist,قائمة عمل الأشعة
+Healthcare Rehab Desk,Healthcare Rehab Desk
 Healthcare Remote Monitoring Reading,Healthcare Remote Monitoring Reading
 Healthcare Revenue By Specialty,الإيرادات حسب التخصص
 Healthcare Role Demo,تجربة أدوار الرعاية الصحية
@@ -1032,6 +1058,7 @@ Insurance Claim Summary,تأمين مطالبة ملخص
 Insurance Member,عضو التأمين
 Insurance Plan,خطة التأمين
 Insurance Workflow,سير عمل التأمين
+Intake Date/Time,Intake Date / الوقت
 Intake/Output,المدخلات/المخرجات
 intended,مقصود
 Intent,النية
@@ -1064,6 +1091,7 @@ Jitsi server URL,Jitsi server URL
 Join URL,Join URL
 Journal Entry,قيد يومية
 L,L
+L&D Board,L & D لوحة
 Lab,مختبر
 lab,مختبر
 Lab & imaging reports,تقارير المختبر والتصوير
@@ -1072,11 +1100,14 @@ Lab Analyzer,Lab Analyzer
 Lab Collection,مختبر تحصيل
 Lab Order,مختبر طلب
 Lab order,مختبر طلب
+Lab Panel,مختبر لوحة
 Lab Panel Volume,حجم لوحات المختبر
 Lab Qc Log,مختبر Qc سجل
 Lab Reference Range,مختبر مرجعي مدى
 Lab Reference Ranges,المديات المرجعية للمختبر
 Lab Rejection Rate,معدل رفض العينات
+Lab Result Line,Lab Result Line
+Lab Results,مختبر نتائج
 Lab Sample,عينة مختبر
 Lab TAT Analysis,تحليل زمن دورة المختبر
 Lab Test Panel,لوحة فحص المختبر
@@ -1088,13 +1119,16 @@ lab_hemoglobin,هيموغلوبين المختبر
 Laboratory,مختبر
 laboratory,مختبر
 Laboratory registration / accreditation ref.,مرجع تسجيل / اعتماد المختبر
+Laboratory Results,مختبر نتائج
 Lactation,Lactation
+Language,اللغة
 Last donation,Last donation
 Last DR test,Last DR test
 Last name,اسم العائلة
 Last sterilization,Last sterilization
 Last sync,Last sync
 Last test result,Last test result
+Ld Board,Ld لوحة
 Legal / Official Name (FHIR HumanName),الاسم القانوني / الرسمي (FHIR HumanName)
 Level,مستوى
 Level 1,مستوى 1
@@ -1130,6 +1164,7 @@ Maintenance,صيانة
 Major,رئيسي
 Male,ذكر
 male,ذكر
+Management,إدارة
 Managing Facility,المنشأة المديرة
 Managing facility does not exist.,المنشأة المديرة غير موجودة.
 Managing facility must belong to the same company and branch.,يجب أن تنتمي المنشأة المديرة لنفس الشركة والفرع.
@@ -1148,6 +1183,8 @@ Max Dose,Max Dose
 Measure / type,القياس / النوع
 Medical Center,مركز طبي
 Medical Device,Medical Device
+Medical Device Admin,Medical Device Admin
+Medical Devices,ربط الأجهزة الطبية
 Medical File,الملف الطبي
 Medical file,الملف الطبي
 Medical file / الملف الطبي,الملف الطبي
@@ -1201,6 +1238,8 @@ Module Name,اسم الوحدة
 Monday,الاثنين
 Monthly,شهري
 More,المزيد
+Morgue Case,Morgue Case
+Morgue Desk,Morgue Desk
 Mother,أم
 MPI & Patient Access,سجل المرضى والوصول
 MQTT,MQTT
@@ -1218,6 +1257,7 @@ Neuro,أعصاب
 New Customer,مريض جديد
 New Patient,مريض جديد
 New Patients,مرضى جدد
+New Receipt,إيصال جديد
 Next test date,Next test date
 NICU,حضانة أطفال
 NM,NM
@@ -1248,6 +1288,7 @@ Nursing Observation Chart,تمريض قياس مخطط
 Nursing Observation Summary,تمريض قياس ملخص
 Nursing Portal,تمريض بوابة
 Nursing Shift Handover,Nursing Shift Handover
+Nutrition Desk,Nutrition Desk
 O,O
 O+,O+
 O-,O-
@@ -1263,6 +1304,7 @@ official,رسمي
 old,قديم
 Omnexa Healthcare,أومنكسا للرعاية الصحية
 Omnexa Journey assets missing. Run: bench build --app omnexa_healthcare,ملفات Omnexa Journey غير محمّلة. نفّذ: bench build --app omnexa_healthcare
+Omnexa Portal,بوابة Omnexa
 On Hold,On Hold
 on-hold,معلّق
 onhold,معلّق
@@ -1271,12 +1313,13 @@ Online Healthcare Booking,حجز الرعاية الصحية عبر الإنتر
 Onset date,Onset date
 Onset Date/Time,تاريخ/وقت البداية
 OPD,OPD
-Open,مفتوح
+Open,فتح
 OpenID Connect,OpenID Connect
 Operating Room,غرفة العمليات
 Operator,Operator
 ophthalmology,ophthalmology
 option,خيار
+Optometry Desk,Optometry Desk
 OR Utilization,OR استخدام
 Oral,Oral
 order,طلب
@@ -1288,6 +1331,8 @@ Orthodontic Case,حالة تقويم
 Orthodontics,تقويم الأسنان
 orthopedics,orthopedics
 OT,OT
+OT Board,OT لوحة
+Ot Board,غرفة عمليات لوحة
 Ot Consumable Issue,صرف مستهلكات غرفة العمليات
 OT Consumable Usage,OT مستهلكات استخدام
 OT Consumables,مستهلكات غرفة العمليات
@@ -1298,6 +1343,7 @@ OTP SMS webhook URL,OTP SMS webhook URL
 Out for delivery,Out for delivery
 Outbound,صادر
 outpatient,عيادة خارجية
+Outpatient portal,بوابة خارجية
 Overall risk,Overall risk
 Overdue,متأخر
 Overridden,Overridden
@@ -1373,12 +1419,13 @@ Patient portal,مريض بوابة
 Patient Portal Journey,بوابة المريض — الرحلة
 Patient Portal — Omnexa Journey,بوابة المريض — رحلة أومنكسا
 Patient Push Notification,مريض دفع إشعار
-Patient Queue,طابور المرضى
+Patient Queue,انتظار المرضى
 Patient request,مريض طلب
 Patient Summary,ملخص المريض
 Patient Telecom,اتصالات المريض
 Patient Waiting,Patient Waiting
 Patients,مرضى
+Patients Desk,مرضى مكتب
 Pay,سداد
 Pay now,ادفع الآن
 Payer,جهة التأمين
@@ -1390,7 +1437,7 @@ Payment,السداد
 Payment Entry,قيد دفع
 Payment gateway,Payment gateway
 Payment Method,طريقة الدفع
-Payment Queue,طابور السداد
+Payment Queue,انتظار السداد
 Payment reference,دفع مرجعي
 Payment Status,دفع حالة
 Paymob,Paymob
@@ -1399,6 +1446,7 @@ pediatrics,pediatrics
 Pending,قيد الانتظار
 Pending Imaging Orders,معلق تصوير طلبات
 Pending Lab Samples,عينات مختبر معلقة
+Pending Release,Pending Release
 Pending tasks,Pending tasks
 Penetration Test Report,Penetration Test Report
 Penetration Tests,Penetration Tests
@@ -1512,6 +1560,7 @@ Procedure Workflow,سير عمل الإجراء
 Procedures,الإجراءات
 Processed,مُعالج
 Processing,قيد المعالجة
+Profile,الملف الشخصي
 proposal,مقترح
 Protocol,البروتوكول
 Provider Joined,Provider Joined
@@ -1527,6 +1576,7 @@ Published services,الخدمات المنشورة
 Pulse Oximeter,Pulse Oximeter
 Purchase Invoice,فاتورة شراء
 Purchase Order,أمر شراء
+Purchase Receipt,إيصال استلام المشتريات
 Push,دفع
 Push Notifications,إشعارات الدفع
 Push Token,رمز الإشعار
@@ -1539,8 +1589,8 @@ Quality Corrective Action,Quality Corrective Action
 Quantity,الكمية
 Quarantine,Quarantine
 Quarterly,ربع سنوي
-Queue,الطابور
-Queued,في الطابور
+Queue,الانتظار
+Queued,في الانتظار
 Radiology,أشعة
 radiology,أشعة
 Radiology By Modality,أشعة حسب طريقة
@@ -1558,7 +1608,9 @@ Reading,Reading
 Reading time,Reading time
 Reason,السبب
 Reason for Visit (narrative),سبب الزيارة (سردي)
+Receipt List,قائمة الاستلامات
 Received,مستلم
+Recent Purchase Receipts,آخر إيصالات الاستلام
 Reception,الاستقبال
 Reception Desk,مكتب الاستقبال
 Receptionist,موظف الاستقبال
@@ -1572,6 +1624,7 @@ Recording,تسجيل
 recurrence,تكرار
 Reference,مرجعي
 Reference DocType,نوع المستند المرجعي
+Reference Range,مرجعي مدى
 References,المراجع
 Referral,التحويل
 Referring facility,Referring facility
@@ -1587,6 +1640,8 @@ Registered,مسجّل
 registered,مسجّل
 Registration Branch,فرع التسجيل
 Registration Status,Registration Status
+Rehab Des,Rehab Des
+Rehab Desk,Rehab Desk
 rehabilitation,تأهيل
 Rejected,مرفوض
 rejected,مرفوض
@@ -1594,6 +1649,9 @@ relapse,انتكاسة
 Relationship,صلة القرابة
 Relative,Relative
 Relative Weight,الوزن النسبي
+Release Date/Time,Release Date / الوقت
+Released,Released
+Released To,Released To
 Relocated,Relocated
 Reminder hours before appointment,ساعات التذكير قبل الموعد
 remission,هدأة
@@ -1667,6 +1725,7 @@ RxNorm Codes,RxNorm Codes
 RxNorm CUI,RxNorm CUI
 S,S
 Sales Invoice,فاتورة بيع
+Same native ERP form as the general system,نفس نموذج النظام العام — أصلي
 SAML 2.0,SAML 2.0
 SAML metadata URL,SAML metadata URL
 Sample Type,نوع العينة
@@ -1691,6 +1750,8 @@ Search,بحث
 Secondary,ثانوي
 secondary,ثانوي
 Secondary PACS WADO URL,Secondary PACS WADO URL
+Section,Section
+Section Header,Section Header
 Secure Message,آمن رسالة
 Secure Messages,رسائل آمنة
 Sedation,تخدير
@@ -1747,7 +1808,7 @@ Site Admin — Purge,مدير النظام — حذف شامل
 Site Marked,الموقع مُعلّم
 Site slug,Site slug
 Slot Duration (mins),مدة الموعد (دقائق)
-Smart Queue Board,لوحة الطابور الذكية
+Smart Queue Board,لوحة الانتظار الذكية
 SMS,SMS
 sms,رسالة نصية
 SMS webhook URL,رابط webhook لـ SMS
@@ -1795,10 +1856,13 @@ Sterilization Cycle,Sterilization Cycle
 Sterilization Cycles,Sterilization Cycles
 Stock Entry,حركة مخزون
 Stock Reconciliation,تسوية مخزون
+Stock traceability control: tracked item requires batch or serial in row {0}.,التحكم في تتبع المخزون: الصنف المتتبع يتطلب دفعة أو رقم تسلسلي في السطر {0}.
 Stock unavailable,Stock unavailable
 stopped,متوقف
 Storage,Storage
+Storage Location,Storage Location
 Store,مخزن
+Stored,Stored
 Stores / warehouse,المخازن / المستودع
 Strength,Strength
 Stripe,Stripe
@@ -1817,6 +1881,7 @@ Suffix,لاحقة
 Summary,ملخص
 Sunday,الأحد
 Supplier,مورد
+Support,مساندة
 Supporting Attachment,مرفق داعم
 Surface,السطح
 Surgery,جراحة
@@ -1849,6 +1914,7 @@ temp,مؤقت
 Temperature,Temperature
 Temperature (°C),درجة الحرارة (°م)
 Template Name,اسم القالب
+Test,Test
 Test / Control,فحص / ضابط
 Test date,Test date
 Test Name,اسم الفحص
@@ -2037,8 +2103,3 @@ Years of experience,Years of experience
 🧪 Laboratory (LIS),🧪 المختبر (نظام معلومات المختبر)
 🩸 Blood Bank · CSSD · QMS,🩸 Blood Bank · CSSD · QMS
 🩺 Practitioners & OPD,🩺 الأطباء والعيادات الخارجية
-Complete patient, prescriber, diagnosis and add medications,أكمل بيانات المريض والواصف والتشخيص وأضف الأدوية
-Account,الحساب
-Language,اللغة
-Arabic,العربية
-Profile,الملف الشخصي

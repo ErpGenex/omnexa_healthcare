@@ -104,6 +104,68 @@ def _item_rate(item: str) -> float:
 	return _demo_pharmacy_rate(_item_code(item))
 
 
+def _resolve_item_name(item_ref: str) -> str:
+	item_ref = (item_ref or "").strip()
+	if not item_ref:
+		return ""
+	if frappe.db.exists("Item", item_ref):
+		return item_ref
+	return frappe.db.get_value("Item", {"item_code": item_ref}, "name") or item_ref
+
+
+def _ensure_batch_no(item: str, batch_no: str | None = None) -> str | None:
+	if not cint(frappe.db.get_value("Item", item, "has_batch_no")):
+		return None
+	batch_no = (batch_no or "").strip()
+	if not batch_no:
+		code = (_item_code(item) or "ITEM").replace(" ", "-")[:18]
+		batch_no = f"PH-{getdate(today()):%Y%m%d}-{code}-{frappe.generate_hash(length=4)}"
+	if not frappe.db.exists("Batch", batch_no):
+		frappe.get_doc({"doctype": "Batch", "batch_id": batch_no, "item": item}).insert(ignore_permissions=True)
+	return batch_no
+
+
+def _ensure_serial_nos(item: str, qty: float, serial_no: str | None = None) -> str | None:
+	if not cint(frappe.db.get_value("Item", item, "has_serial_no")):
+		return None
+	if serial_no and str(serial_no).strip():
+		return str(serial_no).strip()
+	item_code = _item_code(item)
+	serials: list[str] = []
+	for _ in range(max(cint(qty), 1)):
+		sn = f"PH-{frappe.generate_hash(length=10)}"
+		if not frappe.db.exists("Serial No", sn):
+			frappe.get_doc({"doctype": "Serial No", "serial_no": sn, "item_code": item_code}).insert(
+				ignore_permissions=True
+			)
+		serials.append(sn)
+	return "\n".join(serials)
+
+
+def _stock_entry_item_row(item: str, line: dict, **warehouse_fields) -> dict:
+	item_doc = frappe.get_doc("Item", item)
+	row = {
+		"item": item,
+		"item_code": item_doc.item_code,
+		"qty": flt(line.get("qty")),
+		"uom": item_doc.stock_uom,
+		**warehouse_fields,
+	}
+	batch = _ensure_batch_no(item, line.get("batch_no"))
+	if batch:
+		row["batch_no"] = batch
+	serial = _ensure_serial_nos(item, line.get("qty"), line.get("serial_no"))
+	if serial:
+		row["serial_no"] = serial
+	rate = flt(line.get("rate"))
+	if rate:
+		if frappe.get_meta("Stock Entry Item").has_field("rate"):
+			row["rate"] = rate
+		elif frappe.get_meta("Stock Entry Item").has_field("basic_rate"):
+			row["basic_rate"] = rate
+	return row
+
+
 def _normalize_drug_text(value: str) -> str:
 	import re
 
@@ -405,24 +467,15 @@ def create_pharmacy_purchase_receipt(
 	se.remarks = remarks or _("Pharmacy purchase receipt")
 
 	for line in items:
-		item = line.get("item")
+		item = _resolve_item_name(line.get("item"))
 		qty = flt(line.get("qty"))
 		rate = flt(line.get("rate"))
 		if not item or qty <= 0:
 			continue
-		item_doc = frappe.get_doc("Item", item)
-		row = {
-			"item": item,
-			"item_code": item_doc.item_code,
-			"qty": qty,
-			"t_warehouse": warehouse,
-			"uom": item_doc.stock_uom,
-		}
-		if frappe.get_meta("Stock Entry Item").has_field("rate"):
-			row["rate"] = rate
-		elif frappe.get_meta("Stock Entry Item").has_field("basic_rate"):
-			row["basic_rate"] = rate
-		se.append("items", row)
+		se.append(
+			"items",
+			_stock_entry_item_row(item, line, t_warehouse=warehouse),
+		)
 
 	if not se.items:
 		frappe.throw(_("No valid purchase lines."))
@@ -483,7 +536,7 @@ def create_pharmacy_stock_transfer(
 	se.remarks = remarks or _("Pharmacy stock transfer")
 
 	for line in items:
-		item = line.get("item")
+		item = _resolve_item_name(line.get("item"))
 		qty = flt(line.get("qty"))
 		if not item or qty <= 0:
 			continue
@@ -495,17 +548,14 @@ def create_pharmacy_stock_transfer(
 				),
 				title=_("Stock"),
 			)
-		item_doc = frappe.get_doc("Item", item)
 		se.append(
 			"items",
-			{
-				"item": item,
-				"item_code": item_doc.item_code,
-				"qty": qty,
-				"s_warehouse": source_warehouse,
-				"t_warehouse": target_warehouse,
-				"uom": item_doc.stock_uom,
-			},
+			_stock_entry_item_row(
+				item,
+				line,
+				s_warehouse=source_warehouse,
+				t_warehouse=target_warehouse,
+			),
 		)
 
 	if not se.items:
@@ -578,8 +628,27 @@ def get_pharmacy_purchases_summary(company: str | None = None, branch: str | Non
 	company, _branch = _resolve_company_branch(company, branch)
 	limit = min(int(limit or 15), 50)
 	base = get_purchases_summary(company, limit)
+	purchase_receipts: list[dict] = []
+	if frappe.db.exists("DocType", "Purchase Receipt"):
+		filters: dict = {"company": company}
+		if _branch and frappe.db.has_column("Purchase Receipt", "branch"):
+			filters["branch"] = _branch
+		pr_fields = ["name", "supplier", "posting_date", "grand_total", "docstatus"]
+		if frappe.db.has_column("Purchase Receipt", "status"):
+			pr_fields.append("status")
+		purchase_receipts = frappe.get_all(
+			"Purchase Receipt",
+			filters=filters,
+			fields=pr_fields,
+			order_by="modified desc",
+			limit=limit,
+		)
+		for row in purchase_receipts:
+			if "status" not in row and row.get("docstatus") is not None:
+				row["status"] = {0: "Draft", 1: "Submitted", 2: "Cancelled"}.get(cint(row.docstatus), row.docstatus)
 	return {
 		"purchase_orders": base.get("purchase_orders") or [],
+		"purchase_receipts": purchase_receipts,
 		"material_receipts": [
 			row
 			for row in (base.get("stock_entries") or [])

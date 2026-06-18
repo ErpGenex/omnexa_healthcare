@@ -34,7 +34,7 @@ frappe.pages["healthcare-cashier-desk"].on_page_load = function (wrapper) {
 		const kpis = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_kpis", { company, branch });
 		const $body = $(`
 			<div class="oj-panel">
-				<h4>${OJ.t("طابور السداد", "Payment Queue")}</h4>
+				<h4>${OJ.t("انتظار السداد", "Payment Queue")}</h4>
 				<div class="oj-queue-list"></div>
 			</div>
 			<div class="oj-panel oj-pay-section" style="display:none">

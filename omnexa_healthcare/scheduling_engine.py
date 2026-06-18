@@ -60,12 +60,41 @@ def _as_time(value):
 	return value
 
 
+def default_walkin_slot(
+	practitioner: str,
+	branch: str,
+	date: str,
+	*,
+	specialty: str | None = None,
+) -> dict:
+	"""Fallback slot when no practitioner schedule exists — walk-in today."""
+	from frappe.utils import now_datetime, today
+
+	duration = cint(frappe.db.get_single_value("Healthcare Settings", "default_appointment_duration_mins") or 30)
+	if getdate(date) == getdate(today()):
+		start = now_datetime()
+	else:
+		start = get_datetime(f"{getdate(date)!s} 09:00:00")
+	end = add_to_date(start, minutes=duration)
+	doc = frappe.get_doc("Healthcare Practitioner", practitioner)
+	fee = _resolve_consultation_fee(doc, branch, specialty)
+	return {
+		"start": str(start),
+		"end": str(end),
+		"branch": branch,
+		"specialty": specialty,
+		"consultation_fee": fee,
+		"walk_in": True,
+	}
+
+
 def get_available_slots(
 	practitioner: str,
 	branch: str,
 	date: str,
 	*,
 	specialty: str | None = None,
+	include_walk_in: bool = False,
 ) -> list[dict]:
 	"""Return open appointment slots for a practitioner at a branch on a date."""
 	if not practitioner_assigned(practitioner, branch, specialty):
@@ -81,6 +110,8 @@ def get_available_slots(
 		if row.branch == branch and row.day_of_week == day_name and (not specialty or not row.specialty or row.specialty == specialty)
 	]
 	if not schedule_lines:
+		if include_walk_in and practitioner_assigned(practitioner, branch, specialty):
+			return [default_walkin_slot(practitioner, branch, date, specialty=specialty)]
 		return []
 
 	booked = _booked_intervals(practitioner, date)
@@ -105,6 +136,8 @@ def get_available_slots(
 					}
 				)
 			cursor = slot_end
+	if not slots and include_walk_in and practitioner_assigned(practitioner, branch, specialty):
+		return [default_walkin_slot(practitioner, branch, date, specialty=specialty)]
 	return slots
 
 

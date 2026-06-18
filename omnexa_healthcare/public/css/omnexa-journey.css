@@ -19,8 +19,9 @@
 	--oj-shadow: 0 8px 32px rgba(0, 51, 102, 0.1);
 	--oj-shadow-sm: 0 2px 12px rgba(0, 51, 102, 0.06);
 	--oj-font: "Tajawal", "Segoe UI", system-ui, sans-serif;
-	--oj-font-base: 14px;
-	--oj-font-scale: 1.12;
+	--oj-portal-font-scale: 1.4;
+	--oj-font-base: calc(14px * var(--oj-portal-font-scale));
+	--oj-font-scale: calc(1.12 * var(--oj-portal-font-scale));
 }
 
 /* Desk page full-bleed */
@@ -65,7 +66,7 @@
 	padding: 10px 4px;
 	border-radius: var(--oj-radius-sm);
 	color: rgba(255, 255, 255, 0.75);
-	font-size: 0.8rem;
+	font-size: calc(0.8rem * var(--oj-portal-font-scale));
 	text-align: center;
 	text-decoration: none;
 	transition: background 0.2s, color 0.2s;
@@ -79,7 +80,7 @@
 }
 
 .oj-sidebar-icon {
-	font-size: 1.25rem;
+	font-size: calc(1.25rem * var(--oj-portal-font-scale));
 	margin-bottom: 2px;
 }
 
@@ -125,21 +126,21 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 1.5rem;
+	font-size: calc(1.5rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 }
 
 .oj-topbar-brand small {
 	display: block;
 	color: var(--oj-muted);
-	font-size: 0.8rem;
+	font-size: calc(0.8rem * var(--oj-portal-font-scale));
 }
 
 .oj-topbar-meta {
 	display: flex;
 	align-items: center;
 	gap: 16px;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 /* User menu + language switch */
@@ -156,7 +157,7 @@
 	border-radius: 999px;
 	padding: 6px 12px 6px 6px;
 	font-family: var(--oj-font);
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 	font-weight: 600;
 	color: var(--oj-text);
 	cursor: pointer;
@@ -172,12 +173,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 0.9rem;
+	font-size: calc(0.9rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 }
 
 .oj-user-caret {
-	font-size: 0.7rem;
+	font-size: calc(0.7rem * var(--oj-portal-font-scale));
 	color: var(--oj-muted);
 }
 
@@ -224,7 +225,7 @@
 }
 
 .oj-user-dropdown-title {
-	font-size: 0.75rem;
+	font-size: calc(0.75rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 	color: var(--oj-muted);
 	padding: 6px 10px 4px;
@@ -241,7 +242,7 @@
 	border-radius: 8px;
 	padding: 10px 12px;
 	font-family: var(--oj-font);
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 	color: var(--oj-text);
 	text-decoration: none;
 	cursor: pointer;
@@ -270,7 +271,7 @@
 
 .oj-title-row h1 {
 	margin: 0 0 16px;
-	font-size: 1.65rem;
+	font-size: calc(1.65rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 	color: var(--oj-primary);
 }
@@ -292,13 +293,13 @@
 }
 
 .oj-kpi-value {
-	font-size: 2rem;
+	font-size: calc(2rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 	line-height: 1.2;
 }
 
 .oj-kpi-label {
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 	opacity: 0.9;
 	margin-top: 4px;
 }
@@ -331,7 +332,7 @@
 	align-items: center;
 	justify-content: center;
 	font-weight: 700;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 	margin-bottom: 6px;
 	background: #fff;
 }
@@ -350,7 +351,7 @@
 }
 
 .oj-step-label {
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 	color: var(--oj-muted);
 	line-height: 1.2;
 }
@@ -372,8 +373,23 @@
 .oj-clinic-grid,
 .oj-doctor-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 	gap: 16px;
+}
+
+.oj-portal-catalog .oj-portal-section {
+	margin-bottom: 28px;
+}
+
+.oj-portal-catalog .oj-portal-section h4 {
+	margin: 0 0 14px;
+	color: var(--oj-primary);
+	font-size: calc(1.15rem * var(--oj-portal-font-scale));
+}
+
+.oj-clinic-card.oj-muted-card {
+	opacity: 0.55;
+	cursor: not-allowed;
 }
 
 .oj-clinic-card,
@@ -395,27 +411,27 @@
 }
 
 .oj-clinic-icon {
-	font-size: 2rem;
+	font-size: calc(2rem * var(--oj-portal-font-scale));
 	margin-bottom: 8px;
 }
 
 .oj-clinic-card h4,
 .oj-doctor-card h4 {
 	margin: 0 0 6px;
-	font-size: 1.1rem;
+	font-size: calc(1.1rem * var(--oj-portal-font-scale));
 	color: var(--oj-primary);
 }
 
 .oj-muted {
 	color: var(--oj-muted);
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 .oj-clinic-stats {
 	display: flex;
 	justify-content: center;
 	gap: 12px;
-	font-size: 0.75rem;
+	font-size: calc(0.75rem * var(--oj-portal-font-scale));
 	color: var(--oj-muted);
 	margin: 10px 0;
 }
@@ -426,7 +442,7 @@
 	border-radius: 50%;
 	background: var(--oj-accent);
 	color: var(--oj-primary);
-	font-size: 1.5rem;
+	font-size: calc(1.5rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 	display: flex;
 	align-items: center;
@@ -436,7 +452,7 @@
 
 .oj-rating {
 	color: #f59e0b;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 	margin-bottom: 8px;
 }
 
@@ -451,7 +467,7 @@
 	padding: 12px 26px;
 	font-family: var(--oj-font);
 	font-weight: 700;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 	cursor: pointer;
 	transition: opacity 0.2s, transform 0.1s;
 }
@@ -477,7 +493,7 @@
 
 .oj-btn-sm {
 	padding: 8px 16px;
-	font-size: 0.8rem;
+	font-size: calc(0.8rem * var(--oj-portal-font-scale));
 }
 
 .oj-btn-success {
@@ -500,7 +516,7 @@
 }
 
 .oj-token-id {
-	font-size: 1.1rem;
+	font-size: calc(1.1rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 	letter-spacing: 0.05em;
 	margin-bottom: 8px;
@@ -522,7 +538,7 @@
 	justify-content: center;
 	font-weight: 600;
 	color: var(--oj-muted);
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 }
 
 .oj-qr-img {
@@ -555,7 +571,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-size: 0.62rem;
+	font-size: calc(0.62rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 	line-height: 1.1;
 	padding: 4px;
@@ -563,7 +579,7 @@
 }
 
 .oj-token-btn span {
-	font-size: 0.58rem;
+	font-size: calc(0.58rem * var(--oj-portal-font-scale));
 	margin-top: 2px;
 }
 
@@ -596,7 +612,7 @@
 
 .oj-pay-card span {
 	display: block;
-	font-size: 1.5rem;
+	font-size: calc(1.5rem * var(--oj-portal-font-scale));
 	margin-bottom: 6px;
 }
 
@@ -618,14 +634,14 @@
 .oj-emr-card h5 {
 	margin: 0 0 12px;
 	color: var(--oj-primary);
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 .oj-vitals-row {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 	font-weight: 600;
 	margin-bottom: 10px;
 }
@@ -633,7 +649,7 @@
 .oj-emr-card ul {
 	margin: 0;
 	padding-inline-start: 18px;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 }
 
 .oj-emr-actions {
@@ -653,7 +669,7 @@
 
 .oj-form-group label {
 	display: block;
-	font-size: 0.9rem;
+	font-size: calc(0.9rem * var(--oj-portal-font-scale));
 	font-weight: 600;
 	margin-bottom: 4px;
 	color: var(--oj-muted);
@@ -666,7 +682,7 @@
 	border: 1px solid rgba(0, 51, 102, 0.15);
 	border-radius: var(--oj-radius-sm);
 	font-family: var(--oj-font);
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 .oj-search-bar {
@@ -680,7 +696,7 @@
 	padding: 12px 16px;
 	border: 1px solid rgba(0, 51, 102, 0.15);
 	border-radius: 999px;
-	font-size: 1rem;
+	font-size: calc(1rem * var(--oj-portal-font-scale));
 }
 
 .oj-loading {
@@ -692,7 +708,7 @@
 .oj-footer {
 	margin-top: auto;
 	padding-top: 16px;
-	font-size: 0.9rem;
+	font-size: calc(0.9rem * var(--oj-portal-font-scale));
 	color: var(--oj-muted);
 	border-top: 1px solid rgba(0, 51, 102, 0.08);
 }
@@ -701,7 +717,7 @@
 .oj-data-table {
 	width: 100%;
 	border-collapse: collapse;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 .oj-data-table th,
@@ -712,14 +728,14 @@
 }
 
 .oj-data-table th {
-	font-size: 0.9rem;
+	font-size: calc(0.9rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 	color: var(--oj-primary);
 	background: var(--oj-accent);
 }
 
 .oj-body h4 {
-	font-size: 1.1rem;
+	font-size: calc(1.1rem * var(--oj-portal-font-scale));
 	margin: 16px 0 10px;
 	color: var(--oj-primary);
 }
@@ -756,7 +772,7 @@
 }
 
 .oj-pharmacy-rx-toolbar-title {
-	font-size: 0.78rem;
+	font-size: calc(0.78rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 	color: var(--oj-primary);
 	text-transform: uppercase;
@@ -765,7 +781,7 @@
 
 .oj-pharmacy-rx-label {
 	display: block;
-	font-size: 0.75rem;
+	font-size: calc(0.75rem * var(--oj-portal-font-scale));
 	color: var(--oj-muted, #64748b);
 	margin-bottom: 4px;
 }
@@ -920,7 +936,7 @@
 	grid-template-columns: 1fr auto auto;
 	gap: 10px;
 	align-items: center;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--oj-portal-font-scale));
 }
 
 .oj-donut-bar {
@@ -959,7 +975,7 @@
 	border: 2px solid var(--oj-border, #cbd5e1);
 	background: #fff;
 	font-weight: 600;
-	font-size: 0.8rem;
+	font-size: calc(0.8rem * var(--oj-portal-font-scale));
 	cursor: pointer;
 	transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
 }
@@ -1063,7 +1079,7 @@
 .oj-dental-lessons h5,
 .oj-dental-side-card h4 {
 	margin: 0 0 12px;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 	color: #94a3b8;
 	font-weight: 600;
 }
@@ -1091,12 +1107,12 @@
 }
 
 .oj-dental-year-num {
-	font-size: 1.1rem;
+	font-size: calc(1.1rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 }
 
 .oj-dental-year-lbl {
-	font-size: 0.75rem;
+	font-size: calc(0.75rem * var(--oj-portal-font-scale));
 	opacity: 0.9;
 }
 
@@ -1132,7 +1148,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 0.75rem;
+	font-size: calc(0.75rem * var(--oj-portal-font-scale));
 	font-weight: 700;
 }
 
@@ -1140,7 +1156,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
-	font-size: 0.82rem;
+	font-size: calc(0.82rem * var(--oj-portal-font-scale));
 }
 
 .oj-dental-lesson-text small {
@@ -1169,7 +1185,7 @@
 
 .oj-dental-svg-title {
 	fill: #64748b;
-	font-size: 13px;
+	font-size: calc(13px * var(--oj-portal-font-scale));
 	font-weight: 600;
 }
 
@@ -1186,7 +1202,7 @@
 
 .oj-dental-tooth-num {
 	fill: #e2e8f0;
-	font-size: 11px;
+	font-size: calc(11px * var(--oj-portal-font-scale));
 	font-weight: 700;
 	pointer-events: none;
 }
@@ -1232,7 +1248,7 @@
 
 .oj-dental-tooth-badge {
 	display: inline-block;
-	font-size: 1.5rem;
+	font-size: calc(1.5rem * var(--oj-portal-font-scale));
 	font-weight: 800;
 	color: #c084fc;
 	margin-bottom: 6px;
@@ -1240,7 +1256,7 @@
 
 .oj-dental-muted {
 	color: #94a3b8;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 }
 
 .oj-dental-legend--dark li {
@@ -1259,7 +1275,7 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 8px;
-	font-size: 0.85rem;
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
 }
 
 @media (max-width: 1100px) {
@@ -1281,4 +1297,104 @@
 	.oj-dept-grid-2 {
 		grid-template-columns: 1fr;
 	}
+}
+
+/* Demo hub + legacy link cards — enforce reception-style grid */
+.oj-demo-hub .oj-clinic-grid,
+.oj-demo-portals .oj-clinic-grid,
+.oj-demo-portals-panel .oj-clinic-grid {
+	display: grid !important;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+	gap: 16px !important;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.oj-demo-hub .oj-clinic-card,
+.oj-demo-portals-panel .oj-clinic-card {
+	display: block !important;
+	background: #fff !important;
+	border: 1px solid rgba(0, 51, 102, 0.1) !important;
+	border-radius: 14px !important;
+	padding: 20px !important;
+	text-align: center !important;
+	box-shadow: 0 2px 12px rgba(0, 51, 102, 0.06) !important;
+	cursor: pointer;
+	min-height: 210px;
+}
+
+.oj-demo-hub .oj-clinic-card h4,
+.oj-demo-portals-panel .oj-clinic-card h4 {
+	margin: 0 0 6px;
+	color: var(--oj-primary, #003366);
+	font-weight: 700;
+}
+
+.oj-portal-cat-title {
+	margin: 18px 0 12px;
+	color: var(--oj-primary, #003366);
+	font-size: calc(1.15rem * var(--oj-portal-font-scale));
+}
+
+.oj-link-grid {
+	display: grid !important;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+	gap: 16px !important;
+	width: 100%;
+}
+
+.oj-link-card {
+	background: #fff;
+	border: 1px solid rgba(0, 51, 102, 0.1);
+	border-radius: 14px;
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
+	box-shadow: 0 2px 12px rgba(0, 51, 102, 0.06);
+	transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+	min-height: 160px;
+}
+
+.oj-link-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 32px rgba(0, 51, 102, 0.1);
+	border-color: var(--oj-primary-light, #0a4f8c);
+}
+
+.oj-link-icon {
+	font-size: calc(2rem * var(--oj-portal-font-scale));
+	margin-bottom: 8px;
+	line-height: 1;
+}
+
+.oj-link-label {
+	font-weight: 700;
+	color: var(--oj-primary, #003366);
+	margin-bottom: 6px;
+	font-size: calc(1.05rem * var(--oj-portal-font-scale));
+}
+
+.oj-link-sub {
+	font-size: calc(0.85rem * var(--oj-portal-font-scale));
+	color: var(--oj-muted, #5c6b7a);
+}
+
+/* Pharmacy — embedded native Purchase Receipt */
+.oj-pharmacy-pr-embed .page-head {
+	display: none;
+}
+
+.oj-pharmacy-pr-embed .layout-main-section-wrapper {
+	padding: 0;
+	background: transparent;
+}
+
+.oj-pharmacy-pr-embed .form-page,
+.oj-pharmacy-pr-embed .form-layout {
+	background: #fff;
+	border-radius: var(--oj-radius);
+}
+
+.oj-pharmacy-pr-native .oj-pharmacy-pr-form-host {
+	min-height: 420px;
 }

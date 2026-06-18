@@ -29,8 +29,28 @@ frappe.pages["healthcare-demo-hub"].on_page_load = function (wrapper) {
 				(creds.users || []).map((u) => ({ ...u, route: u.route }))
 			)}
 		</div>`);
-		$body.append(`<div class="oj-panel" style="margin-top:16px"><h4>${OJ.t("جميع البوابات", "All Portals")}</h4></div>`);
-		$body.find(".oj-panel").last().append(OJ.portalCategoryGrid(groups || []));
+		$body.append(`<div class="oj-panel oj-demo-portals-panel" style="margin-top:16px"><h4>${OJ.t("جميع البوابات", "All Portals")}</h4></div>`);
+		const $portalMount = $body.find(".oj-demo-portals-panel");
+		(groups || []).forEach((g) => {
+			const title = OJ.lang() === "ar" ? g.label_ar : g.label_en;
+			$portalMount.append(`<h4 class="oj-portal-cat-title" style="margin-top:20px">${OJ.esc(title)}</h4>`);
+			const clinics = (g.portals || []).map((p) => ({
+				id: p.id,
+				name: OJ.lang() === "ar" ? p.label_ar : p.label_en,
+				subtitle: OJ.t("بوابة خارجية", "Outpatient portal"),
+				icon: p.icon || "🏥",
+				doctor_count: 1,
+				waiting_count: 0,
+				route: p.route,
+				exists: p.exists,
+			}));
+			$portalMount.append(
+				OJ.clinicGrid(
+					clinics.filter((c) => c.exists !== false && c.route),
+					(c) => OJ.navigateRoute(c.route)
+				)
+			);
+		});
 		$body.find(".oj-seed-demo").on("click", () => {
 			frappe.call({
 				method: "omnexa_healthcare.api.healthcare_role_demo.seed_full_healthcare_demo",

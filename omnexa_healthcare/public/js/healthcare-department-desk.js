@@ -44,7 +44,7 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 		return (kpis || [])
 			.map(
 				(k) =>
-					`<div class="oj-kpi-card"><div class="oj-kpi-value">${OJ.esc(k.value)}</div><div class="oj-kpi-label">${OJ.esc(k.label)}</div>${k.hint ? `<div class="oj-muted" style="font-size:0.8rem">${OJ.esc(k.hint)}</div>` : ""}</div>`
+					`<div class="oj-kpi-card"><div class="oj-kpi-value">${OJ.esc(k.value)}</div><div class="oj-kpi-label">${OJ.esc(k.label)}</div>${k.hint ? `<div class="oj-muted" style="font-size:calc(0.8rem * var(--oj-portal-font-scale, 1.4))">${OJ.esc(k.hint)}</div>` : ""}</div>`
 			)
 			.join("");
 	}

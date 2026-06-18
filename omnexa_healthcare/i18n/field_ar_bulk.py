@@ -199,7 +199,7 @@ BULK_FIELD_AR: dict[str, str] = {
 	"Publish on Website": "النشر على الموقع",
 	"QC Date": "تاريخ ضبط الجودة",
 	"Qty": "الكمية",
-	"Queued": "في الطابور",
+	"Queued": "في الانتظار",
 	"Rank": "الترتيب",
 	"Reaction / Manifestation": "رد الفعل / المظهر",
 	"Read": "قراءة",

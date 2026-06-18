@@ -54,7 +54,7 @@ JOURNEY_AR: dict[str, str] = {
 	"Cashier / Treasury": "الخزينة / الصندوق",
 	"Physician Workbench": "منصة الطبيب",
 	"Patient Portal Journey": "بوابة المريض — الرحلة",
-	"Smart Queue Board": "لوحة الطابور الذكية",
+	"Smart Queue Board": "لوحة الانتظار الذكية",
 	"Demo Hub & Role Logins": "مركز التجربة وتسجيلات الأدوار",
 	"Patient Journey Wizard": "معالج رحلة المريض",
 	"Patient Consumer App": "تطبيق المريض",
@@ -73,7 +73,7 @@ JOURNEY_AR: dict[str, str] = {
 	"Reception": "الاستقبال",
 	"Cashier": "الخزينة",
 	"Physician": "الطبيب",
-	"Queue": "الطابور",
+	"Queue": "الانتظار",
 	"Chart": "الملف الطبي",
 	"Patient Portal": "بوابة المريض",
 	"doctors": "أطباء",
@@ -129,7 +129,7 @@ JOURNEY_AR: dict[str, str] = {
 	"No pending payments": "لا توجد مدفوعات معلقة",
 	"Amount": "المبلغ",
 	"Pay": "سداد",
-	"Payment Queue": "طابور السداد",
+	"Payment Queue": "انتظار السداد",
 	"Payment Method": "طريقة الدفع",
 	"Confirm Payment": "تأكيد السداد",
 	"Cashier — Visit Payments": "الخزينة — سداد الزيارات",
@@ -184,6 +184,76 @@ JOURNEY_AR: dict[str, str] = {
 	"Published services": "الخدمات المنشورة",
 	"Available slot": "موعد متاح",
 	"Family name": "اسم العائلة",
+	"Could not load data": "تعذر تحميل البيانات",
+	"Purchase Receipt": "إيصال استلام المشتريات",
+	"Same native ERP form as the general system": "نفس نموذج النظام العام — أصلي",
+	"New Receipt": "إيصال جديد",
+	"Receipt List": "قائمة الاستلامات",
+	"Recent Purchase Receipts": "آخر إيصالات الاستلام",
+	"All Portals": "جميع البوابات",
+	"Demo Accounts": "حسابات الديمو",
+	"Omnexa Portal": "بوابة Omnexa",
+	"Open": "فتح",
+	"Outpatient portal": "بوابة خارجية",
+	"Admin & Integration": "الإدارة والتكامل",
+	"Core": "النواة",
+	"Clinical": "سريري",
+	"Departments": "أقسام وتخصصات",
+	"Management": "إدارة",
+	"Digital": "رقمي",
+	"Support": "مساندة",
+	"Medical Devices": "ربط الأجهزة الطبية",
+	"Stock traceability control: tracked item requires batch or serial in row {0}.": "التحكم في تتبع المخزون: الصنف المتتبع يتطلب دفعة أو رقم تسلسلي في السطر {0}.",
+}
+
+# ——— Medical abbreviations in parentheses (Arabic gloss) ———
+MEDICAL_ABBR_AR: dict[str, str] = {
+	"ER": "الطوارئ",
+	"ICU": "العناية المركزة",
+	"OT": "غرفة العمليات",
+	"OPD": "العيادات الخارجية",
+	"IPD": "التنويم",
+	"HDU": "العناية المتوسطة",
+	"LIS": "نظام معلومات المختبر",
+	"EMR": "السجل الطبي الإلكتروني",
+	"MPI": "سجل المرضى الرئيسي",
+	"MRN": "رقم السجل الطبي",
+	"PHI": "المعلومات الصحية المحمية",
+	"CDS": "الدعم القراري السريري",
+	"RCM": "إدارة دورة الإيراد",
+	"ADT": "القبول والتحويل والخروج",
+	"FEFO": "الأقدم صلاحيةً أولاً",
+	"POS": "نقطة البيع",
+	"OTP": "رمز التحقق لمرة واحدة",
+	"KPI": "مؤشر الأداء",
+	"QR": "رمز الاستجابة السريعة",
+	"PDF": "ملف PDF",
+	"DICOM": "معيار التصوير الطبي الرقمي",
+	"PACS": "أرشفة الصور الطبية",
+	"Rx": "الروشتة",
+	"eRx": "الروشتة الإلكترونية",
+	"CT": "التصوير المقطعي",
+	"MR": "الرنين المغناطيسي",
+	"XR": "الأشعة السينية",
+	"US": "الموجات فوق الصوتية",
+	"ENT": "أنف وأذن وحنجرة",
+	"ICD": "التصنيف الدولي للأمراض",
+	"SNOMED": "مصطلحات SNOMED السريرية",
+	"DRG": "مجموعة التشخيص المرتبط",
+	"LOINC": "رموز LOINC المخبرية",
+	"HL7": "معيار تبادل البيانات الصحية",
+	"FHIR": "معيار FHIR للتبادل الصحي",
+	"NPHIES": "منصة نفيس السعودية",
+	"ERP": "نظام تخطيط الموارد",
+	"SKU": "رمز الصنف",
+	"ASA": "تصنيف ASA للتخدير",
+	"MAR": "سجل إعطاء الأدوية",
+	"eMAR": "سجل إعطاء الأدوية الإلكتروني",
+	"ESI": "مؤشر شدّة الطوارئ",
+	"LWBS": "مغادرة دون إنهاء",
+	"WHO": "منظمة الصحة العالمية",
+	"ABO": "فصائل ABO",
+	"Rh": "عامل Rh",
 }
 
 # ——— DocType / page / report short labels ———
@@ -192,13 +262,13 @@ ENTITY_AR: dict[str, str] = {
 	"Cashier / Treasury": "الخزينة / الصندوق",
 	"Physician Workbench": "منصة الطبيب",
 	"Patient Portal Journey": "بوابة المريض — الرحلة",
-	"Smart Queue Board": "لوحة الطابور الذكية",
+	"Smart Queue Board": "لوحة الانتظار الذكية",
 	"Demo Hub & Role Logins": "مركز التجربة وتسجيلات الأدوار",
 	"Patient Journey Wizard": "معالج رحلة المريض",
 	"Cashier Desk": "مكتب الخزينة",
 	"Executive Dashboard": "لوحة القيادة التنفيذية",
 	"Appointment Calendar": "تقويم المواعيد",
-	"Patient Queue": "طابور المرضى",
+	"Patient Queue": "انتظار المرضى",
 	"Practitioner Roster": "جدول الأطباء",
 	"In Basket": "صندوق الوارد",
 	"ER Board": "لوحة الطوارئ",
@@ -761,7 +831,7 @@ TOKEN_AR: dict[str, str] = {
 	"Dashboards": "لوحات معلومات",
 	"Portal": "بوابة",
 	"Portals": "بوابات",
-	"Queue": "طابور",
+	"Queue": "انتظار",
 	"Board": "لوحة",
 	"Workbench": "منصة عمل",
 	"Worklist": "قائمة عمل",
@@ -977,7 +1047,13 @@ def translate_to_ar(text: str) -> str:
 	# Parenthetical FHIR etc.
 	if "(" in raw and raw not in FIELD_AR:
 		main, _, rest = raw.partition("(")
-		inner = rest.rstrip(")")
+		inner = rest.rstrip(")").strip()
+		if inner in MEDICAL_ABBR_AR:
+			main_ar = translate_to_ar(main.strip()) if main.strip() else ""
+			gloss = MEDICAL_ABBR_AR[inner]
+			if main_ar:
+				return f"{main_ar} ({gloss})"
+			return f"{gloss} ({inner})"
 		return f"{translate_to_ar(main.strip())} ({translate_to_ar(inner.strip())})"
 	tokenized = _translate_tokens(raw)
 	if tokenized != raw and not _has_untranslated_english(tokenized):

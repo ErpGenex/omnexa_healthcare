@@ -16,6 +16,7 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 		cdsAlerts: [],
 		accounts: null,
 		purchases: null,
+		prForm: null,
 	};
 
 	function flt(v) {
@@ -387,69 +388,65 @@ frappe.pages["healthcare-pharmacy-desk"].on_page_load = function (wrapper) {
 
 	async function renderPurchaseTab($body) {
 		state.purchases = await OJ.call("omnexa_healthcare.api.pharmacy_desk.get_pharmacy_purchases_summary", { company, branch });
-		const d = state.data || {};
-		const whOpts = (d.warehouses || [])
-			.map((w) => `<option value="${OJ.esc(w.name)}" ${w.name === state.warehouse ? "selected" : ""}>${OJ.esc(w.warehouse_name || w.name)}</option>`)
-			.join("");
 		const p = state.purchases || {};
 		$body.html(`
-			<div class="oj-panel">
-				<h4>${OJ.t("استلام مخزون / مشتريات", "Goods Receipt / Purchases")}</h4>
-				<div class="oj-filter-bar">
-					<div class="oj-filter-item"><label>${OJ.t("المخزن", "Warehouse")}</label><select class="oj-purchase-wh">${whOpts}</select></div>
-					<div class="oj-filter-item"><label>${OJ.t("الصنف", "Item")}</label><input class="oj-purchase-item" placeholder="${OJ.t("كود الصنف", "Item code")}" /></div>
-					<div class="oj-filter-item"><label>${OJ.t("الكمية", "Qty")}</label><input type="number" class="oj-purchase-qty" value="50" /></div>
-					<div class="oj-filter-item"><label>${OJ.t("السعر", "Rate")}</label><input type="number" class="oj-purchase-rate" value="10" /></div>
-					<div class="oj-filter-item"><label>${OJ.t("الدفعة", "Batch")}</label><input class="oj-purchase-batch" placeholder="BATCH-001" /></div>
-					<button type="button" class="oj-btn oj-btn-primary oj-purchase-submit">${OJ.t("استلام", "Receive")}</button>
+			<div class="oj-panel oj-pharmacy-pr-native">
+				<h4>${OJ.t("إيصال استلام المشتريات", "Purchase Receipt")}</h4>
+				<p class="oj-muted">${OJ.t("نفس نموذج النظام العام — أصلي", "Same native ERP form as the general system")}</p>
+				<div class="oj-filter-bar" style="margin-bottom:12px">
+					<button type="button" class="oj-btn oj-btn-primary oj-pr-new">${OJ.t("إيصال جديد", "New Receipt")}</button>
+					<button type="button" class="oj-btn oj-btn-outline oj-pr-list">${OJ.t("قائمة الاستلامات", "Receipt List")}</button>
 				</div>
-				<h5 style="margin-top:16px">${OJ.t("آخر أوامر الشراء", "Recent Purchase Orders")}</h5>
+				<div class="oj-pharmacy-pr-form-host"></div>
+				<h5 style="margin-top:20px">${OJ.t("آخر إيصالات الاستلام", "Recent Purchase Receipts")}</h5>
 				${OJ.dataTable(
 					[
 						{ field: "name", label: OJ.t("المرجع", "Ref") },
 						{ field: "supplier", label: OJ.t("المورد", "Supplier") },
-						{ field: "transaction_date", label: OJ.t("التاريخ", "Date") },
+						{ field: "posting_date", label: OJ.t("التاريخ", "Date") },
 						{ field: "grand_total", label: OJ.t("الإجمالي", "Total") },
 						{ field: "status", label: OJ.t("الحالة", "Status") },
 					],
-					p.purchase_orders || []
-				)}
-				<h5 style="margin-top:16px">${OJ.t("آخر استلامات", "Recent Receipts")}</h5>
-				${OJ.dataTable(
-					[
-						{ field: "name", label: OJ.t("المرجع", "Ref") },
-						{ field: "posting_date", label: OJ.t("التاريخ", "Date") },
-						{ field: "total_amount", label: OJ.t("القيمة", "Amount") },
-						{ field: "remarks", label: OJ.t("ملاحظات", "Remarks") },
-					],
-					p.material_receipts || []
+					p.purchase_receipts || []
 				)}
 			</div>`);
-		$body.find(".oj-purchase-submit").on("click", async () => {
-			const itemCode = ($body.find(".oj-purchase-item").val() || "").trim();
-			const item = await frappe.db.get_value("Item", { item_code: itemCode, company }, "name");
-			if (!item || !item.message || !item.message.name) {
-				return frappe.msgprint(OJ.t("صنف غير موجود", "Item not found"));
-			}
+		$body.find(".oj-pr-new").on("click", () => mountNativePurchaseReceipt($body.find(".oj-pharmacy-pr-form-host")));
+		$body.find(".oj-pr-list").on("click", () => frappe.set_route("List", "Purchase Receipt"));
+		$body.find(".oj-data-table tbody tr").css("cursor", "pointer").on("click", function () {
+			const ref = $(this).find("td").first().text().trim();
+			if (ref) mountNativePurchaseReceipt($body.find(".oj-pharmacy-pr-form-host"), ref);
+		});
+		mountNativePurchaseReceipt($body.find(".oj-pharmacy-pr-form-host"));
+	}
+
+	function destroyNativePurchaseReceipt() {
+		if (state.prForm && state.prForm.$wrapper) {
 			try {
-				const res = await OJ.call("omnexa_healthcare.api.pharmacy_desk.create_pharmacy_purchase_receipt", {
-					warehouse: $body.find(".oj-purchase-wh").val(),
-					items: JSON.stringify([
-						{
-							item: item.message.name,
-							qty: flt($body.find(".oj-purchase-qty").val()),
-							rate: flt($body.find(".oj-purchase-rate").val()),
-							batch_no: ($body.find(".oj-purchase-batch").val() || "").trim() || undefined,
-						},
-					]),
-					company,
-					branch,
-				});
-				frappe.show_alert({ message: OJ.t("تم الاستلام", "Received") + ": " + res.stock_entry, indicator: "green" });
-				renderPurchaseTab($body);
+				state.prForm.$wrapper.empty();
 			} catch (e) {
-				OJ.showCallError(e);
+				/* ignore */
 			}
+		}
+		state.prForm = null;
+	}
+
+	function mountNativePurchaseReceipt($host, docname) {
+		if (!$host || !$host.length) return;
+		destroyNativePurchaseReceipt();
+		$host.empty().addClass("oj-pharmacy-pr-embed");
+		const frm = new frappe.ui.form.Form("Purchase Receipt", $host[0], true);
+		frm.setup();
+		state.prForm = frm;
+		if (docname) {
+			frm.refresh(docname);
+			return;
+		}
+		frappe.model.with_doctype("Purchase Receipt", () => {
+			const doc = frappe.model.get_new_doc("Purchase Receipt");
+			doc.company = company;
+			if (state.warehouse) doc.set_warehouse = state.warehouse;
+			if (branch && frappe.meta.has_field("Purchase Receipt", "branch")) doc.branch = branch;
+			frm.refresh(doc.name);
 		});
 	}
 

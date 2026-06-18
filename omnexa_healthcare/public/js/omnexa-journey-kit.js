@@ -62,19 +62,58 @@
 	}
 
 	function portalCategoryGrid(groups) {
-		const $root = $('<div class="oj-portal-catalog"></div>');
+		const $root = $('<div class="oj-portal-catalog oj-demo-portals"></div>');
 		(groups || []).forEach((g) => {
 			const title = OJ.lang() === "ar" ? g.label_ar : g.label_en;
-			const $sec = $(`<div class="oj-portal-section"><h4>${OJ.esc(title)}</h4><div class="oj-link-grid"></div></div>`);
-			const $grid = $sec.find(".oj-link-grid");
-			(g.portals || []).forEach((p) => {
-				const label = OJ.lang() === "ar" ? p.label_ar : p.label_en;
-				const $card = $(`<div class="oj-link-card ${p.exists === false ? "oj-muted-card" : ""}"><div class="oj-link-icon">${p.icon || "•"}</div><div class="oj-link-label">${OJ.esc(label)}</div><div class="oj-muted oj-link-sub">${OJ.esc((p.roles || []).join(", "))}</div></div>`);
-				if (p.exists !== false) {
-					$card.on("click", () => navigateRoute(p.route));
-				}
-				$grid.append($card);
-			});
+			const $sec = $(`<div class="oj-portal-section"><h4 class="oj-portal-cat-title">${OJ.esc(title)}</h4></div>`);
+			const clinics = (g.portals || []).map((p) => ({
+				id: p.id,
+				name: OJ.lang() === "ar" ? p.label_ar : p.label_en,
+				subtitle: OJ.t("بوابة خارجية", "Outpatient portal"),
+				icon: p.icon || "🏥",
+				doctor_count: (p.roles || []).length,
+				waiting_count: 0,
+				route: p.route,
+				_disabled: p.exists === false,
+			}));
+			if (OJ.clinicGrid) {
+				const $grid = OJ.clinicGrid(
+					clinics.filter((c) => !c._disabled),
+					(c) => navigateRoute(c.route)
+				);
+				$sec.append($grid);
+				clinics
+					.filter((c) => c._disabled)
+					.forEach((c) => {
+						const $card = $(`
+							<div class="oj-clinic-card oj-muted-card" style="margin-top:8px">
+								<div class="oj-clinic-icon">${c.icon || "🏥"}</div>
+								<h4>${OJ.esc(c.name)}</h4>
+								<p class="oj-muted">${OJ.esc(c.subtitle)}</p>
+								<div class="oj-clinic-stats"><span>👤 ${OJ.t("غير متاح", "Unavailable")}</span></div>
+							</div>
+						`);
+						$sec.append($card);
+					});
+			} else {
+				const $grid = $('<div class="oj-clinic-grid"></div>');
+				clinics.forEach((c) => {
+					const $card = $(`
+						<div class="oj-clinic-card ${c._disabled ? "oj-muted-card" : ""}">
+							<div class="oj-clinic-icon">${c.icon || "🏥"}</div>
+							<h4>${OJ.esc(c.name)}</h4>
+							<p class="oj-muted">${OJ.esc(c.subtitle)}</p>
+							<div class="oj-clinic-stats">
+								<span>👤 ${OJ.esc(String(c.doctor_count))} ${OJ.t("أدوار", "roles")}</span>
+							</div>
+							<button type="button" class="oj-btn oj-btn-primary oj-btn-sm">${OJ.t("اختيار", "Select")}</button>
+						</div>
+					`);
+					if (!c._disabled) $card.on("click", () => navigateRoute(c.route));
+					$grid.append($card);
+				});
+				$sec.append($grid);
+			}
 			$root.append($sec);
 		});
 		return $root;
@@ -272,7 +311,7 @@
 		const menus = {
 			reception: [
 				{ id: "home", label: OJ.t("الاستقبال", "Reception"), icon: "🏥", route: "/app/healthcare-reception-desk", active: true },
-				{ id: "queue", label: OJ.t("الطابور", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
+				{ id: "queue", label: OJ.t("الانتظار", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
 				{ id: "appts", label: OJ.t("المواعيد", "Appointments"), icon: "📅", route: "/app/healthcare-appointments-desk" },
 			],
 			pharmacy: [
@@ -289,7 +328,7 @@
 			],
 			nurse: [
 				{ id: "home", label: OJ.t("التمريض", "Nursing"), icon: "🩹", route: "/app/healthcare-nursing-portal", active: true },
-				{ id: "queue", label: OJ.t("الطابور", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
+				{ id: "queue", label: OJ.t("الانتظار", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
 				{ id: "icu", label: OJ.t("ICU", "ICU"), icon: "🏥", route: "/app/healthcare-icu-board" },
 			],
 			lab: [

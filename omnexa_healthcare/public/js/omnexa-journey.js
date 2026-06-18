@@ -399,7 +399,7 @@
 				{ id: "reception", label: t("الاستقبال", "Reception"), icon: "🏥", route: "/app/healthcare-reception-desk", active: role === "reception" },
 				{ id: "cashier", label: t("الخزينة", "Cashier"), icon: "💰", route: "/app/healthcare-cashier-desk", active: role === "cashier" },
 				{ id: "physician", label: t("الطبيب", "Physician"), icon: "👨‍⚕️", route: "/app/healthcare-physician-workbench", active: role === "physician" },
-				{ id: "queue", label: t("الطابور", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
+				{ id: "queue", label: t("الانتظار", "Queue"), icon: "📋", route: "/app/healthcare-patient-queue" },
 				{ id: "chart", label: t("الملف الطبي", "Chart"), icon: "📁", route: "/app/healthcare-patient-chart" },
 				{ id: "patient", label: t("بوابة المريض", "Patient Portal"), icon: "👤", route: "/app/healthcare-patient-consumer" },
 			];

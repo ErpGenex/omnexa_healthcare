@@ -489,7 +489,7 @@ def get_practitioner_booking_slots(
 	if frappe.db.get_value("Healthcare Practitioner", practitioner, "company") != ctx.company:
 		frappe.throw(_("Practitioner not found."))
 
-	slots = get_available_slots(practitioner, ctx.branch, date, specialty=specialty)
+	slots = get_available_slots(practitioner, ctx.branch, date, specialty=specialty, include_walk_in=True)
 	return {
 		"practitioner": practitioner,
 		"practitioner_name": frappe.db.get_value("Healthcare Practitioner", practitioner, "practitioner_name"),

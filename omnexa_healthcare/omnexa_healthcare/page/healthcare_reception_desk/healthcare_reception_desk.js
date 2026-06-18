@@ -4,7 +4,7 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 		frappe.msgprint(__("Load Omnexa Journey assets: bench build --app omnexa_healthcare"));
 		return;
 	}
-	const state = { step: 1, clinic: null, doctor: null, patient: null, appointment: null, token: null, regMode: "search" };
+	const state = { step: 1, clinic: null, doctor: null, patient: null, appointment: null, token: null, regMode: "search", bookingSlot: null };
 	const { company, branch } = OJ.resolveCompanyBranch();
 	const $mount = OJ.mountDeskPage(wrapper, __("Reception Desk"));
 
@@ -101,31 +101,58 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			});
 			$panel.find(".oj-back").on("click", () => { state.step = 2; render(); });
 		} else if (state.step === 4) {
-			$panel.html(`
+			$panel.html(OJ.loading());
+			const date = frappe.datetime.get_today();
+			const slots = await OJ.call("omnexa_healthcare.api.journey_desk.get_reception_booking_slots", {
+				practitioner: state.doctor.name,
+				branch,
+				specialty: state.clinic.specialty,
+				date,
+			});
+			if (!state.bookingSlot && slots.length) {
+				state.bookingSlot = slots[0];
+			}
+			const slotOptions = (slots || [])
+				.map(
+					(s, i) =>
+						`<button type="button" class="oj-btn oj-btn-sm ${state.bookingSlot && state.bookingSlot.start === s.start ? "oj-btn-primary" : "oj-btn-outline"} oj-pick-slot" data-idx="${i}" style="margin:4px">${OJ.esc(String(s.start).slice(11, 16))}${s.walk_in ? " *" : ""}</button>`
+				)
+				.join("");
+			$panel.empty().append(`
 				<h4>${OJ.t("تأكيد الحجز", "Confirm Booking")}</h4>
 				<p><strong>${OJ.t("المريض", "Patient")}:</strong> ${OJ.esc(state.patient.patient_name)}</p>
 				<p><strong>${OJ.t("الطبيب", "Doctor")}:</strong> ${OJ.esc(state.doctor.practitioner_name)}</p>
 				<p><strong>${OJ.t("العيادة", "Clinic")}:</strong> ${OJ.esc(state.clinic.name)}</p>
+				<div style="margin:12px 0">
+					<strong>${OJ.t("الموعد", "Appointment")}:</strong>
+					<div style="margin-top:8px">${slotOptions || `<span class="oj-muted">${OJ.t("حجز افتراضي اليوم", "Default walk-in today")}</span>`}</div>
+				</div>
 				<div class="oj-nav-actions">
 					<button class="oj-btn oj-btn-outline oj-back">${OJ.t("رجوع", "Back")}</button>
 					<button class="oj-btn oj-btn-primary oj-confirm">${OJ.t("تأكيد وإصدار تذكرة", "Confirm & Issue Token")}</button>
 				</div>
 			`);
+			$panel.find(".oj-pick-slot").on("click", function () {
+				const idx = parseInt($(this).attr("data-idx"), 10);
+				state.bookingSlot = slots[idx];
+				render();
+			});
 			$panel.find(".oj-back").on("click", () => { state.step = 3; render(); });
 			$panel.find(".oj-confirm").on("click", async () => {
 				try {
-					const now = frappe.datetime.now_datetime();
 					const patientId = state.patient.name || state.patient.patient;
 					if (!patientId) {
 						return frappe.msgprint(OJ.t("اختر مريضاً", "Select a patient"));
 					}
+					const slot = state.bookingSlot || (slots && slots[0]);
 					const res = await OJ.call("omnexa_healthcare.api.journey_desk.create_reception_booking", {
 						patient: patientId,
 						practitioner: state.doctor.name,
 						company, branch,
 						specialty: state.clinic.specialty,
-						appointment_date: now,
-						booking_fee: 300,
+						appointment_date: (slot && slot.start) || frappe.datetime.now_datetime(),
+						slot_end: slot && slot.end,
+						booking_fee: state.doctor.consultation_fee || 300,
 					});
 					state.token = res;
 					state.step = 5;
