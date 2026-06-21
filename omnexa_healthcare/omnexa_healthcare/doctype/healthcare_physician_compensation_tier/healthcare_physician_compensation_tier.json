@@ -1,0 +1,89 @@
+{
+	"actions": [],
+	"creation": "2026-06-21 12:00:00",
+	"doctype": "DocType",
+	"editable_grid": 1,
+	"engine": "InnoDB",
+	"field_order": [
+		"service_category",
+		"share_percent",
+		"fixed_amount",
+		"column_break_1",
+		"calculation_base",
+		"discount_handling",
+		"physician_discount_share_percent",
+		"min_physician_share",
+		"max_physician_share"
+	],
+	"fields": [
+		{
+			"fieldname": "service_category",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Service category",
+			"options": "Consultation\nFollow-up\nProcedure\nSurgery\nEmergency\nLab\nRadiology\nPackage\nOther",
+			"reqd": 1
+		},
+		{
+			"fieldname": "share_percent",
+			"fieldtype": "Percent",
+			"in_list_view": 1,
+			"label": "Physician share %"
+		},
+		{
+			"fieldname": "fixed_amount",
+			"fieldtype": "Currency",
+			"in_list_view": 1,
+			"label": "Fixed amount per service"
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"default": "Gross",
+			"fieldname": "calculation_base",
+			"fieldtype": "Select",
+			"label": "Calculation base",
+			"options": "Gross\nNet After Discount\nCollected"
+		},
+		{
+			"default": "Hospital Absorbs Discount",
+			"fieldname": "discount_handling",
+			"fieldtype": "Select",
+			"label": "Patient discount handling",
+			"options": "Hospital Absorbs Discount\nPhysician Absorbs Discount\nSplit Discount\nFixed Physician Amount"
+		},
+		{
+			"default": "50",
+			"depends_on": "eval:doc.discount_handling=='Split Discount'",
+			"description": "When discount is split — % of patient discount deducted from physician share.",
+			"fieldname": "physician_discount_share_percent",
+			"fieldtype": "Percent",
+			"label": "Physician discount share %"
+		},
+		{
+			"fieldname": "min_physician_share",
+			"fieldtype": "Currency",
+			"label": "Min physician share"
+		},
+		{
+			"fieldname": "max_physician_share",
+			"fieldtype": "Currency",
+			"label": "Max physician share"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"istable": 1,
+	"links": [],
+	"modified": "2026-06-21 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Physician Compensation Tier",
+	"owner": "Administrator",
+	"permissions": [],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

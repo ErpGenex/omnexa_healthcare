@@ -57,4 +57,11 @@ def create_sales_invoice_from_service_charge(service_charge: str) -> dict:
 	doc.db_set("sales_invoice", si.name, update_modified=False)
 	doc.db_set("status", "Invoiced", update_modified=False)
 
+	try:
+		from omnexa_healthcare.api.physician_compensation_engine import accrue_from_service_charge
+
+		accrue_from_service_charge(doc.name, sales_invoice=si.name)
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "physician_compensation_accrual")
+
 	return {"name": si.name, "status": doc.status}

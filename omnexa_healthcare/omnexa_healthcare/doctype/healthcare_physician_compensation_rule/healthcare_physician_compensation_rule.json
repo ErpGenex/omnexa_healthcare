@@ -6,9 +6,17 @@
 	"field_order": [
 		"rule_code",
 		"practitioner",
+		"specialty",
+		"priority",
 		"compensation_model",
 		"share_percent",
 		"fixed_amount",
+		"section_tiers",
+		"tiers",
+		"section_defaults",
+		"default_calculation_base",
+		"default_discount_handling",
+		"physician_payable_gl",
 		"effective_from",
 		"effective_to",
 		"is_active",
@@ -33,6 +41,20 @@
 			"in_list_view": 1
 		},
 		{
+			"description": "Optional — limits rule to one specialty. Leave blank for all.",
+			"fieldname": "specialty",
+			"fieldtype": "Link",
+			"label": "Specialty",
+			"options": "Healthcare Specialty"
+		},
+		{
+			"default": "100",
+			"description": "Higher priority wins when multiple rules match.",
+			"fieldname": "priority",
+			"fieldtype": "Int",
+			"label": "Priority"
+		},
+		{
 			"fieldname": "compensation_model",
 			"fieldtype": "Select",
 			"label": "Model",
@@ -49,6 +71,44 @@
 			"fieldname": "fixed_amount",
 			"fieldtype": "Currency",
 			"label": "Fixed amount"
+		},
+		{
+			"fieldname": "section_tiers",
+			"fieldtype": "Section Break",
+			"label": "Dynamic tiers by service type"
+		},
+		{
+			"description": "Configure % per service: consultation, procedure, surgery, etc. Overrides header share when matched.",
+			"fieldname": "tiers",
+			"fieldtype": "Table",
+			"label": "Service tiers",
+			"options": "Healthcare Physician Compensation Tier"
+		},
+		{
+			"fieldname": "section_defaults",
+			"fieldtype": "Section Break",
+			"label": "Defaults"
+		},
+		{
+			"default": "Gross",
+			"fieldname": "default_calculation_base",
+			"fieldtype": "Select",
+			"label": "Default calculation base",
+			"options": "Gross\nNet After Discount\nCollected"
+		},
+		{
+			"default": "Hospital Absorbs Discount",
+			"fieldname": "default_discount_handling",
+			"fieldtype": "Select",
+			"label": "Default patient discount handling",
+			"options": "Hospital Absorbs Discount\nPhysician Absorbs Discount\nSplit Discount\nFixed Physician Amount"
+		},
+		{
+			"description": "GL account credited for physician accrual (optional — falls back to practitioner or settings).",
+			"fieldname": "physician_payable_gl",
+			"fieldtype": "Link",
+			"label": "Physician payable GL",
+			"options": "GL Account"
 		},
 		{
 			"fieldname": "effective_from",

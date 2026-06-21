@@ -179,6 +179,7 @@ permission_query_conditions = {
 	"Healthcare Cssd Instrument": "omnexa_healthcare.permissions.healthcare_cssd_instrument_query_conditions",
 	"Healthcare Sterilization Cycle": "omnexa_healthcare.permissions.healthcare_sterilization_cycle_query_conditions",
 	"Healthcare Physician Compensation Rule": "omnexa_healthcare.permissions.healthcare_physician_compensation_rule_query_conditions",
+	"Healthcare Physician Ledger Entry": "omnexa_healthcare.permissions.healthcare_physician_ledger_entry_query_conditions",
 	"Healthcare Physician Settlement": "omnexa_healthcare.permissions.healthcare_physician_settlement_query_conditions",
 	"Healthcare Quality Corrective Action": "omnexa_healthcare.permissions.healthcare_quality_corrective_action_query_conditions",
 	"Healthcare Infection Surveillance Case": "omnexa_healthcare.permissions.healthcare_infection_surveillance_case_query_conditions",

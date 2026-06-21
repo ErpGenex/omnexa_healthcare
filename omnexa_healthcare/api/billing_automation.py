@@ -57,7 +57,17 @@ def create_service_charge_from_appointment(appointment: str) -> dict:
 		frappe.throw(_("Configure default Item on consultation fee rule or service catalog."), title=_("Billing"))
 	charge.insert()
 	appt.db_set("service_charge", charge.name, update_modified=False)
+	_set_practitioner_on_charge_line(charge, appt.practitioner, "Consultation")
 	return {"name": charge.name, "created": True}
+
+
+def _set_practitioner_on_charge_line(charge, practitioner: str | None, service_category: str) -> None:
+	if not practitioner or not charge.items:
+		return
+	line = charge.items[0]
+	line.practitioner = practitioner
+	line.service_category = service_category
+	charge.save(ignore_permissions=True)
 
 
 def _resolve_appointment_fee(appt) -> tuple[str | None, float]:
@@ -118,6 +128,7 @@ def create_service_charge_from_procedure_order(procedure_order: str) -> dict:
 	)
 	charge.insert()
 	order.db_set("service_charge", charge.name, update_modified=False)
+	_set_practitioner_on_charge_line(charge, order.practitioner, "Procedure")
 	return {"name": charge.name, "created": True}
 
 
@@ -153,4 +164,5 @@ def create_service_charge_from_surgical_case(surgical_case: str) -> dict:
 	)
 	charge.insert()
 	case.db_set("service_charge", charge.name, update_modified=False)
+	_set_practitioner_on_charge_line(charge, case.primary_surgeon or case.practitioner, "Surgery")
 	return {"name": charge.name, "created": True}

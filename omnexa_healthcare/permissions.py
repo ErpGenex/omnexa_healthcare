@@ -165,6 +165,10 @@ def healthcare_physician_settlement_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Physician Settlement", user)
 
 
+def healthcare_physician_ledger_entry_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Physician Ledger Entry", user)
+
+
 def healthcare_quality_corrective_action_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Quality Corrective Action", user)
 

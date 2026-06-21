@@ -1,0 +1,240 @@
+{
+	"actions": [],
+	"autoname": "naming_series:",
+	"creation": "2026-06-21 12:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"naming_series",
+		"posting_date",
+		"practitioner",
+		"patient",
+		"service_category",
+		"column_break_1",
+		"service_charge",
+		"service_charge_line",
+		"sales_invoice",
+		"compensation_rule",
+		"section_amounts",
+		"gross_amount",
+		"patient_discount",
+		"net_amount",
+		"column_break_2",
+		"physician_share",
+		"hospital_share",
+		"calculation_base",
+		"discount_handling",
+		"section_status",
+		"status",
+		"settlement",
+		"company",
+		"branch",
+		"remarks"
+	],
+	"fields": [
+		{
+			"default": "PLL-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "PLL-.#####",
+			"reqd": 1
+		},
+		{
+			"default": "Today",
+			"fieldname": "posting_date",
+			"fieldtype": "Date",
+			"in_list_view": 1,
+			"label": "Posting date",
+			"reqd": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fieldname": "service_category",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Service category",
+			"options": "Consultation\nFollow-up\nProcedure\nSurgery\nEmergency\nLab\nRadiology\nPackage\nOther",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "service_charge",
+			"fieldtype": "Link",
+			"label": "Service charge",
+			"options": "Healthcare Service Charge"
+		},
+		{
+			"fieldname": "service_charge_line",
+			"fieldtype": "Int",
+			"label": "Service charge line #"
+		},
+		{
+			"fieldname": "sales_invoice",
+			"fieldtype": "Link",
+			"label": "Sales invoice",
+			"options": "Sales Invoice",
+			"read_only": 1
+		},
+		{
+			"fieldname": "compensation_rule",
+			"fieldtype": "Link",
+			"label": "Compensation rule",
+			"options": "Healthcare Physician Compensation Rule",
+			"read_only": 1
+		},
+		{
+			"fieldname": "section_amounts",
+			"fieldtype": "Section Break",
+			"label": "Amounts"
+		},
+		{
+			"fieldname": "gross_amount",
+			"fieldtype": "Currency",
+			"in_list_view": 1,
+			"label": "Gross amount"
+		},
+		{
+			"fieldname": "patient_discount",
+			"fieldtype": "Currency",
+			"label": "Patient discount"
+		},
+		{
+			"fieldname": "net_amount",
+			"fieldtype": "Currency",
+			"label": "Net amount"
+		},
+		{
+			"fieldname": "column_break_2",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "physician_share",
+			"fieldtype": "Currency",
+			"in_list_view": 1,
+			"label": "Physician share"
+		},
+		{
+			"fieldname": "hospital_share",
+			"fieldtype": "Currency",
+			"label": "Hospital share"
+		},
+		{
+			"fieldname": "calculation_base",
+			"fieldtype": "Data",
+			"label": "Calculation base",
+			"read_only": 1
+		},
+		{
+			"fieldname": "discount_handling",
+			"fieldtype": "Data",
+			"label": "Discount handling",
+			"read_only": 1
+		},
+		{
+			"fieldname": "section_status",
+			"fieldtype": "Section Break",
+			"label": "Status"
+		},
+		{
+			"default": "Accrued",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Accrued\nSettled\nReversed"
+		},
+		{
+			"fieldname": "settlement",
+			"fieldtype": "Link",
+			"label": "Settlement",
+			"options": "Healthcare Physician Settlement",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "remarks",
+			"fieldtype": "Small Text",
+			"label": "Remarks"
+		}
+	],
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-21 12:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Physician Ledger Entry",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 1,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "System Manager",
+			"write": 1
+		},
+		{
+			"create": 1,
+			"delete": 0,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Company Admin",
+			"write": 1
+		},
+		{
+			"create": 0,
+			"delete": 0,
+			"export": 1,
+			"read": 1,
+			"report": 1,
+			"role": "Healthcare CFO",
+			"write": 0
+		},
+		{
+			"create": 0,
+			"delete": 0,
+			"export": 0,
+			"read": 1,
+			"report": 1,
+			"role": "Healthcare Physician",
+			"write": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

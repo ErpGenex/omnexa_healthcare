@@ -12,6 +12,9 @@
 		"column_break_1",
 		"company",
 		"status",
+		"section_compensation",
+		"physician_payable_gl",
+		"default_consultation_share_percent",
 		"section_branch",
 		"branch_assignments",
 		"section_schedule",
@@ -58,6 +61,24 @@
 			"label": "Company",
 			"options": "Company",
 			"reqd": 1
+		},
+		{
+			"fieldname": "section_compensation",
+			"fieldtype": "Section Break",
+			"label": "Physician compensation"
+		},
+		{
+			"description": "Default payable GL for automatic physician accrual postings.",
+			"fieldname": "physician_payable_gl",
+			"fieldtype": "Link",
+			"label": "Physician payable GL",
+			"options": "GL Account"
+		},
+		{
+			"description": "Fallback % when no tier rule matches (consultation).",
+			"fieldname": "default_consultation_share_percent",
+			"fieldtype": "Percent",
+			"label": "Default consultation share %"
 		},
 		{
 			"fieldname": "section_branch",

@@ -69,4 +69,9 @@ class HealthcareServiceCharge(Document):
 					frappe.throw(_("Row {0}: Item belongs to a different company.").format(row.idx), title=_("Item"))
 				if not row.item_code:
 					row.item_code = it.item_code
-			row.amount = flt(row.qty) * flt(row.rate)
+			gross = flt(row.qty) * flt(row.rate)
+			discount = flt(row.patient_discount_amount) or (gross * flt(row.patient_discount_percent) / 100)
+			row.amount = flt(gross - discount)
+		from omnexa_healthcare.api.physician_compensation_engine import apply_line_compensation_preview
+
+		apply_line_compensation_preview(self)

@@ -162,6 +162,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Cssd Instrument", "CSSD Instruments"),
 			("DocType", "Healthcare Sterilization Cycle", "Sterilization Cycles"),
 			("DocType", "Healthcare Physician Compensation Rule", "Compensation Rules"),
+			("DocType", "Healthcare Physician Ledger Entry", "Physician Ledger"),
 			("DocType", "Healthcare Physician Settlement", "Physician Settlements"),
 			("DocType", "Healthcare Quality Corrective Action", "Quality CAPA"),
 			("DocType", "Healthcare Infection Surveillance Case", "Infection Surveillance"),

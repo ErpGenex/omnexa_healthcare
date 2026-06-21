@@ -7,12 +7,17 @@
 	"field_order": [
 		"description",
 		"line_note",
+		"practitioner",
+		"service_category",
 		"item",
 		"item_code",
 		"column_break_omnexa_1",
 		"qty",
 		"rate",
+		"patient_discount_percent",
+		"patient_discount_amount",
 		"amount",
+		"physician_share",
 		"owner_user"
 	],
 	"fields": [
@@ -26,6 +31,21 @@
 			"fieldname": "line_note",
 			"fieldtype": "Data",
 			"label": "Line Note"
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner"
+		},
+		{
+			"default": "Consultation",
+			"fieldname": "service_category",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Service category",
+			"options": "Consultation\nFollow-up\nProcedure\nSurgery\nEmergency\nLab\nRadiology\nPackage\nOther"
 		},
 		{
 			"fieldname": "item",
@@ -59,10 +79,28 @@
 			"reqd": 1
 		},
 		{
+			"default": "0",
+			"fieldname": "patient_discount_percent",
+			"fieldtype": "Percent",
+			"label": "Patient discount %"
+		},
+		{
+			"default": "0",
+			"fieldname": "patient_discount_amount",
+			"fieldtype": "Currency",
+			"label": "Patient discount amount"
+		},
+		{
 			"fieldname": "amount",
 			"fieldtype": "Currency",
 			"in_list_view": 1,
 			"label": "Amount",
+			"read_only": 1
+		},
+		{
+			"fieldname": "physician_share",
+			"fieldtype": "Currency",
+			"label": "Physician share",
 			"read_only": 1
 		},
 		{
