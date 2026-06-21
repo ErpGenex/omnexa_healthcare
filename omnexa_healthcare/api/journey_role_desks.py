@@ -209,6 +209,27 @@ def get_cfo_dashboard(company: str | None = None, branch: str | None = None) -> 
 			order_by="modified desc",
 			limit=15,
 		)
+
+	physician_ledger_open = 0
+	physician_settlements_draft = 0
+	compensation_enabled = False
+	if frappe.db.exists("DocType", "Healthcare Physician Ledger Entry"):
+		ledger_filters: dict = {"settlement": ["is", "not set"]}
+		if company:
+			ledger_filters["company"] = company
+		if branch and frappe.db.has_column("Healthcare Physician Ledger Entry", "branch"):
+			ledger_filters["branch"] = branch
+		physician_ledger_open = frappe.db.count("Healthcare Physician Ledger Entry", ledger_filters)
+	if frappe.db.exists("DocType", "Healthcare Physician Settlement"):
+		settle_filters: dict = {"status": "Draft"}
+		if company:
+			settle_filters["company"] = company
+		if branch and frappe.db.has_column("Healthcare Physician Settlement", "branch"):
+			settle_filters["branch"] = branch
+		physician_settlements_draft = frappe.db.count("Healthcare Physician Settlement", settle_filters)
+	if frappe.db.exists("DocType", "Healthcare Settings"):
+		compensation_enabled = bool(frappe.db.get_single_value("Healthcare Settings", "enable_physician_compensation"))
+
 	return {
 		"revenue_today": revenue_today,
 		"expenses_today": flt(revenue_today * 0.35),
@@ -218,6 +239,9 @@ def get_cfo_dashboard(company: str | None = None, branch: str | None = None) -> 
 		"invoices": invoices,
 		"specialty_revenue": _specialty_breakdown(company, branch),
 		"insurance_claims": claims,
+		"physician_ledger_open": physician_ledger_open,
+		"physician_settlements_draft": physician_settlements_draft,
+		"compensation_enabled": compensation_enabled,
 	}
 
 

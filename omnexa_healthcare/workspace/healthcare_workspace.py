@@ -21,6 +21,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		[
 			("Page", "healthcare-reception-desk", "Reception Desk"),
 			("Page", "healthcare-cashier-desk", "Cashier / Treasury"),
+			("Page", "healthcare-finance-desk", "RCM Workcenter"),
 			("Page", "healthcare-physician-workbench", "Physician Workbench"),
 			("Page", "healthcare-patient-consumer", "Patient Portal Journey"),
 			("Page", "healthcare-patient-queue", "Smart Queue Board"),
@@ -65,8 +66,6 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Department", "Department"),
 			("DocType", "Healthcare Service Unit", "Service Unit"),
 			("DocType", "Healthcare Specialty", "Specialty"),
-			("DocType", "Healthcare Service Catalog", "Service Catalog"),
-			("DocType", "Healthcare Consultation Fee Rule", "Consultation Fees"),
 			("DocType", "Healthcare Icd10 Code", "ICD-10 Codes"),
 			("DocType", "Healthcare Icd11 Code", "ICD-11 Codes"),
 			("DocType", "Healthcare Cpt Code", "CPT Codes"),
@@ -95,8 +94,6 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Dental Treatment Plan", "Dental Treatment Plan"),
 			("DocType", "Healthcare Orthodontic Case", "Orthodontics"),
 			("DocType", "Healthcare Implant Trace", "Implant Trace"),
-			("DocType", "Healthcare Installment Plan", "Installment Plan"),
-			("DocType", "Healthcare Treatment Package", "Treatment Package"),
 			("DocType", "Healthcare Procedure", "Procedures"),
 			("DocType", "Healthcare Lab Test Panel", "Lab Test Panels"),
 			("DocType", "Healthcare Lab Reference Range", "Lab Reference Ranges"),
@@ -161,9 +158,6 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("DocType", "Healthcare Transfusion Order", "Transfusion Orders"),
 			("DocType", "Healthcare Cssd Instrument", "CSSD Instruments"),
 			("DocType", "Healthcare Sterilization Cycle", "Sterilization Cycles"),
-			("DocType", "Healthcare Physician Compensation Rule", "Compensation Rules"),
-			("DocType", "Healthcare Physician Ledger Entry", "Physician Ledger"),
-			("DocType", "Healthcare Physician Settlement", "Physician Settlements"),
 			("DocType", "Healthcare Quality Corrective Action", "Quality CAPA"),
 			("DocType", "Healthcare Infection Surveillance Case", "Infection Surveillance"),
 		],
@@ -227,7 +221,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		[("DocType", "Healthcare Medication Dispense", "Medication Dispense")],
 	),
 	(
-		"🛡️ Insurance & RCM",
+		"🛡️ Insurance & Payer RCM",
 		[
 			("DocType", "Healthcare Payer", "Payer"),
 			("DocType", "Healthcare Insurance Plan", "Insurance Plan"),
@@ -241,14 +235,45 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 		],
 	),
 	(
-		"💰 Billing · Finance · ERP",
+		"💼 Patient Billing & Accounts",
 		[
-			("DocType", "Healthcare Service Charge", "Service Charge"),
-			("DocType", "Sales Invoice", "Sales Invoice"),
-			("DocType", "Payment Entry", "Payment Entry"),
+			("Page", "healthcare-finance-desk", "RCM Workcenter"),
+			("Page", "healthcare-cashier-desk", "Cashier / Treasury"),
+			("DocType", "Healthcare Patient", "Patient Registry"),
+			("DocType", "Healthcare Service Charge", "Service Charges"),
+			("DocType", "Sales Invoice", "Patient Invoices"),
+			("DocType", "Payment Entry", "Patient Payments"),
+			("DocType", "Customer", "Patient ERP Accounts"),
+			("DocType", "Healthcare Consultation Fee Rule", "Consultation Fee Setup"),
+			("DocType", "Healthcare Service Catalog", "Service Price Catalog"),
+			("DocType", "Healthcare Treatment Package", "Treatment Packages"),
+			("DocType", "Healthcare Installment Plan", "Installment Plans"),
+			("Report", "Healthcare Service Charge Summary", "Charges Summary"),
+			("Report", "Healthcare Service Charge By Patient", "Charges by Patient"),
+			("Report", "Healthcare Daily Cash Collection", "Daily Cash Collection"),
+			("Report", "Healthcare Patient Copay Summary", "Patient Copay Summary"),
+		],
+	),
+	(
+		"👨‍⚕️ Physician Revenue & Compensation",
+		[
+			("Page", "healthcare-physician-workbench", "Physician Workbench"),
+			("DocType", "Healthcare Practitioner", "Practitioner Profiles"),
+			("DocType", "Healthcare Physician Compensation Rule", "Compensation Rules"),
+			("DocType", "Healthcare Physician Ledger Entry", "Physician Ledger"),
+			("DocType", "Healthcare Physician Settlement", "Physician Settlements"),
+			("DocType", "Journal Entry", "Physician GL Postings"),
+			("Report", "Healthcare Procedure Revenue", "Procedure Revenue"),
+			("Report", "Healthcare Encounter By Practitioner", "Encounters by Practitioner"),
+		],
+	),
+	(
+		"📒 General Ledger & ERP",
+		[
 			("DocType", "Journal Entry", "Journal Entry"),
 			("DocType", "Purchase Invoice", "Purchase Invoice"),
 			("DocType", "Supplier", "Supplier"),
+			("DocType", "GL Account", "Chart of Accounts"),
 		],
 	),
 	(
@@ -295,6 +320,7 @@ REPORT_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 	("📈 Reports · Pharmacy", []),
 	("📈 Reports · Surgery", []),
 	("📈 Reports · RCM & Finance", []),
+	("📈 Reports · Physician Revenue", []),
 ]
 
 # Map report name keywords → section index
@@ -306,7 +332,8 @@ _REPORT_BUCKETS: list[tuple[str, tuple[str, ...]]] = [
 	("📈 Reports · Radiology", ("radiology", "imaging", "structured report")),
 	("📈 Reports · Pharmacy", ("dispense", "drug", "pharmacy", "par")),
 	("📈 Reports · Surgery", ("or ", "ot ", "consumable")),
-	("📈 Reports · RCM & Finance", ("insurance", "claim", "payer", "copay", "cash", "charge", "revenue", "procedure", "prior auth")),
+	("📈 Reports · RCM & Finance", ("insurance", "claim", "payer", "copay", "cash", "charge", "prior auth")),
+	("📈 Reports · Physician Revenue", ("physician", "compensation", "settlement", "practitioner revenue", "procedure revenue", "encounter by practitioner")),
 ]
 
 _SHORTCUT_COLORS = ("Blue", "Green", "Orange", "Red", "Cyan", "Purple", "Teal", "Pink", "Yellow")

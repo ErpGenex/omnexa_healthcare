@@ -1,1 +1,14 @@
-{"doctype":"Page","module":"Omnexa Healthcare","name":"healthcare-finance-desk","page_name":"healthcare-finance-desk","standard":"Yes","title":"Finance Desk","roles":[{"role":"System Manager"},{"role":"Desk User"}]}
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-finance-desk",
+	"page_name": "healthcare-finance-desk",
+	"standard": "Yes",
+	"title": "RCM Workcenter",
+	"roles": [
+		{"role": "System Manager"},
+		{"role": "Company Admin"},
+		{"role": "Healthcare CFO"},
+		{"role": "Desk User"}
+	]
+}

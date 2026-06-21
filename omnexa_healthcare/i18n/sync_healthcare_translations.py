@@ -192,11 +192,25 @@ def sync_healthcare_translations(*, write: bool = True) -> dict:
 
 def execute():
 	stats = sync_healthcare_translations(write=True)
+	from omnexa_healthcare.i18n.healthcare_i18n_catalog import translate_to_ar
+
+	ws_missing = []
+	for section, items in WORKSPACE_SECTIONS + REPORT_SECTIONS:
+		if translate_to_ar(section) == section:
+			ws_missing.append(section)
+		for _, _, label in items:
+			if translate_to_ar(label) == label:
+				ws_missing.append(label)
 	print(
 		f"Healthcare i18n: {stats['ar_total']} AR rows "
 		f"({stats['ar_translated']} auto, {stats['ar_manual']} kept, "
 		f"{stats['ar_untranslated']} still English), "
 		f"{stats['en_total']} EN overrides"
 	)
+	print(f"Workspace Arabic: {len(WORKSPACE_SECTIONS) + len(REPORT_SECTIONS)} sections, "
+		f"{sum(len(i) for _, i in WORKSPACE_SECTIONS + REPORT_SECTIONS)} links, "
+		f"{len(ws_missing)} untranslated")
 	if stats["ar_untranslated"]:
 		print(f"Warning: {stats['ar_untranslated']} strings still untranslated — review ar.csv")
+	if ws_missing:
+		print(f"Workspace gaps: {ws_missing[:20]}")

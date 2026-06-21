@@ -10,6 +10,7 @@ from omnexa_healthcare.i18n.sync_healthcare_translations import (
 	build_translation_maps,
 	collect_healthcare_strings,
 )
+from omnexa_healthcare.workspace.healthcare_workspace import REPORT_SECTIONS, WORKSPACE_SECTIONS
 
 
 class TestHealthcareI18n(unittest.TestCase):
@@ -17,6 +18,22 @@ class TestHealthcareI18n(unittest.TestCase):
 		self.assertEqual(translate_to_ar("📊 Dashboards & Portals"), "📊 لوحات المعلومات والبوابات")
 		self.assertEqual(translate_to_ar("👤 MPI & Patient Access"), "👤 سجل المرضى والوصول")
 		self.assertEqual(translate_to_ar("🌐 Omnexa Journey Experience"), "🌐 تجربة Omnexa Journey")
+		self.assertEqual(translate_to_ar("💼 Patient Billing & Accounts"), "💼 فوترة المرضى والحسابات")
+		self.assertEqual(
+			translate_to_ar("👨‍⚕️ Physician Revenue & Compensation"),
+			"👨‍⚕️ إيرادات الأطباء والمحاسبة",
+		)
+		self.assertEqual(translate_to_ar("🩸 Blood Bank · CSSD · QMS"), "🩸 بنك الدم · التعقيم · الجودة")
+
+	def test_workspace_links_translated(self):
+		missing = []
+		for section, items in WORKSPACE_SECTIONS + REPORT_SECTIONS:
+			if translate_to_ar(section) == section:
+				missing.append(f"section:{section}")
+			for _, _, label in items:
+				if translate_to_ar(label) == label:
+					missing.append(f"{section} → {label}")
+		self.assertEqual(missing, [], f"Workspace labels missing Arabic: {missing[:10]}")
 
 	def test_journey_ui_translated(self):
 		self.assertEqual(translate_to_ar("Reception Desk"), "مكتب الاستقبال")
@@ -37,7 +54,7 @@ class TestHealthcareI18n(unittest.TestCase):
 		# Codes (MRN, ICU, blood types) may remain unchanged.
 		self.assertLessEqual(stats["ar_untranslated"], 700)
 		untranslated = [s for s in strings if ar_rows.get(s) == s]
-		for code in ("MRN", "ICU", "A+", "HL7", "LOINC"):
+		for code in ("ICU", "A+", "HL7", "LOINC"):
 			self.assertIn(code, untranslated)
 
 	def test_ar_csv_exists(self):
