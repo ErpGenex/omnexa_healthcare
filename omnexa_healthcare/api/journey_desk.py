@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
+import re
 from base64 import b64encode
 from io import BytesIO
 
@@ -21,12 +22,61 @@ from omnexa_healthcare.scheduling_engine import get_available_slots
 
 
 def _patient_search_fields() -> list[str]:
-	return [f for f in ["name", "full_name", "gender", "birth_date", "branch"] if frappe.db.has_column("Healthcare Patient", f)]
+	return [
+		f
+		for f in ["name", "full_name", "given_name", "family_name", "gender", "birth_date", "branch", "company"]
+		if frappe.db.has_column("Healthcare Patient", f)
+	]
+
+
+def _normalize_phone_query(query: str) -> str:
+	digits = re.sub(r"\D", "", query or "")
+	if digits.startswith("20") and len(digits) > 10:
+		digits = digits[2:]
+	if digits.startswith("0") and len(digits) > 10:
+		digits = digits[1:]
+	return digits
+
+
+def _patient_in_search_scope(patient: dict | None, branch: str | None, company: str | None) -> bool:
+	if not patient:
+		return False
+	settings = frappe.get_single("Healthcare Settings")
+	cross_branch = cint(getattr(settings, "allow_cross_branch_patient_access", 1))
+	if branch and patient.get("branch") != branch and not cross_branch:
+		return False
+	if company and patient.get("company") and patient.get("company") != company:
+		return False
+	return True
+
+
+def _append_patient_search_result(
+	results: list[dict],
+	seen: set[str],
+	patient: dict | None,
+	match_type: str,
+	match_value: str,
+) -> None:
+	if not patient or patient.get("name") in seen:
+		return
+	seen.add(patient["name"])
+	results.append(_patient_search_row(patient, match_type, match_value))
 
 
 def _patient_search_row(patient: dict, match_type: str, match_value: str) -> dict:
 	display = patient.get("full_name") or ""
-	return {**patient, "patient_name": display, "match_type": match_type, "match_value": match_value}
+	given = patient.get("given_name") or ""
+	family = patient.get("family_name") or ""
+	if not display and (given or family):
+		display = f"{given} {family}".strip()
+	return {
+		**patient,
+		"patient": patient.get("name"),
+		"patient_name": display,
+		"patient_display": display,
+		"match_type": match_type,
+		"match_value": match_value,
+	}
 
 
 def _journey_token(appointment: str, patient: str) -> str:
@@ -356,55 +406,69 @@ def get_reception_doctors(company: str, branch: str, specialty: str | None = Non
 
 
 @frappe.whitelist()
-def search_patient_quick(query: str, branch: str | None = None) -> list[dict]:
-	"""Search by National ID, MRN, mobile, passport, name."""
+def search_patient_quick(query: str, branch: str | None = None, company: str | None = None) -> list[dict]:
+	"""Search by patient name, National ID, mobile, MRN, or passport."""
 	q = (query or "").strip()
 	if len(q) < 2:
 		return []
+	branch = branch or frappe.defaults.get_user_default("Branch")
+	company = company or frappe.defaults.get_user_default("Company")
 	results: list[dict] = []
-	# Identifier lookup
+	seen: set[str] = set()
+	phone_digits = _normalize_phone_query(q)
+
+	def _load_patient(name: str) -> dict | None:
+		return frappe.db.get_value("Healthcare Patient", name, _patient_search_fields(), as_dict=True)
+
+	def _maybe_add(patient: dict | None, match_type: str, match_value: str) -> None:
+		if _patient_in_search_scope(patient, branch, company):
+			_append_patient_search_result(results, seen, patient, match_type, match_value)
+
+	# National ID / MRN / passport — identifier table
 	for id_row in frappe.get_all(
 		"Healthcare Patient Identifier",
 		filters={"value": ["like", f"%{q}%"]},
 		fields=["parent", "identifier_type", "value"],
-		limit=10,
+		limit=15,
 	):
-		p = frappe.db.get_value(
-			"Healthcare Patient",
-			id_row.parent,
-			_patient_search_fields(),
-			as_dict=True,
-		)
-		if p and (not branch or p.branch == branch):
-			results.append(_patient_search_row(p, id_row.identifier_type, id_row.value))
-	# Telecom
+		_maybe_add(_load_patient(id_row.parent), id_row.identifier_type or "Identifier", id_row.value)
+
+	# Mobile / phone — raw and normalized digits
+	telecom_filters: list[list] = [["value", "like", f"%{q}%"]]
+	if phone_digits and phone_digits != q and len(phone_digits) >= 4:
+		telecom_filters.append(["value", "like", f"%{phone_digits}%"])
 	for tel in frappe.get_all(
 		"Healthcare Patient Telecom",
-		filters={"value": ["like", f"%{q}%"]},
-		fields=["parent", "value"],
-		limit=10,
+		filters={"contact_system": ["in", ["phone", "sms", "other"]]},
+		or_filters=telecom_filters,
+		fields=["parent", "value", "contact_system"],
+		limit=15,
 	):
-		if any(r["name"] == tel.parent for r in results):
-			continue
-		p = frappe.db.get_value("Healthcare Patient", tel.parent, _patient_search_fields(), as_dict=True)
-		if p and (not branch or p.branch == branch):
-			results.append(_patient_search_row(p, "Mobile", tel.value))
-	# Name
-	if len(q) >= 3:
-		or_filters = []
-		for field in ("full_name", "given_name", "family_name"):
-			if frappe.db.has_column("Healthcare Patient", field):
-				or_filters.append([field, "like", f"%{q}%"])
-		name_filters = {**({"branch": branch} if branch else {})}
+		label = "Mobile" if (tel.contact_system or "phone") == "phone" else "Phone"
+		_maybe_add(_load_patient(tel.parent), label, tel.value)
+
+	# Patient name — full, given, family (min 2 chars)
+	name_or_filters: list[list] = []
+	for field in ("full_name", "given_name", "family_name"):
+		if frappe.db.has_column("Healthcare Patient", field):
+			name_or_filters.append([field, "like", f"%{q}%"])
+	if name_or_filters:
+		scope_filters: dict = {}
+		settings = frappe.get_single("Healthcare Settings")
+		if branch and not cint(getattr(settings, "allow_cross_branch_patient_access", 1)):
+			scope_filters["branch"] = branch
+		if company:
+			scope_filters["company"] = company
 		for p in frappe.get_all(
 			"Healthcare Patient",
-			filters=name_filters,
-			or_filters=or_filters or None,
+			filters=scope_filters,
+			or_filters=name_or_filters,
 			fields=_patient_search_fields(),
-			limit=10,
-		) if or_filters else []:
-			if not any(r["name"] == p.name for r in results):
-				results.append(_patient_search_row(p, "Name", p.get("full_name") or q))
+			limit=15,
+		):
+			display = p.get("full_name") or f"{p.get('given_name') or ''} {p.get('family_name') or ''}".strip()
+			_maybe_add(p, "Name", display or q)
+
 	return results[:15]
 
 

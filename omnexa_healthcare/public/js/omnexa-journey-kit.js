@@ -178,49 +178,71 @@
 	}
 
 	function patientSearchBar(options) {
-		const placeholder = (options && options.placeholder) || OJ.t("بحث مريض", "Search patient");
+		const placeholder =
+			(options && options.placeholder) ||
+			OJ.t("الاسم / الرقم القومي / الجوال / MRN", "Name / National ID / Mobile / MRN");
 		return `<div class="oj-search-bar oj-patient-search-bar">
-			<input type="text" class="oj-patient-query" placeholder="${OJ.esc(placeholder)}" />
-			<button type="button" class="oj-btn oj-btn-primary oj-patient-search-btn">${OJ.t("بحث", "Search")}</button>
+			<input type="text" class="oj-patient-query oj-patient-search" placeholder="${OJ.esc(placeholder)}" />
+			<button type="button" class="oj-btn oj-btn-primary oj-patient-search-btn oj-search-btn">${OJ.t("بحث", "Search")}</button>
 		</div>
-		<div class="oj-patient-search-results"></div>`;
+		<div class="oj-patient-search-results oj-patient-results"></div>`;
 	}
 
-	function bindPatientSearch($root, onSelect, branch) {
+	function bindPatientSearch($root, onSelect, branch, company) {
 		const run = async () => {
-			const query = ($root.find(".oj-patient-query").val() || "").trim();
-			const $results = $root.find(".oj-patient-search-results").html(OJ.loading());
+			const query = ($root.find(".oj-patient-query, .oj-patient-search").val() || "").trim();
+			const $results = $root.find(".oj-patient-search-results, .oj-patient-results").first();
+			$results.html(OJ.loading());
 			if (!query || query.length < 2) {
 				$results.html(`<p class="oj-muted">${OJ.t("أدخل حرفين على الأقل", "Enter at least 2 characters")}</p>`);
 				return;
 			}
-			const rows = await OJ.call("omnexa_healthcare.api.journey_desk.search_patient_quick", {
-				query,
-				branch: branch || frappe.defaults.get_user_default("Branch"),
-			});
-			if (!rows.length) {
-				$results.html(`<p class="oj-muted">${OJ.t("لا نتائج", "No results")}</p>`);
-				return;
+			try {
+				const rows = await OJ.call("omnexa_healthcare.api.journey_desk.search_patient_quick", {
+					query,
+					branch: branch || frappe.defaults.get_user_default("Branch"),
+					company: company || frappe.defaults.get_user_default("Company"),
+				});
+				if (!rows.length) {
+					$results.html(
+						`<p class="oj-muted">${OJ.t("لا نتائج — جرّب الاسم أو الرقم القومي أو الجوال", "No results — try name, national ID, or mobile")}</p>`
+					);
+					return;
+				}
+				const matchLabel = (type) => {
+					const map = {
+						Name: OJ.t("الاسم", "Name"),
+						Mobile: OJ.t("الجوال", "Mobile"),
+						Phone: OJ.t("الهاتف", "Phone"),
+						"National ID": OJ.t("الرقم القومي", "National ID"),
+						MRN: OJ.t("MRN", "MRN"),
+					};
+					return map[type] || type;
+				};
+				const $list = $('<div class="oj-patient-search-list"></div>');
+				rows.forEach((r) => {
+					const patientId = r.patient || r.name;
+					const display = r.patient_name || r.full_name || r.patient_display || patientId;
+					const $btn = $(`<button type="button" class="oj-btn oj-btn-outline oj-patient-pick" style="margin:4px;width:100%;text-align:start">
+						<strong>${OJ.esc(display)}</strong>
+						<span class="oj-muted"> · ${OJ.esc(matchLabel(r.match_type))}: ${OJ.esc(r.match_value || "")}</span>
+						<span class="oj-muted"> · ${OJ.esc(r.branch || "")}</span>
+					</button>`);
+					$btn.on("click", () => onSelect && onSelect({ ...r, name: patientId, patient: patientId }));
+					$list.append($btn);
+				});
+				$results.empty().append($list);
+			} catch (err) {
+				$results.html(`<p class="oj-muted">${OJ.t("تعذر البحث", "Search failed")}</p>`);
+				OJ.showCallError(err);
 			}
-			const html = rows
-				.map(
-					(r) =>
-						`<button type="button" class="oj-btn oj-btn-outline oj-patient-pick" style="margin:4px" data-patient="${OJ.esc(r.patient || r.name)}">
-							<strong>${OJ.esc(r.full_name || r.patient_display || r.name)}</strong>
-							<span class="oj-muted"> · ${OJ.esc(r.name || r.patient || "")}</span>
-						</button>`
-				)
-				.join("");
-			$results.html(html);
-			$results.find(".oj-patient-pick").on("click", function () {
-				const patient = $(this).attr("data-patient");
-				const row = rows.find((x) => (x.patient || x.name) === patient) || { patient, name: patient };
-				onSelect && onSelect(row);
-			});
 		};
-		$root.find(".oj-patient-search-btn").on("click", run);
-		$root.find(".oj-patient-query").on("keydown", (e) => {
-			if (e.key === "Enter") run();
+		$root.find(".oj-patient-search-btn, .oj-search-btn").off("click.ojPatientSearch").on("click.ojPatientSearch", run);
+		$root.find(".oj-patient-query, .oj-patient-search").off("keydown.ojPatientSearch").on("keydown.ojPatientSearch", (e) => {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				run();
+			}
 		});
 	}
 

@@ -1379,6 +1379,120 @@
 	color: var(--oj-muted, #5c6b7a);
 }
 
+/* Demo Hub — deployment phase control panels */
+.oj-phase-dashboard {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 16px;
+	margin: 16px 0;
+}
+
+.oj-phase-card {
+	background: #fff;
+	border: 1px solid rgba(0, 51, 102, 0.12);
+	border-radius: 16px;
+	padding: 20px;
+	box-shadow: 0 2px 16px rgba(0, 51, 102, 0.06);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.oj-phase-card-active {
+	border-color: var(--oj-primary, #003366);
+	box-shadow: 0 4px 24px rgba(0, 51, 102, 0.12);
+}
+
+.oj-phase-card-head {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+}
+
+.oj-phase-card-head h4 {
+	margin: 0 0 4px;
+	color: var(--oj-primary, #003366);
+}
+
+.oj-phase-icon {
+	font-size: 2rem;
+	line-height: 1;
+}
+
+.oj-phase-badge {
+	margin-inline-start: auto;
+	font-size: 0.75rem;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(0, 51, 102, 0.08);
+	color: var(--oj-muted, #5c6b7a);
+	white-space: nowrap;
+}
+
+.oj-phase-badge-ready {
+	background: rgba(34, 139, 34, 0.12);
+	color: #1a7a1a;
+}
+
+.oj-phase-meta {
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
+.oj-phase-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+}
+
+.oj-phase-stat {
+	text-align: center;
+	background: rgba(0, 51, 102, 0.04);
+	border-radius: 10px;
+	padding: 10px 6px;
+}
+
+.oj-phase-stat span {
+	display: block;
+	font-size: 1.35rem;
+	font-weight: 700;
+	color: var(--oj-primary, #003366);
+}
+
+.oj-phase-stat small {
+	color: var(--oj-muted, #5c6b7a);
+}
+
+.oj-phase-network {
+	font-size: 0.9rem;
+	padding: 8px 12px;
+	background: rgba(0, 51, 102, 0.04);
+	border-radius: 8px;
+}
+
+.oj-phase-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: auto;
+}
+
+.oj-phase-actions .oj-btn {
+	flex: 1 1 auto;
+	min-width: 100px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.oj-gov-block {
+	margin-top: 16px;
+}
+
+.oj-gov-title {
+	margin: 0 0 8px;
+	color: var(--oj-primary, #003366);
+}
+
 /* Pharmacy — embedded native Purchase Receipt */
 .oj-pharmacy-pr-embed .page-head {
 	display: none;

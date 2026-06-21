@@ -39,6 +39,35 @@ class TestJourneyDesk(unittest.TestCase):
 	def test_search_patient_quick_short_query(self):
 		self.assertEqual(journey_desk.search_patient_quick("a", self.branch), [])
 
+	def test_search_patient_quick_by_name(self):
+		patient = frappe.get_all(
+			"Healthcare Patient",
+			filters={"branch": self.branch},
+			fields=["name", "full_name", "given_name"],
+			limit=1,
+		)
+		if not patient or not (patient[0].full_name or patient[0].given_name):
+			self.skipTest("No named patient on branch")
+		term = (patient[0].full_name or patient[0].given_name).split()[0][:4]
+		if len(term) < 2:
+			self.skipTest("Patient name too short")
+		rows = journey_desk.search_patient_quick(term, self.branch, self.company)
+		self.assertTrue(any(r["name"] == patient[0].name for r in rows))
+
+	def test_search_patient_quick_by_national_id(self):
+		id_row = frappe.get_all(
+			"Healthcare Patient Identifier",
+			filters={"identifier_type": "National ID"},
+			fields=["parent", "value"],
+			limit=1,
+		)
+		if not id_row:
+			self.skipTest("No national ID demo data")
+		branch = frappe.db.get_value("Healthcare Patient", id_row[0].parent, "branch")
+		company = frappe.db.get_value("Healthcare Patient", id_row[0].parent, "company")
+		rows = journey_desk.search_patient_quick(id_row[0].value[:10], branch, company)
+		self.assertTrue(any(r["name"] == id_row[0].parent for r in rows))
+
 	def test_cashier_queue(self):
 		rows = journey_desk.get_cashier_queue(self.company, self.branch)
 		self.assertIsInstance(rows, list)

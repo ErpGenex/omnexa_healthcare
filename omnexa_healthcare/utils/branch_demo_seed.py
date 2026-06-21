@@ -225,12 +225,35 @@ WEB_BOOKING_STATUSES: list[tuple[str, str, int]] = [
 ]
 
 
+CLINIC_DEPARTMENT_CODES = frozenset({"FM", "OPD", "DEN", "PHM"})
+CLINIC_PRACTITIONER_KEYS = frozenset({"FM", "GEN", "DEN"})
+
+
+def seed_healthcare_clinic_demo(
+	company: str,
+	branch: str,
+	patients: int = 12,
+	force: int = 0,
+	include_financial: int = 1,
+) -> dict:
+	"""Seed a lightweight private-clinic demo (OPD only, no IPD)."""
+	return seed_healthcare_hospital_demo(
+		company,
+		branch,
+		patients=patients,
+		force=force,
+		include_financial=include_financial,
+		mode="clinic",
+	)
+
+
 def seed_healthcare_hospital_demo(
 	company: str,
 	branch: str,
 	patients: int = DEFAULT_DEMO_PATIENTS,
 	force: int = 0,
 	include_financial: int = 1,
+	mode: str = "hospital",
 ) -> dict:
 	"""Seed a full multi-specialty hospital demo for one branch."""
 	if not company or not branch:
@@ -238,8 +261,12 @@ def seed_healthcare_hospital_demo(
 	if frappe.db.get_value("Branch", branch, "company") != company:
 		frappe.throw(_("Branch does not belong to company"))
 
+	mode = (mode or "hospital").strip().lower()
+	facility_type = "Clinic" if mode == "clinic" else "Hospital"
 	patient_count = max(1, min(MAX_DEMO_PATIENTS, cint(patients) or DEFAULT_DEMO_PATIENTS))
-	facility_key = f"{company}-{branch}-Hospital"
+	if mode == "clinic":
+		patient_count = max(1, min(25, patient_count))
+	facility_key = f"{company}-{branch}-{facility_type}"
 	if cint(force):
 		reset_healthcare_demo_for_branch(company, branch, dry_run=0)
 	elif frappe.db.exists("Healthcare Facility Profile", facility_key):
@@ -270,6 +297,7 @@ def seed_healthcare_hospital_demo(
 		branch=branch,
 		patient_count=patient_count,
 		include_financial=cint(include_financial),
+		mode=mode,
 	)
 	return seeder.run()
 
@@ -438,11 +466,19 @@ def reset_healthcare_demo_for_branch(company: str, branch: str, dry_run: int = 0
 
 
 class _HospitalDemoSeeder:
-	def __init__(self, company: str, branch: str, patient_count: int, include_financial: int):
+	def __init__(
+		self,
+		company: str,
+		branch: str,
+		patient_count: int,
+		include_financial: int,
+		mode: str = "hospital",
+	):
 		self.company = company
 		self.branch = branch
 		self.patient_count = patient_count
 		self.include_financial = include_financial
+		self.mode = (mode or "hospital").strip().lower()
 		self.stats: dict[str, int] = {}
 		self.ctx: dict = {}
 
@@ -453,9 +489,10 @@ class _HospitalDemoSeeder:
 		self._seed_masters()
 		if self.patient_count:
 			self._seed_patients_and_journeys()
-			self._seed_critical_care_demo()
-			self._seed_specialty_excellence()
-			seed_world_class_gap_operations(self)
+			if self.mode != "clinic":
+				self._seed_critical_care_demo()
+				self._seed_specialty_excellence()
+				seed_world_class_gap_operations(self)
 		self._seed_website_services_and_bookings()
 		if self.include_financial:
 			self._seed_inventory_and_finance()
@@ -481,6 +518,14 @@ class _HospitalDemoSeeder:
 
 	def _bump(self, key: str, n: int = 1) -> None:
 		self.stats[key] = self.stats.get(key, 0) + n
+
+	def _clinic_rotation_rows(self) -> list[tuple[str, str, str]]:
+		depts = self.ctx.get("departments") or {}
+		practitioners = self.ctx.get("practitioners") or {}
+		if self.mode == "clinic":
+			rows = [row for row in CLINIC_ROTATION if row[0] in depts and row[1] in practitioners]
+			return rows or [(code, key, label) for code, key, label in CLINIC_ROTATION if code in depts][:3]
+		return CLINIC_ROTATION
 
 	def _ensure_uom(self) -> None:
 		if not frappe.db.exists("UOM", "Nos"):
@@ -529,14 +574,17 @@ class _HospitalDemoSeeder:
 			if not frappe.db.exists("Healthcare Icd10 Code", {"code": code}):
 				self._insert("Healthcare Icd10 Code", {"code": code, "description": desc, "is_active": 1})
 
-		facility_name = f"{DEMO_MARKER} Multi-Specialty Hospital"
+		is_clinic = self.mode == "clinic"
+		facility_name = (
+			f"{DEMO_MARKER} Private Clinic" if is_clinic else f"{DEMO_MARKER} Multi-Specialty Hospital"
+		)
 		facility = self._insert(
 			"Healthcare Facility Profile",
 			{
 				"facility_name": facility_name,
 				"company": self.company,
 				"branch": self.branch,
-				"facility_type": "Hospital",
+				"facility_type": "Clinic" if is_clinic else "Hospital",
 				"status": "Active",
 			},
 		)
@@ -544,13 +592,17 @@ class _HospitalDemoSeeder:
 
 		from omnexa_healthcare.specialty_engine import seed_default_specialty_modules
 
-		seed_default_specialty_modules(company=self.company)
-		ensure_lab_demo_catalog(self.company)
+		if not is_clinic:
+			seed_default_specialty_modules(company=self.company)
+			ensure_lab_demo_catalog(self.company)
 		self.ctx["specialty_modules_count"] = frappe.db.count("Healthcare Specialty Module", {"is_active": 1})
 
 		depts: dict[str, str] = {}
 		units: dict[str, str] = {}
-		for code, label, unit_type in DEPARTMENTS:
+		department_rows = [
+			row for row in DEPARTMENTS if not is_clinic or row[0] in CLINIC_DEPARTMENT_CODES
+		]
+		for code, label, unit_type in department_rows:
 			dept_code = f"{DEMO_MARKER}{code}"
 			dept = self._insert(
 				"Healthcare Department",
@@ -579,6 +631,63 @@ class _HospitalDemoSeeder:
 
 		self.ctx["departments"] = depts
 		self.ctx["units"] = units
+
+		if is_clinic:
+			self.ctx["beds"] = []
+			self.ctx["critical_beds"] = {}
+			practitioners: dict[str, str] = {}
+			for spec, name, label, dept_code in PRACTITIONERS:
+				if spec not in CLINIC_PRACTITIONER_KEYS or dept_code not in depts:
+					continue
+				specialty_link = self._resolve_specialty(label, spec)
+				unit_key = dept_code if dept_code in units else "OPD"
+				schedule = [
+					{
+						"branch": self.branch,
+						"day_of_week": day,
+						"from_time": "09:00:00",
+						"to_time": "17:00:00",
+						"slot_duration_mins": 30,
+						"specialty": specialty_link,
+					}
+					for day in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+				]
+				pr = self._insert(
+					"Healthcare Practitioner",
+					{
+						"practitioner_name": f"{DEMO_MARKER} {name}",
+						"company": self.company,
+						"status": "Active",
+						"license_number": f"LIC-{spec}-001",
+						"branch_assignments": [
+							{
+								"branch": self.branch,
+								"facility_profile": facility.name,
+								"service_unit": units.get(unit_key),
+								"specialty": specialty_link,
+								"consultation_fee": 250,
+								"is_active": 1,
+							}
+						],
+						"schedule": schedule,
+					},
+				)
+				practitioners[spec] = pr.name
+			self.ctx["practitioners"] = practitioners
+			payer_code = f"{DEMO_MARKER}INS"
+			if not frappe.db.exists("Healthcare Payer", payer_code):
+				payer = self._insert(
+					"Healthcare Payer",
+					{
+						"payer_name": f"{DEMO_MARKER} National Insurance",
+						"payer_code": payer_code,
+						"company": self.company,
+						"payer_type": "Insurance",
+						"is_active": 1,
+					},
+				)
+				self.ctx["payer"] = payer.name
+			return
 
 		beds: list[str] = []
 		for i in range(1, 26):
@@ -676,7 +785,7 @@ class _HospitalDemoSeeder:
 		units = self.ctx["units"]
 		practitioners = self.ctx["practitioners"]
 		facility = self.ctx["facility"]
-		clinic_rotation = CLINIC_ROTATION
+		clinic_rotation = self._clinic_rotation_rows()
 		patients: list[str] = []
 
 		for idx, (given, family, gender, birth_year) in enumerate(PATIENT_ROSTER[: self.patient_count]):
@@ -813,7 +922,7 @@ class _HospitalDemoSeeder:
 				)
 				frappe.db.set_value("Healthcare Appointment", appt.name, "encounter", enc.name)
 
-				if idx % 2 == 0:
+				if self.mode != "clinic" and idx % 2 == 0:
 					panel_code = "LAB-COMPLETE" if idx == 0 else LAB_DEMO_ORDER_ROTATION[(idx // 2) % len(LAB_DEMO_ORDER_ROTATION)]
 					panel_title = build_lab_report_payload(
 						panel_code, patient.name, self.company, self.branch
@@ -859,7 +968,7 @@ class _HospitalDemoSeeder:
 					report_payload["effective_datetime"] = f"{appt_date} {(11 + idx % 4):02d}:00:00"
 					self._insert("Healthcare Diagnostic Report", report_payload)
 
-				if idx % 3 == 0:
+				if self.mode != "clinic" and idx % 3 == 0:
 					modality = frappe.db.get_value("Healthcare Imaging Modality", {"modality_code": "XR"}, "name")
 					study = demo_study_for_index(idx)
 					rad_data = {
@@ -929,7 +1038,7 @@ class _HospitalDemoSeeder:
 						},
 					)
 
-			if idx % 6 == 0:
+			if self.mode != "clinic" and idx % 6 == 0:
 				self._insert(
 					"Healthcare Er Visit",
 					{
@@ -944,7 +1053,7 @@ class _HospitalDemoSeeder:
 					},
 				)
 
-			if idx % 7 == 0 and self.ctx.get("beds"):
+			if self.mode != "clinic" and idx % 7 == 0 and self.ctx.get("beds"):
 				self._insert(
 					"Healthcare Admission",
 					{
@@ -1316,15 +1425,17 @@ class _HospitalDemoSeeder:
 				},
 			)
 
-		clinic_specs = [row[1] for row in CLINIC_ROTATION]
-		clinic_dept_map = {row[1]: row[0] for row in CLINIC_ROTATION}
-		clinic_label_map = {row[1]: row[2] for row in CLINIC_ROTATION}
+		clinic_specs = [row[1] for row in self._clinic_rotation_rows()]
+		clinic_dept_map = {row[1]: row[0] for row in self._clinic_rotation_rows()}
+		clinic_label_map = {row[1]: row[2] for row in self._clinic_rotation_rows()}
 		for idx, (status, payment_status, day_offset) in enumerate(WEB_BOOKING_STATUSES):
 			if idx >= len(patients):
 				break
 			patient = patients[idx]
 			spec = clinic_specs[idx % len(clinic_specs)]
-			dept_key = clinic_dept_map[spec]
+			dept_key = clinic_dept_map.get(spec)
+			if not dept_key or dept_key not in depts or spec not in practitioners:
+				continue
 			specialty_link = self._resolve_specialty(clinic_label_map[spec], spec)
 			appt_day = add_days(today(), day_offset)
 			hour = 10 + (idx % 5)

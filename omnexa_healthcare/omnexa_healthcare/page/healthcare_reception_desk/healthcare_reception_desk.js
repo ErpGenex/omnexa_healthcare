@@ -70,8 +70,8 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 					<button class="oj-btn ${mode === "new" ? "oj-btn-primary" : "oj-btn-outline"} oj-mode-new">${OJ.t("مريض جديد", "New Patient")}</button>
 				</div>
 				<div class="oj-search-panel" ${mode === "new" ? 'style="display:none"' : ""}>
-					<div class="oj-search-bar"><input type="text" class="oj-patient-search" placeholder="${OJ.t("رقم قومي / جوال / MRN", "National ID / Mobile / MRN")}" /><button class="oj-btn oj-btn-primary oj-search-btn">${OJ.t("بحث", "Search")}</button></div>
-					<div class="oj-patient-results"></div>
+					${OJ.patientSearchBar ? OJ.patientSearchBar() : ""}
+					<p class="oj-muted" style="margin-top:8px">${OJ.t("ابحث بالاسم أو الرقم القومي أو رقم الجوال", "Search by name, national ID, or mobile number")}</p>
 				</div>
 				<div class="oj-new-panel" ${mode === "search" ? 'style="display:none"' : ""}>
 					${OJ.registrationForm({}, { showEmail: false })}
@@ -81,16 +81,22 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			`);
 			$panel.find(".oj-mode-search").on("click", () => { state.regMode = "search"; render(); });
 			$panel.find(".oj-mode-new").on("click", () => { state.regMode = "new"; render(); });
-			$panel.find(".oj-search-btn").on("click", async () => {
-				const rows = await OJ.call("omnexa_healthcare.api.journey_desk.search_patient_quick", {
-					query: $panel.find(".oj-patient-search").val(), branch,
-				});
-				const $r = $panel.find(".oj-patient-results").empty();
-				rows.forEach((p) => {
-					$r.append(`<div class="oj-clinic-card" style="margin-bottom:8px;cursor:pointer"><strong>${OJ.esc(p.patient_name)}</strong><br><span class="oj-muted">${OJ.esc(p.match_type)}: ${OJ.esc(p.match_value)}</span></div>`)
-						.find(".oj-clinic-card").last().on("click", () => { state.patient = p; state.step = 4; render(); });
-				});
-			});
+			if (OJ.bindPatientSearch) {
+				OJ.bindPatientSearch(
+					$panel.find(".oj-search-panel"),
+					(row) => {
+						state.patient = {
+							name: row.name || row.patient,
+							patient: row.patient || row.name,
+							patient_name: row.patient_name || row.full_name || row.patient_display,
+						};
+						state.step = 4;
+						render();
+					},
+					branch,
+					company
+				);
+			}
 			$panel.find(".oj-create-patient").on("click", async () => {
 				const res = await OJ.call("omnexa_healthcare.api.journey_desk.quick_register_patient", {
 					payload: { ...OJ.readRegistrationForm($panel), company, branch },
