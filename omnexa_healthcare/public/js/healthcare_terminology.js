@@ -138,6 +138,14 @@
 	frappe.ready(function () {
 		if (!healthcareMode()) return;
 		applyMessageOverrides();
+		try {
+			const map = Object.assign({}, terminologyMap(), (frappe.boot && frappe.boot.__messages) || {});
+			if (Object.keys(map).length) {
+				frappe._messages = Object.assign({}, frappe._messages || {}, map);
+			}
+		} catch (e) {
+			/* ignore */
+		}
 		patchTranslation();
 		patchDoctypeLabels();
 		patchRoutes();

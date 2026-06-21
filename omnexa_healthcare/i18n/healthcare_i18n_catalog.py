@@ -1198,3 +1198,27 @@ def normalize_en(text: str) -> str:
 	if not text:
 		return text
 	return PATIENT_TERMINOLOGY_EN.get(text, text)
+
+
+def build_desk_messages(lang: str | None = None) -> dict[str, str]:
+	"""Merge curated healthcare UI strings for Desk sidebar, workspaces, and forms."""
+	lang = (lang or "en").lower()
+	messages: dict[str, str] = {}
+	if lang.startswith("ar"):
+		for bucket in (
+			WORKSPACE_AR,
+			JOURNEY_AR,
+			DOCTYPE_AR,
+			REPORT_AR,
+			ENTITY_AR,
+			FIELD_AR,
+			BULK_FIELD_AR,
+			PHRASE_FIX_AR,
+		):
+			for en, ar in bucket.items():
+				if en and ar and ar != en:
+					messages[en] = ar
+		messages.update(PATIENT_TERMINOLOGY_AR)
+	else:
+		messages.update(PATIENT_TERMINOLOGY_EN)
+	return messages

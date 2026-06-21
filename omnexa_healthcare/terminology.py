@@ -123,4 +123,10 @@ def apply_boot_terminology(bootinfo) -> None:
 	if isinstance(messages, dict):
 		messages = dict(messages)
 		messages.update(terms)
+		try:
+			from omnexa_healthcare.i18n.healthcare_i18n_catalog import build_desk_messages
+
+			messages.update(build_desk_messages(lang))
+		except Exception:
+			pass
 		bootinfo["__messages"] = messages

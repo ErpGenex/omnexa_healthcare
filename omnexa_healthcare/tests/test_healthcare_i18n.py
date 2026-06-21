@@ -51,8 +51,13 @@ class TestHealthcareI18n(unittest.TestCase):
 		self.assertGreaterEqual(len(ar_rows), len(strings))
 		journey_missing = [k for k in JOURNEY_AR if ar_rows.get(k) == k]
 		self.assertEqual(journey_missing, [], f"Journey UI untranslated: {journey_missing[:5]}")
-		# Codes (MRN, ICU, blood types) may remain unchanged.
-		self.assertLessEqual(stats["ar_untranslated"], 700)
+		from omnexa_healthcare.i18n.healthcare_i18n_catalog import build_desk_messages
+
+		desk = build_desk_messages("ar")
+		self.assertGreater(len(desk), 500)
+		self.assertEqual(desk.get("💼 Patient Billing & Accounts"), "💼 فوترة المرضى والحسابات")
+		# Codes (ICU, blood types) may remain unchanged.
+		self.assertLessEqual(stats["ar_untranslated"], 650)
 		untranslated = [s for s in strings if ar_rows.get(s) == s]
 		for code in ("ICU", "A+", "HL7", "LOINC"):
 			self.assertIn(code, untranslated)
