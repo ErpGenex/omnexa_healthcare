@@ -50,6 +50,21 @@ web_include_js = [
 	"/assets/omnexa_healthcare/js/omnexa-journey.js",
 ]
 
+# Registered with omnexa_experience activity website framework
+activity_website_packs = [
+	{
+		"business_activity": "Healthcare",
+		"app": "omnexa_healthcare",
+		"base_path": "/hospital",
+		"site_config_api": "omnexa_healthcare.api.public_hospital_site.get_site_config",
+		"nav": [
+			{"key": "home", "ar": "الرئيسية", "en": "Home", "href": "/hospital"},
+			{"key": "doctors", "ar": "الأطباء", "en": "Doctors", "href": "/hospital/doctors"},
+			{"key": "booking", "ar": "احجز موعد", "en": "Book appointment", "href": "/hospital/booking", "cta": True},
+		],
+	}
+]
+
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "omnexa_healthcare/public/scss/website"
 
