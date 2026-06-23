@@ -19,7 +19,7 @@ class TestHealthcareRoleDemo(unittest.TestCase):
 		self.assertEqual(len(creds["users"]), len(ROLE_SPECS))
 
 	def test_demo_hub_page(self):
-		self.assertTrue(frappe.db.exists("Page", "healthcare-demo-hub"))
+		self.assertTrue(frappe.db.exists("Page", "healthcare-workcenter"))
 
 	def test_app_visibility_boot_inject(self):
 		from omnexa_core.omnexa_core.app_visibility import inject_desk_visibility_boot

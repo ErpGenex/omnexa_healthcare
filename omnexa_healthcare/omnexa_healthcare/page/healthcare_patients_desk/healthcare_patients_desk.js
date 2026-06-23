@@ -20,6 +20,6 @@ frappe.pages["healthcare-patients-desk"].on_page_load = function (wrapper) {
 			{ labelAr: "مريض جديد", labelEn: "New Patient", route: "/app/healthcare-patient/new-healthcare-patient-1", icon: "➕" },
 			{ labelAr: "الاستقبال", labelEn: "Reception", route: "/app/healthcare-reception-desk", icon: "🏥" },
 		],
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 	});
 };

@@ -23,6 +23,6 @@ frappe.pages["healthcare-morgue-desk"].on_page_load = function (wrapper) {
 		links: [
 			{ label: __("Morgue Cases"), route: "List/Healthcare Morgue Case", icon: "⚰️" },
 		],
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 	});
 };

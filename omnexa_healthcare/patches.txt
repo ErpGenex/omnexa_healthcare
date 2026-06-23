@@ -30,3 +30,4 @@ omnexa_healthcare.patches.v1_0.sync_healthcare_workspace_full
 omnexa_healthcare.patches.v1_0.sync_follow_up_plan_templates
 omnexa_healthcare.patches.v1_0.sync_lab_print_format
 omnexa_healthcare.patches.v1_0.sync_radiology_demo_images
+omnexa_healthcare.patches.rename_healthcare_demo_hub_to_workcenter

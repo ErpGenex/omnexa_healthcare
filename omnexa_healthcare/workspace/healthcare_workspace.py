@@ -25,7 +25,7 @@ WORKSPACE_SECTIONS: list[tuple[str, list[WorkspaceLink]]] = [
 			("Page", "healthcare-physician-workbench", "Physician Workbench"),
 			("Page", "healthcare-patient-consumer", "Patient Portal Journey"),
 			("Page", "healthcare-patient-queue", "Smart Queue Board"),
-			("Page", "healthcare-demo-hub", "Demo Hub & Role Logins"),
+			("Page", "healthcare-workcenter", "Workcenter & Role Portals"),
 		],
 	),
 	(

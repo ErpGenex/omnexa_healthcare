@@ -13,7 +13,7 @@ frappe.pages["healthcare-dental-chart"].on_page_load = function (wrapper) {
 		roleAr: "عيادة الأسنان",
 		roleEn: "Dental Clinic",
 		sidebarRole: "dental",
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 		api: "omnexa_healthcare.api.dental_desk.get_dental_desk_dashboard",
 		lessonApi: "omnexa_healthcare.api.dental_desk.complete_dental_lesson",
 		defaultTab: "home",

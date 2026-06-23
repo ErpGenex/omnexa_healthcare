@@ -26,7 +26,7 @@ frappe.pages["healthcare-lab-workbench"].on_page_load = function (wrapper) {
 		roleAr: "معمل التحاليل",
 		roleEn: "Laboratory",
 		sidebarRole: "lab",
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 		api: "omnexa_healthcare.api.lab_desk.get_lab_desk_dashboard",
 		defaultTab: "home",
 		chartTitle: OJ.t("التحاليل الأكثر طلباً", "Most Requested Tests"),

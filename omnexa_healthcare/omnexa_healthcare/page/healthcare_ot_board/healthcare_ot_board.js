@@ -12,6 +12,6 @@ frappe.pages["healthcare-ot-board"].on_page_load = function (wrapper) {
 		tableTitleEn: "Records",
 		columns: [{"field": "name", "ar": "المرجع", "en": "Ref"}, {"field": "patient", "ar": "المريض", "en": "Patient"}, {"field": "status", "ar": "الحالة", "en": "Status"}],
 		links: [],
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 	});
 };

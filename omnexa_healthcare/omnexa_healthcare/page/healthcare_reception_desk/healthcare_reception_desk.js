@@ -191,7 +191,7 @@ frappe.pages["healthcare-reception-desk"].on_page_load = function (wrapper) {
 			kpis: kpiCards,
 			sidebar: OJ.defaultSidebar("reception"),
 			bodyEl: $body,
-			homeRoute: "/app/healthcare-demo-hub",
+			homeRoute: "/app/healthcare-workcenter",
 		});
 		$mount.empty().append($shell);
 	}

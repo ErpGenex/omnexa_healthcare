@@ -268,7 +268,7 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 				});
 				return $body;
 			})(),
-			homeRoute: config.homeRoute || "/app/healthcare-demo-hub",
+			homeRoute: config.homeRoute || "/app/healthcare-workcenter",
 		});
 		$mount.empty().append($shell);
 		renderTabBody($shell.find(".oj-dept-tab-body"));

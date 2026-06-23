@@ -22,6 +22,6 @@ frappe.pages["healthcare-appointments-desk"].on_page_load = function (wrapper) {
 			{ labelAr: "موعد جديد", labelEn: "New Appointment", route: "/app/healthcare-appointment/new-healthcare-appointment-1", icon: "➕" },
 			{ labelAr: "التقويم", labelEn: "Calendar", route: "/app/healthcare-appointment-calendar", icon: "🗓" },
 		],
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 	});
 };

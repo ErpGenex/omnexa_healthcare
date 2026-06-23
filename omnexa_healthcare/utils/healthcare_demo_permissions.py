@@ -29,7 +29,7 @@ JOURNEY_PAGE_ROLES: dict[str, tuple[str, ...]] = {
 	"healthcare-patient-chart": ("Healthcare Physician",),
 	"healthcare-erx-writer": ("Healthcare Physician",),
 	"healthcare-device-admin": ("System Manager", "Company Admin"),
-	"healthcare-demo-hub": ("System Manager",),
+	"healthcare-workcenter": ("System Manager",),
 	"healthcare-lab-workbench": ("Healthcare Physician", "Healthcare Nurse"),
 	"healthcare-radiology-worklist": ("Healthcare Physician", "Healthcare Nurse"),
 	"healthcare-dicom-viewer": ("Healthcare Physician",),

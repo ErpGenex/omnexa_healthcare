@@ -94,7 +94,7 @@ frappe.pages["healthcare-device-admin"].on_page_load = function (wrapper) {
 			],
 			sidebar: OJ.defaultSidebar("admin"),
 			bodyEl: $body,
-			homeRoute: "/app/healthcare-demo-hub",
+			homeRoute: "/app/healthcare-workcenter",
 		});
 		$mount.empty().append($shell);
 	}

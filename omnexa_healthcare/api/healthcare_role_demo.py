@@ -113,7 +113,7 @@ ROLE_SPECS: list[dict] = [
 		"sections": [
 			("📊 Analytics", [
 				("Page", "healthcare-executive-dashboard", "Executive Dashboard"),
-				("Page", "healthcare-demo-hub", "Demo Hub"),
+				("Page", "healthcare-workcenter", "Workcenter"),
 			]),
 		],
 	},
@@ -158,7 +158,7 @@ ROLE_SPECS: list[dict] = [
 		"sections": [
 			("📊 Management", [
 				("Page", "healthcare-executive-dashboard", "Executive Dashboard"),
-				("Page", "healthcare-demo-hub", "Demo Hub"),
+				("Page", "healthcare-workcenter", "Workcenter"),
 			]),
 		],
 	},

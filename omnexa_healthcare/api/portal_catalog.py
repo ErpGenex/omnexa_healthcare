@@ -9,7 +9,7 @@ import frappe
 from frappe.utils import cint
 
 PORTAL_CATALOG: list[dict] = [
-	{"id": "demo-hub", "route": "/app/healthcare-demo-hub", "page": "healthcare-demo-hub", "icon": "🎯", "category": "admin", "roles": ["System Manager"], "label_ar": "مركز الديمو", "label_en": "Demo Hub"},
+	{"id": "workcenter", "route": "/app/healthcare-workcenter", "page": "healthcare-workcenter", "icon": "🏢", "category": "admin", "roles": ["System Manager"], "label_ar": "مركز العمل", "label_en": "Workcenter"},
 	{"id": "device-admin", "route": "/app/healthcare-device-admin", "page": "healthcare-device-admin", "icon": "🔌", "category": "admin", "roles": ["System Manager", "Company Admin"], "label_ar": "ربط الأجهزة الطبية", "label_en": "Medical Devices"},
 	{"id": "reception", "route": "/app/healthcare-reception-desk", "page": "healthcare-reception-desk", "icon": "🏥", "category": "core", "roles": ["Healthcare Receptionist"], "label_ar": "الاستقبال", "label_en": "Reception"},
 	{"id": "cashier", "route": "/app/healthcare-cashier-desk", "page": "healthcare-cashier-desk", "icon": "💰", "category": "core", "roles": ["Healthcare Cashier"], "label_ar": "الخزينة", "label_en": "Cashier"},

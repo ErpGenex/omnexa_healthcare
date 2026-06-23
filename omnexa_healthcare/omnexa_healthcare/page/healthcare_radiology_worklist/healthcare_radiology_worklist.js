@@ -13,7 +13,7 @@ frappe.pages["healthcare-radiology-worklist"].on_page_load = function (wrapper) 
 		roleAr: "الأشعة",
 		roleEn: "Radiology",
 		sidebarRole: "radiology",
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 		api: "omnexa_healthcare.api.radiology_desk.get_radiology_desk_dashboard",
 		defaultTab: "home",
 		chartTitle: OJ.t("أنواع الأشعة الأكثر طلباً", "Most Requested Scan Types"),

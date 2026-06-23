@@ -346,7 +346,7 @@
 			],
 			manager: [
 				{ id: "home", label: OJ.t("المدير", "Manager"), icon: "📊", route: "/app/healthcare-executive-dashboard", active: true },
-				{ id: "demo", label: OJ.t("مركز الديمو", "Demo Hub"), icon: "🎯", route: "/app/healthcare-demo-hub" },
+				{ id: "demo", label: OJ.t("مركز العمل", "Workcenter"), icon: "🎯", route: "/app/healthcare-workcenter" },
 			],
 			nurse: [
 				{ id: "home", label: OJ.t("التمريض", "Nursing"), icon: "🩹", route: "/app/healthcare-nursing-portal", active: true },
@@ -371,7 +371,7 @@
 				{ id: "appts", label: OJ.t("المواعيد", "Appointments"), icon: "📅", route: "/app/healthcare-appointments-desk" },
 			],
 			admin: [
-				{ id: "demo", label: OJ.t("مركز الديمو", "Demo Hub"), icon: "🎯", route: "/app/healthcare-demo-hub", active: true },
+				{ id: "demo", label: OJ.t("مركز العمل", "Workcenter"), icon: "🎯", route: "/app/healthcare-workcenter", active: true },
 				{ id: "devices", label: OJ.t("الأجهزة", "Devices"), icon: "🔌", route: "/app/healthcare-device-admin" },
 			],
 		};

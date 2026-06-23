@@ -34,7 +34,7 @@ JS_TEMPLATE = '''frappe.pages["{page}"].on_page_load = function (wrapper) {{
 		tableTitleEn: "Records",
 		columns: {columns},
 		links: {links},
-		homeRoute: "/app/healthcare-demo-hub",
+		homeRoute: "/app/healthcare-workcenter",
 	}});
 }};
 '''

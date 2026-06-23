@@ -1,0 +1,9 @@
+{
+	"doctype": "Page",
+	"module": "Omnexa Healthcare",
+	"name": "healthcare-workcenter",
+	"page_name": "healthcare-workcenter",
+	"title": "Healthcare Workcenter",
+	"standard": "Yes",
+	"roles": [{"role": "System Manager"}]
+}
