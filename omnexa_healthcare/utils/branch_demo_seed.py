@@ -539,7 +539,51 @@ class _HospitalDemoSeeder:
 				ignore_permissions=True
 			)
 
+	def _normalize_child_tables(self, doctype: str, data: dict) -> dict:
+		"""Coerce accidental scalar values into child-table row payloads.
+
+		This prevents crashes like:
+		TypeError: 'str' object does not support item assignment
+		when a Table field receives a string instead of `[{"field": "..."}]`.
+		"""
+		meta = frappe.get_meta(doctype)
+		out = dict(data or {})
+		for df in meta.fields:
+			if df.fieldtype != "Table" or df.fieldname not in out:
+				continue
+			value = out[df.fieldname]
+			if value in (None, "", []):
+				out[df.fieldname] = []
+				continue
+			if isinstance(value, dict):
+				out[df.fieldname] = [value]
+				continue
+			if isinstance(value, list):
+				normalized = []
+				for item in value:
+					if isinstance(item, dict):
+						normalized.append(item)
+					else:
+						normalized.append(self._scalar_to_child_row(df.options, item))
+				out[df.fieldname] = normalized
+				continue
+			out[df.fieldname] = [self._scalar_to_child_row(df.options, value)]
+		return out
+
+	def _scalar_to_child_row(self, child_doctype: str, value):
+		child_meta = frappe.get_meta(child_doctype)
+		target_field = None
+		for cdf in child_meta.fields:
+			if cdf.fieldtype in ("Section Break", "Column Break", "Tab Break", "HTML", "Table", "Button"):
+				continue
+			target_field = cdf.fieldname
+			break
+		if not target_field:
+			return {}
+		return {target_field: value}
+
 	def _insert(self, doctype: str, data: dict):
+		data = self._normalize_child_tables(doctype, data)
 		doc = frappe.get_doc({"doctype": doctype, **data})
 		doc.insert(ignore_permissions=True)
 		self._bump(doctype)
@@ -996,7 +1040,7 @@ class _HospitalDemoSeeder:
 						"status": "final",
 						"report_category": "radiology",
 						"report_title": study["title"],
-						"findings": study["findings"],
+						"findings": [{"finding_narrative": study["findings"]}],
 						"conclusion": study["conclusion"],
 						"effective_datetime": f"{appt_date} {(12 + idx % 3):02d}:00:00",
 					}

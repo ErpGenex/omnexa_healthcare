@@ -20,6 +20,7 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 		highlightTeeth: [],
 	};
 	const $mount = OJ.mountDeskPage(wrapper, config.deskTitle || config.titleEn);
+	let $tabBody = null;
 
 	function money(v) {
 		return (parseFloat(v || 0) || 0).toFixed(2);
@@ -200,16 +201,16 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 				state.selectedLesson = id;
 				state.highlightTeeth = teeth || [];
 				if (teeth && teeth.length === 1) state.selectedTooth = String(teeth[0]);
-				renderTabBody($(".oj-dept-tab-body"));
+				renderTabBody($tabBody);
 			},
 			onTooth(tid) {
 				state.selectedTooth = String(tid);
-				renderTabBody($(".oj-dept-tab-body"));
+				renderTabBody($tabBody);
 			},
 			onShowAllLessons() {
 				state.selectedLesson = null;
 				state.highlightTeeth = (data.year_lessons || []).flatMap((l) => l.teeth || []);
-				renderTabBody($(".oj-dept-tab-body"));
+				renderTabBody($tabBody);
 			},
 			async onCompleteLesson(lessonId) {
 				if (!state.patient || !state.selectedTooth) return;
@@ -243,9 +244,14 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 
 	function switchTab(tab) {
 		state.tab = tab;
-		$(".oj-dept-tabs .oj-tab-btn").removeClass("oj-btn-primary").addClass("oj-btn-outline");
-		$(`.oj-dept-tabs .oj-tab-btn[data-tab="${tab}"]`).removeClass("oj-btn-outline").addClass("oj-btn-primary");
-		renderTabBody($(".oj-dept-tab-body"));
+		if (!$tabBody) return;
+		$tabBody.closest(".oj-dept-layout").find(".oj-dept-tabs .oj-tab-btn").removeClass("oj-btn-primary").addClass("oj-btn-outline");
+		$tabBody
+			.closest(".oj-dept-layout")
+			.find(`.oj-dept-tabs .oj-tab-btn[data-tab="${tab}"]`)
+			.removeClass("oj-btn-outline")
+			.addClass("oj-btn-primary");
+		renderTabBody($tabBody);
 	}
 
 	async function reload() {
@@ -271,7 +277,8 @@ omnexa_healthcare.department.mount = function (wrapper, config) {
 			homeRoute: config.homeRoute || "/app/healthcare-workcenter",
 		});
 		$mount.empty().append($shell);
-		renderTabBody($shell.find(".oj-dept-tab-body"));
+		$tabBody = $shell.find(".oj-dept-tab-body").first();
+		renderTabBody($tabBody);
 	}
 
 	reload().catch((e) => OJ.showCallError(e));

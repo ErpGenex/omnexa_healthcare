@@ -9,6 +9,10 @@ import frappe
 from frappe.utils import add_days, add_months, flt, today
 
 
+def _pick(seq, idx, default=None):
+	return seq[idx] if isinstance(seq, (list, tuple)) and len(seq) > idx else default
+
+
 def seed_world_class_gap_operations(seeder) -> None:
 	"""Populate Blood Bank, CSSD, physician compensation, CAPA, infection surveillance demo."""
 	if not _has_doctype("Healthcare Blood Donor"):
@@ -72,14 +76,20 @@ def seed_world_class_gap_operations(seeder) -> None:
 		)
 		blood_units.append(unit.name)
 
-	if patients and blood_units and not frappe.db.exists(
+	p0 = _pick(patients, 0)
+	p2 = _pick(patients, 2, p0)
+	p4 = _pick(patients, 4, p2)
+	p5 = _pick(patients, 5, p4)
+	p8 = _pick(patients, 8, p5)
+
+	if p0 and blood_units and not frappe.db.exists(
 		"Healthcare Transfusion Order",
-		{"patient": patients[0], "blood_unit": blood_units[0], "branch": branch},
+		{"patient": p0, "blood_unit": blood_units[0], "branch": branch},
 	):
 		seeder._insert(
 			"Healthcare Transfusion Order",
 			{
-				"patient": patients[0],
+				"patient": p0,
 				"blood_unit": blood_units[0],
 				"cross_match_result": "Compatible",
 				"ordered_by": practitioners.get("CAR") or practitioners.get("GEN"),
@@ -187,14 +197,14 @@ def seed_world_class_gap_operations(seeder) -> None:
 				"branch": branch,
 			},
 		)
-	if patients and not frappe.db.exists(
+	if p5 and not frappe.db.exists(
 		"Healthcare Infection Surveillance Case",
-		{"patient": patients[5], "branch": branch, "infection_type": "HAI"},
+		{"patient": p5, "branch": branch, "infection_type": "HAI"},
 	):
 		seeder._insert(
 			"Healthcare Infection Surveillance Case",
 			{
-				"patient": patients[5],
+				"patient": p5,
 				"infection_type": "HAI",
 				"onset_date": add_days(today(), -7),
 				"isolation_required": 1,
@@ -205,10 +215,10 @@ def seed_world_class_gap_operations(seeder) -> None:
 		)
 
 	# Telehealth + home care + RPM samples (wave 2 DTs)
-	if patients and _has_doctype("Healthcare Telehealth Session"):
+	if p2 and _has_doctype("Healthcare Telehealth Session"):
 		appt = frappe.db.get_value(
 			"Healthcare Appointment",
-			{"patient": patients[2], "company": company, "branch": branch},
+			{"patient": p2, "company": company, "branch": branch},
 			"name",
 		)
 		if appt and not frappe.db.exists("Healthcare Telehealth Session", {"appointment": appt}):
@@ -216,7 +226,7 @@ def seed_world_class_gap_operations(seeder) -> None:
 				"Healthcare Telehealth Session",
 				{
 					"appointment": appt,
-					"patient": patients[2],
+					"patient": p2,
 					"practitioner": practitioners.get("GEN"),
 					"room_id": f"{DEMO_MARKER}tele-001",
 					"join_url": "https://meet.jit.si/erpgenex-demo-consult",
@@ -226,11 +236,11 @@ def seed_world_class_gap_operations(seeder) -> None:
 				},
 			)
 
-	if patients and _has_doctype("Healthcare Home Visit Request"):
+	if p8 and _has_doctype("Healthcare Home Visit Request"):
 		seeder._insert(
 			"Healthcare Home Visit Request",
 			{
-				"patient": patients[8],
+				"patient": p8,
 				"visit_type": "Nursing",
 				"scheduled_datetime": f"{add_days(today(), 2)} 10:00:00",
 				"address": "Demo home address — Nasr City, Cairo",
@@ -241,11 +251,11 @@ def seed_world_class_gap_operations(seeder) -> None:
 			},
 		)
 
-	if patients and _has_doctype("Healthcare Remote Monitoring Reading"):
+	if p4 and _has_doctype("Healthcare Remote Monitoring Reading"):
 		seeder._insert(
 			"Healthcare Remote Monitoring Reading",
 			{
-				"patient": patients[4],
+				"patient": p4,
 				"metric_type": "Blood Pressure",
 				"value": 128,
 				"unit": "mmHg",

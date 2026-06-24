@@ -158,8 +158,21 @@
 		</div>`;
 	}
 
+	function patientSearchHtml(OJ) {
+		if (OJ.patientSearchBar) {
+			return OJ.patientSearchBar({ placeholder: OJ.t("مريض العيادة (اختياري)", "Clinic patient (optional)") });
+		}
+		return `<div class="oj-search-bar oj-patient-search-bar"><input type="text" class="oj-patient-query" placeholder="${OJ.esc(
+			OJ.t("مريض العيادة (اختياري)", "Clinic patient (optional)")
+		)}" /></div>`;
+	}
+
 	function render($body, data, state, handlers) {
 		const OJ = window.OmnexaJourney;
+		if (!OJ) {
+			$body.html('<p class="oj-muted">OmnexaJourney assets missing. Run: bench build --app omnexa_healthcare</p>');
+			return;
+		}
 		const years = [1, 2, 3, 4, 5];
 		const year = state.academicYear || data.academic_year || 1;
 		const lessons = data.year_lessons || [];
@@ -175,7 +188,7 @@
 					<button type="button" class="oj-btn oj-btn-sm oj-btn-outline oj-dental-show-all">${OJ.t("عرض كل الدروس", "Show all lessons")}</button>
 				</aside>
 				<main class="oj-dental-chart-main">
-					${OJ.patientSearchBar({ placeholder: OJ.t("مريض العيادة (اختياري)", "Clinic patient (optional)") })}
+					${patientSearchHtml(OJ)}
 					<div class="oj-dental-svg-wrap">${buildArchSvg(data, state)}</div>
 				</main>
 				<aside class="oj-dental-side">
@@ -184,7 +197,9 @@
 				</aside>
 			</div>
 		`);
-		OJ.bindPatientSearch($body, handlers.onPatient, handlers.branch);
+		if (OJ.bindPatientSearch) {
+			OJ.bindPatientSearch($body, handlers.onPatient, handlers.branch);
+		}
 		$body.find(".oj-dental-year-btn").on("click", function () {
 			handlers.onYear(parseInt($(this).attr("data-year"), 10) || 1);
 		});

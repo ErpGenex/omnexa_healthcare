@@ -72,8 +72,12 @@ activity_website_packs = [
 # webform_include_js = {"doctype": "public/js/doctype.js"}
 # webform_include_css = {"doctype": "public/css/doctype.css"}
 
-# include js in page
-# page_js = {"page" : "public/js/file.js"}
+# Re-apply healthcare journey shell on department desk pages (after other vertical kits)
+page_js = {
+	"healthcare-dental-chart": "public/js/omnexa-journey-kit.js",
+	"healthcare-lab-workbench": "public/js/omnexa-journey-kit.js",
+	"healthcare-radiology-worklist": "public/js/omnexa-journey-kit.js",
+}
 
 # include js in doctype views
 doctype_js = {

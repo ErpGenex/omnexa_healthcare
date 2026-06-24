@@ -35,16 +35,13 @@ def upgrade_demo_radiology_reports(company: str | None = None, branch: str | Non
 			continue
 		study_key = DEMO_RAD_ROTATION[idx % len(DEMO_RAD_ROTATION)]
 		study = DEMO_RADIOLOGY_STUDIES[study_key]
-		values = {"pacs_wado_url": study["image"]}
-		if frappe.db.has_column("Healthcare Diagnostic Report", "findings") and not frappe.db.get_value(
-			"Healthcare Diagnostic Report", row.name, "findings"
-		):
-			values["findings"] = study["findings"]
-		if frappe.db.has_column("Healthcare Diagnostic Report", "conclusion") and not frappe.db.get_value(
-			"Healthcare Diagnostic Report", row.name, "conclusion"
-		):
-			values["conclusion"] = study["conclusion"]
-		frappe.db.set_value("Healthcare Diagnostic Report", row.name, values, update_modified=False)
+		doc = frappe.get_doc("Healthcare Diagnostic Report", row.name)
+		doc.pacs_wado_url = study["image"]
+		if not doc.findings:
+			doc.append("findings", {"finding_narrative": study["findings"]})
+		if not doc.conclusion:
+			doc.conclusion = study["conclusion"]
+		doc.save(ignore_permissions=True)
 		updated += 1
 	if updated:
 		frappe.db.commit()
