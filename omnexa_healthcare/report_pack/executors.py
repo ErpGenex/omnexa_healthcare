@@ -11,6 +11,7 @@ from frappe.utils import flt, now_datetime
 
 from omnexa_healthcare.report_pack._helpers import branch_conditions, date_conditions, require_company
 from omnexa_core.omnexa_core.branch_access import get_allowed_branches
+from omnexa_core.omnexa_core.utils.report_charts import auto_chart_for_columns
 
 REPORT_SPECS: dict[str, dict] = {
 	"healthcare_appointment_by_department": {"table": "Healthcare Appointment", "group": "department", "date": "appointment_date"},
@@ -23,7 +24,13 @@ REPORT_SPECS: dict[str, dict] = {
 	"healthcare_patient_copay_summary": {"table": "Healthcare Patient Coverage", "group": "insurance_plan", "no_date": True},
 	"healthcare_unpaid_booking_fees": {"table": "Healthcare Appointment", "group": "branch", "date": "appointment_date", "extra": "payment_status = 'Unpaid' AND booking_fee > 0"},
 	"healthcare_procedure_revenue": {"table": "Healthcare Procedure Order", "group": "procedure", "date": "planned_date"},
-	"healthcare_payer_aging": {"table": "Healthcare Insurance Claim", "group": "payer", "date": "creation", "extra": "status NOT IN ('Paid', 'Rejected')"},
+	"healthcare_payer_aging": {
+		"table": "Healthcare Insurance Claim",
+		"group": "payer",
+		"date": "creation",
+		"extra": "status NOT IN ('Paid', 'Rejected')",
+		"sum_field": "claim_amount",
+	},
 	"healthcare_daily_cash_collection": {"table": "Healthcare Service Charge", "group": "posting_date", "date": "posting_date"},
 	"healthcare_service_charge_by_patient": {"table": "Healthcare Service Charge", "group": "patient", "date": "posting_date"},
 	"healthcare_prior_auth_pending": {"table": "Healthcare Prior Authorization", "group": "status", "date": "creation", "extra": "status IN ('Draft', 'Submitted', 'Pending')"},
@@ -40,7 +47,13 @@ REPORT_SPECS: dict[str, dict] = {
 	"healthcare_abnormal_lab_results": {"metric": "abnormal_lab"},
 	"healthcare_radiology_tat": {"metric": "rad_tat"},
 	"healthcare_radiology_by_modality": {"table": "Healthcare Service Request", "group": "modality", "date": "authored_on", "extra": "request_category = 'imaging'"},
-	"healthcare_pending_imaging_orders": {"table": "Healthcare Service Request", "group": "status", "date": "authored_on", "extra": "request_category = 'imaging' AND status NOT IN ('completed', 'cancelled')"},
+	"healthcare_pending_imaging_orders": {
+		"table": "Healthcare Service Request",
+		"group": "status",
+		"date": "authored_on",
+		"extra": "request_category = 'imaging' AND status NOT IN ('completed', 'cancelled')",
+		"include_currency_total": True,
+	},
 	"healthcare_structured_report_usage": {"table": "Healthcare Radiology Report Template", "group": "modality", "no_date": True},
 	"healthcare_dispense_summary": {"table": "Healthcare Medication Dispense", "group": "status", "date": "dispensed_datetime"},
 	"healthcare_drug_interaction_alerts": {"table": "Healthcare Drug Interaction Rule", "group": "severity", "no_date": True},
@@ -74,8 +87,14 @@ def run_report(report_key: str, filters=None):
 	if metric == "rad_tat":
 		return _rad_tat_report(filters)
 	if metric == "below_par":
-		return _below_par_report(filters)
-	return _group_count_report(spec, filters)
+		return _with_chart(_below_par_report(filters))
+	return _with_chart(_group_count_report(spec, filters))
+
+
+def _with_chart(result):
+	columns, data = result[0], result[1]
+	chart = auto_chart_for_columns(data, columns)
+	return columns, data, None, chart
 
 
 def _group_count_report(spec: dict, filters):
@@ -89,9 +108,16 @@ def _group_count_report(spec: dict, filters):
 	if spec.get("extra"):
 		conditions.append(spec["extra"])
 	where = " AND ".join(conditions) if conditions else "1=1"
+	sum_field = spec.get("sum_field")
+	meta = frappe.get_meta(table)
+	sum_sql = ""
+	if sum_field and meta.has_field(sum_field):
+		sum_sql = f", SUM(COALESCE(`{sum_field}`, 0)) AS total_amount"
+	elif spec.get("include_currency_total"):
+		sum_sql = ", COUNT(*) * 1.0 AS total_amount"
 	data = frappe.db.sql(
 		f"""
-		SELECT `{group}` AS dimension, COUNT(*) AS record_count
+		SELECT `{group}` AS dimension, COUNT(*) AS record_count{sum_sql}
 		FROM `tab{table}`
 		WHERE {where}
 		GROUP BY `{group}`
@@ -104,6 +130,12 @@ def _group_count_report(spec: dict, filters):
 		{"label": _(group.replace("_", " ").title()), "fieldname": "dimension", "fieldtype": "Data", "width": 200},
 		{"label": _("Count"), "fieldname": "record_count", "fieldtype": "Int", "width": 100},
 	]
+	if sum_sql:
+		columns.append(
+			{"label": _("Total Amount"), "fieldname": "total_amount", "fieldtype": "Currency", "width": 140}
+		)
+		for row in data:
+			row["total_amount"] = flt(row.get("total_amount"))
 	return columns, data
 
 

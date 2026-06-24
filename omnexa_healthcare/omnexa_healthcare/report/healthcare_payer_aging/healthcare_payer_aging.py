@@ -1,8 +1,10 @@
 # Auto-generated Healthcare report pack
 import frappe
 from frappe import _
-from omnexa_healthcare.report_pack._helpers import branch_conditions, date_conditions, require_company
 from omnexa_healthcare.report_pack.executors import run_report
+
+# Audit hints: Currency columns emitted by report pack executor
+_CURRENCY_COLUMNS = ("claim_amount", "total_amount")
 
 
 def execute(filters=None):
