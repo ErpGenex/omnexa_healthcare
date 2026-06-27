@@ -23,6 +23,22 @@ def _room_id(appointment: str) -> str:
 	return f"omnexa-{digest}"
 
 
+def _resolve_practitioner(company: str | None, branch: str | None, current: str | None = None) -> str | None:
+	if current and frappe.db.exists("Healthcare Practitioner", current):
+		return current
+	meta = frappe.get_meta("Healthcare Practitioner")
+	filters: dict = {}
+	if meta.has_field("company") and company:
+		filters["company"] = company
+	if meta.has_field("branch") and branch:
+		filters["branch"] = branch
+	if filters:
+		found = frappe.db.get_value("Healthcare Practitioner", filters, "name")
+		if found:
+			return found
+	return frappe.db.get_value("Healthcare Practitioner", {}, "name")
+
+
 @frappe.whitelist()
 def create_telehealth_session(appointment: str) -> dict:
 	"""Create or return telehealth session for appointment."""
@@ -36,6 +52,7 @@ def create_telehealth_session(appointment: str) -> dict:
 		["patient", "practitioner", "company", "branch", "appointment_type"],
 		as_dict=True,
 	)
+	practitioner = _resolve_practitioner(appt.company, appt.branch, appt.practitioner)
 	existing = frappe.db.get_value("Healthcare Telehealth Session", {"appointment": appointment}, "name")
 	if existing:
 		doc = frappe.get_doc("Healthcare Telehealth Session", existing)
@@ -46,7 +63,7 @@ def create_telehealth_session(appointment: str) -> dict:
 				"doctype": "Healthcare Telehealth Session",
 				"appointment": appointment,
 				"patient": appt.patient,
-				"practitioner": appt.practitioner,
+				"practitioner": practitioner,
 				"company": appt.company,
 				"branch": appt.branch,
 				"room_id": room,

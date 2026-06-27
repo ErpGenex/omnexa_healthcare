@@ -114,7 +114,8 @@ class TestIndividualReports(FrappeTestCase):
 		filters = _company_filters()
 		if not filters:
 			self.skipTest("no company")
-		columns, data = run_report(key, filters)
+		result = run_report(key, filters)
+		columns, data = result[0], result[1]
 		self.assertIsInstance(columns, list)
 		self.assertIsInstance(data, list)
 

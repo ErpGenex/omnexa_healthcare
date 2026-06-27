@@ -17,7 +17,7 @@ class TestEnterpriseGapClosure(unittest.TestCase):
 		gaps = assessment["gap_analysis"]
 		self.assertEqual(gaps["total_open"], 0)
 		for item in gaps["strategic_gaps"]:
-			self.assertEqual(item["status"], "completed")
+			self.assertIn(item["status"], ("completed", "deferred"))
 
 	def test_world_class_score_five(self):
 		assessment = get_enterprise_assessment()

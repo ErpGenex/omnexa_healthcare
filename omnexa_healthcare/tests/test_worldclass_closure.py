@@ -110,7 +110,8 @@ class TestReportPackSmoke(FrappeTestCase):
 	def test_all_pack_reports_execute(self):
 		filters = self._filters()
 		for key in REPORT_SPECS:
-			columns, data = run_report(key, filters)
+			result = run_report(key, filters)
+			columns, data = result[0], result[1]
 			self.assertIsInstance(columns, list)
 			self.assertIsInstance(data, list)
 

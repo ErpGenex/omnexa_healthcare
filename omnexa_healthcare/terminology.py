@@ -80,8 +80,8 @@ PATIENT_TERMINOLOGY_AR: dict[str, str] = {
 
 
 def is_healthcare_activity(activity: str | None = None) -> bool:
-	if activity and _norm(activity) == "Healthcare":
-		return True
+	if activity is not None:
+		return _norm(activity) == "Healthcare"
 	try:
 		from omnexa_core.omnexa_core.app_visibility import get_user_company_activity
 

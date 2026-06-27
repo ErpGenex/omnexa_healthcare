@@ -10,6 +10,7 @@ import re
 
 import frappe
 from frappe import _
+from frappe.rate_limiter import rate_limit
 from frappe.utils import now_datetime
 
 OTP_CACHE_PREFIX = "healthcare_patient_otp:"
@@ -28,6 +29,7 @@ def _otp_enabled() -> bool:
 
 
 @frappe.whitelist(allow_guest=True)
+@rate_limit(limit=5, seconds=60)
 def send_patient_otp(mobile: str, patient: str | None = None) -> dict:
 	"""Send OTP to patient mobile (SMS webhook when configured)."""
 	if not _otp_enabled():
@@ -50,6 +52,7 @@ def send_patient_otp(mobile: str, patient: str | None = None) -> dict:
 
 
 @frappe.whitelist(allow_guest=True)
+@rate_limit(limit=10, seconds=300)
 def verify_patient_otp(mobile: str, otp: str, patient: str | None = None) -> dict:
 	"""Verify OTP and return session token for portal."""
 	mobile_key = _normalize_mobile(mobile)

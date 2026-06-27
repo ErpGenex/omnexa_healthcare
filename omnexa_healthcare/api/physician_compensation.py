@@ -10,7 +10,6 @@ import frappe
 from omnexa_healthcare.api.physician_compensation_engine import (
 	calculate_settlement_preview,
 	get_practitioner_ledger_summary,
-	list_active_rules,
 )
 
 __all__ = [

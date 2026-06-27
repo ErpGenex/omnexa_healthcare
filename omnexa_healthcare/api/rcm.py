@@ -74,6 +74,9 @@ def approve_insurance_claim(name: str, approved_amount: float | None = None) -> 
 def split_billing(service_charge: str) -> dict:
 	"""Split service charge into patient copay and insurer portion using coverage."""
 	sc = frappe.get_doc("Healthcare Service Charge", service_charge)
+	total = flt(getattr(sc, "total_amount", None))
+	if not total:
+		total = sum(flt(row.amount) for row in (sc.items or []))
 	coverage = frappe.get_all(
 		"Healthcare Patient Coverage",
 		filters={"patient": sc.patient, "is_active": 1},
@@ -81,8 +84,7 @@ def split_billing(service_charge: str) -> dict:
 		limit=1,
 	)
 	if not coverage:
-		return {"patient_portion": sc.total_amount, "insurer_portion": 0}
+		return {"patient_portion": total, "insurer_portion": 0}
 	copay_pct = flt(coverage[0].copay_percent) or 0
-	total = flt(sc.total_amount)
 	patient_portion = total * copay_pct / 100
 	return {"patient_portion": patient_portion, "insurer_portion": total - patient_portion, "coverage": coverage[0].name}

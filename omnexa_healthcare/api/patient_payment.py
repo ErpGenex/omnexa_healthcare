@@ -21,6 +21,14 @@ def _build_checkout_url(checkout_name: str) -> str:
 	return get_url(f"/api/method/omnexa_healthcare.api.patient_payment.payment_checkout_page?checkout={checkout_name}&token={token}")
 
 
+def _is_valid_checkout_token(checkout: str, token: str | None) -> bool:
+	value = (token or "").strip()
+	if not value:
+		return False
+	expected = hashlib.sha256(f"{checkout}-{frappe.local.site}".encode()).hexdigest()[:24]
+	return value == expected
+
+
 @frappe.whitelist()
 def create_payment_checkout(patient: str, amount: float, company: str, service_charge: str | None = None, branch: str | None = None) -> dict:
 	if not _payments_enabled():
@@ -71,6 +79,8 @@ def payment_checkout_page(checkout: str, token: str | None = None) -> dict:
 	"""Guest-safe checkout status for patient payment journey."""
 	if not frappe.db.exists("Healthcare Patient Payment Checkout", checkout):
 		frappe.throw(_("Checkout not found."), title=_("Payment"))
+	if not _is_valid_checkout_token(checkout, token):
+		frappe.throw(_("Invalid checkout token."), frappe.PermissionError)
 	doc = frappe.get_doc("Healthcare Patient Payment Checkout", checkout)
 	return {
 		"checkout": doc.name,

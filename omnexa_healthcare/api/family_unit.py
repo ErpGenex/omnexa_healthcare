@@ -12,6 +12,11 @@ from frappe import _
 from frappe.utils import today
 
 
+def _existing_fields(doctype: str, *fields: str) -> list[str]:
+	meta = frappe.get_meta(doctype)
+	return [field for field in fields if meta.has_field(field)]
+
+
 @frappe.whitelist()
 def list_family_units(company: str | None = None, branch: str | None = None, limit: int = 50) -> list[dict]:
 	limit = min(int(limit or 50), 200)
@@ -123,14 +128,19 @@ def get_family_dashboard(family_unit: str) -> dict:
 	member_ids = [m.patient for m in unit.members or [] if m.patient]
 	members_detail: list[dict] = []
 	for mid in member_ids:
-		patient = frappe.db.get_value(
-			"Healthcare Patient",
-			mid,
-			["name", "patient_name", "gender", "date_of_birth", "status"],
-			as_dict=True,
-		)
+		meta = frappe.get_meta("Healthcare Patient")
+		name_field = "full_name" if meta.has_field("full_name") else "patient_name"
+		dob_field = "birth_date" if meta.has_field("birth_date") else "date_of_birth"
+		fields = ["name", name_field, "gender", dob_field]
+		if meta.has_field("status"):
+			fields.append("status")
+		patient = frappe.db.get_value("Healthcare Patient", mid, fields, as_dict=True)
 		if not patient:
 			continue
+		if name_field != "patient_name" and name_field in patient:
+			patient["patient_name"] = patient.get(name_field)
+		if dob_field != "date_of_birth" and dob_field in patient:
+			patient["date_of_birth"] = patient.get(dob_field)
 		row = next((m for m in unit.members if m.patient == mid), None)
 		members_detail.append(
 			{
@@ -145,6 +155,13 @@ def get_family_dashboard(family_unit: str) -> dict:
 	immunizations = []
 	follow_ups = []
 	if member_ids:
+		enc_meta = frappe.get_meta("Healthcare Encounter")
+		date_field = "encounter_date" if enc_meta.has_field("encounter_date") else "period_start"
+		enc_fields = ["name", "patient", "status"]
+		if enc_meta.has_field(date_field):
+			enc_fields.append(date_field)
+		if enc_meta.has_field("chief_complaint"):
+			enc_fields.append("chief_complaint")
 		open_encounters = frappe.get_all(
 			"Healthcare Encounter",
 			filters={
@@ -152,28 +169,59 @@ def get_family_dashboard(family_unit: str) -> dict:
 				"docstatus": 1,
 				"status": ["in", ["Open", "In Progress"]],
 			},
-			fields=["name", "patient", "encounter_date", "status", "chief_complaint"],
+			fields=enc_fields,
 			limit=20,
-			order_by="encounter_date desc",
+			order_by=f"{date_field} desc" if enc_meta.has_field(date_field) else "modified desc",
+		)
+		for row in open_encounters:
+			if date_field != "encounter_date" and row.get(date_field):
+				row["encounter_date"] = row.get(date_field)
+		chronic_fields = _existing_fields(
+			"Healthcare Clinical Condition",
+			"name",
+			"patient",
+			"code",
+			"icd10_code",
+			"description",
+			"clinical_status",
 		)
 		chronic_conditions = frappe.get_all(
 			"Healthcare Clinical Condition",
 			filters={"patient": ["in", member_ids], "clinical_status": ["in", ["Active", "Recurrence"]]},
-			fields=["name", "patient", "code", "description", "clinical_status"],
+			fields=chronic_fields or ["name", "patient"],
 			limit=30,
+		)
+		for row in chronic_conditions:
+			if not row.get("code") and row.get("icd10_code"):
+				row["code"] = row.get("icd10_code")
+		imm_fields = _existing_fields(
+			"Healthcare Immunization",
+			"name",
+			"patient",
+			"vaccine_code",
+			"occurrence_datetime",
+			"status",
 		)
 		immunizations = frappe.get_all(
 			"Healthcare Immunization",
 			filters={"patient": ["in", member_ids]},
-			fields=["name", "patient", "vaccine_code", "occurrence_datetime", "status"],
+			fields=imm_fields or ["name", "patient"],
 			limit=20,
-			order_by="occurrence_datetime desc",
+			order_by="occurrence_datetime desc" if "occurrence_datetime" in imm_fields else "modified desc",
 		)
 		if frappe.db.exists("DocType", "Healthcare Follow Up Plan"):
+			fu_fields = _existing_fields(
+				"Healthcare Follow Up Plan",
+				"name",
+				"patient",
+				"plan_title",
+				"status",
+				"progress_pct",
+			)
 			follow_ups = frappe.get_all(
 				"Healthcare Follow Up Plan",
 				filters={"patient": ["in", member_ids], "status": ["in", ["Active", "Draft"]]},
-				fields=["name", "patient", "plan_title", "status", "progress_pct"],
+				fields=fu_fields or ["name", "patient"],
 				limit=20,
 			)
 

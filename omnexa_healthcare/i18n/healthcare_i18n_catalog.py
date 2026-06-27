@@ -48,6 +48,7 @@ WORKSPACE_AR: dict[str, str] = {
 	"📊 KPIs": "📊 مؤشرات الأداء",
 	"📈 Charts": "📈 الرسوم البيانية",
 	"🌐 Omnexa Journey Experience": "🌐 تجربة Omnexa Journey",
+	"Workcenter & Role Portals": "مراكز العمل وبوابات الأدوار",
 	"✨ Omnexa Journey": "✨ رحلة أومنكسا",
 	"💊 ePrescription · CDSS": "💊 الوصفات الإلكترونية · الدعم القراري",
 	"👨‍👩‍👧 Family Medicine": "👨‍👩‍👧 طب الأسرة",

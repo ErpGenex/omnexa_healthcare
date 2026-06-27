@@ -128,13 +128,27 @@ def book_appointment_online(payload: str | dict) -> dict:
 		"branch",
 		"service_code",
 		"appointment_date",
-		"patient",
 	)
 	for key in required:
 		if not data.get(key):
 			frappe.throw(_("{0} is required").format(key.replace("_", " ").title()))
 
+	if not data.get("patient") and data.get("given_name") and data.get("phone"):
+		ensured = ensure_patient_for_website_booking(
+			{
+				"given_name": data.given_name,
+				"family_name": data.get("family_name") or data.given_name,
+				"phone": data.phone,
+				"email": data.get("email"),
+				"company": data.company,
+				"branch": data.branch,
+			}
+		)
+		data.patient = ensured.get("patient")
+
 	patient = data.patient
+	if not patient:
+		frappe.throw(_("Patient is required"))
 	if data.get("session_token"):
 		assert_booking_allowed(patient, session_token=data.session_token, online=True)
 	else:

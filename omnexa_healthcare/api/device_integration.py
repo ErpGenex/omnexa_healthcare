@@ -23,8 +23,16 @@ def register_medical_device(
 	"""Register a medical device for integration (HL7/FHIR Device mapping)."""
 	company = company or frappe.defaults.get_user_default("Company")
 	branch = branch or frappe.defaults.get_user_default("Branch")
-	if frappe.db.exists("Healthcare Medical Device", {"device_code": device_code, "company": company}):
-		return {"device": frappe.db.get_value("Healthcare Medical Device", {"device_code": device_code, "company": company}, "name"), "status": "existing"}
+	predicted_name = f"HMD-{device_code}"
+	if frappe.db.exists("Healthcare Medical Device", predicted_name):
+		return {"device": predicted_name, "status": "existing", "fhir_type": "Device"}
+	existing = frappe.db.get_value(
+		"Healthcare Medical Device",
+		{"device_code": device_code, "company": company},
+		"name",
+	)
+	if existing:
+		return {"device": existing, "status": "existing", "fhir_type": "Device"}
 	doc = frappe.get_doc(
 		{
 			"doctype": "Healthcare Medical Device",

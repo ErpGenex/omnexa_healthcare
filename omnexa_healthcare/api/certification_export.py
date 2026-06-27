@@ -27,18 +27,21 @@ def export_certification_pack() -> dict:
 		name = frappe.db.get_value("Healthcare Certification Record", {"certification_type": cert_type}, "name")
 		evidence = json.dumps({"assessment_version": assessment.get("version"), "maturity": maturity, "exported": str(now_datetime())}, indent=2)
 		if name:
-			frappe.db.set_value("Healthcare Certification Record", name, {"evidence_summary": evidence, "status": "Active"})
+			frappe.db.set_value("Healthcare Certification Record", name, {"evidence_summary": evidence, "status": "Achieved"})
 			records.append(name)
 		else:
+			company = frappe.defaults.get_user_default("Company") or frappe.get_all("Company", limit=1, pluck="name")[0]
 			doc = frappe.get_doc(
 				{
 					"doctype": "Healthcare Certification Record",
 					"certification_type": cert_type,
 					"certification_name": title,
 					"stage_or_level": stage,
-					"status": "Active",
+					"status": "Achieved",
 					"evidence_summary": evidence,
 					"valid_from": frappe.utils.today(),
+					"assessment_date": frappe.utils.today(),
+					"company": company,
 				}
 			).insert(ignore_permissions=True)
 			records.append(doc.name)
