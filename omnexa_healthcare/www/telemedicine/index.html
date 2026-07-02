@@ -1,0 +1,146 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}بوابة الطب عن بعد | Telemedicine Portal{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine" data-page="telemedicine-home">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-hero hc-telemedicine-hero">
+    <div class="hc-hero-pro">
+      <div class="hc-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1920&q=80');"></div>
+      <div class="hc-wrap">
+        <div class="hc-hero-content">
+          <h1 id="hc-telemedicine-title">الطب عن بعد</h1>
+          <p id="hc-telemedicine-subtitle">استشارة طبية من منزلك مع أفضل الأطباء</p>
+          <div class="hc-hero-actions">
+            <a class="hc-btn hc-btn-primary" id="hc-book-cta" href="/telemedicine/book">احجز استشارة الآن</a>
+            <a class="hc-btn hc-btn-hero-outline" id="hc-learn-cta" href="#how-it-works">كيف يعمل؟</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hc-wrap"><div class="hc-features-bar hc-features-pro" id="hc-features-bar"></div></div>
+
+  <section class="hc-section" id="how-it-works">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2 id="hc-how-title">كيف يعمل الطب عن بعد؟</h2>
+        <p id="hc-how-subtitle">استشارة طبية سهلة وآمنة من منزلك</p>
+      </div>
+      <div class="hc-grid-4" id="hc-steps-grid">
+        <div class="hc-card hc-step-card">
+          <div class="hc-step-icon">1</div>
+          <h3 id="hc-step-1-title">اختر الطبيب</h3>
+          <p id="hc-step-1-desc">تصفح الأطباء حسب التخصص واختر الأنسب لك</p>
+        </div>
+        <div class="hc-card hc-step-card">
+          <div class="hc-step-icon">2</div>
+          <h3 id="hc-step-2-title">احجز موعد</h3>
+          <p id="hc-step-2-desc">اختر الوقت المناسب وأكمل الحجز بسهولة</p>
+        </div>
+        <div class="hc-card hc-step-card">
+          <div class="hc-step-icon">3</div>
+          <h3 id="hc-step-3-title">استشارتك</h3>
+          <p id="hc-step-3-desc">تواصل مع طبيبك عبر الفيديو من منزلك</p>
+        </div>
+        <div class="hc-card hc-step-card">
+          <div class="hc-step-icon">4</div>
+          <h3 id="hc-step-4-title">العلاج</h3>
+          <p id="hc-step-4-desc">احصل على الوصفة الطبية والتوصيات</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hc-section" id="hc-specialties">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2 id="hc-specialties-title">التخصصات المتاحة</h2>
+        <p id="hc-specialties-subtitle">استشارات في مختلف التخصصات الطبية</p>
+      </div>
+      <div class="hc-grid-4" id="hc-specialties-grid"></div>
+    </div>
+  </section>
+
+  <section class="hc-section hc-bg-light">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2 id="hc-benefits-title">مميزات الطب عن بعد</h2>
+        <p id="hc-benefits-subtitle">رعاية صحية مريحة وآمنة</p>
+      </div>
+      <div class="hc-grid-3" id="hc-benefits-grid">
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">🏠</div>
+          <h3 id="hc-benefit-1-title">من منزلك</h3>
+          <p id="hc-benefit-1-desc">لا حاجة للسفر أو الانتظار في العيادة</p>
+        </div>
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">⏰</div>
+          <h3 id="hc-benefit-2-title">وفر الوقت</h3>
+          <p id="hc-benefit-2-desc">مواعيد مرنة تناسب جدولك</p>
+        </div>
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">🔒</div>
+          <h3 id="hc-benefit-3-title">آمن وخاص</h3>
+          <p id="hc-benefit-3-desc">استشارات مشفرة ومحمية بالكامل</p>
+        </div>
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">💰</div>
+          <h3 id="hc-benefit-4-title">تكلفة أقل</h3>
+          <p id="hc-benefit-4-desc">أسعار تنافسية مع نفس الجودة</p>
+        </div>
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">📱</div>
+          <h3 id="hc-benefit-5-title">سهل الاستخدام</h3>
+          <p id="hc-benefit-5-desc">واجهة بسيطة من الهاتف أو الكمبيوتر</p>
+        </div>
+        <div class="hc-card hc-benefit-card">
+          <div class="hc-benefit-icon">👨‍⚕️</div>
+          <h3 id="hc-benefit-6-title">أطباء مختصون</h3>
+          <p id="hc-benefit-6-desc">نخبة من الأطباء المعتمدين</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hc-section" id="hc-doctors">
+    <div class="hc-wrap">
+      <div class="hc-section-title">
+        <h2 id="hc-doctors-title">أطباؤنا</h2>
+        <p id="hc-doctors-subtitle">نخبة من الأطباء المتخصصين</p>
+      </div>
+      <div class="hc-grid-4" id="hc-doctors-grid"></div>
+      <div class="hc-text-center" style="text-align: center; margin-top: 24px;">
+        <a class="hc-btn hc-btn-outline" id="hc-view-all-doctors" href="/telemedicine/doctors">عرض جميع الأطباء</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hc-stats" id="hc-stats"></section>
+
+  <section class="hc-section" id="hc-cta">
+    <div class="hc-wrap hc-card" style="text-align: center; padding: 48px;">
+      <h2 id="hc-cta-title">جاهز لاستشارة طبية؟</h2>
+      <p id="hc-cta-subtitle">احجز استشارتك الأولى اليوم</p>
+      <a class="hc-btn hc-btn-primary" id="hc-cta-button" href="/telemedicine/book">احجز الآن</a>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicinePortal.init("home");
+  });
+</script>
+{% endblock %}

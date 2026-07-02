@@ -1,0 +1,185 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-06-30 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"tab_break_consent",
+		"naming_series",
+		"patient",
+		"patient_display",
+		"consent_type",
+		"consent_date",
+		"consent_version",
+		"column_break_omnexa_1",
+		"is_consent_given",
+		"consent_document",
+		"digital_signature",
+		"tab_break_metadata",
+		"ip_address",
+		"user_agent",
+		"column_break_omnexa_2",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "tab_break_consent",
+			"fieldtype": "Tab Break",
+			"label": "Consent Details"
+		},
+		{
+			"fieldname": "tab_break_metadata",
+			"fieldtype": "Tab Break",
+			"label": "Metadata"
+		},
+		{
+			"default": "HTC-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HTC-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "consent_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Consent Type",
+			"options": "Video Consultation\nRecording\nData Sharing",
+			"reqd": 1
+		},
+		{
+			"fieldname": "consent_date",
+			"fieldtype": "Datetime",
+			"label": "Consent Date",
+			"reqd": 1
+		},
+		{
+			"fieldname": "consent_version",
+			"fieldtype": "Data",
+			"label": "Consent Version",
+			"reqd": 1
+		},
+		{
+			"default": 0,
+			"fieldname": "is_consent_given",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Consent Given"
+		},
+		{
+			"fieldname": "consent_document",
+			"fieldtype": "Attach",
+			"label": "Consent Document"
+		},
+		{
+			"fieldname": "digital_signature",
+			"fieldtype": "Data",
+			"label": "Digital Signature"
+		},
+		{
+			"fieldname": "ip_address",
+			"fieldtype": "Data",
+			"label": "IP Address",
+			"read_only": 1
+		},
+		{
+			"fieldname": "user_agent",
+			"fieldtype": "Data",
+			"label": "User Agent",
+			"read_only": 1
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 0
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 0
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-30 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Telemedicine Consent",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Patient",
+			"read": 1,
+			"write": 0,
+			"create": 0,
+			"delete": 0,
+			"report": 0,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

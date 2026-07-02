@@ -1,0 +1,204 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-06-30 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"tab_break_queue",
+		"naming_series",
+		"practitioner",
+		"practitioner_display",
+		"session",
+		"patient",
+		"patient_display",
+		"column_break_omnexa_1",
+		"queue_position",
+		"estimated_wait_minutes",
+		"status",
+		"tab_break_timing",
+		"joined_datetime",
+		"start_datetime",
+		"end_datetime",
+		"column_break_omnexa_2",
+		"tab_break_organization",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "tab_break_queue",
+			"fieldtype": "Tab Break",
+			"label": "Queue Details"
+		},
+		{
+			"fieldname": "tab_break_timing",
+			"fieldtype": "Tab Break",
+			"label": "Timing"
+		},
+		{
+			"fieldname": "tab_break_organization",
+			"fieldtype": "Tab Break",
+			"label": "Organization"
+		},
+		{
+			"default": "HTQ-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HTQ-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "practitioner.practitioner_name",
+			"fieldname": "practitioner_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Practitioner Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "session",
+			"fieldtype": "Link",
+			"label": "Telemedicine Session",
+			"options": "Healthcare Telemedicine Session",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "session.patient",
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"read_only": 1
+		},
+		{
+			"fetch_from": "session.patient_display",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "queue_position",
+			"fieldtype": "Int",
+			"in_list_view": 1,
+			"label": "Queue Position",
+			"reqd": 1
+		},
+		{
+			"fieldname": "estimated_wait_minutes",
+			"fieldtype": "Int",
+			"label": "Estimated Wait (Minutes)"
+		},
+		{
+			"default": "Waiting",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Waiting\nIn Progress\nCompleted\nSkipped",
+			"reqd": 1
+		},
+		{
+			"fieldname": "joined_datetime",
+			"fieldtype": "Datetime",
+			"label": "Joined DateTime",
+			"reqd": 1
+		},
+		{
+			"fieldname": "start_datetime",
+			"fieldtype": "Datetime",
+			"label": "Start DateTime"
+		},
+		{
+			"fieldname": "end_datetime",
+			"fieldtype": "Datetime",
+			"label": "End DateTime"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-30 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Telemedicine Queue",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Healthcare Practitioner",
+			"read": 1,
+			"write": 1,
+			"create": 0,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

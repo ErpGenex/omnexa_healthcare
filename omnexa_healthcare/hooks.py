@@ -44,10 +44,16 @@ app_include_js = [
 web_include_css = [
 	"/assets/omnexa_healthcare/css/hospital_website.css",
 	"/assets/omnexa_healthcare/css/omnexa-journey.css",
+	"/assets/omnexa_healthcare/css/telemedicine.css",
+	"/assets/omnexa_healthcare/css/telemedicine-admin.css",
 ]
 web_include_js = [
-	"/assets/omnexa_healthcare/js/hospital_website.js",
-	"/assets/omnexa_healthcare/js/omnexa-journey.js",
+	"/assets/omnexa_healthcare/js/hospital_website.js?v=20260702",
+	"/assets/omnexa_healthcare/js/omnexa-journey.js?v=20260702",
+	"/assets/omnexa_healthcare/js/telemedicine-portal.js?v=20260702",
+	"/assets/omnexa_healthcare/js/telemedicine-doctor.js?v=20260702",
+	"/assets/omnexa_healthcare/js/telemedicine-admin.js?v=20260702",
+	"/assets/omnexa_healthcare/js/telemedicine-socket.js?v=20260702",
 ]
 
 # Registered with omnexa_experience activity website framework
@@ -212,6 +218,12 @@ permission_query_conditions = {
 	"Healthcare Morgue Case": "omnexa_healthcare.permissions.healthcare_morgue_case_query_conditions",
 	"Healthcare Pharmacy Substitution Log": "omnexa_healthcare.permissions.healthcare_pharmacy_substitution_log_query_conditions",
 	"Healthcare Patient Erasure Request": "omnexa_healthcare.permissions.healthcare_patient_erasure_request_query_conditions",
+	"Healthcare Telemedicine Session": "omnexa_healthcare.permissions.healthcare_telemedicine_session_query_conditions",
+	"Healthcare Telemedicine Configuration": "omnexa_healthcare.permissions.healthcare_telemedicine_configuration_query_conditions",
+	"Healthcare Telemedicine Consent": "omnexa_healthcare.permissions.healthcare_telemedicine_consent_query_conditions",
+	"Healthcare Remote Monitoring Device": "omnexa_healthcare.permissions.healthcare_remote_monitoring_device_query_conditions",
+	"Healthcare Remote Monitoring Reading": "omnexa_healthcare.permissions.healthcare_remote_monitoring_reading_query_conditions",
+	"Healthcare Telemedicine Queue": "omnexa_healthcare.permissions.healthcare_telemedicine_queue_query_conditions",
 }
 
 # DocType Class
@@ -226,7 +238,15 @@ permission_query_conditions = {
 # ---------------
 # Hook on document methods and events
 
-doc_events = {}
+doc_events = {
+	"Healthcare Telemedicine Session": {
+		"on_update": "omnexa_healthcare.api.telemedicine.on_session_update",
+		"after_insert": "omnexa_healthcare.api.telemedicine.on_session_create",
+	},
+	"Healthcare Remote Monitoring Reading": {
+		"after_insert": "omnexa_healthcare.api.telemedicine_monitoring.on_reading_create",
+	},
+}
 
 _BRANCH_VALIDATE = [
 	"Healthcare Patient",
@@ -295,6 +315,11 @@ _BRANCH_VALIDATE = [
 	"Healthcare Cds Alert Log",
 	"Healthcare Pharmacy Substitution Log",
 	"Healthcare Patient Erasure Request",
+	"Healthcare Telemedicine Session",
+	"Healthcare Telemedicine Consent",
+	"Healthcare Remote Monitoring Device",
+	"Healthcare Remote Monitoring Reading",
+	"Healthcare Telemedicine Queue",
 ]
 
 for _dt in _BRANCH_VALIDATE:
@@ -315,6 +340,14 @@ doc_events["Healthcare Patient"]["after_insert"] = "omnexa_healthcare.api.audit_
 doc_events["Healthcare Patient"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
 doc_events["Healthcare Encounter"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
 doc_events["Healthcare Encounter"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Telemedicine Session"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Telemedicine Session"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Telemedicine Consent"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Telemedicine Consent"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Remote Monitoring Device"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Remote Monitoring Device"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Remote Monitoring Reading"]["after_insert"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
+doc_events["Healthcare Remote Monitoring Reading"]["on_update"] = "omnexa_healthcare.api.audit_phi.log_phi_access"
 
 from omnexa_healthcare.gap_closure_wave9_defs import PHI_AUDIT_DOCTYPES as _PHI_AUDIT_DOCTYPES
 
@@ -427,4 +460,12 @@ before_request = [
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
+
+# Website Routes
+# --------------
+website_routes = [
+	{"from_route": "/telemedicine", "to_route": "telemedicine"},
+	{"from_route": "/telemedicine-doctor", "to_route": "telemedicine-doctor"},
+	{"from_route": "/telemedicine-admin", "to_route": "telemedicine-admin"},
+]
 

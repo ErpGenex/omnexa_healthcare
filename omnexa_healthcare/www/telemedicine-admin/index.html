@@ -1,0 +1,218 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}لوحة تحكم الطب عن بعد | Telemedicine Admin Dashboard{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine-admin" data-page="admin-home">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-admin-dashboard">
+    <div class="hc-wrap">
+      <div class="hc-admin-header">
+        <div class="hc-admin-title">
+          <h1 id="hc-admin-title">لوحة تحكم الطب عن بعد</h1>
+          <p id="hc-admin-subtitle">نظرة عامة على النظام</p>
+        </div>
+        <div class="hc-admin-actions">
+          <button class="hc-btn hc-btn-outline" id="hc-refresh-dashboard">
+            <span>🔄</span>
+            <span id="hc-refresh-text">تحديث</span>
+          </button>
+          <button class="hc-btn hc-btn-primary" id="hc-new-session">
+            <span>➕</span>
+            <span id="hc-new-text">جلسة جديدة</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="hc-admin-stats">
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-green">📹</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-active-sessions">0</div>
+            <div class="hc-stat-label" id="hc-active-label">جلسات نشطة</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-up">↑ 12%</div>
+        </div>
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-blue">👥</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-today-sessions">0</div>
+            <div class="hc-stat-label" id="hc-today-label">استشارات اليوم</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-up">↑ 8%</div>
+        </div>
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-purple">⭐</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-satisfaction">0.0</div>
+            <div class="hc-stat-label" id="hc-satisfaction-label">رضا المرضى</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-up">↑ 5%</div>
+        </div>
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-orange">💰</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-revenue">0</div>
+            <div class="hc-stat-label" id="hc-revenue-label">إيراد اليوم</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-down">↓ 3%</div>
+        </div>
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-red">⚠️</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-issues">0</div>
+            <div class="hc-stat-label" id="hc-issues-label">مشاكل تقنية</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-down">↓ 15%</div>
+        </div>
+        <div class="hc-stat-card">
+          <div class="hc-stat-icon hc-icon-cyan">👨‍⚕️</div>
+          <div class="hc-stat-info">
+            <div class="hc-stat-value" id="hc-active-doctors">0</div>
+            <div class="hc-stat-label" id="hc-doctors-label">أطباء نشطون</div>
+          </div>
+          <div class="hc-stat-trend hc-trend-up">↑ 2</div>
+        </div>
+      </div>
+
+      <div class="hc-admin-grid">
+        <!-- Main Content -->
+        <div class="hc-admin-main">
+          <!-- Live Sessions -->
+          <div class="hc-card hc-live-sessions">
+            <div class="hc-card-header">
+              <h3 id="hc-live-title">الجلسات النشطة</h3>
+              <div class="hc-card-actions">
+                <button class="hc-btn hc-btn-sm hc-btn-outline" id="hc-view-all-sessions">
+                  <span id="hc-view-all-text">عرض الكل</span>
+                </button>
+              </div>
+            </div>
+            <div class="hc-sessions-list" id="hc-sessions-list">
+              <div class="hc-empty">
+                <p id="hc-no-sessions">لا توجد جلسات نشطة</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- System Health -->
+          <div class="hc-card hc-system-health">
+            <div class="hc-card-header">
+              <h3 id="hc-health-title">صحة النظام</h3>
+            </div>
+            <div class="hc-health-metrics">
+              <div class="hc-health-item">
+                <div class="hc-health-label" id="hc-server-label">خادم الفيديو</div>
+                <div class="hc-health-status hc-status-success" id="hc-server-status">متصل</div>
+              </div>
+              <div class="hc-health-item">
+                <div class="hc-health-label" id="hc-turn-label">خادم TURN</div>
+                <div class="hc-health-status hc-status-success" id="hc-turn-status">متصل</div>
+              </div>
+              <div class="hc-health-item">
+                <div class="hc-health-label" id="hc-db-label">قاعدة البيانات</div>
+                <div class="hc-health-status hc-status-success" id="hc-db-status">متصل</div>
+              </div>
+              <div class="hc-health-item">
+                <div class="hc-health-label" id="hc-redis-label">Redis</div>
+                <div class="hc-health-status hc-status-success" id="hc-redis-status">متصل</div>
+              </div>
+              <div class="hc-health-item">
+                <div class="hc-health-label" id="hc-storage-label">التخزين</div>
+                <div class="hc-health-status hc-status-warning" id="hc-storage-status">75% مستخدم</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="hc-admin-sidebar">
+          <!-- Quick Actions -->
+          <div class="hc-card hc-quick-actions">
+            <div class="hc-card-header">
+              <h3 id="hc-quick-title">إجراءات سريعة</h3>
+            </div>
+            <div class="hc-quick-actions-list">
+              <button class="hc-quick-action" id="hc-manage-doctors">
+                <span class="hc-action-icon">👨‍⚕️</span>
+                <span id="hc-action-doctors">إدارة الأطباء</span>
+              </button>
+              <button class="hc-quick-action" id="hc-manage-patients">
+                <span class="hc-action-icon">👥</span>
+                <span id="hc-action-patients">إدارة المرضى</span>
+              </button>
+              <button class="hc-quick-action" id="hc-view-reports">
+                <span class="hc-action-icon">📊</span>
+                <span id="hc-action-reports">التقارير</span>
+              </button>
+              <button class="hc-quick-action" id="hc-system-settings">
+                <span class="hc-action-icon">⚙️</span>
+                <span id="hc-action-settings">إعدادات النظام</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <div class="hc-card hc-alerts">
+            <div class="hc-card-header">
+              <h3 id="hc-alerts-title">التنبيهات</h3>
+              <span class="hc-badge hc-badge-danger" id="hc-alert-count">0</span>
+            </div>
+            <div class="hc-alerts-list" id="hc-alerts-list">
+              <div class="hc-empty">
+                <p id="hc-no-alerts">لا توجد تنبيهات</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="hc-card hc-recent-activity">
+            <div class="hc-card-header">
+              <h3 id="hc-activity-title">النشاط الأخير</h3>
+            </div>
+            <div class="hc-activity-list" id="hc-activity-list">
+              <div class="hc-activity-item">
+                <div class="hc-activity-icon">📹</div>
+                <div class="hc-activity-content">
+                  <div class="hc-activity-text" id="hc-activity-1">بدأت جلسة جديدة</div>
+                  <div class="hc-activity-time" id="hc-time-1">منذ 5 دقائق</div>
+                </div>
+              </div>
+              <div class="hc-activity-item">
+                <div class="hc-activity-icon">👨‍⚕️</div>
+                <div class="hc-activity-content">
+                  <div class="hc-activity-text" id="hc-activity-2">انضم طبيب جديد</div>
+                  <div class="hc-activity-time" id="hc-time-2">منذ 15 دقيقة</div>
+                </div>
+              </div>
+              <div class="hc-activity-item">
+                <div class="hc-activity-icon">💊</div>
+                <div class="hc-activity-content">
+                  <div class="hc-activity-text" id="hc-activity-3">وصفة جديدة صدرت</div>
+                  <div class="hc-activity-time" id="hc-time-3">منذ 30 دقيقة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicineAdmin.init("home");
+  });
+</script>
+{% endblock %}

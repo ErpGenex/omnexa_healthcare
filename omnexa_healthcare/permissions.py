@@ -215,3 +215,28 @@ def healthcare_er_visit_query_conditions(user=None):
 
 def healthcare_morgue_case_query_conditions(user=None):
 	return _get_query_for_table("Healthcare Morgue Case", user)
+
+
+def healthcare_telemedicine_session_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Telemedicine Session", user)
+
+
+def healthcare_telemedicine_configuration_query_conditions(user=None):
+	# Configuration is single DocType, no branch filtering needed
+	return ""
+
+
+def healthcare_telemedicine_consent_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Telemedicine Consent", user)
+
+
+def healthcare_remote_monitoring_device_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Remote Monitoring Device", user)
+
+
+def healthcare_remote_monitoring_reading_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Remote Monitoring Reading", user)
+
+
+def healthcare_telemedicine_queue_query_conditions(user=None):
+	return _get_query_for_table("Healthcare Telemedicine Queue", user)

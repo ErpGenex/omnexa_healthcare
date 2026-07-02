@@ -1,0 +1,262 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}استشارة طبية عن بعد | Telemedicine Session{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine" data-page="telemedicine-session">
+  <header class="hc-header hc-session-header" id="hc-header">
+    <div class="hc-header-inner">
+      <div class="hc-brand">
+        <span id="hc-session-title">استشارة طبية</span>
+      </div>
+      <div class="hc-session-info">
+        <span id="hc-session-doctor"></span>
+        <span id="hc-session-time"></span>
+      </div>
+      <div class="hc-actions">
+        <button class="hc-btn hc-btn-light" id="hc-toggle-chat">
+          <span id="hc-chat-label">المحادثة</span>
+        </button>
+        <button class="hc-btn hc-btn-light" id="hc-toggle-records">
+          <span id="hc-records-label">السجلات</span>
+        </button>
+        <button class="hc-btn hc-btn-danger" id="hc-end-call">
+          <span id="hc-end-label">إنهاء</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hc-session-container">
+    <!-- Main Video Area -->
+    <div class="hc-video-area" id="hc-video-area">
+      <div id="hc-jitsi-container" style="width:100%;height:480px;display:none;"></div>
+      <div class="hc-video-grid">
+        <!-- Doctor Video -->
+        <div class="hc-video-wrapper hc-doctor-video">
+          <div class="hc-video-placeholder" id="hc-doctor-video">
+            <div class="hc-avatar">
+              <span id="hc-doctor-avatar">👨‍⚕️</span>
+            </div>
+            <div class="hc-name" id="hc-doctor-name"></div>
+          </div>
+          <div class="hc-video-controls hc-doctor-controls">
+            <button class="hc-video-btn" id="hc-pin-doctor" title="تثبيت">📌</button>
+          </div>
+        </div>
+
+        <!-- Patient Video -->
+        <div class="hc-video-wrapper hc-patient-video">
+          <div class="hc-video-placeholder" id="hc-patient-video">
+            <div class="hc-avatar">
+              <span id="hc-patient-avatar">👤</span>
+            </div>
+            <div class="hc-name" id="hc-patient-name">أنت</div>
+          </div>
+          <div class="hc-video-controls hc-patient-controls">
+            <button class="hc-video-btn" id="hc-mirror-video" title="عكس">↔️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Status -->
+      <div class="hc-session-status" id="hc-session-status">
+        <div class="hc-status-indicator" id="hc-status-indicator"></div>
+        <span id="hc-status-text">جاري الاتصال...</span>
+      </div>
+
+      <!-- Recording Indicator -->
+      <div class="hc-recording-indicator" id="hc-recording-indicator" style="display: none;">
+        <span class="hc-rec-dot"></span>
+        <span id="hc-recording-text">جاري التسجيل</span>
+      </div>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="hc-side-panel" id="hc-side-panel">
+      <!-- Chat Panel -->
+      <div class="hc-panel-tab hc-chat-panel active" id="hc-chat-panel">
+        <div class="hc-panel-header">
+          <h3 id="hc-chat-title">المحادثة</h3>
+        </div>
+        <div class="hc-chat-messages" id="hc-chat-messages">
+          <div class="hc-system-message" id="hc-welcome-message">
+            <p>مرحباً بك في الاستشارة الطبية</p>
+          </div>
+        </div>
+        <div class="hc-chat-input">
+          <input type="text" id="hc-chat-input" placeholder="اكتب رسالتك..." />
+          <button class="hc-btn hc-btn-primary" id="hc-send-message">إرسال</button>
+        </div>
+      </div>
+
+      <!-- Records Panel -->
+      <div class="hc-panel-tab hc-records-panel" id="hc-records-panel" style="display: none;">
+        <div class="hc-panel-header">
+          <h3 id="hc-records-title">السجلات الطبية</h3>
+        </div>
+        <div class="hc-records-content" id="hc-records-content">
+          <div class="hc-record-section">
+            <h4 id="hc-vitals-title">القياسات الحيوية</h4>
+            <div class="hc-vitals-grid" id="hc-vitals-grid"></div>
+          </div>
+          <div class="hc-record-section">
+            <h4 id="hc-medications-title">الأدوية الحالية</h4>
+            <div class="hc-medications-list" id="hc-medications-list"></div>
+          </div>
+          <div class="hc-record-section">
+            <h4 id="hc-allergies-title">الحساسية</h4>
+            <div class="hc-allergies-list" id="hc-allergies-list"></div>
+          </div>
+          <div class="hc-record-section">
+            <h4 id="hc-conditions-title">الأمراض المزمنة</h4>
+            <div class="hc-conditions-list" id="hc-conditions-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Controls -->
+  <div class="hc-bottom-controls" id="hc-bottom-controls">
+    <div class="hc-control-group">
+      <button class="hc-control-btn" id="hc-mic-btn" title="الميكروفون">
+        <span id="hc-mic-icon">🎤</span>
+      </button>
+      <button class="hc-control-btn" id="hc-camera-btn" title="الكاميرا">
+        <span id="hc-camera-icon">📷</span>
+      </button>
+      <button class="hc-control-btn" id="hc-screen-btn" title="مشاركة الشاشة">
+        <span id="hc-screen-icon">🖥️</span>
+      </button>
+    </div>
+    <div class="hc-control-group">
+      <button class="hc-control-btn" id="hc-whiteboard-btn" title="السبورة">
+        <span id="hc-whiteboard-icon">📝</span>
+      </button>
+      <button class="hc-control-btn" id="hc-file-btn" title="مشاركة ملف">
+        <span id="hc-file-icon">📎</span>
+      </button>
+      <button class="hc-control-btn" id="hc-settings-btn" title="الإعدادات">
+        <span id="hc-settings-icon">⚙️</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Whiteboard Modal -->
+  <div class="hc-modal" id="hc-whiteboard-modal" style="display: none;">
+    <div class="hc-modal-content">
+      <div class="hc-modal-header">
+        <h3 id="hc-whiteboard-modal-title">السبورة</h3>
+        <button class="hc-modal-close" id="hc-close-whiteboard">✕</button>
+      </div>
+      <div class="hc-whiteboard-container">
+        <canvas id="hc-whiteboard"></canvas>
+      </div>
+      <div class="hc-whiteboard-tools">
+        <button class="hc-tool-btn active" data-tool="pen" id="hc-tool-pen">✏️</button>
+        <button class="hc-tool-btn" data-tool="eraser" id="hc-tool-eraser">🧹</button>
+        <button class="hc-tool-btn" data-tool="text" id="hc-tool-text">📝</button>
+        <input type="color" id="hc-color-picker" value="#000000" />
+        <input type="range" id="hc-size-slider" min="1" max="20" value="3" />
+        <button class="hc-btn hc-btn-outline" id="hc-clear-whiteboard">مسح</button>
+        <button class="hc-btn hc-btn-primary" id="hc-save-whiteboard">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- File Share Modal -->
+  <div class="hc-modal" id="hc-file-modal" style="display: none;">
+    <div class="hc-modal-content">
+      <div class="hc-modal-header">
+        <h3 id="hc-file-modal-title">مشاركة ملف</h3>
+        <button class="hc-modal-close" id="hc-close-file">✕</button>
+      </div>
+      <div class="hc-file-upload">
+        <input type="file" id="hc-file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+        <div class="hc-file-drop-zone" id="hc-file-drop-zone">
+          <p id="hc-file-drop-text">اسحب الملفات هنا أو انقر للاختيار</p>
+        </div>
+      </div>
+      <div class="hc-file-list" id="hc-file-list"></div>
+      <button class="hc-btn hc-btn-primary" id="hc-send-files">إرسال</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="hc-modal" id="hc-settings-modal" style="display: none;">
+    <div class="hc-modal-content">
+      <div class="hc-modal-header">
+        <h3 id="hc-settings-modal-title">الإعدادات</h3>
+        <button class="hc-modal-close" id="hc-close-settings">✕</button>
+      </div>
+      <div class="hc-settings-content">
+        <div class="hc-setting-item">
+          <label id="hc-camera-label">الكاميرا</label>
+          <select id="hc-camera-select" class="form-control"></select>
+        </div>
+        <div class="hc-setting-item">
+          <label id="hc-mic-label">الميكروفون</label>
+          <select id="hc-mic-select" class="form-control"></select>
+        </div>
+        <div class="hc-setting-item">
+          <label id="hc-speaker-label">السماعات</label>
+          <select id="hc-speaker-select" class="form-control"></select>
+        </div>
+        <div class="hc-setting-item">
+          <label id="hc-quality-label">جودة الفيديو</label>
+          <select id="hc-quality-select" class="form-control">
+            <option value="auto">تلقائي</option>
+            <option value="720">HD 720p</option>
+            <option value="1080">Full HD 1080p</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Session Modal -->
+  <div class="hc-modal" id="hc-end-modal" style="display: none;">
+    <div class="hc-modal-content hc-modal-small">
+      <div class="hc-modal-header">
+        <h3 id="hc-end-modal-title">إنهاء الاستشارة</h3>
+      </div>
+      <div class="hc-modal-body">
+        <p id="hc-end-modal-text">هل أنت متأكد من إنهاء الاستشارة؟</p>
+        <div class="hc-rating-section">
+          <label id="hc-rating-label">قيّم الاستشارة</label>
+          <div class="hc-rating-stars" id="hc-rating-stars">
+            <span class="hc-star" data-rating="1">⭐</span>
+            <span class="hc-star" data-rating="2">⭐</span>
+            <span class="hc-star" data-rating="3">⭐</span>
+            <span class="hc-star" data-rating="4">⭐</span>
+            <span class="hc-star" data-rating="5">⭐</span>
+          </div>
+        </div>
+        <div class="hc-field">
+          <label id="hc-feedback-label">ملاحظاتك</label>
+          <textarea id="hc-feedback-text" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="hc-modal-footer">
+        <button class="hc-btn hc-btn-outline" id="hc-cancel-end">إلغاء</button>
+        <button class="hc-btn hc-btn-danger" id="hc-confirm-end">إنهاء</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="hc-footer" id="hc-footer" style="display: none;"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicinePortal.init("session");
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,186 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}حجز استشارة طبية عن بعد | Book Telemedicine Consultation{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine" data-page="telemedicine-booking">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-booking-shell">
+    <div class="hc-wrap">
+      <div class="hc-section-title hc-alhayat-title">
+        <h2 id="hc-booking-title">حجز استشارة طبية عن بعد</h2>
+        <p id="hc-booking-subtitle">اختر طبيبك واحجز استشارتك بسهولة</p>
+      </div>
+      
+      <div class="hc-steps hc-steps-ring" id="hc-booking-steps">
+        <div class="hc-step-ring active" data-step="1">
+          <span class="num">1</span>
+          <span id="hc-step-specialty">التخصص</span>
+        </div>
+        <div class="hc-step-ring" data-step="2">
+          <span class="num">2</span>
+          <span id="hc-step-doctor">الطبيب</span>
+        </div>
+        <div class="hc-step-ring" data-step="3">
+          <span class="num">3</span>
+          <span id="hc-step-time">الموعد</span>
+        </div>
+        <div class="hc-step-ring" data-step="4">
+          <span class="num">4</span>
+          <span id="hc-step-type">النوع</span>
+        </div>
+        <div class="hc-step-ring" data-step="5">
+          <span class="num">5</span>
+          <span id="hc-step-confirm">التأكيد</span>
+        </div>
+      </div>
+
+      <div class="hc-panel" id="hc-booking-panel">
+        <!-- Step 1: Specialty -->
+        <div class="hc-booking-step" data-step="1" id="hc-step-1">
+          <h3 id="hc-choose-specialty">اختر التخصص الطبي</h3>
+          <div class="hc-filters" id="hc-specialty-filters"></div>
+          <div class="hc-grid-3" id="hc-specialties-list"></div>
+        </div>
+
+        <!-- Step 2: Doctor -->
+        <div class="hc-booking-step" data-step="2" id="hc-step-2" style="display: none;">
+          <h3 id="hc-choose-doctor">اختر الطبيب</h3>
+          <div class="hc-filters" id="hc-doctor-filters">
+            <button class="hc-pill active" data-filter="all" id="hc-filter-all">الكل</button>
+            <button class="hc-pill" data-filter="available" id="hc-filter-available">متاح الآن</button>
+            <button class="hc-pill" data-filter="top-rated" id="hc-filter-rated">الأعلى تقييماً</button>
+          </div>
+          <div class="hc-grid-3" id="hc-doctors-list"></div>
+          <div class="hc-empty" id="hc-no-doctors" style="display: none;">
+            <p id="hc-no-doctors-msg">لا يوجد أطباء متاحون لهذا التخصص</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Time -->
+        <div class="hc-booking-step" data-step="3" id="hc-step-3" style="display: none;">
+          <h3 id="hc-choose-time">اختر الموعد</h3>
+          <div class="hc-form-grid">
+            <div class="hc-field">
+              <label id="hc-date-label">التاريخ</label>
+              <input type="date" id="hc-booking-date" class="form-control" />
+            </div>
+            <div class="hc-field">
+              <label id="hc-time-label">الوقت</label>
+              <select id="hc-booking-time" class="form-control">
+                <option value="">اختر الموعد</option>
+              </select>
+            </div>
+          </div>
+          <div class="hc-slot-grid" id="hc-slots-grid"></div>
+          <div class="hc-empty" id="hc-no-slots" style="display: none;">
+            <p id="hc-no-slots-msg">لا توجد مواعيد متاحة لهذا التاريخ</p>
+          </div>
+        </div>
+
+        <!-- Step 4: Consultation Type -->
+        <div class="hc-booking-step" data-step="4" id="hc-step-4" style="display: none;">
+          <h3 id="hc-choose-type">نوع الاستشارة</h3>
+          <div class="hc-grid-3" id="hc-consultation-types">
+            <div class="hc-card hc-consultation-type selected" data-type="video">
+              <div class="hc-type-icon">📹</div>
+              <h4 id="hc-type-video">فيديو</h4>
+              <p id="hc-type-video-desc">استشارة عبر الفيديو</p>
+              <div class="hc-type-price" id="hc-price-video"></div>
+            </div>
+            <div class="hc-card hc-consultation-type" data-type="voice">
+              <div class="hc-type-icon">📞</div>
+              <h4 id="hc-type-voice">صوت</h4>
+              <p id="hc-type-voice-desc">استشارة صوتية</p>
+              <div class="hc-type-price" id="hc-price-voice"></div>
+            </div>
+            <div class="hc-card hc-consultation-type" data-type="chat">
+              <div class="hc-type-icon">💬</div>
+              <h4 id="hc-type-chat">محادثة</h4>
+              <p id="hc-type-chat-desc">استشارة عبر المحادثة</p>
+              <div class="hc-type-price" id="hc-price-chat"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Confirm -->
+        <div class="hc-booking-step" data-step="5" id="hc-step-5" style="display: none;">
+          <h3 id="hc-confirm-title">تأكيد الحجز</h3>
+          <div class="hc-booking-summary" id="hc-booking-summary">
+            <div class="hc-summary-item">
+              <span id="hc-summary-doctor-label">الطبيب:</span>
+              <strong id="hc-summary-doctor"></strong>
+            </div>
+            <div class="hc-summary-item">
+              <span id="hc-summary-specialty-label">التخصص:</span>
+              <strong id="hc-summary-specialty"></strong>
+            </div>
+            <div class="hc-summary-item">
+              <span id="hc-summary-date-label">التاريخ:</span>
+              <strong id="hc-summary-date"></strong>
+            </div>
+            <div class="hc-summary-item">
+              <span id="hc-summary-time-label">الوقت:</span>
+              <strong id="hc-summary-time"></strong>
+            </div>
+            <div class="hc-summary-item">
+              <span id="hc-summary-type-label">النوع:</span>
+              <strong id="hc-summary-type"></strong>
+            </div>
+            <div class="hc-summary-item">
+              <span id="hc-summary-price-label">التكلفة:</span>
+              <strong id="hc-summary-price"></strong>
+            </div>
+          </div>
+          <div class="hc-form-grid">
+            <div class="hc-field">
+              <label id="hc-patient-label">المريض</label>
+              <select id="hc-booking-patient" class="form-control">
+                <option value="">اختر المريض</option>
+              </select>
+            </div>
+            <div class="hc-field">
+              <label id="hc-complaint-label">سبب الاستشارة</label>
+              <textarea id="hc-complaint" class="form-control" rows="3" placeholder="اشرح حالتك باختصار"></textarea>
+            </div>
+            <div class="hc-field">
+              <label id="hc-notes-label">ملاحظات إضافية</label>
+              <textarea id="hc-notes" class="form-control" rows="2" placeholder="أي ملاحظات إضافية"></textarea>
+            </div>
+          </div>
+          <div class="hc-field">
+            <label id="hc-consent-label">
+              <input type="checkbox" id="hc-consent" required />
+              أوافق على شروط خدمة الطب عن بعد وسياسة الخصوصية
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="hc-booking-actions">
+        <button class="hc-btn hc-btn-outline" id="hc-back-btn" style="display: none;">
+          <span id="hc-back-text">السابق</span>
+        </button>
+        <button class="hc-btn hc-btn-primary" id="hc-next-btn">
+          <span id="hc-next-text">التالي</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicinePortal.init("booking");
+  });
+</script>
+{% endblock %}

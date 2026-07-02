@@ -41,6 +41,9 @@ PORTAL_CATALOG: list[dict] = [
 	{"id": "finance", "route": "/app/healthcare-finance-desk", "page": "healthcare-finance-desk", "icon": "💼", "category": "management", "roles": ["Healthcare CFO", "Company Admin"], "label_ar": "مركز الإيرادات", "label_en": "RCM Workcenter"},
 	{"id": "executive", "route": "/app/healthcare-executive-dashboard", "page": "healthcare-executive-dashboard", "icon": "📊", "category": "management", "roles": ["Healthcare Executive"], "label_ar": "التنفيذي", "label_en": "Executive"},
 	{"id": "telehealth", "route": "/app/healthcare-telehealth-room", "page": "healthcare-telehealth-room", "icon": "📹", "category": "digital", "roles": ["Healthcare Physician"], "label_ar": "Telehealth", "label_en": "Telehealth"},
+	{"id": "telemedicine-patient", "route": "/telemedicine", "page": "telemedicine", "icon": "🏥", "category": "digital", "roles": ["Healthcare Patient Portal"], "label_ar": "الكشف عن بعد", "label_en": "Telemedicine"},
+	{"id": "telemedicine-doctor", "route": "/telemedicine-doctor", "page": "telemedicine_doctor", "icon": "👨‍⚕️", "category": "digital", "roles": ["Healthcare Physician"], "label_ar": "بوابة الطبيب", "label_en": "Doctor Portal"},
+	{"id": "telemedicine-admin", "route": "/telemedicine-admin", "page": "telemedicine_admin", "icon": "⚙️", "category": "admin", "roles": ["System Manager", "Company Admin"], "label_ar": "إدارة الطب عن بعد", "label_en": "Telemedicine Admin"},
 	{"id": "calendar", "route": "/app/healthcare-appointment-calendar", "page": "healthcare-appointment-calendar", "icon": "🗓", "category": "support", "roles": ["Healthcare Receptionist"], "label_ar": "التقويم", "label_en": "Calendar"},
 	{"id": "roster", "route": "/app/healthcare-practitioner-roster", "page": "healthcare-practitioner-roster", "icon": "📆", "category": "support", "roles": ["Healthcare Executive"], "label_ar": "جدول الأطباء", "label_en": "Roster"},
 ]

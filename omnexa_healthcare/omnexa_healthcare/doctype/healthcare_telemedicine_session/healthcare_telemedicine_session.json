@@ -1,0 +1,367 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-06-30 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"tab_break_overview",
+		"naming_series",
+		"patient",
+		"patient_display",
+		"practitioner",
+		"practitioner_display",
+		"appointment",
+		"column_break_omnexa_1",
+		"company",
+		"branch",
+		"session_type",
+		"status",
+		"tab_break_session",
+		"scheduled_datetime",
+		"start_datetime",
+		"end_datetime",
+		"duration_minutes",
+		"column_break_omnexa_2",
+		"room_id",
+		"recording_enabled",
+		"recording_url",
+		"recording_expiry",
+		"tab_break_clinical",
+		"diagnosis",
+		"clinical_notes",
+		"column_break_omnexa_3",
+		"technical_quality",
+		"connection_issues",
+		"tab_break_items",
+		"prescriptions",
+		"lab_orders",
+		"radiology_orders",
+		"tab_break_feedback",
+		"rating",
+		"patient_feedback",
+		"column_break_omnexa_4",
+		"encounter",
+		"service_charge",
+		"medication_request",
+		"created_by",
+		"modified_by"
+	],
+	"fields": [
+		{
+			"fieldname": "tab_break_overview",
+			"fieldtype": "Tab Break",
+			"label": "Overview"
+		},
+		{
+			"fieldname": "tab_break_session",
+			"fieldtype": "Tab Break",
+			"label": "Session Details"
+		},
+		{
+			"fieldname": "tab_break_clinical",
+			"fieldtype": "Tab Break",
+			"label": "Clinical Information"
+		},
+		{
+			"fieldname": "tab_break_items",
+			"fieldtype": "Tab Break",
+			"label": "Orders & Prescriptions"
+		},
+		{
+			"fieldname": "tab_break_feedback",
+			"fieldtype": "Tab Break",
+			"label": "Feedback"
+		},
+		{
+			"default": "HTS-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HTS-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "practitioner",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Practitioner",
+			"options": "Healthcare Practitioner",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "practitioner.practitioner_name",
+			"fieldname": "practitioner_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Practitioner Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "appointment",
+			"fieldtype": "Link",
+			"label": "Appointment",
+			"options": "Healthcare Appointment"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"default": "Video",
+			"fieldname": "session_type",
+			"fieldtype": "Select",
+			"label": "Session Type",
+			"options": "Video\nVoice\nChat",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"default": "Scheduled",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"label": "Status",
+			"options": "Scheduled\nIn Progress\nCompleted\nCancelled\nNo Show",
+			"reqd": 1,
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "scheduled_datetime",
+			"fieldtype": "Datetime",
+			"label": "Scheduled DateTime",
+			"reqd": 1
+		},
+		{
+			"fieldname": "start_datetime",
+			"fieldtype": "Datetime",
+			"label": "Start DateTime"
+		},
+		{
+			"fieldname": "end_datetime",
+			"fieldtype": "Datetime",
+			"label": "End DateTime"
+		},
+		{
+			"fieldname": "duration_minutes",
+			"fieldtype": "Int",
+			"label": "Duration (Minutes)"
+		},
+		{
+			"fieldname": "room_id",
+			"fieldtype": "Data",
+			"label": "Room ID",
+			"read_only": 1
+		},
+		{
+			"default": 0,
+			"fieldname": "recording_enabled",
+			"fieldtype": "Check",
+			"label": "Recording Enabled"
+		},
+		{
+			"fieldname": "recording_url",
+			"fieldtype": "Data",
+			"label": "Recording URL",
+			"read_only": 1
+		},
+		{
+			"fieldname": "recording_expiry",
+			"fieldtype": "Date",
+			"label": "Recording Expiry Date"
+		},
+		{
+			"fieldname": "diagnosis",
+			"fieldtype": "Link",
+			"label": "Diagnosis",
+			"options": "Healthcare Clinical Condition"
+		},
+		{
+			"fieldname": "clinical_notes",
+			"fieldtype": "Text",
+			"label": "Clinical Notes"
+		},
+		{
+			"fieldname": "technical_quality",
+			"fieldtype": "Select",
+			"label": "Technical Quality",
+			"options": "Excellent\nGood\nFair\nPoor"
+		},
+		{
+			"fieldname": "connection_issues",
+			"fieldtype": "Text",
+			"label": "Connection Issues"
+		},
+		{
+			"fieldname": "rating",
+			"fieldtype": "Rating",
+			"label": "Patient Rating",
+			"options": "5"
+		},
+		{
+			"fieldname": "patient_feedback",
+			"fieldtype": "Text",
+			"label": "Patient Feedback"
+		},
+		{
+			"fieldname": "prescriptions",
+			"fieldtype": "Table",
+			"label": "Prescriptions",
+			"options": "Healthcare Telemedicine Prescription Item"
+		},
+		{
+			"fieldname": "lab_orders",
+			"fieldtype": "Table",
+			"label": "Lab Orders",
+			"options": "Healthcare Telemedicine Lab Order Item"
+		},
+		{
+			"fieldname": "radiology_orders",
+			"fieldtype": "Table",
+			"label": "Radiology Orders",
+			"options": "Healthcare Telemedicine Radiology Order Item"
+		},
+		{
+			"fieldname": "encounter",
+			"fieldtype": "Link",
+			"label": "Healthcare Encounter",
+			"options": "Healthcare Encounter",
+			"read_only": 1
+		},
+		{
+			"fieldname": "service_charge",
+			"fieldtype": "Link",
+			"label": "Service Charge",
+			"options": "Healthcare Service Charge",
+			"read_only": 1
+		},
+		{
+			"fieldname": "medication_request",
+			"fieldtype": "Link",
+			"label": "Medication Request",
+			"options": "Healthcare Medication Request",
+			"read_only": 1
+		},
+		{
+			"fieldname": "created_by",
+			"fieldtype": "Link",
+			"label": "Created By",
+			"options": "User",
+			"read_only": 1
+		},
+		{
+			"fieldname": "modified_by",
+			"fieldtype": "Link",
+			"label": "Modified By",
+			"options": "User",
+			"read_only": 1
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_3",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_4",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-30 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Telemedicine Session",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Healthcare Practitioner",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Patient",
+			"read": 1,
+			"write": 0,
+			"create": 0,
+			"delete": 0,
+			"report": 0,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

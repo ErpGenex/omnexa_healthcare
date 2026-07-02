@@ -1,0 +1,233 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"autoname": "naming_series:",
+	"creation": "2026-06-30 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"tab_break_device",
+		"naming_series",
+		"device_name",
+		"device_type",
+		"manufacturer",
+		"model",
+		"serial_number",
+		"column_break_omnexa_1",
+		"patient",
+		"patient_display",
+		"device_identifier",
+		"connection_type",
+		"tab_break_status",
+		"api_endpoint",
+		"authentication_token",
+		"last_sync_datetime",
+		"battery_level",
+		"column_break_omnexa_2",
+		"status",
+		"calibration_date",
+		"expiry_date",
+		"tab_break_organization",
+		"company",
+		"branch"
+	],
+	"fields": [
+		{
+			"fieldname": "tab_break_device",
+			"fieldtype": "Tab Break",
+			"label": "Device Information"
+		},
+		{
+			"fieldname": "tab_break_status",
+			"fieldtype": "Tab Break",
+			"label": "Status & Connection"
+		},
+		{
+			"fieldname": "tab_break_organization",
+			"fieldtype": "Tab Break",
+			"label": "Organization"
+		},
+		{
+			"default": "HRMD-.#####",
+			"fieldname": "naming_series",
+			"fieldtype": "Select",
+			"label": "Series",
+			"options": "HRMD-.#####",
+			"reqd": 1
+		},
+		{
+			"fieldname": "device_name",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Device Name",
+			"reqd": 1
+		},
+		{
+			"fieldname": "device_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Device Type",
+			"options": "Blood Pressure Monitor\nGlucose Meter\nPulse Oximeter\nSmart Watch\nFitness Tracker\nWeight Scale\nThermometer",
+			"reqd": 1
+		},
+		{
+			"fieldname": "manufacturer",
+			"fieldtype": "Data",
+			"label": "Manufacturer"
+		},
+		{
+			"fieldname": "model",
+			"fieldtype": "Data",
+			"label": "Model"
+		},
+		{
+			"fieldname": "serial_number",
+			"fieldtype": "Data",
+			"label": "Serial Number",
+			"unique": 1
+		},
+		{
+			"fieldname": "patient",
+			"fieldtype": "Link",
+			"in_list_view": 1,
+			"label": "Patient",
+			"options": "Healthcare Patient",
+			"reqd": 1
+		},
+		{
+			"fetch_from": "patient.full_name",
+			"fieldname": "patient_display",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Patient Name",
+			"read_only": 1
+		},
+		{
+			"fieldname": "device_identifier",
+			"fieldtype": "Data",
+			"label": "Device Identifier",
+			"unique": 1,
+			"reqd": 1
+		},
+		{
+			"fieldname": "connection_type",
+			"fieldtype": "Select",
+			"label": "Connection Type",
+			"options": "Bluetooth\nWiFi\nCellular"
+		},
+		{
+			"fieldname": "api_endpoint",
+			"fieldtype": "Data",
+			"label": "API Endpoint"
+		},
+		{
+			"fieldname": "authentication_token",
+			"fieldtype": "Password",
+			"label": "Authentication Token"
+		},
+		{
+			"fieldname": "last_sync_datetime",
+			"fieldtype": "Datetime",
+			"label": "Last Sync",
+			"read_only": 1
+		},
+		{
+			"fieldname": "battery_level",
+			"fieldtype": "Int",
+			"label": "Battery Level (%)",
+			"read_only": 1
+		},
+		{
+			"default": "Active",
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Active\nInactive\nLost\nReplaced",
+			"reqd": 1
+		},
+		{
+			"fieldname": "calibration_date",
+			"fieldtype": "Date",
+			"label": "Calibration Date"
+		},
+		{
+			"fieldname": "expiry_date",
+			"fieldtype": "Date",
+			"label": "Expiry Date"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company",
+			"reqd": 1
+		},
+		{
+			"fieldname": "branch",
+			"fieldtype": "Link",
+			"label": "Branch",
+			"options": "Branch",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_omnexa_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "column_break_omnexa_2",
+			"fieldtype": "Column Break"
+		}
+	],
+	"grid_page_length": 50,
+	"index_web_pages_for_search": 1,
+	"links": [],
+	"modified": "2026-06-30 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Remote Monitoring Device",
+	"naming_rule": "By \"Naming Series\" field",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1,
+			"share": 1,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1,
+			"share": 0,
+			"print": 1,
+			"email": 1
+		},
+		{
+			"role": "Patient",
+			"read": 1,
+			"write": 0,
+			"create": 0,
+			"delete": 0,
+			"report": 0,
+			"export": 0,
+			"share": 0,
+			"print": 1,
+			"email": 0
+		}
+	],
+	"sort_field": "modified",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

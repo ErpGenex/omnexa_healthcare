@@ -1,0 +1,96 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}المرضى | Doctor Patients{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine-doctor" data-page="patients">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-admin-dashboard">
+    <div class="hc-wrap">
+      <div class="hc-admin-header">
+        <div class="hc-admin-title">
+          <h1 id="hc-admin-title">المرضى</h1>
+          <p id="hc-admin-subtitle">دليل المرضى</p>
+        </div>
+        <div class="hc-admin-actions">
+          <button class="hc-btn hc-btn-primary" onclick="window.location.href='/telemedicine-doctor/patients/new'">
+            + مريض جديد
+          </button>
+          <button class="hc-btn hc-btn-outline" onclick="window.location.href='/telemedicine-doctor'">
+            ← العودة
+          </button>
+        </div>
+      </div>
+
+      <div class="hc-sessions-filters">
+        <div class="hc-filter-group">
+          <label>البحث</label>
+          <input type="text" id="hc-search-patient" placeholder="اسم المريض أو الرقم" class="hc-form-control">
+        </div>
+        <div class="hc-filter-group">
+          <label>الحالة</label>
+          <select id="hc-filter-status" class="hc-form-control">
+            <option value="">الكل</option>
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+        <button id="hc-filter-patients" class="hc-btn hc-btn-primary">بحث</button>
+      </div>
+
+      <div class="hc-sessions-table">
+        <table class="hc-table" id="hc-patients-table">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>العمر</th>
+              <th>الجنس</th>
+              <th>آخر زيارة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="hc-patients-tbody">
+            <tr>
+              <td colspan="5" class="hc-empty">
+                <p>لا يوجد مرضى</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  console.log("Script loaded");
+  console.log("TelemedicineDoctor:", typeof TelemedicineDoctor);
+  
+  // Wait for TelemedicineDoctor to load
+  function initWhenReady() {
+    console.log("Checking TelemedicineDoctor:", typeof TelemedicineDoctor);
+    if (typeof TelemedicineDoctor !== 'undefined') {
+      console.log("TelemedicineDoctor found, initializing...");
+      TelemedicineDoctor.init("patients");
+    } else {
+      console.log("TelemedicineDoctor not ready, retrying in 100ms...");
+      setTimeout(initWhenReady, 100);
+    }
+  }
+  
+  // Start checking after page load
+  window.addEventListener('load', function() {
+    console.log("Window loaded");
+    setTimeout(initWhenReady, 500);
+  });
+</script>
+{% endblock %}

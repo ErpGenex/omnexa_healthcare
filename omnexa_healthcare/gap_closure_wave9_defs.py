@@ -54,4 +54,9 @@ PHI_AUDIT_DOCTYPES: list[str] = [
 	"Healthcare Discharge Summary",
 	"Healthcare Patient Consent",
 	"Healthcare Secure Message",
+	"Healthcare Telemedicine Session",
+	"Healthcare Telemedicine Consent",
+	"Healthcare Telemedicine Queue",
+	"Healthcare Remote Monitoring Device",
+	"Healthcare Remote Monitoring Reading",
 ]

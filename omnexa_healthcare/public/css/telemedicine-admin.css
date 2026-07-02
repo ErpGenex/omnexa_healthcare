@@ -1,0 +1,816 @@
+/* Telemedicine Admin Dashboard Styles */
+.hc-telemedicine-admin {
+  --hc-admin-primary: #2c3e50;
+  --hc-admin-secondary: #34495e;
+  --hc-admin-accent: #3498db;
+  --hc-admin-success: #27ae60;
+  --hc-admin-warning: #f39c12;
+  --hc-admin-danger: #e74c3c;
+  --hc-admin-info: #16a085;
+  min-height: 100vh;
+  background: #f7fafc;
+}
+
+.hc-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hc-admin-dashboard {
+  padding: 24px 0;
+}
+
+.hc-admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hc-admin-title h1 {
+  margin: 0;
+  color: var(--hc-admin-primary);
+  font-size: 1.8rem;
+}
+
+.hc-admin-title p {
+  margin: 4px 0 0;
+  color: var(--hc-admin-secondary);
+  font-size: 0.95rem;
+}
+
+.hc-admin-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.hc-admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hc-stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hc-stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.hc-icon-green {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--hc-admin-success);
+}
+
+.hc-icon-blue {
+  background: rgba(52, 152, 219, 0.1);
+  color: var(--hc-admin-accent);
+}
+
+.hc-icon-purple {
+  background: rgba(155, 89, 182, 0.1);
+  color: #9b59b6;
+}
+
+.hc-icon-orange {
+  background: rgba(243, 156, 18, 0.1);
+  color: var(--hc-admin-warning);
+}
+
+.hc-icon-red {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+.hc-icon-cyan {
+  background: rgba(22, 160, 133, 0.1);
+  color: var(--hc-admin-info);
+}
+
+.hc-stat-info {
+  flex: 1;
+}
+
+.hc-stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--hc-admin-primary);
+  line-height: 1.2;
+}
+
+.hc-stat-label {
+  font-size: 0.85rem;
+  color: var(--hc-admin-secondary);
+  margin-top: 4px;
+}
+
+.hc-stat-trend {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.hc-trend-up {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--hc-admin-success);
+}
+
+.hc-trend-down {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+.hc-admin-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.hc-admin-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hc-admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hc-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.hc-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e6eef6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hc-card-header h3 {
+  margin: 0;
+  color: var(--hc-admin-primary);
+  font-size: 1.1rem;
+}
+
+.hc-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.hc-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hc-badge-danger {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+.hc-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* Sessions List */
+.hc-sessions-list {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hc-session-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f7fafc;
+  margin-bottom: 8px;
+  transition: background 0.2s ease;
+}
+
+.hc-session-item:hover {
+  background: #e6eef6;
+}
+
+.hc-session-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--hc-admin-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.hc-session-info {
+  flex: 1;
+}
+
+.hc-session-name {
+  font-weight: 600;
+  color: var(--hc-admin-primary);
+  margin-bottom: 4px;
+}
+
+.hc-session-meta {
+  font-size: 0.85rem;
+  color: var(--hc-admin-secondary);
+  display: flex;
+  gap: 12px;
+}
+
+.hc-session-duration {
+  font-size: 0.8rem;
+  color: var(--hc-admin-accent);
+  font-weight: 600;
+}
+
+.hc-session-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hc-status-active {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--hc-admin-success);
+}
+
+.hc-status-waiting {
+  background: rgba(243, 156, 18, 0.1);
+  color: var(--hc-admin-warning);
+}
+
+/* System Health */
+.hc-health-metrics {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hc-health-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.hc-health-label {
+  font-weight: 500;
+  color: var(--hc-admin-primary);
+}
+
+.hc-health-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.hc-status-success {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--hc-admin-success);
+}
+
+.hc-status-warning {
+  background: rgba(243, 156, 18, 0.1);
+  color: var(--hc-admin-warning);
+}
+
+.hc-status-error {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+/* Quick Actions */
+.hc-quick-actions-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hc-quick-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e6eef6;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.hc-quick-action:hover {
+  border-color: var(--hc-admin-accent);
+  background: var(--hc-admin-accent);
+  color: #fff;
+}
+
+.hc-action-icon {
+  font-size: 1.3rem;
+}
+
+/* Alerts */
+.hc-alerts-list {
+  padding: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.hc-alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border-left: 3px solid;
+}
+
+.hc-alert-item.critical {
+  background: rgba(231, 76, 60, 0.05);
+  border-color: var(--hc-admin-danger);
+}
+
+.hc-alert-item.warning {
+  background: rgba(243, 156, 18, 0.05);
+  border-color: var(--hc-admin-warning);
+}
+
+.hc-alert-item.info {
+  background: rgba(52, 152, 219, 0.05);
+  border-color: var(--hc-admin-accent);
+}
+
+.hc-alert-icon {
+  font-size: 1.2rem;
+}
+
+.hc-alert-content {
+  flex: 1;
+}
+
+.hc-alert-text {
+  font-weight: 500;
+  color: var(--hc-admin-primary);
+  margin-bottom: 4px;
+}
+
+.hc-alert-time {
+  font-size: 0.8rem;
+  color: var(--hc-admin-secondary);
+}
+
+/* Activity */
+.hc-activity-list {
+  padding: 16px;
+}
+
+.hc-activity-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e6eef6;
+}
+
+.hc-activity-item:last-child {
+  border-bottom: none;
+}
+
+.hc-activity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--hc-admin-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.hc-activity-content {
+  flex: 1;
+}
+
+.hc-activity-text {
+  font-size: 0.9rem;
+  color: var(--hc-admin-primary);
+  margin-bottom: 4px;
+}
+
+.hc-activity-time {
+  font-size: 0.8rem;
+  color: var(--hc-admin-secondary);
+}
+
+/* Empty State */
+.hc-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--hc-admin-secondary);
+}
+
+.hc-empty p {
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .hc-admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hc-admin-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-admin-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .hc-admin-sidebar > .hc-card {
+    flex: 1;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hc-admin-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .hc-admin-actions {
+    width: 100%;
+  }
+  
+  .hc-admin-actions .hc-btn {
+    flex: 1;
+  }
+}
+
+/* RTL Support */
+.hc-telemedicine-admin[dir="rtl"] .hc-quick-action {
+  text-align: right;
+}
+
+.hc-telemedicine-admin[dir="rtl"] .hc-alert-item {
+  border-left: none;
+  border-right: 3px solid;
+}
+
+.hc-telemedicine-admin[dir="rtl"] .hc-stat-trend {
+  right: auto;
+  left: 12px;
+}
+
+/* Sessions Management Page */
+.hc-admin-sessions {
+  padding: 24px 0;
+}
+
+.hc-sessions-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.hc-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 150px;
+  flex: 1;
+}
+
+.hc-filter-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--hc-admin-secondary);
+}
+
+.hc-form-control {
+  padding: 10px 12px;
+  border: 1px solid #e6eef6;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.hc-form-control:focus {
+  outline: none;
+  border-color: var(--hc-admin-accent);
+}
+
+.hc-sessions-table {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.hc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hc-table thead {
+  background: #f7fafc;
+}
+
+.hc-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--hc-admin-primary);
+  font-size: 0.85rem;
+  border-bottom: 2px solid #e6eef6;
+}
+
+.hc-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e6eef6;
+  color: var(--hc-admin-secondary);
+  font-size: 0.9rem;
+}
+
+.hc-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.hc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* New Session Page */
+.hc-admin-new-session {
+  padding: 24px 0;
+}
+
+.hc-session-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+.hc-form-section {
+  margin-bottom: 32px;
+}
+
+.hc-form-section:last-child {
+  margin-bottom: 0;
+}
+
+.hc-form-section h3 {
+  margin: 0 0 20px;
+  color: var(--hc-admin-primary);
+  font-size: 1.1rem;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e6eef6;
+}
+
+.hc-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.hc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hc-form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--hc-admin-secondary);
+}
+
+.hc-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.hc-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.hc-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Buttons */
+.hc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+}
+
+.hc-btn-primary {
+  background: var(--hc-admin-accent);
+  color: #fff;
+}
+
+.hc-btn-primary:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+}
+
+.hc-btn-outline {
+  background: transparent;
+  border: 1px solid var(--hc-admin-accent);
+  color: var(--hc-admin-accent);
+}
+
+.hc-btn-outline:hover {
+  background: var(--hc-admin-accent);
+  color: #fff;
+}
+
+.hc-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* Status Badges */
+.hc-status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.hc-status-scheduled {
+  background: rgba(52, 152, 219, 0.1);
+  color: var(--hc-admin-accent);
+}
+
+.hc-status-in_progress {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--hc-admin-success);
+}
+
+.hc-status-completed {
+  background: rgba(22, 160, 133, 0.1);
+  color: var(--hc-admin-info);
+}
+
+.hc-status-cancelled {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+/* Action Buttons in Table */
+.hc-action-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  margin-right: 4px;
+}
+
+.hc-action-btn:last-child {
+  margin-right: 0;
+}
+
+.hc-btn-view {
+  background: rgba(52, 152, 219, 0.1);
+  color: var(--hc-admin-accent);
+}
+
+.hc-btn-view:hover {
+  background: var(--hc-admin-accent);
+  color: #fff;
+}
+
+.hc-btn-edit {
+  background: rgba(243, 156, 18, 0.1);
+  color: var(--hc-admin-warning);
+}
+
+.hc-btn-edit:hover {
+  background: var(--hc-admin-warning);
+  color: #fff;
+}
+
+.hc-btn-delete {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--hc-admin-danger);
+}
+
+.hc-btn-delete:hover {
+  background: var(--hc-admin-danger);
+  color: #fff;
+}
+
+/* RTL for Table */
+.hc-telemedicine-admin[dir="rtl"] .hc-table th,
+.hc-telemedicine-admin[dir="rtl"] .hc-table td {
+  text-align: right;
+}
+
+.hc-telemedicine-admin[dir="rtl"] .hc-action-btn {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+.hc-telemedicine-admin[dir="rtl"] .hc-action-btn:last-child {
+  margin-left: 0;
+}
+
+/* Responsive for Filters */
+@media (max-width: 768px) {
+  .hc-sessions-filters {
+    flex-direction: column;
+  }
+  
+  .hc-filter-group {
+    min-width: 100%;
+  }
+  
+  .hc-form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-table {
+    font-size: 0.85rem;
+  }
+  
+  .hc-table th,
+  .hc-table td {
+    padding: 10px 12px;
+  }
+}

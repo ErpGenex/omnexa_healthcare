@@ -1,0 +1,78 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}إدارة المرضى | Patients Management{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine-admin" data-page="admin-patients">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-admin-patients">
+    <div class="hc-wrap">
+      <div class="hc-admin-header">
+        <div class="hc-admin-title">
+          <h1 id="hc-admin-title">إدارة المرضى</h1>
+          <p id="hc-admin-subtitle">عرض وإدارة جميع مرضى الطب عن بعد</p>
+        </div>
+        <div class="hc-admin-actions">
+          <button class="hc-btn hc-btn-outline" id="hc-filter-patients">
+            <span>🔍</span>
+            <span id="hc-filter-text">تصفية</span>
+          </button>
+          <button class="hc-btn hc-btn-primary" id="hc-view-patients">
+            <span>👥</span>
+            <span id="hc-view-text">عرض المرضى</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hc-patients-filters">
+        <div class="hc-filter-group">
+          <label for="hc-filter-status" id="hc-status-label">الحالة</label>
+          <select id="hc-filter-status" class="hc-form-control">
+            <option value="">الكل</option>
+            <option value="Active">نشط</option>
+            <option value="Inactive">غير نشط</option>
+          </select>
+        </div>
+        <div class="hc-filter-group">
+          <label for="hc-filter-date" id="hc-date-label">تاريخ التسجيل</label>
+          <input type="date" id="hc-filter-date" class="hc-form-control">
+        </div>
+      </div>
+
+      <div class="hc-patients-table">
+        <table class="hc-table">
+          <thead>
+            <tr>
+              <th id="hc-th-name">الاسم</th>
+              <th id="hc-th-status">الحالة</th>
+              <th id="hc-th-actions">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="hc-patients-tbody">
+            <tr>
+              <td colspan="3" class="hc-empty">
+                <p id="hc-no-patients">لا يوجد مرضى</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicineAdmin.init("patients");
+  });
+</script>
+{% endblock %}

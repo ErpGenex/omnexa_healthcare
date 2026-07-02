@@ -1,0 +1,27 @@
+{
+ "app": "omnexa_healthcare",
+ "category": "Admin",
+ "creation": "2026-06-30 20:59:00",
+ "description": "Telemedicine Admin Dashboard",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "is_standard": 1,
+ "modified": "2026-06-30 20:59:00",
+ "modified_by": "Administrator",
+ "module": "Omnexa Healthcare",
+ "name": "telemedicine_admin",
+ "owner": "Administrator",
+ "page_name": "Telemedicine Admin",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Company Admin"
+  }
+ ],
+ "route": "/telemedicine-admin",
+ "standard": "Yes",
+ "title": "Telemedicine Admin Dashboard"
+}

@@ -1,0 +1,201 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}إعدادات النظام | System Settings{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine-admin" data-page="admin-settings">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-admin-settings">
+    <div class="hc-wrap">
+      <div class="hc-admin-header">
+        <div class="hc-admin-title">
+          <h1 id="hc-admin-title">إعدادات النظام</h1>
+          <p id="hc-admin-subtitle">تكوين إعدادات الطب عن بعد</p>
+        </div>
+        <div class="hc-admin-actions">
+          <button class="hc-btn hc-btn-outline" id="hc-reset-settings">
+            <span>↺</span>
+            <span id="hc-reset-text">إعادة تعيين</span>
+          </button>
+          <button class="hc-btn hc-btn-primary" id="hc-save-settings">
+            <span>💾</span>
+            <span id="hc-save-text">حفظ الإعدادات</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hc-settings-tabs">
+        <button class="hc-tab-btn active" data-tab="general" id="hc-tab-general">
+          <span>⚙️</span>
+          <span id="hc-general-text">عام</span>
+        </button>
+        <button class="hc-tab-btn" data-tab="video" id="hc-tab-video">
+          <span>📹</span>
+          <span id="hc-video-text">الفيديو</span>
+        </button>
+        <button class="hc-tab-btn" data-tab="features" id="hc-tab-features">
+          <span>✨</span>
+          <span id="hc-features-text">الميزات</span>
+        </button>
+        <button class="hc-tab-btn" data-tab="ai" id="hc-tab-ai">
+          <span>🤖</span>
+          <span id="hc-ai-text">الذكاء الاصطناعي</span>
+        </button>
+      </div>
+
+      <div class="hc-settings-content">
+        <!-- General Settings -->
+        <div class="hc-settings-panel active" id="hc-panel-general">
+          <div class="hc-form-section">
+            <h3 id="hc-general-title">الإعدادات العامة</h3>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-enable-video" id="hc-enable-video-label">تفعيل استشارات الفيديو</label>
+                <input type="checkbox" id="hc-enable-video" class="hc-form-control" checked>
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-enable-voice" id="hc-enable-voice-label">تفعيل استشارات الصوت</label>
+                <input type="checkbox" id="hc-enable-voice" class="hc-form-control" checked>
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-enable-chat" id="hc-enable-chat-label">تفعيل استشارات الدردشة</label>
+                <input type="checkbox" id="hc-enable-chat" class="hc-form-control" checked>
+              </div>
+            </div>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-default-duration" id="hc-default-duration-label">المدة الافتراضية (دقائق)</label>
+                <input type="number" id="hc-default-duration" class="hc-form-control" value="30">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-max-duration" id="hc-max-duration-label">المدة القصوى (دقائق)</label>
+                <input type="number" id="hc-max-duration" class="hc-form-control" value="60">
+              </div>
+            </div>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-max-concurrent" id="hc-max-concurrent-label">الحد الأقصى للجلسات المتزامنة</label>
+                <input type="number" id="hc-max-concurrent" class="hc-form-control" value="100">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-session-timeout" id="hc-session-timeout-label">مهلة الجلسة (دقائق)</label>
+                <input type="number" id="hc-session-timeout" class="hc-form-control" value="15">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Settings -->
+        <div class="hc-settings-panel" id="hc-panel-video">
+          <div class="hc-form-section">
+            <h3 id="hc-video-title">إعدادات الفيديو</h3>
+            <div class="hc-form-group">
+              <label for="hc-jitsi-domain" id="hc-jitsi-domain-label">نطاق Jitsi</label>
+              <input type="text" id="hc-jitsi-domain" class="hc-form-control" value="meet.jit.si">
+            </div>
+            <div class="hc-form-group">
+              <label for="hc-jitsi-app-id" id="hc-jitsi-app-id-label">معرف تطبيق Jitsi</label>
+              <input type="text" id="hc-jitsi-app-id" class="hc-form-control" placeholder="اتركه فارغاً للاستخدام المجاني">
+            </div>
+            <div class="hc-form-group">
+              <label for="hc-jitsi-secret" id="hc-jitsi-secret-label">مفتاح سر Jitsi</label>
+              <input type="password" id="hc-jitsi-secret" class="hc-form-control" placeholder="اتركه فارغاً للاستخدام المجاني">
+            </div>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-turn-url" id="hc-turn-url-label">عنوان خادم TURN</label>
+                <input type="text" id="hc-turn-url" class="hc-form-control" placeholder="turn:your-turn-server.com:3478">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-stun-url" id="hc-stun-url-label">عنوان خادم STUN</label>
+                <input type="text" id="hc-stun-url" class="hc-form-control" value="stun:stun.l.google.com:19302">
+              </div>
+            </div>
+            <div class="hc-form-group">
+              <label for="hc-video-quality" id="hc-video-quality-label">جودة الفيديو</label>
+              <select id="hc-video-quality" class="hc-form-control">
+                <option value="SD">SD</option>
+                <option value="HD" selected>HD</option>
+                <option value="FHD">FHD</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Settings -->
+        <div class="hc-settings-panel" id="hc-panel-features">
+          <div class="hc-form-section">
+            <h3 id="hc-features-title">الميزات</h3>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-enable-screen-share" id="hc-screen-share-label">تفعيل مشاركة الشاشة</label>
+                <input type="checkbox" id="hc-enable-screen-share" class="hc-form-control" checked>
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-enable-whiteboard" id="hc-whiteboard-label">تفعيل اللوحة البيضاء</label>
+                <input type="checkbox" id="hc-enable-whiteboard" class="hc-form-control" checked>
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-enable-file-share" id="hc-file-share-label">تفعيل مشاركة الملفات</label>
+                <input type="checkbox" id="hc-enable-file-share" class="hc-form-control" checked>
+              </div>
+            </div>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-max-file-size" id="hc-max-file-size-label">الحد الأقصى لحجم الملف (MB)</label>
+                <input type="number" id="hc-max-file-size" class="hc-form-control" value="10">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-allowed-file-types" id="hc-allowed-types-label">أنواع الملفات المسموحة</label>
+                <input type="text" id="hc-allowed-file-types" class="hc-form-control" value="pdf,jpg,jpeg,png,doc,docx">
+              </div>
+            </div>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-enable-recording" id="hc-recording-label">تفعيل التسجيل</label>
+                <input type="checkbox" id="hc-enable-recording" class="hc-form-control">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-auto-record" id="hc-auto-record-label">تسجيل تلقائي</label>
+                <input type="checkbox" id="hc-auto-record" class="hc-form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Settings -->
+        <div class="hc-settings-panel" id="hc-panel-ai">
+          <div class="hc-form-section">
+            <h3 id="hc-ai-title">الذكاء الاصطناعي</h3>
+            <div class="hc-form-row">
+              <div class="hc-form-group">
+                <label for="hc-enable-transcription" id="hc-transcription-label">تفعيل النسخ الصوتي</label>
+                <input type="checkbox" id="hc-enable-transcription" class="hc-form-control">
+              </div>
+              <div class="hc-form-group">
+                <label for="hc-enable-summarization" id="hc-summarization-label">تفعيل التلخيص</label>
+                <input type="checkbox" id="hc-enable-summarization" class="hc-form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicineAdmin.init("settings");
+  });
+</script>
+{% endblock %}

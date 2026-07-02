@@ -1,0 +1,112 @@
+{
+	"actions": [],
+	"allow_rename": 1,
+	"autoname": "field:procedure_code",
+	"creation": "2026-07-02 00:00:00",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"procedure_name",
+		"procedure_code",
+		"modality",
+		"column_break_1",
+		"company",
+		"is_active",
+		"description"
+	],
+	"fields": [
+		{
+			"fieldname": "procedure_name",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Procedure Name",
+			"reqd": 1
+		},
+		{
+			"fieldname": "procedure_code",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Procedure Code",
+			"reqd": 1,
+			"unique": 1
+		},
+		{
+			"fieldname": "modality",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Modality",
+			"options": "X-Ray\nUltrasound\nCT\nMRI\nMammography\nFluoroscopy\nOther",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "company",
+			"fieldtype": "Link",
+			"label": "Company",
+			"options": "Company"
+		},
+		{
+			"default": "1",
+			"fieldname": "is_active",
+			"fieldtype": "Check",
+			"in_list_view": 1,
+			"label": "Active"
+		},
+		{
+			"fieldname": "description",
+			"fieldtype": "Small Text",
+			"label": "Description"
+		}
+	],
+	"links": [],
+	"modified": "2026-07-02 00:00:00",
+	"modified_by": "Administrator",
+	"module": "Omnexa Healthcare",
+	"name": "Healthcare Radiology Procedure",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"role": "System Manager",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 1,
+			"report": 1,
+			"export": 1
+		},
+		{
+			"role": "Company Admin",
+			"read": 1,
+			"write": 1,
+			"create": 1,
+			"delete": 0,
+			"report": 1,
+			"export": 1
+		},
+		{
+			"role": "Desk User",
+			"read": 1,
+			"write": 0,
+			"create": 0,
+			"delete": 0,
+			"report": 1,
+			"export": 0
+		},
+		{
+			"role": "Physician",
+			"read": 1,
+			"write": 0,
+			"create": 0,
+			"delete": 0,
+			"report": 1,
+			"export": 0
+		}
+	],
+	"sort_field": "procedure_name",
+	"sort_order": "ASC",
+	"states": [],
+	"track_changes": 1
+}

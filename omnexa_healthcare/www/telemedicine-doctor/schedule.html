@@ -1,0 +1,92 @@
+---
+no_breadcrumbs: 1
+full_width: 1
+no_header: 1
+---
+
+{% extends "templates/web.html" %}
+
+{% block title %}جدول المواعيد | Doctor Schedule{% endblock %}
+
+{% block page_content %}
+<div class="hc-site hc-telemedicine-doctor" data-page="doctor-schedule">
+  <header class="hc-header" id="hc-header"></header>
+  
+  <section class="hc-admin-dashboard">
+    <div class="hc-wrap">
+      <div class="hc-admin-header">
+        <div class="hc-admin-title">
+          <h1 id="hc-admin-title">جدول المواعيد</h1>
+          <p id="hc-admin-subtitle">إدارة مواعيد الاستشارات</p>
+        </div>
+        <div class="hc-admin-actions">
+          <button class="hc-btn hc-btn-primary" onclick="window.location.href='/telemedicine-doctor'">
+            ← العودة
+          </button>
+        </div>
+      </div>
+
+      <div class="hc-schedule-filters">
+        <div class="hc-filter-group">
+          <label>التاريخ</label>
+          <input type="date" id="hc-filter-date" class="hc-form-control">
+        </div>
+        <div class="hc-filter-group">
+          <label>الحالة</label>
+          <select id="hc-filter-status" class="hc-form-control">
+            <option value="">الكل</option>
+            <option value="scheduled">مجدول</option>
+            <option value="completed">مكتمل</option>
+            <option value="cancelled">ملغي</option>
+            <option value="no-show">لم يحضر</option>
+          </select>
+        </div>
+        <button id="hc-filter-schedule" class="hc-btn hc-btn-primary">تصفية</button>
+      </div>
+
+      <div class="hc-schedule-calendar">
+        <div class="hc-calendar-header">
+          <button class="hc-btn hc-btn-sm hc-btn-outline" id="hc-prev-month">←</button>
+          <h3 id="hc-calendar-month">يوليو 2026</h3>
+          <button class="hc-btn hc-btn-sm hc-btn-outline" id="hc-next-month">→</button>
+        </div>
+        <div class="hc-calendar-grid" id="hc-calendar-grid">
+          <!-- Calendar days will be loaded here -->
+        </div>
+      </div>
+
+      <div class="hc-schedule-table">
+        <div class="hc-card-header">
+          <h3 id="hc-appointments-title">مواعيد اليوم</h3>
+        </div>
+        <table class="hc-table" id="hc-schedule-table">
+          <thead>
+            <tr>
+              <th>الوقت</th>
+              <th>المريض</th>
+              <th>نوع الاستشارة</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="hc-schedule-tbody">
+            <tr>
+              <td colspan="5" class="hc-empty">
+                <p>لا توجد مواعيد لهذا اليوم</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hc-footer" id="hc-footer"></footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    TelemedicineDoctor.init("schedule");
+  });
+</script>
+{% endblock %}

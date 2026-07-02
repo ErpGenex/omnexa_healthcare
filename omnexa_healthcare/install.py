@@ -45,3 +45,10 @@ def after_migrate():
 		sync_lab_print()
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: lab print format sync failed")
+
+	try:
+		from omnexa_healthcare.api.telemedicine_admin import ensure_telemedicine_configuration
+
+		ensure_telemedicine_configuration()
+	except Exception:
+		frappe.log_error(frappe.get_traceback(), "Omnexa Healthcare: telemedicine configuration setup failed")
